@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.projekt.TaskController"
+            style="-fx-background-color: linear-gradient(to bottom right, #6a1b9a, #9c27b0); -fx-padding: 20;">
+    <top>
+        <HBox alignment="CENTER" spacing="10" style="-fx-padding: 10;">
+            <Label text="Zarządzanie zadaniami" style="-fx-text-fill: white; -fx-font-size: 24px; -fx-font-weight: bold;" />
+        </HBox>
+    </top>
+
+    <center>
+        <VBox alignment="CENTER" spacing="20" style="-fx-padding: 20; -fx-background-color: rgba(255, 255, 255, 0.8); -fx-border-radius: 10; -fx-background-radius: 10;">
+            <HBox alignment="CENTER_LEFT" spacing="10">
+                <TextField fx:id="taskInput" promptText="Wpisz nowe zadanie" style="-fx-background-color: white; -fx-font-size: 14px; -fx-padding: 5; -fx-border-radius: 5; -fx-background-radius: 5;" />
+                <Button text="Dodaj zadanie" onAction="#handleAddTask" style="-fx-background-color: #7b1fa2; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold; -fx-padding: 10 20; -fx-border-radius: 5; -fx-background-radius: 5;" />
+            </HBox>
+            <ListView fx:id="taskList" style="-fx-background-color: white; -fx-font-size: 14px; -fx-padding: 5; -fx-border-radius: 5; -fx-background-radius: 5; -fx-pref-height: 200px;" />
+        </VBox>
+    </center>
+
+    <bottom>
+        <HBox alignment="CENTER" spacing="10" style="-fx-padding: 10;">
+            <Button text="Usuń zadanie" onAction="#handleDeleteTask" style="-fx-background-color: #7b1fa2; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold; -fx-padding: 10 20; -fx-border-radius: 5; -fx-background-radius: 5;" />
+            <Button text="Oznacz jako zakończone" onAction="#handleMarkAsCompleted" style="-fx-background-color: #7b1fa2; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold; -fx-padding: 10 20; -fx-border-radius: 5; -fx-background-radius: 5;" />
+            <!-- Przycisk "Powrót do Dashboardu" -->
+            <Button text="Powrót do Dashboardu" onAction="#goToDashboard" style="-fx-background-color: #7b1fa2; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold; -fx-padding: 10 20; -fx-border-radius: 5; -fx-background-radius: 5;" />
+        </HBox>
+    </bottom>
+</BorderPane>
