@@ -19,7 +19,16 @@
 
     <!-- Nagłówek dashboardu -->
     <Label text="Dashboard"
-           style="-fx-text-fill: white; -fx-font-size: 24px; -fx-font-weight: bold;"/>
+           style="-fx-text-fill: white; -fx-font-size: 32px; -fx-font-weight: bold;"/>
+
+    <Label fx:id="usernameLabel" layoutX="50" layoutY="50"
+           text="Witaj, użytkowniku"
+           style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: white;"
+    />
+
+
+    <Label fx:id="roleLabel" layoutX="50" layoutY="100" text="Rola: "
+           style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: white;"/>
 
     <!-- Przyciski akcji -->
     <Button text="Zarządzaj zadaniami"
@@ -28,4 +37,11 @@
                   -fx-font-weight: bold; -fx-padding: 10 20; -fx-border-radius: 5;
                   -fx-background-radius: 5; -fx-cursor: hand;"
             fx:id="taskManagerButton"/>
+
+    <Button fx:id="adminButton"
+            text="Zarządzaj użytkownikami"
+            onAction="#goToUserManagement"
+            style="-fx-background-color: #7b1fa2; -fx-text-fill: white; -fx-font-size: 14px;
+                  -fx-font-weight: bold; -fx-padding: 10 20; -fx-border-radius: 5;
+                  -fx-background-radius: 5; -fx-cursor: hand;"/>
 </VBox>

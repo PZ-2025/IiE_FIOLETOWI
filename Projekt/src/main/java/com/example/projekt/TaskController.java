@@ -113,8 +113,12 @@ public class TaskController {
     @FXML
     private void goToDashboard(ActionEvent event) {
         try {
-            Parent dashboardRoot = FXMLLoader.load(Objects.requireNonNull(
-                    getClass().getResource(DASHBOARD_VIEW_PATH)));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(DASHBOARD_VIEW_PATH));
+            Parent dashboardRoot = loader.load();
+
+            DashboardController dashboardController = loader.getController();
+            dashboardController.setCurrentUser(UserSession.getInstance().getUser());
+            // Przekazujemy UserSession
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setTitle(DASHBOARD_TITLE);
@@ -126,6 +130,7 @@ public class TaskController {
             showAlert("Nie można załadować dashboardu");
         }
     }
+
 
     /**
      * Wyświetla komunikat o błędzie (w przyszłości można rozszerzyć o Alert).

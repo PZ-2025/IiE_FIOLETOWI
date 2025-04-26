@@ -1,11 +1,14 @@
 package com.example.projekt;
 
+import com.example.projekt.UserSession;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Objects;
@@ -23,13 +26,26 @@ public class DashboardController {
     private static final int WINDOW_WIDTH = 1000;
     private static final int WINDOW_HEIGHT = 600;
 
-    /**
-     * Przechodzi do widoku menedżera zadań.
-     * Ładuje plik FXML z definicją interfejsu menedżera zadań i zastępuje obecną scenę.
-     *
-     * @param event zdarzenie akcji wywołujące przejście do menedżera zadań
-     * @throws IllegalStateException jeśli nie uda się załadować pliku FXML
-     */
+    private User currentUser;
+
+    @FXML
+    private Label usernameLabel;
+    @FXML
+    private Label roleLabel;
+
+    @FXML
+    private Button adminButton;
+
+    @FXML
+    public void initialize() {
+        adminButton.setVisible(false);
+
+        UserSession userSession = UserSession.getInstance();
+        if (userSession != null && userSession.getUser() != null) {
+            setCurrentUser(userSession.getUser());
+        }
+    }
+
     @FXML
     private void goToTaskManager(ActionEvent event) {
         try {
@@ -44,27 +60,39 @@ public class DashboardController {
         }
     }
 
-    /**
-     * Konfiguruje okno menedżera zadań.
-     *
-     * @param stage referencja do obiektu Stage
-     * @param root załadowany graf sceny z pliku FXML
-     */
     private void configureTaskManagerStage(Stage stage, Parent root) {
         stage.setTitle(TASK_WINDOW_TITLE);
         stage.setScene(new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT));
         stage.show();
     }
 
-    /**
-     * Obsługuje błędy ładowania widoku.
-     * Loguje szczegóły błędu i wyświetla komunikat w konsoli.
-     *
-     * @param e wyjątek który wystąpił podczas ładowania widoku
-     */
     private void handleViewLoadingError(Exception e) {
         LOGGER.log(Level.SEVERE, "Błąd ładowania widoku menedżera zadań", e);
         System.err.println("Krytyczny błąd aplikacji: Nie można załadować widoku menedżera zadań");
-        // W pełnej aplikacji warto dodać tu wyświetlenie komunikatu użytkownikowi
+    }
+
+    @FXML
+    private void goToUserManagement(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/com/example/projekt/userManagement.fxml"));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(root));
+    }
+
+    public void setCurrentUser(User user) {
+        this.currentUser = user;
+
+        if (usernameLabel != null) {
+            usernameLabel.setText("Witaj, " + user.getImie() + " " + user.getNazwisko());
+        }
+
+        if (roleLabel != null) {
+            roleLabel.setText("Rola: " + user.getRole().toString());
+        }
+
+        if (user.isAdmin()) {
+            adminButton.setVisible(true);
+        }
+
+        System.out.println("Zalogowano jako: " + user.getLogin() + " (" + user.getRole() + ")");
     }
 }
