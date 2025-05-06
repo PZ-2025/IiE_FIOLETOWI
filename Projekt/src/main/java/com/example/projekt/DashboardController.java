@@ -78,6 +78,27 @@ public class DashboardController {
         stage.setScene(new Scene(root));
     }
 
+    @FXML
+    private Button reportButton;  // Dodaj to pole, aby powiązać przycisk z plikiem FXML
+
+    @FXML
+    private void goToReports() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/projekt/reports.fxml"));
+            Parent root = loader.load();
+
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) reportButton.getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Błąd ładowania widoku raportów: " + e.getMessage());
+        }
+    }
+
+
+
     public void setCurrentUser(User user) {
         this.currentUser = user;
 

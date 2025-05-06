@@ -4,8 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="93580640-a4f6-4848-877d-83f2d9fe0546" name="Changes" comment="Połączenie z bazą danych (u mnie działa)">
+    <list default="true" id="93580640-a4f6-4848-877d-83f2d9fe0546" name="Changes" comment="Pierwsze moduły">
+      <change afterPath="$PROJECT_DIR$/Projekt/HurtPolSan.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/ReportController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/ReportGenerator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/reports.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projekt/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/DashboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/DashboardController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/dashboard.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/dashboard.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,10 +33,11 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="master" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
@@ -36,8 +47,8 @@
 }</component>
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/PZ-2025/IiE_FIOLETOWI.git&quot;,
-    &quot;accountId&quot;: &quot;4c9a4c99-ddb6-4831-b40f-6a863f7514e1&quot;
+    &quot;url&quot;: &quot;https://github.com/PZ-2025/IiE_FIOLETOWI&quot;,
+    &quot;accountId&quot;: &quot;8128e519-daaf-4f3c-9214-ef3526595eaa&quot;
   }
 }</component>
   <component name="MavenImportPreferences">
@@ -65,16 +76,21 @@
     "Application.TestPołączenia.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "DB",
+    "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable"
+    "last_opened_file_path": "D:/JavaFX/openjfx-24_windows-x64_bin-sdk/javafx-sdk-24/lib",
+    "project.structure.last.edited": "Libraries",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.3494253",
+    "settings.editor.selected.configurable": "reference.settings.project.maven.repository.indices"
   }
 }]]></component>
-  <component name="RunManager" selected="Application.Main">
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\remix\IdeaProjects\IiE_FIOLETOWI\Projekt" />
+    </key>
+  </component>
+  <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="com.example.projekt.Main" />
       <module name="Projekt" />
@@ -82,33 +98,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TestPołączenia" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.example.projekt.TestPołączenia" />
-      <module name="Projekt" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.example.projekt.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="JetRunConfigurationType">
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <option name="filePath" />
-      <method v="2" />
-    </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Application.TestPołączenia" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -127,15 +116,7 @@
       <option name="project" value="LOCAL" />
       <updated>1742767001159</updated>
     </task>
-    <task id="LOCAL-00002" summary="Połączenie z bazą danych (u mnie działa)">
-      <option name="closed" value="true" />
-      <created>1744059411339</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1744059411339</updated>
-    </task>
-    <option name="localTasksCounter" value="3" />
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -163,7 +144,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Pierwsze moduły" />
-    <MESSAGE value="Połączenie z bazą danych (u mnie działa)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Połączenie z bazą danych (u mnie działa)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Pierwsze moduły" />
   </component>
 </project>

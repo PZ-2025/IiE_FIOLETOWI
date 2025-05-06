@@ -4,6 +4,10 @@ module com.example.projekt {
     requires java.sql;
     requires java.desktop;
 
+    // Moduły iText
+    requires kernel;
+    requires layout;
+    requires io;
 
     opens com.example.projekt to javafx.fxml;
     exports com.example.projekt;

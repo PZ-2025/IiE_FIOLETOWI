@@ -4,7 +4,6 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
 <VBox xmlns="http://javafx.com/javafx/8"
       xmlns:fx="http://javafx.com/fxml/1"
@@ -17,26 +16,31 @@
         <Insets top="20" right="20" bottom="20" left="20"/>
     </padding>
 
-    <!-- Nagłówek dashboardu -->
     <Label text="Dashboard"
            style="-fx-text-fill: white; -fx-font-size: 32px; -fx-font-weight: bold;"/>
 
-    <Label fx:id="usernameLabel" layoutX="50" layoutY="50"
+    <Label fx:id="usernameLabel"
            text="Witaj, użytkowniku"
-           style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: white;"
-    />
-
-
-    <Label fx:id="roleLabel" layoutX="50" layoutY="100" text="Rola: "
            style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: white;"/>
 
-    <!-- Przyciski akcji -->
+    <Label fx:id="roleLabel"
+           text="Rola: "
+           style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: white;"/>
+
     <Button text="Zarządzaj zadaniami"
             onAction="#goToTaskManager"
             style="-fx-background-color: #7b1fa2; -fx-text-fill: white; -fx-font-size: 14px;
                   -fx-font-weight: bold; -fx-padding: 10 20; -fx-border-radius: 5;
                   -fx-background-radius: 5; -fx-cursor: hand;"
             fx:id="taskManagerButton"/>
+
+    <Button text="Raporty"
+            onAction="#goToReports"
+            style="-fx-background-color: #7b1fa2; -fx-text-fill: white; -fx-font-size: 14px;
+              -fx-font-weight: bold; -fx-padding: 10 20; -fx-border-radius: 5;
+              -fx-background-radius: 5; -fx-cursor: hand;"
+            fx:id="reportButton"/>
+
 
     <Button fx:id="adminButton"
             text="Zarządzaj użytkownikami"
