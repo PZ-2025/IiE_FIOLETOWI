@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.projekt.UserTaskPanelController"
+            style="-fx-background-color: linear-gradient(to bottom right, #6a1b9a, #9c27b0);">
+
+    <top>
+        <Label text="Panel użytkownika - Twoje zadania"
+               style="-fx-font-size: 24px; -fx-text-fill: white; -fx-padding: 20;"
+               BorderPane.alignment="CENTER"/>
+    </top>
+
+    <center>
+        <VBox spacing="10" style="-fx-background-color: white; -fx-background-radius: 10;">
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
+
+            <TableView fx:id="taskTable" prefHeight="200">
+                <columns>
+                    <TableColumn fx:id="nameColumn" text="Nazwa"/>
+                    <TableColumn fx:id="statusColumn" text="Status"/>
+                    <TableColumn fx:id="priorityColumn" text="Priorytet"/>
+                    <TableColumn fx:id="dateColumn" text="Data"/>
+                </columns>
+            </TableView>
+
+            <HBox spacing="10">
+                <Label text="Zmień status:"/>
+                <ComboBox fx:id="statusComboBox" promptText="Wybierz status"/>
+                <Button text="Zapisz zmiany" onAction="#changeTaskStatus"/>
+            </HBox>
+
+            <Label text="Komentarze:" style="-fx-font-weight: bold;"/>
+            <ListView fx:id="commentList" prefHeight="100"/>
+            <HBox spacing="10">
+                <TextField fx:id="commentField" promptText="Dodaj komentarz" HBox.hgrow="ALWAYS"/>
+                <Button text="Dodaj" onAction="#addComment"/>
+            </HBox>
+
+            <Label text="Załączniki:" style="-fx-font-weight: bold;"/>
+            <ListView fx:id="attachmentList" prefHeight="100"/>
+            <Button text="Dodaj załącznik" onAction="#addAttachment"/>
+
+            <Label text="Historia zakończonych zadań:" style="-fx-font-weight: bold;"/>
+            <ListView fx:id="historyList" prefHeight="100"/>
+        </VBox>
+    </center>
+
+    <bottom>
+        <Button text="Powrót do Dashboardu"
+                onAction="#goToDashboard"
+                style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 10;"/>
+    </bottom>
+</BorderPane>

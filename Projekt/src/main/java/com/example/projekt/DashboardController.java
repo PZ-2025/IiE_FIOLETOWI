@@ -96,6 +96,18 @@ public class DashboardController {
             System.err.println("Błąd ładowania widoku raportów: " + e.getMessage());
         }
     }
+    @FXML
+    private void goToUserTaskPanel(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/projekt/userTaskPanel.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root, 1000, 600));
+            stage.setTitle("Moje zadania");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 
 

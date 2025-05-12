@@ -26,6 +26,12 @@
     <Label fx:id="roleLabel"
            text="Rola: "
            style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: white;"/>
+    <Button text="Panel użytkownika"
+            onAction="#goToUserTaskPanel"
+            style="-fx-background-color: #7b1fa2; -fx-text-fill: white; -fx-font-size: 14px;
+              -fx-font-weight: bold; -fx-padding: 10 20; -fx-border-radius: 5;
+              -fx-background-radius: 5; -fx-cursor: hand;"/>
+
 
     <Button text="Zarządzaj zadaniami"
             onAction="#goToTaskManager"
