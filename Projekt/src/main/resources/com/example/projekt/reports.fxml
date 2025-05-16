@@ -2,8 +2,6 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.*?>
-<?import javafx.collections.FXCollections?>
-<?import java.lang.String?>
 
 <VBox xmlns="http://javafx.com/javafx/8"
       xmlns:fx="http://javafx.com/fxml/1"
@@ -11,57 +9,40 @@
       spacing="20"
       style="-fx-background-color: linear-gradient(to bottom right, #6a1b9a, #9c27b0);">
 
-    <padding>
-        <Insets top="20" right="20" bottom="20" left="20"/>
-    </padding>
 
     <Label text="Raporty"
            style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: white;"/>
 
-    <!-- Filtrowanie raportów -->
-    <HBox spacing="10" alignment="CENTER_LEFT">
-        <DatePicker fx:id="startDatePicker"
-                    promptText="Data początkowa"
-                    style="-fx-background-color: white;"/>
-
-        <DatePicker fx:id="endDatePicker"
-                    promptText="Data końcowa"
-                    style="-fx-background-color: white;"/>
-
-        <ComboBox fx:id="reportTypeComboBox"
-                  promptText="Typ raportu"
-                  style="-fx-background-color: white;">
-            <items>
-                <FXCollections fx:factory="observableArrayList">
-                    <String fx:value="Transakcje"/>
-                    <String fx:value="Zadania"/>
-                    <String fx:value="Produkty"/>
-                </FXCollections>
-            </items>
-        </ComboBox>
+    <!-- Wybór głównego typu raportu -->
+    <HBox spacing="10">
+        <ComboBox fx:id="mainReportTypeComboBox"
+                  promptText="Wybierz typ raportu"
+                  style="-fx-background-color: white;"/>
     </HBox>
+
+    <!-- Dynamiczna sekcja filtrów -->
+    <VBox fx:id="filterContainer"
+          spacing="10"/>
 
     <!-- Przycisk generowania raportu -->
-    <HBox spacing="10" alignment="CENTER_LEFT">
+    <HBox spacing="10">
         <Button text="Generuj raport"
                 onAction="#generateReport"
-                style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-font-weight: bold;"/>
+                style="-fx-background-color: #2196F3; -fx-text-fill: white;"/>
+        <Button text="Zapisz do PDF"
+                onAction="#saveReportAsPDF"
+                style="-fx-background-color: #4CAF50; -fx-text-fill: white;"/>
     </HBox>
 
-    <!-- Tabela raportów -->
-    <TableView fx:id="reportsTable"
-               style="-fx-background-color: rgba(255,255,255,0.9);"
-               VBox.vgrow="ALWAYS">
-        <columns>
-            <TableColumn fx:id="dateColumn" text="Data"/>
-            <TableColumn fx:id="typeColumn" text="Typ raportu"/>
-            <TableColumn fx:id="detailsColumn" text="Szczegóły"/>
-            <TableColumn fx:id="statusColumn" text="Status"/>
-        </columns>
-    </TableView>
+    <!-- Podgląd raportu -->
+    <ScrollPane fitToWidth="true" style="-fx-background-color: white;">
+        <VBox fx:id="reportPreviewContainer" spacing="10">
+            <TableView fx:id="reportTableView">
+                <columns>
+                </columns>
+            </TableView>
+        </VBox>
+    </ScrollPane>
 
-    <!-- Przycisk powrotu do Dashboardu -->
-    <Button text="Powrót do Dashboardu"
-            onAction="#goToDashboard"
-            style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-padding: 10; -fx-font-weight: bold;"/>
+
 </VBox>

@@ -3,8 +3,8 @@ module com.example.projekt {
     requires javafx.fxml;
     requires java.sql;
     requires java.desktop;
-
-    // Moduły iText
+    requires javafx.swing;
+    requires org.jfree.jfreechart;
     requires kernel;
     requires layout;
     requires io;
