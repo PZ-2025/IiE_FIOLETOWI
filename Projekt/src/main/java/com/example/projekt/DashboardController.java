@@ -111,7 +111,7 @@ public class DashboardController {
     }
     @FXML
     private void openManagerUsersWindow() {
-        if (currentUser != null && currentUser.isAdmin()) {
+        if (currentUser != null && currentUser.isManager()|| currentUser.isAdmin()) {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/projekt/ManagerUsers.fxml"));
                 Parent root = loader.load();
@@ -127,7 +127,7 @@ public class DashboardController {
                 System.err.println("Błąd otwierania okna zarządzania użytkownikami: " + e.getMessage());
             }
         } else {
-            System.out.println("Brak dostępu - tylko administrator może zarządzać użytkownikami.");
+            System.out.println("Brak dostępu - tylko kierownik może zarządzać użytkownikami.");
         }
     }
 

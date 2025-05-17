@@ -1,24 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
 
-<?import javafx.scene.layout.HBox?>
-<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.example.projekt.ManagerUsersController" spacing="10" style="-fx-padding: 10;">
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.projekt.ManagerUsersController">
+    <VBox spacing="10">
+        <padding>
+            <Insets top="20" right="20" bottom="20" left="20"/>
+        </padding>
+        <TableView fx:id="employeeTable" prefHeight="400">
+            <columns>
+                <TableColumn fx:id="idColumn" text="ID" />
+                <TableColumn fx:id="firstNameColumn" text="Imię" />
+                <TableColumn fx:id="lastNameColumn" text="Nazwisko" />
+                <TableColumn fx:id="loginColumn" text="Login" />
+                <TableColumn fx:id="salaryColumn" text="Płaca" />
+                <TableColumn fx:id="groupIdColumn" text="ID Grupy" />
+            </columns>
+        </TableView>
 
-    <TableView fx:id="userTable" prefHeight="300" prefWidth="600">
-        <columns>
-            <TableColumn fx:id="idColumn" text="ID" prefWidth="50"/>
-            <TableColumn fx:id="imieColumn" text="Imię" prefWidth="120"/>
-            <TableColumn fx:id="nazwiskoColumn" text="Nazwisko" prefWidth="120"/>
-            <TableColumn fx:id="loginColumn" text="Login" prefWidth="120"/>
-            <TableColumn fx:id="roleColumn" text="Rola" prefWidth="120"/>
-        </columns>
-    </TableView>
+        <HBox spacing="10">
+            <TextField fx:id="salaryField" promptText="Nowa płaca" />
+            <Button text="Zmień płacę" onAction="#handleChangeSalary"/>
+        </HBox>
 
-    <HBox spacing="10">
-        <Button text="Zmień rolę" onAction="#changeRole" />
-        <Button text="Usuń użytkownika" onAction="#deleteUser" />
-    </HBox>
-</VBox>
+        <HBox spacing="10">
+            <ComboBox fx:id="groupComboBox" promptText="Wybierz grupę"/>
+            <Button text="Zmień grupę" onAction="#handleChangeGroup"/>
+        </HBox>
+    </VBox>
+</AnchorPane>

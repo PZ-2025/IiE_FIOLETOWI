@@ -77,6 +77,7 @@ public class TaskController {
             taskList.getItems().add(task);
             taskInput.clear();
         }
+
     }
 
     /**

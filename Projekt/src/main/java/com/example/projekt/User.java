@@ -66,6 +66,6 @@ public class User {
      * @return {@code true} jeśli rola to "Admin", w przeciwnym razie {@code false}
      */
     public boolean isAdmin() {return "Admin".equalsIgnoreCase(nazwaRoli);}
-
+    public boolean isManager() {return "Kierownik".equalsIgnoreCase(nazwaRoli);}
 
 }
