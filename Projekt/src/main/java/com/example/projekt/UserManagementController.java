@@ -27,20 +27,33 @@ public class UserManagementController {
     private static final String DASHBOARD_VIEW_PATH = "/com/example/projekt/dashboard.fxml";
     private static final String DASHBOARD_TITLE = "Dashboard";
 
-    @FXML private TableView<User> usersTable;
-    @FXML private TableColumn<User, String> imieColumn;
-    @FXML private TableColumn<User, String> nazwiskoColumn;
-    @FXML private TableColumn<User, String> loginColumn;
-    @FXML private TableColumn<User, Double> placaColumn;
-    @FXML private TableColumn<User, String> rolaColumn;
+    @FXML
+    TableView<User> usersTable;
+    @FXML
+    TableColumn<User, String> imieColumn;
+    @FXML
+    TableColumn<User, String> nazwiskoColumn;
+    @FXML
+    TableColumn<User, String> loginColumn;
+    @FXML
+    TableColumn<User, Double> placaColumn;
+    @FXML
+    TableColumn<User, String> rolaColumn;
 
-    @FXML private TextField usernameField;
-    @FXML private PasswordField passwordField;
-    @FXML private ComboBox<Role> roleComboBox;
-    @FXML private ComboBox<Group> groupComboBox;
-    @FXML private TextField firstNameField;
-    @FXML private TextField lastNameField;
-    @FXML private TextField salaryField;
+    @FXML
+    TextField usernameField;
+    @FXML
+    PasswordField passwordField;
+    @FXML
+    ComboBox<Role> roleComboBox;
+    @FXML
+    ComboBox<Group> groupComboBox;
+    @FXML
+    TextField firstNameField;
+    @FXML
+    TextField lastNameField;
+    @FXML
+    TextField salaryField;
 
     @FXML
     public void initialize() {
@@ -141,7 +154,7 @@ public class UserManagementController {
     }
 
     @FXML
-    private void createUser() {
+    void createUser() {
         String login = usernameField.getText();
         String haslo = passwordField.getText();
         String imie = firstNameField.getText();
@@ -219,7 +232,7 @@ public class UserManagementController {
     }
 
 
-    private void showAlert(String message) {
+    void showAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Informacja");
         alert.setHeaderText(null);
