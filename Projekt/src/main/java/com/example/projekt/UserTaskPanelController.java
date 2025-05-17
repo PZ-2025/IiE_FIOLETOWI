@@ -58,7 +58,7 @@ public class UserTaskPanelController {
     private void loadTasks() {
         ObservableList<Task> taskList = FXCollections.observableArrayList();
         String sql = """
-        SELECT z.id_zadania, z.nazwa, s.nazwa AS status, p.nazwa AS priorytet, z.data_rozpoczęcia
+        SELECT z.id_zadania, z.nazwa, s.nazwa AS status, p.nazwa AS priorytet, z.data_rozpoczecia
         FROM zadania z
         JOIN statusy s ON z.id_statusu = s.id_statusu
         JOIN priorytety p ON z.id_priorytetu = p.id_priorytetu
@@ -75,7 +75,7 @@ public class UserTaskPanelController {
                         rs.getString("nazwa"),
                         rs.getString("status"),
                         rs.getString("priorytet"),
-                        rs.getDate("data_rozpoczęcia").toString()
+                        rs.getDate("data_rozpoczecia").toString()
                 ));
             }
         } catch (SQLException e) {

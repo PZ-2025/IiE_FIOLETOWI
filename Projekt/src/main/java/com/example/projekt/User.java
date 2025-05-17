@@ -40,7 +40,9 @@ public class User {
 
 
     public String getRole() {return nazwaRoli;}
-
+    public void setRole(String nazwaRoli) {
+        this.nazwaRoli = nazwaRoli;
+    }
     public boolean isAdmin() {return "Admin".equalsIgnoreCase(nazwaRoli);}
 
 
