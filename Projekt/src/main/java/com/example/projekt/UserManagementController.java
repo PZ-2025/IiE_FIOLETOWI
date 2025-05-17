@@ -21,6 +21,16 @@ import java.util.logging.Logger;
 
 public class UserManagementController {
 
+    /**
+     * Kontroler odpowiedzialny za zarządzanie użytkownikami w aplikacji przez administratora.
+     * <p>
+     * Obsługuje wyświetlanie tabeli użytkowników, dodawanie nowych użytkowników do bazy danych,
+     * oraz inicjalizację pól wyboru (ComboBox) dla ról i grup.
+     * @author KrzysztofDrozda
+     * @version 1.0
+     * @since 2025-04-25
+     */
+
     private static final Logger LOGGER = Logger.getLogger(UserManagementController.class.getName());
     private static final double WINDOW_WIDTH = 800;
     private static final double WINDOW_HEIGHT = 600;
@@ -54,7 +64,10 @@ public class UserManagementController {
     TextField lastNameField;
     @FXML
     TextField salaryField;
-
+    /**
+     * Inicjalizuje kontroler zarządzania użytkownikami.
+     * Konfiguruje kolumny tabeli, ładuje role, grupy i użytkowników z bazy danych.
+     */
     @FXML
     public void initialize() {
         imieColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getImie()));
@@ -74,7 +87,10 @@ public class UserManagementController {
         placaColumn.prefWidthProperty().bind(usersTable.widthProperty().multiply(colWidth));
         rolaColumn.prefWidthProperty().bind(usersTable.widthProperty().multiply(colWidth));
     }
-
+    /**
+     * Ładuje listę użytkowników z bazy danych i wyświetla ich w tabeli.
+     * W przypadku błędu połączenia z bazą, wyświetla komunikat o błędzie.
+     */
     public void loadUsersFromDatabase() {
         ObservableList<User> usersList = FXCollections.observableArrayList();
         String sql = """
@@ -110,7 +126,11 @@ public class UserManagementController {
 
         usersTable.setItems(usersList);
     }
-
+    /**
+     * Ładuje role z bazy danych do ComboBoxa.
+     *
+     * @return lista ról dostępnych w systemie
+     */
     private ObservableList<Role> loadRolesFromDatabase() {
         ObservableList<Role> roles = FXCollections.observableArrayList();
         String sql = "SELECT id_roli, nazwa FROM role";
@@ -131,7 +151,11 @@ public class UserManagementController {
 
         return roles;
     }
-
+    /**
+     * Ładuje grupy z bazy danych do ComboBoxa.
+     *
+     * @return lista grup dostępnych w systemie
+     */
     private ObservableList<Group> loadGroupsFromDatabase() {
         ObservableList<Group> groups = FXCollections.observableArrayList();
         String sql = "SELECT id_grupy, nazwa FROM grupy";
@@ -152,7 +176,11 @@ public class UserManagementController {
 
         return groups;
     }
-
+    /**
+     * Obsługuje zdarzenie utworzenia nowego użytkownika.
+     * Waliduje dane formularza, zapisuje użytkownika do bazy danych
+     * i odświeża widok tabeli. W razie błędów wyświetla odpowiedni alert.
+     */
     @FXML
     void createUser() {
         String login = usernameField.getText();
@@ -199,7 +227,10 @@ public class UserManagementController {
             showAlert("Błąd podczas dodawania użytkownika.");
         }
     }
-
+    /**
+     * Czyści wszystkie pola formularza dodawania użytkownika.
+     * Resetuje pola tekstowe oraz wybory ComboBoxów.
+     */
     private void clearForm() {
         usernameField.clear();
         passwordField.clear();
@@ -209,7 +240,12 @@ public class UserManagementController {
         roleComboBox.setValue(null);
         groupComboBox.setValue(null);
     }
-
+    /**
+     * Przełącza widok do ekranu głównego (dashboard).
+     * Przekazuje dane zalogowanego użytkownika do kontrolera dashboardu.
+     *
+     * @param event zdarzenie wywołane przez użytkownika (np. kliknięcie przycisku)
+     */
     @FXML
     private void goToDashboard(ActionEvent event) {
         try {
@@ -231,7 +267,11 @@ public class UserManagementController {
         }
     }
 
-
+    /**
+     * Wyświetla prosty alert informacyjny z podaną wiadomością.
+     *
+     * @param message treść komunikatu do wyświetlenia
+     */
     void showAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Informacja");
