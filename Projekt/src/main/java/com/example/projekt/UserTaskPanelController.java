@@ -7,18 +7,21 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.Parent;
-import javafx.scene.control.*;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 import javafx.scene.Node;
+import javafx.scene.control.*;
+import javafx.stage.Stage;
 
-import java.io.File;
-import java.io.IOException;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class UserTaskPanelController {
+    @FXML private TableView<Product> productTable;
+    @FXML private TableColumn<Product, String> productNameColumn;
+    @FXML private TableColumn<Product, Integer> productStockColumn;
+    @FXML private TableColumn<Product, Integer> productLimitColumn;
+    @FXML private TableColumn<Product, Double> productPriceColumn;
+
     @FXML private TableView<Task> taskTable;
     @FXML private TableColumn<Task, String> nameColumn;
     @FXML private TableColumn<Task, String> statusColumn;
@@ -26,16 +29,21 @@ public class UserTaskPanelController {
     @FXML private TableColumn<Task, String> dateColumn;
 
     @FXML private ComboBox<String> statusComboBox;
-    @FXML private ListView<String> commentList;
-    @FXML private ListView<String> attachmentList;
     @FXML private ListView<String> historyList;
-    @FXML private TextField commentField;
+    @FXML private TextArea commentTextArea;
 
     private static final Logger LOGGER = Logger.getLogger(UserTaskPanelController.class.getName());
     private Task selectedTask;
 
     @FXML
     public void initialize() {
+        productNameColumn.setCellValueFactory(data -> data.getValue().nazwaProperty());
+        productStockColumn.setCellValueFactory(data -> data.getValue().stanProperty().asObject());
+        productLimitColumn.setCellValueFactory(data -> data.getValue().limitStanowProperty().asObject());
+        productPriceColumn.setCellValueFactory(data -> data.getValue().cenaProperty().asObject());
+
+        loadProducts();
+
         nameColumn.setCellValueFactory(data -> data.getValue().nazwaProperty());
         statusColumn.setCellValueFactory(data -> data.getValue().statusProperty());
         priorityColumn.setCellValueFactory(data -> data.getValue().priorytetProperty());
@@ -43,30 +51,59 @@ public class UserTaskPanelController {
 
         loadTasks();
         loadStatuses();
+        loadTaskHistory();
 
         taskTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSel, newSel) -> {
             selectedTask = newSel;
             if (newSel != null) {
-                loadComments(newSel.getId());
-                loadAttachments(newSel.getId());
+                loadTaskComment(newSel.getId());
+            } else {
+                commentTextArea.clear();
             }
         });
+    }
 
-        loadTaskHistory();
+    private void loadProducts() {
+        ObservableList<Product> products = FXCollections.observableArrayList();
+        String sql = "SELECT nazwa, stan, limit_stanow, cena FROM produkty";
+
+        try (Connection conn = DatabaseConnector.connect();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                products.add(new Product(
+                        rs.getString("nazwa"),
+                        rs.getInt("stan"),
+                        rs.getInt("limit_stanow"),
+                        rs.getDouble("cena")
+                ));
+            }
+
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Błąd ładowania produktów", e);
+        }
+
+        productTable.setItems(products);
     }
 
     private void loadTasks() {
         ObservableList<Task> taskList = FXCollections.observableArrayList();
+
         String sql = """
-        SELECT z.id_zadania, z.nazwa, s.nazwa AS status, p.nazwa AS priorytet, z.data_rozpoczecia
-        FROM zadania z
-        JOIN statusy s ON z.id_statusu = s.id_statusu
-        JOIN priorytety p ON z.id_priorytetu = p.id_priorytetu
-        WHERE z.id_pracownika = ?
+            SELECT z.id_zadania, z.nazwa,
+                   COALESCE(s.nazwa, 'Brak') AS status,
+                   COALESCE(p.nazwa, 'Brak') AS priorytet,
+                   z.data_rozpoczecia
+            FROM zadania z
+            LEFT JOIN statusy s ON z.id_statusu = s.id_statusu
+            LEFT JOIN priorytety p ON z.id_priorytetu = p.id_priorytetu
+            WHERE z.id_pracownika = ?
         """;
 
         try (Connection conn = DatabaseConnector.connect();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
+
             stmt.setInt(1, UserSession.getInstance().getUser().getId());
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
@@ -75,9 +112,10 @@ public class UserTaskPanelController {
                         rs.getString("nazwa"),
                         rs.getString("status"),
                         rs.getString("priorytet"),
-                        rs.getDate("data_rozpoczecia").toString()
+                        rs.getDate("data_rozpoczecia") != null ? rs.getDate("data_rozpoczecia").toString() : ""
                 ));
             }
+
         } catch (SQLException e) {
             LOGGER.log(Level.SEVERE, "Błąd ładowania zadań", e);
         }
@@ -98,18 +136,57 @@ public class UserTaskPanelController {
         }
     }
 
+    private void loadTaskComment(int taskId) {
+        String sql = "SELECT komentarz FROM zadania WHERE id_zadania = ?";
+        try (Connection conn = DatabaseConnector.connect();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, taskId);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                commentTextArea.setText(rs.getString("komentarz"));
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Błąd ładowania komentarza", e);
+        }
+    }
+
+    @FXML
+    private void saveTaskComment() {
+        if (selectedTask == null) return;
+
+        String sql = "UPDATE zadania SET komentarz = ? WHERE id_zadania = ?";
+        try (Connection conn = DatabaseConnector.connect();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, commentTextArea.getText());
+            stmt.setInt(2, selectedTask.getId());
+            stmt.executeUpdate();
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Komentarz zapisany");
+            alert.setHeaderText(null);
+            alert.setContentText("Komentarz został zapisany.");
+            alert.showAndWait();
+
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Błąd zapisu komentarza", e);
+        }
+    }
+
     @FXML
     private void changeTaskStatus() {
         if (selectedTask == null || statusComboBox.getValue() == null) return;
 
         String sql = """
-        UPDATE zadania SET id_statusu = 
-        (SELECT id_statusu FROM statusy WHERE nazwa = ?) 
-        WHERE id_zadania = ?
+            UPDATE zadania SET id_statusu =
+            (SELECT id_statusu FROM statusy WHERE nazwa = ?)
+            WHERE id_zadania = ?
         """;
 
         try (Connection conn = DatabaseConnector.connect();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
+
             stmt.setString(1, statusComboBox.getValue());
             stmt.setInt(2, selectedTask.getId());
             stmt.executeUpdate();
@@ -119,91 +196,23 @@ public class UserTaskPanelController {
         }
     }
 
-    private void loadComments(int taskId) {
-        commentList.getItems().clear();
-        try (Connection conn = DatabaseConnector.connect();
-             PreparedStatement stmt = conn.prepareStatement(
-                     "SELECT tresc FROM komentarze WHERE id_zadania = ? ORDER BY data_dodania")) {
-            stmt.setInt(1, taskId);
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                commentList.getItems().add(rs.getString("tresc"));
-            }
-        } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "Błąd ładowania komentarzy", e);
-        }
-    }
-
-    @FXML
-    private void addComment() {
-        if (selectedTask == null || commentField.getText().isEmpty()) return;
-
-        String sql = "INSERT INTO komentarze (id_zadania, id_pracownika, tresc) VALUES (?, ?, ?)";
-
-        try (Connection conn = DatabaseConnector.connect();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, selectedTask.getId());
-            stmt.setInt(2, UserSession.getInstance().getUser().getId());
-            stmt.setString(3, commentField.getText());
-            stmt.executeUpdate();
-            commentField.clear();
-            loadComments(selectedTask.getId());
-        } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "Błąd dodawania komentarza", e);
-        }
-    }
-
-    private void loadAttachments(int taskId) {
-        attachmentList.getItems().clear();
-        try (Connection conn = DatabaseConnector.connect();
-             PreparedStatement stmt = conn.prepareStatement(
-                     "SELECT nazwa_pliku FROM zalaczniki WHERE id_zadania = ?")) {
-            stmt.setInt(1, taskId);
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                attachmentList.getItems().add(rs.getString("nazwa_pliku"));
-            }
-        } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "Błąd ładowania załączników", e);
-        }
-    }
-
-    @FXML
-    private void addAttachment() {
-        if (selectedTask == null) return;
-
-        FileChooser chooser = new FileChooser();
-        File file = chooser.showOpenDialog(new Stage());
-        if (file != null) {
-            try (Connection conn = DatabaseConnector.connect();
-                 PreparedStatement stmt = conn.prepareStatement(
-                         "INSERT INTO zalaczniki (id_zadania, sciezka_pliku, nazwa_pliku) VALUES (?, ?, ?)")) {
-                stmt.setInt(1, selectedTask.getId());
-                stmt.setString(2, file.getAbsolutePath());
-                stmt.setString(3, file.getName());
-                stmt.executeUpdate();
-                loadAttachments(selectedTask.getId());
-            } catch (SQLException e) {
-                LOGGER.log(Level.SEVERE, "Błąd dodawania załącznika", e);
-            }
-        }
-    }
-
     private void loadTaskHistory() {
         historyList.getItems().clear();
         String sql = """
-        SELECT z.nazwa FROM zadania z 
-        JOIN statusy s ON z.id_statusu = s.id_statusu
-        WHERE z.id_pracownika = ? AND s.nazwa = 'Zakończone'
+            SELECT z.nazwa FROM zadania z
+            JOIN statusy s ON z.id_statusu = s.id_statusu
+            WHERE z.id_pracownika = ? AND s.nazwa = 'Zakończone'
         """;
 
         try (Connection conn = DatabaseConnector.connect();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
+
             stmt.setInt(1, UserSession.getInstance().getUser().getId());
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 historyList.getItems().add(rs.getString("nazwa"));
             }
+
         } catch (SQLException e) {
             LOGGER.log(Level.SEVERE, "Błąd ładowania historii", e);
         }
@@ -219,7 +228,7 @@ public class UserTaskPanelController {
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.setTitle("Dashboard");
-        } catch (IOException e) {
+        } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Błąd powrotu do dashboardu", e);
         }
     }
