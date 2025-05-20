@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="93580640-a4f6-4848-877d-83f2d9fe0546" name="Changes" comment="Połączenie z bazą danych (u mnie działa)">
-      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/DashboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/DashboardController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/dashboard.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/dashboard.fxml" afterDir="false" />
-    </list>
+    <list default="true" id="93580640-a4f6-4848-877d-83f2d9fe0546" name="Changes" comment="Dodanie panelu Ustawień, zmiany hasła oraz lokalne zmiany wielkości czcionki" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -34,12 +29,12 @@
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {}
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/PZ-2025/IiE_FIOLETOWI.git",
-    "accountId": "b1f7b158-4475-45f9-92b8-f1f8ef44342c"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/PZ-2025/IiE_FIOLETOWI.git&quot;,
+    &quot;accountId&quot;: &quot;b1f7b158-4475-45f9-92b8-f1f8ef44342c&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 0
 }</component>
@@ -139,7 +134,15 @@
       <option name="project" value="LOCAL" />
       <updated>1747485613729</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Dodanie panelu Ustawień, zmiany hasła oraz lokalne zmiany wielkości czcionki">
+      <option name="closed" value="true" />
+      <created>1747742116063</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1747742116063</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -169,6 +172,7 @@
     <MESSAGE value="Pierwsze moduły" />
     <MESSAGE value="Panel użytkownika" />
     <MESSAGE value="Kierownik" />
-    <option name="LAST_COMMIT_MESSAGE" value="Kierownik" />
+    <MESSAGE value="Dodanie panelu Ustawień, zmiany hasła oraz lokalne zmiany wielkości czcionki" />
+    <option name="LAST_COMMIT_MESSAGE" value="Dodanie panelu Ustawień, zmiany hasła oraz lokalne zmiany wielkości czcionki" />
   </component>
 </project>

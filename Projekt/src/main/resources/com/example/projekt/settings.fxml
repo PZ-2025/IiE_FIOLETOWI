@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.*?>
+
+<VBox xmlns="http://javafx.com/javafx/8"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.projekt.SettingsController"
+      spacing="20"
+      style="-fx-background-color: linear-gradient(to bottom right, #6a1b9a, #9c27b0);"
+      fx:id="rootVBox">
+
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <Label text="Ustawienia"
+           style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: white;"/>
+
+    <!-- Personalizacja interfejsu -->
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Label text="Motyw:" style="-fx-text-fill: white;"/>
+        <ComboBox fx:id="themeChoiceBox"
+                  promptText="Wybierz motyw"
+                  style="-fx-background-color: white;"/>
+
+        <Label text="Rozmiar czcionki:" style="-fx-text-fill: white;"/>
+        <ComboBox fx:id="fontSizeChoiceBox" prefWidth="150" />
+    </HBox>
+
+    <!-- Zmiana hasła -->
+    <VBox spacing="10">
+        <Label text="Zmiana hasła"
+               style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: white;"/>
+
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <PasswordField fx:id="oldPasswordField"
+                           promptText="Stare hasło"
+                           style="-fx-background-color: white;"/>
+            <PasswordField fx:id="newPasswordField"
+                           promptText="Nowe hasło"
+                           style="-fx-background-color: white;"/>
+            <PasswordField fx:id="confirmPasswordField"
+                           promptText="Powtórz nowe hasło"
+                           style="-fx-background-color: white;"/>
+            <Button text="Zmień hasło"
+                    onAction="#handleChangePassword"
+                    style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-font-weight: bold;"/>
+        </HBox>
+
+        <Label fx:id="passwordMessageLabel"
+               textFill="white"
+               style="-fx-font-style: italic;"/>
+    </VBox>
+
+    <Button text="Powrót do menu głównego"
+            onAction="#goToDashboard"
+            style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-padding: 10; -fx-font-weight: bold;"
+            alignment="CENTER"/>
+</VBox>
