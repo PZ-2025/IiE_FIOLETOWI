@@ -10,6 +10,14 @@
       style="-fx-background-color: linear-gradient(to bottom right, #6a1b9a, #9c27b0);">
 
 
+
+
+    <!-- Przycisk powrotu -->
+    <Button text="Powrót do menu głównego"
+            onAction="#goBackToDashboard"
+            style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-padding: 10; -fx-font-weight: bold;"
+            alignment="CENTER"/>
+
     <Label text="Raporty"
            style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: white;"/>
 
