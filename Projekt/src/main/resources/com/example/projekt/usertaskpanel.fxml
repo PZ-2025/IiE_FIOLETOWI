@@ -21,6 +21,19 @@
                 <Insets top="20" right="20" bottom="20" left="20"/>
             </padding>
 
+            <!-- Tabela z produktami -->
+            <Label text="Dostępne produkty:" style="-fx-font-weight: bold;"/>
+            <TableView fx:id="productTable" prefHeight="150">
+                <columns>
+                    <TableColumn fx:id="productNameColumn" text="Nazwa"/>
+                    <TableColumn fx:id="productStockColumn" text="Stan"/>
+                    <TableColumn fx:id="productLimitColumn" text="Limit stanu"/>
+                    <TableColumn fx:id="productPriceColumn" text="Cena"/>
+                </columns>
+            </TableView>
+
+            <!-- Tabela z zadaniami -->
+            <Label text="Twoje zadania:" style="-fx-font-weight: bold;"/>
             <TableView fx:id="taskTable" prefHeight="200">
                 <columns>
                     <TableColumn fx:id="nameColumn" text="Nazwa"/>
@@ -36,16 +49,10 @@
                 <Button text="Zapisz zmiany" onAction="#changeTaskStatus"/>
             </HBox>
 
-            <Label text="Komentarze:" style="-fx-font-weight: bold;"/>
-            <ListView fx:id="commentList" prefHeight="100"/>
-            <HBox spacing="10">
-                <TextField fx:id="commentField" promptText="Dodaj komentarz" HBox.hgrow="ALWAYS"/>
-                <Button text="Dodaj" onAction="#addComment"/>
-            </HBox>
+            <Label text="Komentarz do zadania:" style="-fx-font-weight: bold;"/>
+            <TextArea fx:id="commentTextArea" prefHeight="100" promptText="Tutaj możesz wpisać komentarz do zadania..."/>
+            <Button text="Zapisz komentarz" onAction="#saveTaskComment"/>
 
-            <Label text="Załączniki:" style="-fx-font-weight: bold;"/>
-            <ListView fx:id="attachmentList" prefHeight="100"/>
-            <Button text="Dodaj załącznik" onAction="#addAttachment"/>
 
             <Label text="Historia zakończonych zadań:" style="-fx-font-weight: bold;"/>
             <ListView fx:id="historyList" prefHeight="100"/>
