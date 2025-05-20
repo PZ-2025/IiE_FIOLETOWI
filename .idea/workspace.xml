@@ -4,16 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="93580640-a4f6-4848-877d-83f2d9fe0546" name="Changes" comment="Kierownik">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/JavaFX_21.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/itextpdf_io.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/itextpdf_kernel.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/itextpdf_layout.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="93580640-a4f6-4848-877d-83f2d9fe0546" name="Changes" comment="Panel użytkownika - komentarze i produkty">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/UserTaskPanelController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/UserTaskPanelController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/usertaskpanel.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/usertaskpanel.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -112,7 +105,23 @@
       <option name="project" value="LOCAL" />
       <updated>1747485613729</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Panel użytkownika - komentarze i produkty">
+      <option name="closed" value="true" />
+      <created>1747689413305</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1747689413305</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Panel użytkownika - komentarze i produkty">
+      <option name="closed" value="true" />
+      <created>1747689448613</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1747689448613</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -142,6 +151,7 @@
     <MESSAGE value="Pierwsze moduły" />
     <MESSAGE value="Panel użytkownika" />
     <MESSAGE value="Kierownik" />
-    <option name="LAST_COMMIT_MESSAGE" value="Kierownik" />
+    <MESSAGE value="Panel użytkownika - komentarze i produkty" />
+    <option name="LAST_COMMIT_MESSAGE" value="Panel użytkownika - komentarze i produkty" />
   </component>
 </project>

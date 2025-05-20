@@ -61,6 +61,8 @@ public class UserTaskPanelController {
                 commentTextArea.clear();
             }
         });
+
+        checkForNotifications(); // 🟢 Dodane powiadomienia
     }
 
     private void loadProducts() {
@@ -180,7 +182,8 @@ public class UserTaskPanelController {
 
         String sql = """
             UPDATE zadania SET id_statusu =
-            (SELECT id_statusu FROM statusy WHERE nazwa = ?)
+            (SELECT id_statusu FROM statusy WHERE nazwa = ?),
+            powiadomienia = 1
             WHERE id_zadania = ?
         """;
 
@@ -215,6 +218,42 @@ public class UserTaskPanelController {
 
         } catch (SQLException e) {
             LOGGER.log(Level.SEVERE, "Błąd ładowania historii", e);
+        }
+    }
+
+    private void checkForNotifications() {
+        String sql = """
+            SELECT nazwa FROM zadania
+            WHERE id_pracownika = ? AND powiadomienia = 1
+        """;
+
+        try (Connection conn = DatabaseConnector.connect();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, UserSession.getInstance().getUser().getId());
+            ResultSet rs = stmt.executeQuery();
+
+            StringBuilder message = new StringBuilder();
+            while (rs.next()) {
+                message.append("- ").append(rs.getString("nazwa")).append("\n");
+            }
+
+            if (!message.isEmpty()) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Nowe powiadomienia");
+                alert.setHeaderText("Masz nowe przypisane zadania lub zmiany:");
+                alert.setContentText(message.toString());
+                alert.showAndWait();
+
+                try (PreparedStatement clear = conn.prepareStatement(
+                        "UPDATE zadania SET powiadomienia = 0 WHERE id_pracownika = ?")) {
+                    clear.setInt(1, UserSession.getInstance().getUser().getId());
+                    clear.executeUpdate();
+                }
+            }
+
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Błąd sprawdzania powiadomień", e);
         }
     }
 
