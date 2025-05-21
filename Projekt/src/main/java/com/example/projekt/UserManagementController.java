@@ -15,7 +15,6 @@ import javafx.event.ActionEvent;
 
 import java.io.IOException;
 import java.sql.*;
-import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -25,9 +24,9 @@ public class UserManagementController {
      * Kontroler odpowiedzialny za zarządzanie użytkownikami w aplikacji przez administratora.
      * <p>
      * Obsługuje wyświetlanie tabeli użytkowników, dodawanie nowych użytkowników do bazy danych,
-     * oraz inicjalizację pól wyboru (ComboBox) dla ról i grup.
+     * edycję istniejących danych, oraz inicjalizację pól wyboru (ComboBox) dla ról i grup.
      * @author KrzysztofDrozda
-     * @version 1.0
+     * @version 1.1
      * @since 2025-04-25
      */
 
@@ -38,36 +37,38 @@ public class UserManagementController {
     private static final String DASHBOARD_TITLE = "Dashboard";
 
     @FXML
-    TableView<User> usersTable;
+    private TableView<User> usersTable;
     @FXML
-    TableColumn<User, String> imieColumn;
+    private TableColumn<User, String> imieColumn;
     @FXML
-    TableColumn<User, String> nazwiskoColumn;
+    private TableColumn<User, String> nazwiskoColumn;
     @FXML
-    TableColumn<User, String> loginColumn;
+    private TableColumn<User, String> loginColumn;
     @FXML
-    TableColumn<User, Double> placaColumn;
+    private TableColumn<User, Double> placaColumn;
     @FXML
-    TableColumn<User, String> rolaColumn;
+    private TableColumn<User, String> rolaColumn;
 
     @FXML
-    TextField usernameField;
+    private TextField usernameField;
     @FXML
-    PasswordField passwordField;
+    private PasswordField passwordField;
     @FXML
-    ComboBox<Role> roleComboBox;
+    private ComboBox<Role> roleComboBox;
     @FXML
-    ComboBox<Group> groupComboBox;
+    private ComboBox<Group> groupComboBox;
     @FXML
-    TextField firstNameField;
+    private TextField firstNameField;
     @FXML
-    TextField lastNameField;
+    private TextField lastNameField;
     @FXML
-    TextField salaryField;
-    /**
-     * Inicjalizuje kontroler zarządzania użytkownikami.
-     * Konfiguruje kolumny tabeli, ładuje role, grupy i użytkowników z bazy danych.
-     */
+    private TextField salaryField;
+
+    private ObservableList<Role> roles = FXCollections.observableArrayList();
+    private ObservableList<Group> groups = FXCollections.observableArrayList();
+
+    private User selectedUserToEdit = null; // Przechowuje użytkownika do edycji
+
     @FXML
     public void initialize() {
         imieColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getImie()));
@@ -76,8 +77,10 @@ public class UserManagementController {
         placaColumn.setCellValueFactory(cellData -> new SimpleDoubleProperty(cellData.getValue().getPlaca()).asObject());
         rolaColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getRole()));
 
-        roleComboBox.setItems(loadRolesFromDatabase());
-        groupComboBox.setItems(loadGroupsFromDatabase());
+        roles = loadRolesFromDatabase();
+        groups = loadGroupsFromDatabase();
+        roleComboBox.setItems(roles);
+        groupComboBox.setItems(groups);
         loadUsersFromDatabase();
 
         double colWidth = 1.0 / 5;
@@ -86,11 +89,35 @@ public class UserManagementController {
         loginColumn.prefWidthProperty().bind(usersTable.widthProperty().multiply(colWidth));
         placaColumn.prefWidthProperty().bind(usersTable.widthProperty().multiply(colWidth));
         rolaColumn.prefWidthProperty().bind(usersTable.widthProperty().multiply(colWidth));
+
+        // Obsługa kliknięcia na wiersz tabeli - wczytanie danych do formularza
+        usersTable.setRowFactory(tv -> {
+            TableRow<User> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (!row.isEmpty()) {
+                    selectedUserToEdit = row.getItem();
+                    fillFormForEditing(selectedUserToEdit);
+                }
+            });
+            return row;
+        });
     }
-    /**
-     * Ładuje listę użytkowników z bazy danych i wyświetla ich w tabeli.
-     * W przypadku błędu połączenia z bazą, wyświetla komunikat o błędzie.
-     */
+
+    private void fillFormForEditing(User user) {
+        usernameField.setText(user.getLogin());
+        passwordField.setText(user.getHaslo());
+        firstNameField.setText(user.getImie());
+        lastNameField.setText(user.getNazwisko());
+        salaryField.setText(String.valueOf(user.getPlaca()));
+
+        roleComboBox.getSelectionModel().select(
+                roles.stream().filter(r -> r.getId() == user.getIdRoli()).findFirst().orElse(null)
+        );
+        groupComboBox.getSelectionModel().select(
+                groups.stream().filter(g -> g.getId() == user.getIdGrupy()).findFirst().orElse(null)
+        );
+    }
+
     public void loadUsersFromDatabase() {
         ObservableList<User> usersList = FXCollections.observableArrayList();
         String sql = """
@@ -126,11 +153,7 @@ public class UserManagementController {
 
         usersTable.setItems(usersList);
     }
-    /**
-     * Ładuje role z bazy danych do ComboBoxa.
-     *
-     * @return lista ról dostępnych w systemie
-     */
+
     private ObservableList<Role> loadRolesFromDatabase() {
         ObservableList<Role> roles = FXCollections.observableArrayList();
         String sql = "SELECT id_roli, nazwa FROM role";
@@ -151,11 +174,7 @@ public class UserManagementController {
 
         return roles;
     }
-    /**
-     * Ładuje grupy z bazy danych do ComboBoxa.
-     *
-     * @return lista grup dostępnych w systemie
-     */
+
     private ObservableList<Group> loadGroupsFromDatabase() {
         ObservableList<Group> groups = FXCollections.observableArrayList();
         String sql = "SELECT id_grupy, nazwa FROM grupy";
@@ -176,13 +195,17 @@ public class UserManagementController {
 
         return groups;
     }
-    /**
-     * Obsługuje zdarzenie utworzenia nowego użytkownika.
-     * Waliduje dane formularza, zapisuje użytkownika do bazy danych
-     * i odświeża widok tabeli. W razie błędów wyświetla odpowiedni alert.
-     */
+
     @FXML
     void createUser() {
+        if (selectedUserToEdit != null) {
+            updateUser();
+        } else {
+            addNewUser();
+        }
+    }
+
+    private void addNewUser() {
         String login = usernameField.getText();
         String haslo = passwordField.getText();
         String imie = firstNameField.getText();
@@ -227,10 +250,59 @@ public class UserManagementController {
             showAlert("Błąd podczas dodawania użytkownika.");
         }
     }
-    /**
-     * Czyści wszystkie pola formularza dodawania użytkownika.
-     * Resetuje pola tekstowe oraz wybory ComboBoxów.
-     */
+
+    private void updateUser() {
+        String login = usernameField.getText();
+        String haslo = passwordField.getText();
+        String imie = firstNameField.getText();
+        String nazwisko = lastNameField.getText();
+        String placaStr = salaryField.getText();
+        Role selectedRole = roleComboBox.getValue();
+        Group selectedGroup = groupComboBox.getValue();
+
+        if (login.isEmpty() || imie.isEmpty() || nazwisko.isEmpty() || placaStr.isEmpty() || selectedRole == null || selectedGroup == null) {
+            showAlert("Wszystkie pola muszą być wypełnione!");
+            return;
+        }
+
+        double placa;
+        try {
+            placa = Double.parseDouble(placaStr);
+        } catch (NumberFormatException e) {
+            showAlert("Nieprawidłowa wartość płacy.");
+            return;
+        }
+
+        String sql = """
+            UPDATE pracownicy
+            SET imie = ?, nazwisko = ?, login = ?, haslo = ?, placa = ?, id_roli = ?, id_grupy = ?
+            WHERE id_pracownika = ?
+        """;
+
+        try (Connection conn = DatabaseConnector.connect();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, imie);
+            stmt.setString(2, nazwisko);
+            stmt.setString(3, login);
+            stmt.setString(4, haslo);
+            stmt.setDouble(5, placa);
+            stmt.setInt(6, selectedRole.getId());
+            stmt.setInt(7, selectedGroup.getId());
+            stmt.setInt(8, selectedUserToEdit.getId());
+
+            stmt.executeUpdate();
+            showAlert("Dane użytkownika zostały zaktualizowane!");
+            clearForm();
+            loadUsersFromDatabase();
+            selectedUserToEdit = null;
+
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Błąd przy aktualizacji użytkownika", e);
+            showAlert("Błąd podczas aktualizacji użytkownika.");
+        }
+    }
+    @FXML
     private void clearForm() {
         usernameField.clear();
         passwordField.clear();
@@ -239,13 +311,9 @@ public class UserManagementController {
         salaryField.clear();
         roleComboBox.setValue(null);
         groupComboBox.setValue(null);
+        selectedUserToEdit = null;
     }
-    /**
-     * Przełącza widok do ekranu głównego (dashboard).
-     * Przekazuje dane zalogowanego użytkownika do kontrolera dashboardu.
-     *
-     * @param event zdarzenie wywołane przez użytkownika (np. kliknięcie przycisku)
-     */
+
     @FXML
     private void goToDashboard(ActionEvent event) {
         try {
@@ -254,7 +322,6 @@ public class UserManagementController {
 
             DashboardController dashboardController = loader.getController();
             dashboardController.setCurrentUser(UserSession.getInstance().getUser());
-
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setTitle(DASHBOARD_TITLE);
@@ -267,11 +334,6 @@ public class UserManagementController {
         }
     }
 
-    /**
-     * Wyświetla prosty alert informacyjny z podaną wiadomością.
-     *
-     * @param message treść komunikatu do wyświetlenia
-     */
     void showAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Informacja");
@@ -279,4 +341,13 @@ public class UserManagementController {
         alert.setContentText(message);
         alert.showAndWait();
     }
+    @FXML
+    private void handleUpdateUser() {
+        if (selectedUserToEdit == null) {
+            showAlert("Wybierz użytkownika z tabeli do edycji!");
+            return;
+        }
+        updateUser();
+    }
+
 }

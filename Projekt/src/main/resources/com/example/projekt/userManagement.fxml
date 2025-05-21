@@ -1,73 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.geometry.*?>
 
-<VBox xmlns="http://javafx.com/javafx/8"
-      xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.example.projekt.UserManagementController"
-      spacing="20"
-      style="-fx-background-color: linear-gradient(to bottom right, #6a1b9a, #9c27b0);">
+<VBox spacing="20" style="-fx-background-color: linear-gradient(to bottom right, #6a1b9a, #9c27b0);" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.projekt.UserManagementController">
 
     <padding>
-        <Insets top="20" right="20" bottom="20" left="20"/>
+        <Insets bottom="20" left="20" right="20" top="20" />
     </padding>
 
-    <Label text="Panel administratora"
-           style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: white;"/>
+    <Label style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: white;" text="Panel administratora" />
 
-    <HBox spacing="10" alignment="CENTER_LEFT">
-        <TextField fx:id="usernameField"
-                   promptText="Login"
-                   style="-fx-background-color: white;"
-                   HBox.hgrow="ALWAYS"/>
+    <HBox alignment="CENTER_LEFT" spacing="10">
+        <TextField fx:id="usernameField" promptText="Login" style="-fx-background-color: white;" HBox.hgrow="ALWAYS" />
 
-        <PasswordField fx:id="passwordField"
-                       promptText="Hasło"
-                       style="-fx-background-color: white;"
-                       HBox.hgrow="ALWAYS"/>
+        <PasswordField fx:id="passwordField" promptText="Hasło" style="-fx-background-color: white;" HBox.hgrow="ALWAYS" />
 
-        <ComboBox fx:id="roleComboBox"
-                  promptText="Rola"
-                  style="-fx-background-color: white;"
-                  HBox.hgrow="ALWAYS"/>
+        <ComboBox fx:id="roleComboBox" promptText="Rola" style="-fx-background-color: white;" HBox.hgrow="ALWAYS" />
     </HBox>
 
-    <HBox spacing="10" alignment="CENTER_LEFT">
-        <TextField fx:id="firstNameField"
-                   promptText="Imię"
-                   style="-fx-background-color: white;"/>
+    <HBox alignment="CENTER_LEFT" spacing="10">
+        <TextField fx:id="firstNameField" promptText="Imię" style="-fx-background-color: white;" />
 
-        <TextField fx:id="lastNameField"
-                   promptText="Nazwisko"
-                   style="-fx-background-color: white;"/>
+        <TextField fx:id="lastNameField" promptText="Nazwisko" style="-fx-background-color: white;" />
 
-        <TextField fx:id="salaryField"
-                   promptText="Płaca"
-                   style="-fx-background-color: white;"/>
-        <ComboBox fx:id="groupComboBox"
-                  promptText="Grupa"
-                  style="-fx-background-color: white;"
-                  HBox.hgrow="ALWAYS"/>
+        <TextField fx:id="salaryField" promptText="Płaca" style="-fx-background-color: white;" />
+        <ComboBox fx:id="groupComboBox" promptText="Grupa" style="-fx-background-color: white;" HBox.hgrow="ALWAYS" />
 
-        <Button text="Dodaj użytkownika"
-                onAction="#createUser"
-                style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-font-weight: bold;"/>
+        <Button onAction="#createUser" style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-font-weight: bold;" text="Dodaj użytkownika" />
+        <Button onAction="#clearForm" style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-font-weight: bold;" text="Wyczyść dane" />
     </HBox>
 
-    <TableView fx:id="usersTable"
-               style="-fx-background-color: rgba(255,255,255,0.9);"
-               VBox.vgrow="ALWAYS">
+    <TableView fx:id="usersTable" style="-fx-background-color: rgba(255,255,255,0.9);" VBox.vgrow="ALWAYS">
         <columns>
-            <TableColumn fx:id="imieColumn" text="Imię"/>
-            <TableColumn fx:id="nazwiskoColumn" text="Nazwisko"/>
-            <TableColumn fx:id="loginColumn" text="Login"/>
-            <TableColumn fx:id="placaColumn" text="Płaca"/>
-            <TableColumn fx:id="rolaColumn" text="Rola"/>
+            <TableColumn fx:id="imieColumn" text="Imię" />
+            <TableColumn fx:id="nazwiskoColumn" text="Nazwisko" />
+            <TableColumn fx:id="loginColumn" text="Login" />
+            <TableColumn fx:id="placaColumn" text="Płaca" />
+            <TableColumn fx:id="rolaColumn" text="Rola" />
         </columns>
     </TableView>
 
-    <Button text="Powrót do Dashboardu"
-            onAction="#goToDashboard"
-            style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-padding: 10; -fx-font-weight: bold;"/>
+    <HBox alignment="BOTTOM_LEFT" prefWidth="598.0" spacing="10">
+        <Button minHeight="40" onAction="#goToDashboard" prefHeight="40" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold;" text="Powrót do Dashboardu" />
+
+        <Button minHeight="40" onAction="#handleUpdateUser" prefHeight="40" style="-fx-background-color: #FF9800; -fx-text-fill: white; -fx-font-weight: bold;" text="Zaktualizuj użytkownika" />
+    </HBox>
+
+
 </VBox>
