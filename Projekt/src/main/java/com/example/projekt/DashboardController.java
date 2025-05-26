@@ -22,7 +22,7 @@ import java.util.logging.Logger;
  * Obsługuje przejście do różnych modułów aplikacji, w tym do menedżera zadań.
  */
 public class DashboardController {
-    private static final Logger LOGGER = Logger.getLogger(DashboardController.class.getName());
+    static final Logger LOGGER = Logger.getLogger(DashboardController.class.getName());
     private static final String TASK_VIEW_PATH = "/com/example/projekt/task.fxml";
     private static final String TASK_WINDOW_TITLE = "Zarządzanie zadaniami";
     private static final int WINDOW_WIDTH = 1000;

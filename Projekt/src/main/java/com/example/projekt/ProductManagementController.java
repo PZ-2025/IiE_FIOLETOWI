@@ -2,13 +2,22 @@ package com.example.projekt;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.stage.Stage;
 
 import java.sql.*;
+import java.util.logging.Level;
+
+import static com.example.projekt.DashboardController.LOGGER;
 
 public class ProductManagementController {
 
@@ -192,6 +201,20 @@ public class ProductManagementController {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
+        }
+    }
+    @FXML
+    private void goBackToDashboard(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/projekt/dashboard.fxml"));
+            Parent root = loader.load();
+            DashboardController controller = loader.getController();
+            controller.setCurrentUser(UserSession.getInstance().getUser());
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Dashboard");
+        } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, "Błąd powrotu do dashboardu", e);
         }
     }
 

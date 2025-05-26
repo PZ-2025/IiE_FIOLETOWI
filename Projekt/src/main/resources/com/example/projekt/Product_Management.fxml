@@ -29,4 +29,8 @@
         <Button text="Usuń zaznaczony produkt" onAction="#handleDeleteProduct"
                 style="-fx-background-color: #e53935; -fx-text-fill: white; -fx-font-weight: bold;"/>
     </HBox>
+    <Button text="Powrót do menu głównego"
+            onAction="#goBackToDashboard"
+            style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-padding: 10; -fx-font-weight: bold;"
+            alignment="CENTER"/>
 </VBox>
