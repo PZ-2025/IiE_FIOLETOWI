@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.projekt.ProductManagementController" spacing="10" style="-fx-padding: 20; -fx-background-color: #f0f0f0;">
+    <HBox spacing="10">
+        <TextField fx:id="nazwaField" promptText="Nazwa produktu" />
+        <TextField fx:id="stanField" promptText="Stan" />
+        <TextField fx:id="cenaField" promptText="Cena" />
+        <TextField fx:id="limitField" promptText="Limit" />
+        <ComboBox fx:id="typComboBox" promptText="Typ produktu" />
+        <Button text="Zapisz" onAction="#saveProduct" />
+        <Button text="Wyczyść" onAction="#clearForm" />
+    </HBox>
+    <TableView fx:id="productTable">
+        <columns>
+            <TableColumn fx:id="nazwaColumn" text="Nazwa" />
+            <TableColumn fx:id="stanColumn" text="Stan" />
+            <TableColumn fx:id="cenaColumn" text="Cena" />
+            <TableColumn fx:id="limitColumn" text="Limit" />
+            <TableColumn fx:id="typColumn" text="Typ" />
+        </columns>
+    </TableView>
+    <HBox spacing="10" alignment="CENTER">
+        <Button text="Dodaj produkt" onAction="#handleAddProduct"
+                style="-fx-background-color: #43a047; -fx-text-fill: white; -fx-font-weight: bold;"/>
+        <Button text="Usuń zaznaczony produkt" onAction="#handleDeleteProduct"
+                style="-fx-background-color: #e53935; -fx-text-fill: white; -fx-font-weight: bold;"/>
+    </HBox>
+</VBox>
