@@ -67,7 +67,9 @@ public class UserTaskPanelController {
 
     private void loadProducts() {
         ObservableList<Product> products = FXCollections.observableArrayList();
-        String sql = "SELECT nazwa, stan, limit_stanow, cena FROM produkty";
+        String sql = "SELECT p.id_produktu, p.nazwa, p.stan, p.cena, p.limit_stanow, p.id_typu_produktu, t.nazwa AS typ_nazwa " +
+                "FROM produkty p " +
+                "LEFT JOIN typ_produktu t ON p.id_typu_produktu = t.id_typu_produktu";
 
         try (Connection conn = DatabaseConnector.connect();
              PreparedStatement stmt = conn.prepareStatement(sql);
@@ -75,13 +77,13 @@ public class UserTaskPanelController {
 
             while (rs.next()) {
                 products.add(new Product(
-                        rs.getInt("id"),
+                        rs.getInt("id_produktu"),
                         rs.getString("nazwa"),
                         rs.getInt("stan"),
                         rs.getDouble("cena"),
                         rs.getInt("limit_stanow"),
-                        rs.getInt("idTypuProduktu"),
-                        rs.getString("typProduktuNazwa")
+                        rs.getInt("id_typu_produktu"),
+                        rs.getString("typ_nazwa")
                 ));
             }
 

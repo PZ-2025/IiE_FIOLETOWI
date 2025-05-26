@@ -5,7 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="93580640-a4f6-4848-877d-83f2d9fe0546" name="Changes" comment="CRUD produkty">
-      <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/ProductManagementController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/ProductManagementController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/UserTaskPanelController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/UserTaskPanelController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
