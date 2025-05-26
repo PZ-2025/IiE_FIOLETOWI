@@ -131,7 +131,19 @@ public class DashboardController {
             System.out.println("Brak dostępu - tylko kierownik może zarządzać użytkownikami.");
         }
     }
-
+    @FXML
+    private void openProductManager(ActionEvent event) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/com/example/projekt/Product_Management.fxml"));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root, 1000, 600));
+            stage.setTitle("Zarządzanie produktami");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Błąd ładowania widoku zarządzania produktami: " + e.getMessage());
+        }
+    }
 
     public void setCurrentUser(User user) {
         this.currentUser = user;

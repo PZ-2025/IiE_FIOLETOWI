@@ -75,10 +75,13 @@ public class UserTaskPanelController {
 
             while (rs.next()) {
                 products.add(new Product(
+                        rs.getInt("id"),
                         rs.getString("nazwa"),
                         rs.getInt("stan"),
+                        rs.getDouble("cena"),
                         rs.getInt("limit_stanow"),
-                        rs.getDouble("cena")
+                        rs.getInt("idTypuProduktu"),
+                        rs.getString("typProduktuNazwa")
                 ));
             }
 
