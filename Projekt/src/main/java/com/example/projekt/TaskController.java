@@ -1,144 +1,104 @@
 package com.example.projekt;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import java.io.IOException;
-import java.util.Objects;
+
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
-/**
- * Kontroler zarządzający widokiem listy zadań.
- * Obsługuje operacje dodawania, usuwania i oznaczania zadań jako zakończone.
- */
+import static com.example.projekt.DashboardController.LOGGER;
+
 public class TaskController {
-    private static final Logger LOGGER = Logger.getLogger(TaskController.class.getName());
-    private static final String DASHBOARD_VIEW_PATH = "/com/example/projekt/dashboard.fxml";
-    private static final String DASHBOARD_TITLE = "Dashboard";
-    private static final int WINDOW_WIDTH = 1000;
-    private static final int WINDOW_HEIGHT = 600;
-    private static final String COMPLETED_PREFIX = "[Ukończono] ";
 
-    /**
-     * Pole tekstowe do wprowadzania nowych zadań
-     */
     @FXML
     private TextField taskInput;
 
-    /**
-     * Lista wyświetlająca zadania
-     */
     @FXML
-    private ListView<String> taskList;
+    private TableView<Task> taskTable;
 
-    /**
-     * Przycisk do dodawania zadań
-     */
     @FXML
-    private Button addTaskButton;
+    private TableColumn<Task, String> nameColumn;
 
-    /**
-     * Przycisk do usuwania zadań
-     */
     @FXML
-    private Button deleteTaskButton;
+    private TableColumn<Task, String> priorityColumn;
 
-    /**
-     * Przycisk do oznaczania zadań jako zakończone
-     */
     @FXML
-    private Button markAsCompletedButton;
+    private TableColumn<Task, String> dateColumn;
 
-    /**
-     * Inicjalizuje kontroler po załadowaniu widoku FXML.
-     * Automatycznie wywoływana przez JavaFX.
-     */
+    @FXML
+    private TableColumn<Task, String> userColumn;
+
+    @FXML
+    private TableColumn<Task, String> statusColumn;
+
+    private final ObservableList<Task> tasks = FXCollections.observableArrayList();
+
+    // Konstruktor bezargumentowy wymagany przez FXMLLoader
+    public TaskController() {
+    }
+
     @FXML
     public void initialize() {
-        // Inicjalizacja kontrolera (opcjonalnie)
+        // Inicjalizacja kolumn powiązaniem z właściwościami klasy Task
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        priorityColumn.setCellValueFactory(new PropertyValueFactory<>("priority"));
+        dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
+        userColumn.setCellValueFactory(new PropertyValueFactory<>("user"));
+        statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
+
+        taskTable.setItems(tasks);
     }
 
-    /**
-     * Dodaje nowe zadanie do listy.
-     * Zadanie jest dodawane tylko jeśli pole tekstowe nie jest puste.
-     */
     @FXML
     private void handleAddTask() {
-        String task = taskInput.getText().trim();
-        if (!task.isEmpty()) {
-            taskList.getItems().add(task);
+        String taskName = taskInput.getText().trim();
+        if (!taskName.isEmpty()) {
+            // Ustaw dane przykładowo — dopasuj według swojej logiki
+            Task newTask = new Task(taskName, "Średni", "2025-05-27", "Admin");
+            tasks.add(newTask);
             taskInput.clear();
         }
-
     }
 
-    /**
-     * Usuwa zaznaczone zadanie z listy.
-     */
     @FXML
     private void handleDeleteTask() {
-        int selectedIndex = taskList.getSelectionModel().getSelectedIndex();
-        if (selectedIndex >= 0) {
-            taskList.getItems().remove(selectedIndex);
+        Task selectedTask = taskTable.getSelectionModel().getSelectedItem();
+        if (selectedTask != null) {
+            tasks.remove(selectedTask);
         }
     }
 
-    /**
-     * Oznacza zaznaczone zadanie jako zakończone.
-     * Dodaje prefix "[Ukończono]" do nazwy zadania.
-     */
     @FXML
     private void handleMarkAsCompleted() {
-        int selectedIndex = taskList.getSelectionModel().getSelectedIndex();
-        if (selectedIndex >= 0) {
-            String task = taskList.getItems().get(selectedIndex);
-            if (!task.startsWith(COMPLETED_PREFIX)) {
-                taskList.getItems().set(selectedIndex, COMPLETED_PREFIX + task);
-            }
+        Task selectedTask = taskTable.getSelectionModel().getSelectedItem();
+        if (selectedTask != null) {
+            selectedTask.setStatus("Zakończone");
+            taskTable.refresh();
         }
     }
 
-    /**
-     * Przechodzi z powrotem do widoku dashboardu.
-     *
-     * @param event zdarzenie wywołujące zmianę widoku
-     */
     @FXML
-    private void goToDashboard(ActionEvent event) {
+    private void goBackToDashboard(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(DASHBOARD_VIEW_PATH));
-            Parent dashboardRoot = loader.load();
-
-            DashboardController dashboardController = loader.getController();
-            dashboardController.setCurrentUser(UserSession.getInstance().getUser());
-            // Przekazujemy UserSession
-
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/projekt/dashboard.fxml"));
+            Parent root = loader.load();
+            DashboardController controller = loader.getController();
+            controller.setCurrentUser(UserSession.getInstance().getUser());
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setTitle(DASHBOARD_TITLE);
-            stage.setScene(new Scene(dashboardRoot, WINDOW_WIDTH, WINDOW_HEIGHT));
-            stage.show();
-
-        } catch (IOException | NullPointerException e) {
-            LOGGER.log(Level.SEVERE, "Błąd ładowania dashboardu", e);
-            showAlert("Nie można załadować dashboardu");
+            stage.setScene(new Scene(root));
+            stage.setTitle("Dashboard");
+        } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, "Błąd powrotu do dashboardu", e);
         }
-    }
-
-
-    /**
-     * Wyświetla komunikat o błędzie (w przyszłości można rozszerzyć o Alert).
-     *
-     * @param message treść komunikatu
-     */
-    private void showAlert(String message) {
-        System.err.println(message);
     }
 }

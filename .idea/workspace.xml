@@ -5,7 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="93580640-a4f6-4848-877d-83f2d9fe0546" name="Changes" comment="CRUD produkty">
-      <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/ProductManagementController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/ProductManagementController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/DashboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/DashboardController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/Task.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/Task.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/TaskController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/TaskController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/TaskDB.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/UserTaskPanelController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/UserTaskPanelController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/task.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/task.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/usertaskpanel.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/usertaskpanel.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,12 +41,12 @@
     &quot;assignee&quot;: &quot;KrzysztofDrozda&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/PZ-2025/IiE_FIOLETOWI&quot;,
-    &quot;accountId&quot;: &quot;e47df973-3faf-41d6-9f20-be590d1b6888&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/PZ-2025/IiE_FIOLETOWI.git",
+    "accountId": "9b500b68-c45e-4292-b426-a1ebc04dbb6e"
   }
-}</component>
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 0
 }</component>
@@ -120,7 +127,15 @@
       <option name="project" value="LOCAL" />
       <updated>1748283290823</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="CRUD produkty">
+      <option name="closed" value="true" />
+      <created>1748283876874</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1748283876874</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

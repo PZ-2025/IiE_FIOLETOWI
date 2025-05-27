@@ -1,28 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.geometry.Insets?>
 
 <BorderPane xmlns="http://javafx.com/javafx/8"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.example.projekt.UserTaskPanelController"
             style="-fx-background-color: linear-gradient(to bottom right, #6a1b9a, #9c27b0);">
 
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
     <top>
-        <Label text="Panel użytkownika - Twoje zadania"
-               style="-fx-font-size: 24px; -fx-text-fill: white; -fx-padding: 20;"
-               BorderPane.alignment="CENTER"/>
+        <HBox alignment="CENTER" spacing="10" style="-fx-padding: 10;">
+            <Label text="Panel użytkownika - Twoje zadania"
+                   style="-fx-text-fill: white; -fx-font-size: 24px; -fx-font-weight: bold;"/>
+        </HBox>
     </top>
 
     <center>
-        <VBox spacing="10" style="-fx-background-color: white; -fx-background-radius: 10;">
-            <padding>
-                <Insets top="20" right="20" bottom="20" left="20"/>
-            </padding>
+        <VBox spacing="20"
+              style="-fx-padding: 20; -fx-background-color: rgba(255, 255, 255, 0.9);
+                     -fx-border-radius: 10; -fx-background-radius: 10;">
 
-            <!-- Tabela z produktami -->
-            <Label text="Dostępne produkty:" style="-fx-font-weight: bold;"/>
+            <!-- Produkty -->
+            <Label text="Dostępne produkty:" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
             <TableView fx:id="productTable" prefHeight="150">
                 <columns>
                     <TableColumn fx:id="productNameColumn" text="Nazwa"/>
@@ -32,8 +36,8 @@
                 </columns>
             </TableView>
 
-            <!-- Tabela z zadaniami -->
-            <Label text="Twoje zadania:" style="-fx-font-weight: bold;"/>
+            <!-- Zadania -->
+            <Label text="Twoje zadania:" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
             <TableView fx:id="taskTable" prefHeight="200">
                 <columns>
                     <TableColumn fx:id="nameColumn" text="Nazwa"/>
@@ -43,25 +47,34 @@
                 </columns>
             </TableView>
 
+            <!-- Status i komentarz -->
             <HBox spacing="10">
                 <Label text="Zmień status:"/>
                 <ComboBox fx:id="statusComboBox" promptText="Wybierz status"/>
-                <Button text="Zapisz zmiany" onAction="#changeTaskStatus"/>
+                <Button text="Zapisz zmiany"
+                        onAction="#changeTaskStatus"
+                        style="-fx-background-color: #7b1fa2; -fx-text-fill: white; -fx-font-weight: bold;"/>
             </HBox>
 
             <Label text="Komentarz do zadania:" style="-fx-font-weight: bold;"/>
-            <TextArea fx:id="commentTextArea" prefHeight="100" promptText="Tutaj możesz wpisać komentarz do zadania..."/>
-            <Button text="Zapisz komentarz" onAction="#saveTaskComment"/>
+            <TextArea fx:id="commentTextArea" prefHeight="100"
+                      promptText="Tutaj możesz wpisać komentarz do zadania..."/>
+            <Button text="Zapisz komentarz"
+                    onAction="#saveTaskComment"
+                    style="-fx-background-color: #7b1fa2; -fx-text-fill: white; -fx-font-weight: bold;"/>
 
-
+            <!-- Historia -->
             <Label text="Historia zakończonych zadań:" style="-fx-font-weight: bold;"/>
             <ListView fx:id="historyList" prefHeight="100"/>
         </VBox>
     </center>
 
     <bottom>
-        <Button text="Powrót do Dashboardu"
-                onAction="#goToDashboard"
-                style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 10;"/>
+        <HBox alignment="CENTER" spacing="10" style="-fx-padding: 10;">
+            <Button text="Powrót do Dashboardu"
+                    onAction="#goBackToDashboard"
+                    style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold;
+                           -fx-padding: 10 20; -fx-border-radius: 5; -fx-background-radius: 5;"/>
+        </HBox>
     </bottom>
 </BorderPane>

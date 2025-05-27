@@ -49,17 +49,10 @@ public class DashboardController {
     }
 
     @FXML
-    private void goToTaskManager(ActionEvent event) {
-        try {
-            Parent taskManagerRoot = FXMLLoader.load(
-                    Objects.requireNonNull(getClass().getResource(TASK_VIEW_PATH)));
-
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            configureTaskManagerStage(stage, taskManagerRoot);
-
-        } catch (IOException | NullPointerException e) {
-            handleViewLoadingError(e);
-        }
+    private void goToTaskManager(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/com/example/projekt/task.fxml"));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(root));
     }
 
     private void configureTaskManagerStage(Stage stage, Parent root) {
