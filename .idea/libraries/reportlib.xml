@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="reportlib">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/Projekt/lib/reportlib.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
