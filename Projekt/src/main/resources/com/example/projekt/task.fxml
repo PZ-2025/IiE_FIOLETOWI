@@ -4,74 +4,68 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.projekt.TaskController"
-            style="-fx-background-color: linear-gradient(to bottom right, #6a1b9a, #9c27b0);">
-    <padding>
-        <Insets top="20" right="20" bottom="20" left="20"/>
-    </padding>
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            xmlns="http://javafx.com/javafx/8"
+            fx:controller="com.example.projekt.TaskController"
+            style="-fx-background-color: linear-gradient(to bottom right, #4a148c, #7b1fa2);">
 
     <top>
-        <HBox alignment="CENTER" spacing="10" style="-fx-padding: 10;">
-            <Label text="Zarządzanie zadaniami (Admin)"
-                   style="-fx-text-fill: white; -fx-font-size: 24px; -fx-font-weight: bold;"/>
-        </HBox>
+        <Label text="Panel Kierownika - Zarządzanie Zadaniami"
+               style="-fx-font-size: 24px; -fx-text-fill: white; -fx-padding: 20;"
+               BorderPane.alignment="CENTER"/>
     </top>
 
     <center>
-        <VBox spacing="20"
-              style="-fx-padding: 20; -fx-background-color: rgba(255,255,255,0.9);
-                     -fx-border-radius: 10; -fx-background-radius: 10;">
+        <VBox spacing="10" style="-fx-background-color: white; -fx-background-radius: 10;">
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
 
-            <!-- Form do tworzenia/edycji zadania -->
-            <GridPane hgap="10" vgap="10">
-                <Label text="Nazwa:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-                <TextField fx:id="taskInput" promptText="Nazwa zadania"
-                           GridPane.rowIndex="0" GridPane.columnIndex="1"/>
-
-                <Label text="Priorytet:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-                <ComboBox fx:id="priorityComboBox" promptText="Wybierz priorytet"
-                          GridPane.rowIndex="1" GridPane.columnIndex="1"/>
-
-                <Label text="Data:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-                <DatePicker fx:id="datePicker" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
-
-                <Label text="Użytkownik:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-                <ComboBox fx:id="userComboBox" promptText="Wybierz użytkownika"
-                          GridPane.rowIndex="3" GridPane.columnIndex="1"/>
-
-                <Button text="Dodaj zadanie"
-                        onAction="#handleAddTask"
-                        style="-fx-background-color: #7b1fa2; -fx-text-fill: white;"
-                        GridPane.rowIndex="4" GridPane.columnIndex="1"/>
-            </GridPane>
-
-            <!-- Lista zadań -->
-            <Label text="Lista zadań:" style="-fx-font-weight: bold;"/>
-            <TableView fx:id="taskTable" prefHeight="200">
+            <TableView fx:id="taskTable" prefHeight="300">
                 <columns>
-                    <TableColumn fx:id="nameColumn" text="Nazwa" />
-                    <TableColumn fx:id="priorityColumn" text="Priorytet" />
-                    <TableColumn fx:id="dateColumn" text="Data" />
-                    <TableColumn fx:id="userColumn" text="Użytkownik" />
-                    <TableColumn fx:id="statusColumn" text="Status" />
+                    <TableColumn fx:id="nameColumn" text="Nazwa"/>
+                    <TableColumn fx:id="statusColumn" text="Status"/>
+                    <TableColumn fx:id="priorityColumn" text="Priorytet"/>
+                    <TableColumn fx:id="startDateColumn" text="Start"/>
+                    <TableColumn fx:id="endDateColumn" text="Koniec"/>
+                    <TableColumn fx:id="assignedColumn" text="Pracownik"/>
                 </columns>
             </TableView>
+
+            <HBox spacing="10">
+                <Label text="Nazwa:"/>
+                <TextField fx:id="nameField" promptText="Wpisz nazwę"/>
+
+                <Label text="Status:"/>
+                <ComboBox fx:id="statusBox"/>
+
+                <Label text="Priorytet:"/>
+                <ComboBox fx:id="priorityBox"/>
+            </HBox>
+
+            <HBox spacing="10">
+                <Label text="Data startu:"/>
+                <DatePicker fx:id="startDatePicker"/>
+
+                <Label text="Data końca:"/>
+                <DatePicker fx:id="endDatePicker"/>
+
+                <Label text="Przypisz do:"/>
+                <ComboBox fx:id="employeeBox"/>
+            </HBox>
+
+            <HBox spacing="10">
+                <Button text="Dodaj zadanie" onAction="#handleAddTask"/>
+                <Button text="Edytuj zadanie" onAction="#handleEditTask"/>
+                <Button text="Usuń zadanie" onAction="#handleDeleteTask"/>
+            </HBox>
         </VBox>
     </center>
 
     <bottom>
-        <HBox alignment="CENTER" spacing="10" style="-fx-padding: 10;">
-            <Button text="Usuń zadanie"
-                    onAction="#handleDeleteTask"
-                    style="-fx-background-color: #e53935; -fx-text-fill: white; -fx-font-weight: bold;"/>
-
-            <Button text="Oznacz jako zakończone"
-                    onAction="#handleMarkAsCompleted"
-                    style="-fx-background-color: #43a047; -fx-text-fill: white; -fx-font-weight: bold;"/>
-
-            <Button text="Powrót do Dashboardu"
-                    onAction="#goBackToDashboard"
-                    style="-fx-background-color: #3949ab; -fx-text-fill: white; -fx-font-weight: bold;"/>
-        </HBox>
+        <Button text="Powrót do Dashboardu"
+                onAction="#goBackToDashboard"
+                style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 10;"
+                BorderPane.alignment="CENTER"/>
     </bottom>
 </BorderPane>

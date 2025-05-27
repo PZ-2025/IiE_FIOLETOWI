@@ -1,45 +1,49 @@
 package com.example.projekt;
 
-import javafx.beans.property.*;
+import javafx.beans.property.SimpleStringProperty;
 
 public class Task {
-    private final StringProperty name = new SimpleStringProperty();
-    private final StringProperty status = new SimpleStringProperty();
-    private final StringProperty priority = new SimpleStringProperty();
-    private final StringProperty date = new SimpleStringProperty();
-    private final StringProperty comment = new SimpleStringProperty();
+    private int id;
+    private final SimpleStringProperty nazwa;
+    private final SimpleStringProperty status;
+    private final SimpleStringProperty priorytet;
+    private final SimpleStringProperty data;
+    private final SimpleStringProperty koniec;
+    private final SimpleStringProperty pracownik;
 
-    public Task(String name, String status, String priority, String date) {
-        this.name.set(name);
-        this.status.set(status);
-        this.priority.set(priority);
-        this.date.set(date);
-        this.comment.set("");
+    public Task(int id, String nazwa, String status, String priorytet, String data) {
+        this.id = id;
+        this.nazwa = new SimpleStringProperty(nazwa);
+        this.status = new SimpleStringProperty(status);
+        this.priorytet = new SimpleStringProperty(priorytet);
+        this.data = new SimpleStringProperty(data);
+        this.koniec = new SimpleStringProperty("");
+        this.pracownik = new SimpleStringProperty("");
     }
 
     // Gettery
-    public String getName() { return name.get(); }
+    public int getId() { return id; }
+    public String getNazwa() { return nazwa.get(); }
     public String getStatus() { return status.get(); }
-    public String getPriority() { return priority.get(); }
-    public String getDate() { return date.get(); }
-    public String getComment() { return comment.get(); }
+    public String getPriorytet() { return priorytet.get(); }
+    public String getData() { return data.get(); }
+    public String getKoniec() { return koniec.get(); }
+    public String getPracownik() { return pracownik.get(); }
 
     // Settery
-    public void setName(String name) { this.name.set(name); }
-    public void setStatus(String status) { this.status.set(status); }
-    public void setPriority(String priority) { this.priority.set(priority); }
-    public void setDate(String date) { this.date.set(date); }
-    public void setComment(String comment) { this.comment.set(comment); }
-
-    // Właściwości
-    public StringProperty nameProperty() { return name; }
-    public StringProperty statusProperty() { return status; }
-    public StringProperty priorityProperty() { return priority; }
-    public StringProperty dateProperty() { return date; }
-    public StringProperty commentProperty() { return comment; }
-
-    @Override
-    public String toString() {
-        return name.get() + " (" + status.get() + ")";
+    public void setEndDate(String koniec) {
+        this.koniec.set(koniec);
     }
+
+    public void setAssignedTo(String pracownik) {
+        this.pracownik.set(pracownik);
+    }
+
+    // Property dla TableView
+    public SimpleStringProperty nazwaProperty() { return nazwa; }
+    public SimpleStringProperty statusProperty() { return status; }
+    public SimpleStringProperty priorytetProperty() { return priorytet; }
+    public SimpleStringProperty dataProperty() { return data; }
+    public SimpleStringProperty koniecProperty() { return koniec; }
+    public SimpleStringProperty pracownikProperty() { return pracownik; }
 }
