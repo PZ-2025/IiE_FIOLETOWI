@@ -8,6 +8,8 @@ module com.example.projekt {
     requires kernel;
     requires layout;
     requires io;
+    requires com.example.reportlib;
+
 
     opens com.example.projekt to javafx.fxml;
     exports com.example.projekt;

@@ -12,6 +12,8 @@ import javafx.scene.layout.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.scene.control.cell.PropertyValueFactory;
+import com.example.reportlib.ChartUtils;
+import com.example.reportlib.PDFGenerator;
 
 import java.io.File;
 import java.io.IOException;
@@ -29,6 +31,10 @@ public class ReportController {
 
     private final Map<String, Control> dynamicFilters = new HashMap<>();
     private String currentReportType;
+    private List<Map<String, String>> lastReportData;
+    private Map<String, Integer> lastChartData;
+    private final Map<String, String> headerKeyMap = new LinkedHashMap<>();
+
 
     @FXML
     public void initialize() {
@@ -103,6 +109,9 @@ public class ReportController {
         reportTableView.getItems().clear();
         reportPreviewContainer.getChildren().clear();
 
+        headerKeyMap.clear();
+
+
         switch (currentReportType) {
             case "Transakcje" -> generateTransactionPreview();
             case "Zadania"     -> generateTaskPreview();
@@ -114,20 +123,28 @@ public class ReportController {
 
     private void generateTransactionPreview() {
         String sortKey = getFilterValue("sortTransaction","Data");
-        List<Map<String, String>> data = getTransactionData(sortKey);
+
+        LocalDate start = ((DatePicker) dynamicFilters.get("startDate")).getValue();
+        LocalDate end = ((DatePicker) dynamicFilters.get("endDate")).getValue();
+
+        List<Map<String, String>> data = getTransactionData(sortKey, start, end);
 
         addColumn("Produkt", "Produkt");
         addColumn("Data", "Data");
         addColumn("Ilosc", "Ilosc");
 
         reportTableView.setItems(FXCollections.observableArrayList(data));
+        lastReportData = data;
 
-        Map<String, Integer> chartData = getTransactionChartData();
+        Map<String, Integer> chartData = getTransactionChartData(start, end);
+        lastChartData = chartData;
+
         ImageView chart = ChartUtils.createChartImage(chartData, "Sprzedaż dzienna");
         reportPreviewContainer.getChildren().add(chart);
     }
 
-    private List<Map<String, String>> getTransactionData(String sortKey) {
+
+    private List<Map<String, String>> getTransactionData(String sortKey, LocalDate start, LocalDate end) {
         List<Map<String, String>> list = new ArrayList<>();
         String orderBy;
         switch (sortKey) {
@@ -137,15 +154,26 @@ public class ReportController {
             default -> orderBy = "t.data_transakcji";
         }
 
-        String query = "SELECT p.nazwa AS produkt, t.data_transakcji AS data, t.ilosc AS ilosc " +
-                "FROM transakcje t " +
-                "JOIN produkty p ON t.id_produktu = p.id_produktu " +
-                "ORDER BY " + orderBy;
+        StringBuilder query = new StringBuilder(
+                "SELECT p.nazwa AS produkt, t.data_transakcji AS data, t.ilosc AS ilosc " +
+                        "FROM transakcje t " +
+                        "JOIN produkty p ON t.id_produktu = p.id_produktu " +
+                        "WHERE 1=1 "
+        );
+
+        if (start != null) query.append("AND t.data_transakcji >= ? ");
+        if (end != null) query.append("AND t.data_transakcji <= ? ");
+
+        query.append("ORDER BY ").append(orderBy);
 
         try (Connection conn = DatabaseConnector.connect();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(query)) {
+             PreparedStatement stmt = conn.prepareStatement(query.toString())) {
 
+            int index = 1;
+            if (start != null) stmt.setDate(index++, Date.valueOf(start));
+            if (end != null) stmt.setDate(index++, Date.valueOf(end));
+
+            ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 Map<String, String> row = new HashMap<>();
                 row.put("Produkt", rs.getString("produkt"));
@@ -153,7 +181,6 @@ public class ReportController {
                 row.put("Ilosc", rs.getString("ilosc"));
                 list.add(row);
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -162,13 +189,26 @@ public class ReportController {
     }
 
 
-    private Map<String, Integer> getTransactionChartData() {
+
+    private Map<String, Integer> getTransactionChartData(LocalDate start, LocalDate end) {
         Map<String, Integer> data = new LinkedHashMap<>();
-        String query = "SELECT t.data_transakcji, SUM(t.ilosc) AS total FROM transakcje t GROUP BY t.data_transakcji";
+        StringBuilder query = new StringBuilder(
+                "SELECT t.data_transakcji, SUM(t.ilosc) AS total FROM transakcje t WHERE 1=1 "
+        );
+
+        if (start != null) query.append("AND t.data_transakcji >= ? ");
+        if (end != null) query.append("AND t.data_transakcji <= ? ");
+
+        query.append("GROUP BY t.data_transakcji ORDER BY t.data_transakcji");
 
         try (Connection conn = DatabaseConnector.connect();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(query)) {
+             PreparedStatement stmt = conn.prepareStatement(query.toString())) {
+
+            int index = 1;
+            if (start != null) stmt.setDate(index++, Date.valueOf(start));
+            if (end != null) stmt.setDate(index++, Date.valueOf(end));
+
+            ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 data.put(rs.getString("data_transakcji"), rs.getInt("total"));
             }
@@ -177,6 +217,7 @@ public class ReportController {
         }
         return data;
     }
+
 
 
     private void generateTaskPreview() {
@@ -201,8 +242,12 @@ public class ReportController {
         addColumn("Data rozpoczęcia", "start");
 
         reportTableView.setItems(FXCollections.observableArrayList(data));
+        lastReportData = data;
+
 
         Map<String, Integer> chartData = getTaskChartData(statusFilter, priorityFilter, start, end);
+        lastChartData = chartData;
+
         ImageView chart = ChartUtils.createChartImage(chartData, "Liczba zadań wg statusu");
         reportPreviewContainer.getChildren().add(chart);
     }
@@ -306,6 +351,13 @@ public class ReportController {
         addColumn("Cena", "price");
 
         reportTableView.setItems(FXCollections.observableArrayList(data));
+        lastReportData = data;
+
+        Map<String, Integer> chartData = getProductChartData();
+        lastChartData = chartData;
+        ImageView chart = ChartUtils.createChartImage(chartData, "Stan magazynowy produktów");
+        reportPreviewContainer.getChildren().add(chart);
+
     }
 
     private List<Map<String, String>> getProductData(String sortKey) {
@@ -363,7 +415,9 @@ public class ReportController {
         TableColumn<Map<String, String>, String> col = new TableColumn<>(header);
         col.setCellValueFactory(data -> new javafx.beans.property.SimpleStringProperty(data.getValue().get(key)));
         reportTableView.getColumns().add(col);
+        headerKeyMap.put(header, key); // zapamiętujemy mapowanie nagłówek → klucz mapy
     }
+
 
     @FXML
     public void saveReportAsPDF() {
@@ -373,28 +427,15 @@ public class ReportController {
 
         if (file != null) {
             try {
-                // Pobierz dane z tabeli
-                List<Map<String, String>> data = new ArrayList<>(reportTableView.getItems());
+                List<Map<String, String>> data = lastReportData;
+                Map<String, Integer> chartData = lastChartData;
 
-                // Pobierz nagłówki kolumn
-                String[] headers = reportTableView.getColumns().stream().map(TableColumn::getText).toArray(String[]::new);
+                // Tablica nagłówków
+                String[] headers = headerKeyMap.keySet().toArray(new String[0]);
+                // Tablica kluczy (do odczytu wartości z map danych)
+                String[] keys = headerKeyMap.values().toArray(new String[0]);
 
-                // Pobierz dane wykresu w zależności od typu raportu
-                Map<String, Integer> chartData = null;
-                switch (currentReportType) {
-                    case "Transakcje":
-                        chartData = getTransactionChartData(); // Wykres dla transakcji
-                        break;
-                    case "Zadania":
-                        chartData = getTaskChartData(null, null, null, null); // Wykres dla zadań
-                        break;
-                    case "Produkty":
-                        chartData = getProductChartData(); // Wykres dla produktów
-                        break;
-                }
-
-                // Generowanie raportu PDF
-                PDFGenerator.generateReport(currentReportType, data, headers, file, chartData);
+                PDFGenerator.generateReport(currentReportType, data, headers, keys, file, chartData);
                 showAlert("Zapisano raport do pliku: " + file.getName());
             } catch (Exception e) {
                 e.printStackTrace();
@@ -402,6 +443,11 @@ public class ReportController {
             }
         }
     }
+
+
+
+
+
 
 
     private void showAlert(String message) {
