@@ -12,6 +12,8 @@ import javafx.scene.layout.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.scene.control.cell.PropertyValueFactory;
+import com.example.reportlib.ChartUtils;
+import com.example.reportlib.PDFGenerator;
 
 import java.io.File;
 import java.io.IOException;
