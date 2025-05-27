@@ -4,11 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="93580640-a4f6-4848-877d-83f2d9fe0546" name="Changes" comment="Kierownik">
+    <list default="true" id="93580640-a4f6-4848-877d-83f2d9fe0546" name="Changes" comment="Biblioteka zewnętrzna">
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/reportlib.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/ChartUtils.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/PDFGenerator.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projekt/lib/reportlib.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/ReportController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/ReportController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/reports.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/reports.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chart.png" beforeDir="false" afterPath="$PROJECT_DIR$/chart.png" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -113,7 +115,23 @@
       <option name="project" value="LOCAL" />
       <updated>1747485613729</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Biblioteka zewnętrzna">
+      <option name="closed" value="true" />
+      <created>1748330500599</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1748330500599</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Biblioteka zewnętrzna">
+      <option name="closed" value="true" />
+      <created>1748330509384</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1748330509384</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -143,6 +161,7 @@
     <MESSAGE value="Pierwsze moduły" />
     <MESSAGE value="Panel użytkownika" />
     <MESSAGE value="Kierownik" />
-    <option name="LAST_COMMIT_MESSAGE" value="Kierownik" />
+    <MESSAGE value="Biblioteka zewnętrzna" />
+    <option name="LAST_COMMIT_MESSAGE" value="Biblioteka zewnętrzna" />
   </component>
 </project>
