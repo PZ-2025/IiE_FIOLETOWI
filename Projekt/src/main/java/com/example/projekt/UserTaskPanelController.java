@@ -98,14 +98,15 @@ public class UserTaskPanelController {
         ObservableList<Task> taskList = FXCollections.observableArrayList();
 
         String sql = """
-            SELECT z.id_zadania, z.nazwa,
-                   COALESCE(s.nazwa, 'Brak') AS status,
-                   COALESCE(p.nazwa, 'Brak') AS priorytet,
-                   z.data_rozpoczecia
-            FROM zadania z
-            LEFT JOIN statusy s ON z.id_statusu = s.id_statusu
-            LEFT JOIN priorytety p ON z.id_priorytetu = p.id_priorytetu
-            WHERE z.id_pracownika = ?
+        SELECT z.id_zadania, z.nazwa,
+               COALESCE(s.nazwa, 'Brak') AS status,
+               COALESCE(p.nazwa, 'Brak') AS priorytet,
+               z.data_rozpoczecia
+        FROM zadania z
+        LEFT JOIN statusy s ON z.id_statusu = s.id_statusu
+        LEFT JOIN priorytety p ON z.id_priorytetu = p.id_priorytetu
+        WHERE z.id_pracownika = ? 
+        AND s.nazwa != 'Zakończone'  -- Dodaj ten warunek
         """;
 
         try (Connection conn = DatabaseConnector.connect();
@@ -186,19 +187,25 @@ public class UserTaskPanelController {
         if (selectedTask == null || statusComboBox.getValue() == null) return;
 
         String sql = """
-            UPDATE zadania SET id_statusu =
-            (SELECT id_statusu FROM statusy WHERE nazwa = ?),
-            powiadomienia = 1
-            WHERE id_zadania = ?
+        UPDATE zadania SET id_statusu =
+        (SELECT id_statusu FROM statusy WHERE nazwa = ?),
+        data_zakonczenia = CASE WHEN ? = 'Zakończone' THEN CURRENT_DATE ELSE NULL END,
+        powiadomienia = 1
+        WHERE id_zadania = ?
         """;
 
         try (Connection conn = DatabaseConnector.connect();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, statusComboBox.getValue());
-            stmt.setInt(2, selectedTask.getId());
+            stmt.setString(2, statusComboBox.getValue()); // Drugi parametr dla CASE
+            stmt.setInt(3, selectedTask.getId());
             stmt.executeUpdate();
+
+            // Odśwież obie tabele po zmianie
             loadTasks();
+            loadTaskHistory();
+
         } catch (SQLException e) {
             LOGGER.log(Level.SEVERE, "Błąd zmiany statusu", e);
         }
@@ -207,9 +214,11 @@ public class UserTaskPanelController {
     private void loadTaskHistory() {
         historyList.getItems().clear();
         String sql = """
-            SELECT z.nazwa FROM zadania z
-            JOIN statusy s ON z.id_statusu = s.id_statusu
-            WHERE z.id_pracownika = ? AND s.nazwa = 'Zakończone'
+        SELECT z.nazwa, z.data_rozpoczecia, z.data_zakonczenia 
+        FROM zadania z
+        JOIN statusy s ON z.id_statusu = s.id_statusu
+        WHERE z.id_pracownika = ? AND s.nazwa = 'Zakończone'
+        ORDER BY z.data_zakonczenia DESC
         """;
 
         try (Connection conn = DatabaseConnector.connect();
@@ -218,7 +227,11 @@ public class UserTaskPanelController {
             stmt.setInt(1, UserSession.getInstance().getUser().getId());
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                historyList.getItems().add(rs.getString("nazwa"));
+                String taskInfo = String.format("%s (Rozpoczęto: %s, Zakończono: %s)",
+                        rs.getString("nazwa"),
+                        rs.getDate("data_rozpoczecia"),
+                        rs.getDate("data_zakonczenia"));
+                historyList.getItems().add(taskInfo);
             }
 
         } catch (SQLException e) {
