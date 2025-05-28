@@ -47,6 +47,4 @@
 
         <Button minHeight="40" onAction="#handleUpdateUser" prefHeight="40" style="-fx-background-color: #FF9800; -fx-text-fill: white; -fx-font-weight: bold;" text="Zaktualizuj użytkownika" />
     </HBox>
-
-
 </VBox>

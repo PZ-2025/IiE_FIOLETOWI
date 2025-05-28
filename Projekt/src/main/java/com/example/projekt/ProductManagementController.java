@@ -14,7 +14,10 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.stage.Stage;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.*;
+import java.util.function.UnaryOperator;
 import java.util.logging.Level;
 
 import static com.example.projekt.DashboardController.LOGGER;
@@ -60,12 +63,22 @@ public class ProductManagementController {
             });
             return row;
         });
+
+        // Ograniczenie wpisu ceny do dwóch miejsc po przecinku
+        UnaryOperator<TextFormatter.Change> filter = change -> {
+            String newText = change.getControlNewText();
+            if (newText.matches("\\d*(\\.\\d{0,2})?")) {
+                return change;
+            }
+            return null;
+        };
+        cenaField.setTextFormatter(new TextFormatter<>(filter));
     }
 
     private void fillForm(Product p) {
         nazwaField.setText(p.getNazwa());
         stanField.setText(String.valueOf(p.getStan()));
-        cenaField.setText(String.valueOf(p.getCena()));
+        cenaField.setText(String.format("%.2f", p.getCena()));
         limitField.setText(String.valueOf(p.getLimitStanow()));
         typComboBox.getSelectionModel().select(
                 productTypes.stream()
@@ -77,27 +90,50 @@ public class ProductManagementController {
 
     @FXML
     private void handleAddProduct() {
-        selectedProduct = null;  // sygnał, że dodajemy nowy produkt
-        clearForm();             // wyczyść formularz
+        selectedProduct = null;
+        clearForm();
     }
 
     @FXML
     private void handleDeleteProduct() {
         Product selected = productTable.getSelectionModel().getSelectedItem();
         if (selected != null) {
-            try (Connection conn = DatabaseConnector.connect();
-                 PreparedStatement stmt = conn.prepareStatement("DELETE FROM produkty WHERE id_produktu = ?")) {
-                stmt.setInt(1, selected.getId());
-                stmt.executeUpdate();
-                loadProducts();
-                clearForm();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+
+            Alert confirmAlert = new Alert(Alert.AlertType.CONFIRMATION);
+            confirmAlert.setTitle("Potwierdzenie usunięcia");
+            confirmAlert.setHeaderText("Czy na pewno chcesz usunąć ten produkt?");
+            confirmAlert.setContentText("Produkt: " + selected.getNazwa());
+
+            ButtonType buttonYes = new ButtonType("Tak", ButtonBar.ButtonData.YES);
+            ButtonType buttonNo = new ButtonType("Nie", ButtonBar.ButtonData.NO);
+
+            confirmAlert.getButtonTypes().setAll(buttonYes, buttonNo);
+
+            confirmAlert.showAndWait().ifPresent(response -> {
+                if (response == buttonYes) {
+                    try (Connection conn = DatabaseConnector.connect();
+                         PreparedStatement stmt = conn.prepareStatement("DELETE FROM produkty WHERE id_produktu = ?")) {
+
+                        stmt.setInt(1, selected.getId());
+                        stmt.executeUpdate();
+                        loadProducts();
+                        clearForm();
+
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
         } else {
-            System.out.println("Nie zaznaczono produktu do usunięcia.");
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Brak wyboru");
+            alert.setHeaderText("Nie wybrano produktu do usunięcia.");
+            alert.setContentText("Wybierz produkt z tabeli, aby go usunąć.");
+            alert.showAndWait();
         }
     }
+
 
     private void loadProducts() {
         ObservableList<Product> products = FXCollections.observableArrayList();
@@ -152,25 +188,52 @@ public class ProductManagementController {
     @FXML
     private void saveProduct() {
         String nazwa = nazwaField.getText();
-        int stan = Integer.parseInt(stanField.getText());
-        double cena = Double.parseDouble(cenaField.getText());
-        int limit = Integer.parseInt(limitField.getText());
-        ProductType typ = typComboBox.getValue();
+        int stan, limit;
+        BigDecimal cena;
 
+        try {
+            stan = Integer.parseInt(stanField.getText());
+            if (stan < 0) {
+                showAlert("Błąd walidacji", "Stan nie może być ujemny.");
+                return;
+            }
+        } catch (NumberFormatException e) {
+            showAlert("Błąd danych", "Wprowadź poprawny stan.");
+            return;
+        }
+
+        try {
+            cena = new BigDecimal(cenaField.getText()).setScale(2, RoundingMode.HALF_UP);
+            if (cena.compareTo(BigDecimal.ZERO) < 0) {
+                showAlert("Błąd walidacji", "Cena nie może być ujemna.");
+                return;
+            }
+        } catch (NumberFormatException e) {
+            showAlert("Błąd danych", "Wprowadź poprawną cenę.");
+            return;
+        }
+
+        try {
+            limit = Integer.parseInt(limitField.getText());
+        } catch (NumberFormatException e) {
+            showAlert("Błąd danych", "Wprowadź poprawny limit.");
+            return;
+        }
+
+        ProductType typ = typComboBox.getValue();
         if (typ == null) {
-            System.out.println("Wybierz typ produktu.");
+            showAlert("Błąd danych", "Wybierz typ produktu.");
             return;
         }
 
         if (selectedProduct != null) {
-            // aktualizacja
             String sql = "UPDATE produkty SET nazwa=?, stan=?, cena=?, limit_stanow=?, id_typu_produktu=? WHERE id_produktu=?";
             try (Connection conn = DatabaseConnector.connect();
                  PreparedStatement stmt = conn.prepareStatement(sql)) {
 
                 stmt.setString(1, nazwa);
                 stmt.setInt(2, stan);
-                stmt.setDouble(3, cena);
+                stmt.setDouble(3, cena.doubleValue());
                 stmt.setInt(4, limit);
                 stmt.setInt(5, typ.getId());
                 stmt.setInt(6, selectedProduct.getId());
@@ -183,14 +246,13 @@ public class ProductManagementController {
                 e.printStackTrace();
             }
         } else {
-            // dodanie nowego produktu
             String sql = "INSERT INTO produkty (nazwa, stan, cena, limit_stanow, id_typu_produktu) VALUES (?, ?, ?, ?, ?)";
             try (Connection conn = DatabaseConnector.connect();
                  PreparedStatement stmt = conn.prepareStatement(sql)) {
 
                 stmt.setString(1, nazwa);
                 stmt.setInt(2, stan);
-                stmt.setDouble(3, cena);
+                stmt.setDouble(3, cena.doubleValue());
                 stmt.setInt(4, limit);
                 stmt.setInt(5, typ.getId());
 
@@ -203,6 +265,7 @@ public class ProductManagementController {
             }
         }
     }
+
     @FXML
     private void goBackToDashboard(ActionEvent event) {
         try {
@@ -226,5 +289,13 @@ public class ProductManagementController {
         limitField.clear();
         typComboBox.setValue(null);
         selectedProduct = null;
+    }
+
+    private void showAlert(String title, String content) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
     }
 }
