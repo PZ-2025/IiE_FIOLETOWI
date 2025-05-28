@@ -97,7 +97,7 @@ INSERT INTO typ_produktu (nazwa) VALUES
 
 
 INSERT INTO pracownicy (imie, nazwisko, login, haslo, placa, id_grupy, id_roli) VALUES 
-('Admin', 'Admin', 'admin', 'admin', 5000.00, 1, 1),
+('Admin', 'Admin', 'Admin123', 'rDlt1lrSXRTUhaYdrtrHPQ==:0JzlTGgCm3V3x9XgTCV1hIyXdr7UA45FgeNdyr4EgW0=', 5000.00, 1, 1),
 ('Jan', 'Kowalski', 'jkowalski', 'haslo123', 5000.00, 1, 2),
 ('Anna', 'Nowak', 'anowak', 'haslo123', 5200.00, 2, 2),
 ('Piotr', 'Zieliński', 'pzielinski', 'haslo123', 4800.00, 3, 3),
