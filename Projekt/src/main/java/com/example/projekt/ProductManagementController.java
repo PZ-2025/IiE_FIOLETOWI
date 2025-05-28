@@ -1,5 +1,8 @@
 package com.example.projekt;
 
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -9,9 +12,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.stage.Stage;
 
 import java.math.BigDecimal;
@@ -42,10 +42,30 @@ public class ProductManagementController {
 
     @FXML
     public void initialize() {
+        productTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
         nazwaColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getNazwa()));
+
         stanColumn.setCellValueFactory(data -> new SimpleIntegerProperty(data.getValue().getStan()).asObject());
-        cenaColumn.setCellValueFactory(data -> new SimpleDoubleProperty(data.getValue().getCena()).asObject());
+        stanColumn.setStyle("-fx-alignment: CENTER-RIGHT;"); // 🔢 do prawej
+
         limitColumn.setCellValueFactory(data -> new SimpleIntegerProperty(data.getValue().getLimitStanow()).asObject());
+        limitColumn.setStyle("-fx-alignment: CENTER-RIGHT;"); // 🔢 do prawej
+
+        cenaColumn.setCellValueFactory(data -> new SimpleDoubleProperty(data.getValue().getCena()).asObject());
+        cenaColumn.setCellFactory(column -> new TableCell<>() {
+            @Override
+            protected void updateItem(Double item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(String.format("%.2f", item));
+                }
+                setStyle("-fx-alignment: CENTER-RIGHT;"); // 🔢 do prawej
+            }
+        });
+
         typColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getTypProduktuNazwa()));
 
         productTypes = loadProductTypes();
@@ -64,16 +84,14 @@ public class ProductManagementController {
             return row;
         });
 
-        // Ograniczenie wpisu ceny do dwóch miejsc po przecinku
+        // 🔒 Walidacja ceny (2 miejsca po przecinku)
         UnaryOperator<TextFormatter.Change> filter = change -> {
             String newText = change.getControlNewText();
-            if (newText.matches("\\d*(\\.\\d{0,2})?")) {
-                return change;
-            }
-            return null;
+            return newText.matches("\\d*(\\.\\d{0,2})?") ? change : null;
         };
         cenaField.setTextFormatter(new TextFormatter<>(filter));
     }
+
 
     private void fillForm(Product p) {
         nazwaField.setText(p.getNazwa());
@@ -98,7 +116,6 @@ public class ProductManagementController {
     private void handleDeleteProduct() {
         Product selected = productTable.getSelectionModel().getSelectedItem();
         if (selected != null) {
-
             Alert confirmAlert = new Alert(Alert.AlertType.CONFIRMATION);
             confirmAlert.setTitle("Potwierdzenie usunięcia");
             confirmAlert.setHeaderText("Czy na pewno chcesz usunąć ten produkt?");
@@ -106,7 +123,6 @@ public class ProductManagementController {
 
             ButtonType buttonYes = new ButtonType("Tak", ButtonBar.ButtonData.YES);
             ButtonType buttonNo = new ButtonType("Nie", ButtonBar.ButtonData.NO);
-
             confirmAlert.getButtonTypes().setAll(buttonYes, buttonNo);
 
             confirmAlert.showAndWait().ifPresent(response -> {
@@ -126,14 +142,9 @@ public class ProductManagementController {
             });
 
         } else {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Brak wyboru");
-            alert.setHeaderText("Nie wybrano produktu do usunięcia.");
-            alert.setContentText("Wybierz produkt z tabeli, aby go usunąć.");
-            alert.showAndWait();
+            showAlert("Brak wyboru", "Nie wybrano produktu do usunięcia.");
         }
     }
-
 
     private void loadProducts() {
         ObservableList<Product> products = FXCollections.observableArrayList();

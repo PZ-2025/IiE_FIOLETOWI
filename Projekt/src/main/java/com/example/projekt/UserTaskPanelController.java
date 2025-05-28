@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.Parent;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.sql.*;
@@ -42,6 +43,19 @@ public class UserTaskPanelController {
         productLimitColumn.setCellValueFactory(data -> data.getValue().limitStanowProperty().asObject());
         productPriceColumn.setCellValueFactory(data -> data.getValue().cenaProperty().asObject());
 
+        // 🔧 FORMATOWANIE CENY DO 2 MIEJSC PO PRZECINKU
+        productPriceColumn.setCellFactory(column -> new TableCell<>() {
+            @Override
+            protected void updateItem(Double item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(String.format("%.2f", item));
+                }
+            }
+        });
+
         loadProducts();
 
         nameColumn.setCellValueFactory(data -> data.getValue().nazwaProperty());
@@ -62,7 +76,7 @@ public class UserTaskPanelController {
             }
         });
 
-        checkForNotifications(); // 🟢 Dodane powiadomienia
+        checkForNotifications();
     }
 
     private void loadProducts() {
@@ -106,7 +120,7 @@ public class UserTaskPanelController {
         LEFT JOIN statusy s ON z.id_statusu = s.id_statusu
         LEFT JOIN priorytety p ON z.id_priorytetu = p.id_priorytetu
         WHERE z.id_pracownika = ? 
-        AND s.nazwa != 'Zakończone'  -- Dodaj ten warunek
+        AND s.nazwa != 'Zakończone'
         """;
 
         try (Connection conn = DatabaseConnector.connect();
@@ -198,11 +212,10 @@ public class UserTaskPanelController {
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, statusComboBox.getValue());
-            stmt.setString(2, statusComboBox.getValue()); // Drugi parametr dla CASE
+            stmt.setString(2, statusComboBox.getValue());
             stmt.setInt(3, selectedTask.getId());
             stmt.executeUpdate();
 
-            // Odśwież obie tabele po zmianie
             loadTasks();
             loadTaskHistory();
 

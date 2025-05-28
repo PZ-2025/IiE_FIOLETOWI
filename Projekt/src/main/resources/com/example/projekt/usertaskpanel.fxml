@@ -3,6 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.text.*?>
 
 <BorderPane xmlns="http://javafx.com/javafx/8"
             xmlns:fx="http://javafx.com/fxml"
@@ -25,22 +26,60 @@
             <Label text="Dostępne produkty:" style="-fx-font-weight: bold;"/>
             <TableView fx:id="productTable" prefHeight="150">
                 <columns>
-                    <TableColumn fx:id="productNameColumn" text="Nazwa"/>
-                    <TableColumn fx:id="productStockColumn" text="Stan"/>
-                    <TableColumn fx:id="productLimitColumn" text="Limit stanu"/>
-                    <TableColumn fx:id="productPriceColumn" text="Cena"/>
+                    <TableColumn fx:id="productNameColumn" text="Nazwa">
+                        <style>
+                            -fx-alignment: CENTER_LEFT;
+                        </style>
+                    </TableColumn>
+                    <TableColumn fx:id="productStockColumn" text="Stan">
+                        <style>
+                            -fx-alignment: CENTER_RIGHT;
+                        </style>
+                    </TableColumn>
+                    <TableColumn fx:id="productLimitColumn" text="Limit stanu">
+                        <style>
+                            -fx-alignment: CENTER_RIGHT;
+                        </style>
+                    </TableColumn>
+                    <TableColumn fx:id="productPriceColumn" text="Cena">
+                        <style>
+                            -fx-alignment: CENTER_RIGHT;
+                        </style>
+                    </TableColumn>
                 </columns>
+                <columnResizePolicy>
+                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                </columnResizePolicy>
             </TableView>
 
             <!-- Tabela z zadaniami -->
             <Label text="Twoje zadania:" style="-fx-font-weight: bold;"/>
             <TableView fx:id="taskTable" prefHeight="200">
                 <columns>
-                    <TableColumn fx:id="nameColumn" text="Nazwa"/>
-                    <TableColumn fx:id="statusColumn" text="Status"/>
-                    <TableColumn fx:id="priorityColumn" text="Priorytet"/>
-                    <TableColumn fx:id="dateColumn" text="Data"/>
+                    <TableColumn fx:id="nameColumn" text="Nazwa">
+                        <style>
+                            -fx-alignment: CENTER_LEFT;
+                        </style>
+                    </TableColumn>
+                    <TableColumn fx:id="statusColumn" text="Status">
+                        <style>
+                            -fx-alignment: CENTER;
+                        </style>
+                    </TableColumn>
+                    <TableColumn fx:id="priorityColumn" text="Priorytet">
+                        <style>
+                            -fx-alignment: CENTER;
+                        </style>
+                    </TableColumn>
+                    <TableColumn fx:id="dateColumn" text="Data">
+                        <style>
+                            -fx-alignment: CENTER;
+                        </style>
+                    </TableColumn>
                 </columns>
+                <columnResizePolicy>
+                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                </columnResizePolicy>
             </TableView>
 
             <HBox spacing="10">
@@ -52,7 +91,6 @@
             <Label text="Komentarz do zadania:" style="-fx-font-weight: bold;"/>
             <TextArea fx:id="commentTextArea" prefHeight="100" promptText="Tutaj możesz wpisać komentarz do zadania..."/>
             <Button text="Zapisz komentarz" onAction="#saveTaskComment"/>
-
 
             <Label text="Historia zakończonych zadań:" style="-fx-font-weight: bold;"/>
             <ListView fx:id="historyList" prefHeight="100"/>
