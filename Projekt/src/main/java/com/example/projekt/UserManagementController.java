@@ -37,6 +37,9 @@ public class UserManagementController {
     private static final String DASHBOARD_TITLE = "Dashboard";
 
     @FXML
+    private Button createUserButton;
+
+    @FXML
     private TableView<User> usersTable;
     @FXML
     private TableColumn<User, String> imieColumn;
@@ -90,6 +93,8 @@ public class UserManagementController {
         placaColumn.prefWidthProperty().bind(usersTable.widthProperty().multiply(colWidth));
         rolaColumn.prefWidthProperty().bind(usersTable.widthProperty().multiply(colWidth));
 
+        configureFieldsByRole();
+
         // Obsługa kliknięcia na wiersz tabeli - wczytanie danych do formularza
         usersTable.setRowFactory(tv -> {
             TableRow<User> row = new TableRow<>();
@@ -101,6 +106,10 @@ public class UserManagementController {
             });
             return row;
         });
+        User currentUser = UserSession.getInstance().getUser();
+        if (currentUser.isManager()) {
+            createUserButton.setVisible(false);
+        }
     }
 
     private void fillFormForEditing(User user) {
@@ -195,7 +204,29 @@ public class UserManagementController {
 
         return groups;
     }
+    private void configureFieldsByRole() {
+        User currentUser = UserSession.getInstance() != null ? UserSession.getInstance().getUser() : null;
 
+        if (currentUser.isAdmin()) {
+            usernameField.setVisible(true);
+            passwordField.setVisible(true);
+            roleComboBox.setVisible(true);
+            firstNameField.setVisible(true);
+            lastNameField.setVisible(true);
+            salaryField.setVisible(true);
+            groupComboBox.setVisible(true);
+
+        } else if (currentUser.isManager()) {
+            usernameField.setVisible(false);
+            passwordField.setVisible(false);
+            roleComboBox.setVisible(true);
+            firstNameField.setVisible(false);
+            lastNameField.setVisible(false);
+            salaryField.setVisible(true);
+            groupComboBox.setVisible(true);
+
+        }
+    }
     @FXML
     void createUser() {
         if (selectedUserToEdit != null) {

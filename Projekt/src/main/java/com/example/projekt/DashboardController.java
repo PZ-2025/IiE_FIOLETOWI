@@ -81,7 +81,7 @@ public class DashboardController {
     }
 
     @FXML
-    private Button reportButton;  // Dodaj to pole, aby powiązać przycisk z plikiem FXML
+    private Button reportButton;
 
     @FXML
     private void goToReports() {
@@ -156,7 +156,7 @@ public class DashboardController {
             roleLabel.setText("Rola: " + user.getRole().toString());
         }
 
-        if (user.isAdmin()) {
+        if (user.isAdmin() || user.isManager()) {
             adminButton.setVisible(true);
         }
 

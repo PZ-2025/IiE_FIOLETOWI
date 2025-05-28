@@ -28,7 +28,7 @@
         <TextField fx:id="salaryField" promptText="Płaca" style="-fx-background-color: white;" />
         <ComboBox fx:id="groupComboBox" promptText="Grupa" style="-fx-background-color: white;" HBox.hgrow="ALWAYS" />
 
-        <Button onAction="#createUser" style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-font-weight: bold;" text="Dodaj użytkownika" />
+        <Button fx:id="createUserButton" onAction="#createUser" style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-font-weight: bold;" text="Dodaj użytkownika" />
         <Button onAction="#clearForm" style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-font-weight: bold;" text="Wyczyść dane" />
     </HBox>
 
