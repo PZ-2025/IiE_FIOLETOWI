@@ -80,37 +80,39 @@ public class LoginController {
                p.id_grupy, p.id_roli, r.nazwa AS nazwa_roli
         FROM pracownicy p
         JOIN role r ON p.id_roli = r.id_roli
-        WHERE p.login = ? AND p.haslo = ?
+        WHERE p.login = ?
     """;
 
         try (Connection conn = DatabaseConnector.connect();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, username);
-            stmt.setString(2, password);
 
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    int id = rs.getInt("id_pracownika");
-                    String imie = rs.getString("imie");
-                    String nazwisko = rs.getString("nazwisko");
-                    String login = rs.getString("login");
-                    String haslo = rs.getString("haslo");
-                    double placa = rs.getDouble("placa");
-                    int id_grupy = rs.getInt("id_grupy");
-                    int id_roli = rs.getInt("id_roli");
-                    String nazwa_roli = rs.getString("nazwa_roli");
+                    String storedHashedPassword = rs.getString("haslo");
 
-                    return new User(id, imie, nazwisko, login, haslo, placa, id_grupy, id_roli, nazwa_roli);
+                    // Weryfikujemy hasło
+                    if (PasswordHasher.verifyPassword(password, storedHashedPassword)) {
+                        int id = rs.getInt("id_pracownika");
+                        String imie = rs.getString("imie");
+                        String nazwisko = rs.getString("nazwisko");
+                        String login = rs.getString("login");
+                        double placa = rs.getDouble("placa");
+                        int id_grupy = rs.getInt("id_grupy");
+                        int id_roli = rs.getInt("id_roli");
+                        String nazwa_roli = rs.getString("nazwa_roli");
+
+                        return new User(id, imie, nazwisko, login, storedHashedPassword, placa, id_grupy, id_roli, nazwa_roli);
+                    }
                 }
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return null;
     }
+
 
 
     /**

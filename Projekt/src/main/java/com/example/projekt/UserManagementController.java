@@ -249,6 +249,12 @@ public class UserManagementController {
             showAlert("Wszystkie pola muszą być wypełnione!");
             return;
         }
+        if (!PasswordValidator.isPasswordValid(haslo)) {
+            showAlert(PasswordValidator.getPasswordRequirementsMessage());
+            return;
+        }
+        String hashedPassword = PasswordHasher.hashPassword(haslo, PasswordHasher.generateSalt());
+
 
         double placa;
         try {
@@ -266,7 +272,7 @@ public class UserManagementController {
             stmt.setString(1, imie);
             stmt.setString(2, nazwisko);
             stmt.setString(3, login);
-            stmt.setString(4, haslo);
+            stmt.setString(4, hashedPassword);
             stmt.setDouble(5, placa);
             stmt.setInt(6, selectedRole.getId());
             stmt.setInt(7, selectedGroup.getId());
@@ -294,6 +300,13 @@ public class UserManagementController {
         if (login.isEmpty() || imie.isEmpty() || nazwisko.isEmpty() || placaStr.isEmpty() || selectedRole == null || selectedGroup == null) {
             showAlert("Wszystkie pola muszą być wypełnione!");
             return;
+        }
+        if (!haslo.isEmpty()) {
+            if (!PasswordValidator.isPasswordValid(haslo)) {
+                showAlert(PasswordValidator.getPasswordRequirementsMessage());
+                return;
+            }
+            haslo = PasswordHasher.hashPassword(haslo, PasswordHasher.generateSalt());
         }
 
         double placa;
