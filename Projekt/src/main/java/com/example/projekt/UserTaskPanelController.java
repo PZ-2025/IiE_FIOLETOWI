@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.Parent;
 import javafx.scene.Node;
@@ -13,6 +14,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.sql.*;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -35,48 +37,111 @@ public class UserTaskPanelController {
 
     private static final Logger LOGGER = Logger.getLogger(UserTaskPanelController.class.getName());
     private Task selectedTask;
+    private Map<String, Integer> statusOrder = new LinkedHashMap<>();
 
     @FXML
     public void initialize() {
+        // Inicjalizacja kolejności statusów
+        initializeStatusOrder();
+
+        // Konfiguracja tabeli produktów
+        configureProductTable();
+        loadProducts();
+
+        // Konfiguracja tabeli zadań
+        configureTaskTable();
+        loadTasks();
+        loadStatuses();
+        loadTaskHistory();
+
+        // Listener dla wyboru zadania
+        taskTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSel, newSel) -> {
+            selectedTask = newSel;
+            if (newSel != null) {
+                loadTaskComment(newSel.getId());
+                updateAvailableStatuses(newSel.getStatus());
+            } else {
+                commentTextArea.clear();
+                statusComboBox.getItems().clear();
+            }
+        });
+
+        checkForNotifications();
+    }
+
+    private void initializeStatusOrder() {
+        statusOrder.put("Oczekujące", 1);
+        statusOrder.put("Rozpoczęte", 2);
+        statusOrder.put("W trakcie", 3);
+        statusOrder.put("Zakończone", 4);
+    }
+
+    private void configureProductTable() {
         productNameColumn.setCellValueFactory(data -> data.getValue().nazwaProperty());
         productStockColumn.setCellValueFactory(data -> data.getValue().stanProperty().asObject());
         productLimitColumn.setCellValueFactory(data -> data.getValue().limitStanowProperty().asObject());
         productPriceColumn.setCellValueFactory(data -> data.getValue().cenaProperty().asObject());
 
-        // 🔧 FORMATOWANIE CENY DO 2 MIEJSC PO PRZECINKU
-        productPriceColumn.setCellFactory(column -> new TableCell<>() {
+        // Formatowanie ceny do 2 miejsc po przecinku
+        productPriceColumn.setCellFactory(column -> new TableCell<Product, Double>() {
             @Override
-            protected void updateItem(Double item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty || item == null) {
+            protected void updateItem(Double price, boolean empty) {
+                super.updateItem(price, empty);
+                if (empty || price == null) {
                     setText(null);
                 } else {
-                    setText(String.format("%.2f", item));
+                    setText(String.format("%.2f zł", price));
+                    setAlignment(Pos.CENTER_RIGHT);
                 }
             }
         });
 
-        loadProducts();
+        // Wyrównanie kolumn liczbowych do prawej
+        productStockColumn.setCellFactory(column -> new TableCell<Product, Integer>() {
+            @Override
+            protected void updateItem(Integer stock, boolean empty) {
+                super.updateItem(stock, empty);
+                if (empty || stock == null) {
+                    setText(null);
+                } else {
+                    setText(stock.toString());
+                    setAlignment(Pos.CENTER_RIGHT);
+                }
+            }
+        });
 
+        productLimitColumn.setCellFactory(column -> new TableCell<Product, Integer>() {
+            @Override
+            protected void updateItem(Integer limit, boolean empty) {
+                super.updateItem(limit, empty);
+                if (empty || limit == null) {
+                    setText(null);
+                } else {
+                    setText(limit.toString());
+                    setAlignment(Pos.CENTER_RIGHT);
+                }
+            }
+        });
+    }
+
+    private void configureTaskTable() {
         nameColumn.setCellValueFactory(data -> data.getValue().nazwaProperty());
         statusColumn.setCellValueFactory(data -> data.getValue().statusProperty());
         priorityColumn.setCellValueFactory(data -> data.getValue().priorytetProperty());
         dateColumn.setCellValueFactory(data -> data.getValue().dataProperty());
+    }
 
-        loadTasks();
-        loadStatuses();
-        loadTaskHistory();
+    private void updateAvailableStatuses(String currentStatus) {
+        statusComboBox.getItems().clear();
 
-        taskTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSel, newSel) -> {
-            selectedTask = newSel;
-            if (newSel != null) {
-                loadTaskComment(newSel.getId());
-            } else {
-                commentTextArea.clear();
-            }
-        });
+        // Znajdź aktualną pozycję statusu
+        Integer currentOrder = statusOrder.get(currentStatus);
+        if (currentOrder == null) return;
 
-        checkForNotifications();
+        // Dodaj tylko statusy o wyższej kolejności
+        statusOrder.entrySet().stream()
+                .filter(entry -> entry.getValue() > currentOrder)
+                .forEach(entry -> statusComboBox.getItems().add(entry.getKey()));
     }
 
     private void loadProducts() {
@@ -100,59 +165,58 @@ public class UserTaskPanelController {
                         rs.getString("typ_nazwa")
                 ));
             }
+            productTable.setItems(products);
 
         } catch (SQLException e) {
             LOGGER.log(Level.SEVERE, "Błąd ładowania produktów", e);
+            showAlert("Błąd", "Nie udało się załadować produktów");
         }
-
-        productTable.setItems(products);
     }
 
     private void loadTasks() {
         ObservableList<Task> taskList = FXCollections.observableArrayList();
-
         String sql = """
-        SELECT z.id_zadania, z.nazwa,
-               COALESCE(s.nazwa, 'Brak') AS status,
-               COALESCE(p.nazwa, 'Brak') AS priorytet,
-               z.data_rozpoczecia
-        FROM zadania z
-        LEFT JOIN statusy s ON z.id_statusu = s.id_statusu
-        LEFT JOIN priorytety p ON z.id_priorytetu = p.id_priorytetu
-        WHERE z.id_pracownika = ? 
-        AND s.nazwa != 'Zakończone'
-        """;
+            SELECT z.id_zadania, z.nazwa,
+                   COALESCE(s.nazwa, 'Brak') AS status,
+                   COALESCE(p.nazwa, 'Brak') AS priorytet,
+                   z.data_rozpoczecia
+            FROM zadania z
+            LEFT JOIN statusy s ON z.id_statusu = s.id_statusu
+            LEFT JOIN priorytety p ON z.id_priorytetu = p.id_priorytetu
+            WHERE z.id_pracownika = ? 
+            AND s.nazwa != 'Zakończone'
+            """;
 
         try (Connection conn = DatabaseConnector.connect();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, UserSession.getInstance().getUser().getId());
             ResultSet rs = stmt.executeQuery();
+
             while (rs.next()) {
                 taskList.add(new Task(
                         rs.getInt("id_zadania"),
                         rs.getString("nazwa"),
                         rs.getString("status"),
                         rs.getString("priorytet"),
-                        rs.getDate("data_rozpoczecia") != null ? rs.getDate("data_rozpoczecia").toString() : ""
+                        rs.getDate("data_rozpoczecia") != null ?
+                                rs.getDate("data_rozpoczecia").toString() : ""
                 ));
             }
+            taskTable.setItems(taskList);
 
         } catch (SQLException e) {
             LOGGER.log(Level.SEVERE, "Błąd ładowania zadań", e);
+            showAlert("Błąd", "Nie udało się załadować zadań");
         }
-
-        taskTable.setItems(taskList);
     }
 
     private void loadStatuses() {
-        statusComboBox.getItems().clear();
         try (Connection conn = DatabaseConnector.connect();
              PreparedStatement stmt = conn.prepareStatement("SELECT nazwa FROM statusy");
              ResultSet rs = stmt.executeQuery()) {
-            while (rs.next()) {
-                statusComboBox.getItems().add(rs.getString("nazwa"));
-            }
+
+            // Nie czyścimy tutaj ComboBox, bo jest wypełniany dynamicznie w updateAvailableStatuses()
         } catch (SQLException e) {
             LOGGER.log(Level.SEVERE, "Błąd ładowania statusów", e);
         }
@@ -175,7 +239,10 @@ public class UserTaskPanelController {
 
     @FXML
     private void saveTaskComment() {
-        if (selectedTask == null) return;
+        if (selectedTask == null) {
+            showAlert("Błąd", "Nie wybrano zadania");
+            return;
+        }
 
         String sql = "UPDATE zadania SET komentarz = ? WHERE id_zadania = ?";
         try (Connection conn = DatabaseConnector.connect();
@@ -185,60 +252,77 @@ public class UserTaskPanelController {
             stmt.setInt(2, selectedTask.getId());
             stmt.executeUpdate();
 
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Komentarz zapisany");
-            alert.setHeaderText(null);
-            alert.setContentText("Komentarz został zapisany.");
-            alert.showAndWait();
-
+            showAlert("Sukces", "Komentarz został zapisany");
         } catch (SQLException e) {
             LOGGER.log(Level.SEVERE, "Błąd zapisu komentarza", e);
+            showAlert("Błąd", "Nie udało się zapisać komentarza");
         }
     }
 
     @FXML
     private void changeTaskStatus() {
-        if (selectedTask == null || statusComboBox.getValue() == null) return;
+        if (selectedTask == null || statusComboBox.getValue() == null) {
+            showAlert("Błąd", "Nie wybrano zadania lub statusu");
+            return;
+        }
 
-        String sql = """
-        UPDATE zadania SET id_statusu =
-        (SELECT id_statusu FROM statusy WHERE nazwa = ?),
-        data_zakonczenia = CASE WHEN ? = 'Zakończone' THEN CURRENT_DATE ELSE NULL END,
-        powiadomienia = 1
-        WHERE id_zadania = ?
-        """;
+        String newStatus = statusComboBox.getValue();
+        String sql;
+
+        if ("Zakończone".equals(newStatus)) {
+            sql = """
+            UPDATE zadania SET 
+                id_statusu = (SELECT id_statusu FROM statusy WHERE nazwa = ?),
+                data_zakonczenia = CURRENT_DATE,
+                powiadomienia = 1
+            WHERE id_zadania = ?
+            """;
+        } else {
+            sql = """
+            UPDATE zadania SET 
+                id_statusu = (SELECT id_statusu FROM statusy WHERE nazwa = ?),
+                powiadomienia = 1
+            WHERE id_zadania = ?
+            """;
+        }
 
         try (Connection conn = DatabaseConnector.connect();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setString(1, statusComboBox.getValue());
-            stmt.setString(2, statusComboBox.getValue());
-            stmt.setInt(3, selectedTask.getId());
+            stmt.setString(1, newStatus);
+            if ("Zakończone".equals(newStatus)) {
+                stmt.setInt(2, selectedTask.getId());
+            } else {
+                stmt.setInt(2, selectedTask.getId());
+            }
             stmt.executeUpdate();
 
             loadTasks();
             loadTaskHistory();
+            showAlert("Sukces", "Status zadania został zaktualizowany");
 
         } catch (SQLException e) {
             LOGGER.log(Level.SEVERE, "Błąd zmiany statusu", e);
+            showAlert("Błąd", "Nie udało się zmienić statusu zadania: " + e.getMessage());
         }
     }
 
     private void loadTaskHistory() {
-        historyList.getItems().clear();
         String sql = """
-        SELECT z.nazwa, z.data_rozpoczecia, z.data_zakonczenia 
-        FROM zadania z
-        JOIN statusy s ON z.id_statusu = s.id_statusu
-        WHERE z.id_pracownika = ? AND s.nazwa = 'Zakończone'
-        ORDER BY z.data_zakonczenia DESC
-        """;
+            SELECT z.nazwa, z.data_rozpoczecia, z.data_zakonczenia 
+            FROM zadania z
+            JOIN statusy s ON z.id_statusu = s.id_statusu
+            WHERE z.id_pracownika = ? AND s.nazwa = 'Zakończone'
+            ORDER BY z.data_zakonczenia DESC
+            """;
 
         try (Connection conn = DatabaseConnector.connect();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, UserSession.getInstance().getUser().getId());
             ResultSet rs = stmt.executeQuery();
+
+            historyList.getItems().clear();
             while (rs.next()) {
                 String taskInfo = String.format("%s (Rozpoczęto: %s, Zakończono: %s)",
                         rs.getString("nazwa"),
@@ -246,17 +330,13 @@ public class UserTaskPanelController {
                         rs.getDate("data_zakonczenia"));
                 historyList.getItems().add(taskInfo);
             }
-
         } catch (SQLException e) {
             LOGGER.log(Level.SEVERE, "Błąd ładowania historii", e);
         }
     }
 
     private void checkForNotifications() {
-        String sql = """
-            SELECT nazwa FROM zadania
-            WHERE id_pracownika = ? AND powiadomienia = 1
-        """;
+        String sql = "SELECT nazwa FROM zadania WHERE id_pracownika = ? AND powiadomienia = 1";
 
         try (Connection conn = DatabaseConnector.connect();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -270,19 +350,15 @@ public class UserTaskPanelController {
             }
 
             if (!message.isEmpty()) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Nowe powiadomienia");
-                alert.setHeaderText("Masz nowe przypisane zadania lub zmiany:");
-                alert.setContentText(message.toString());
-                alert.showAndWait();
+                showAlert("Powiadomienia", "Nowe zadania:\n" + message.toString());
 
+                // Wyczyść powiadomienia
                 try (PreparedStatement clear = conn.prepareStatement(
                         "UPDATE zadania SET powiadomienia = 0 WHERE id_pracownika = ?")) {
                     clear.setInt(1, UserSession.getInstance().getUser().getId());
                     clear.executeUpdate();
                 }
             }
-
         } catch (SQLException e) {
             LOGGER.log(Level.SEVERE, "Błąd sprawdzania powiadomień", e);
         }
@@ -295,11 +371,21 @@ public class UserTaskPanelController {
             Parent root = loader.load();
             DashboardController controller = loader.getController();
             controller.setCurrentUser(UserSession.getInstance().getUser());
+
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.setTitle("Dashboard");
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Błąd powrotu do dashboardu", e);
+            showAlert("Błąd", "Nie udało się przejść do dashboardu");
         }
+    }
+
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }

@@ -46,12 +46,11 @@ public class TaskController {
 
     @FXML
     public void initialize() {
-        nameColumn.setCellValueFactory(new PropertyValueFactory<>("nazwa"));
-        statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
-        priorityColumn.setCellValueFactory(new PropertyValueFactory<>("priorytet"));
-        startDateColumn.setCellValueFactory(new PropertyValueFactory<>("data"));
-        endDateColumn.setCellValueFactory(new PropertyValueFactory<>("koniec"));
-        assignedColumn.setCellValueFactory(new PropertyValueFactory<>("pracownik"));
+        // Konfiguracja tabeli
+        configureTableColumns();
+
+        // Ustawienie polityki zmiany rozmiaru kolumn
+        taskTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         loadData();
         loadComboBoxes();
@@ -59,39 +58,77 @@ public class TaskController {
         taskTable.setOnMouseClicked(event -> {
             Task selected = taskTable.getSelectionModel().getSelectedItem();
             if (selected != null) {
-                nameField.setText(selected.getNazwa());
-                statusBox.setValue(selected.getStatus());
-                priorityBox.setValue(selected.getPriorytet());
-                employeeBox.getItems().stream()
-                        .filter(emp -> emp.contains(selected.getPracownik()))
-                        .findFirst()
-                        .ifPresent(employeeBox::setValue);
-                startDatePicker.setValue(LocalDate.parse(selected.getData()));
-                endDatePicker.setValue(LocalDate.parse(selected.getKoniec()));
+                fillFormWithSelectedTask(selected);
             }
         });
     }
 
+    private void configureTableColumns() {
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("nazwa"));
+        statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
+        priorityColumn.setCellValueFactory(new PropertyValueFactory<>("priorytet"));
+        startDateColumn.setCellValueFactory(new PropertyValueFactory<>("data"));
+        endDateColumn.setCellValueFactory(new PropertyValueFactory<>("koniec"));
+        assignedColumn.setCellValueFactory(new PropertyValueFactory<>("pracownik"));
+
+        // Ustawienie proporcjonalnego rozkładu szerokości kolumn
+        nameColumn.prefWidthProperty().bind(taskTable.widthProperty().multiply(0.25));
+        statusColumn.prefWidthProperty().bind(taskTable.widthProperty().multiply(0.15));
+        priorityColumn.prefWidthProperty().bind(taskTable.widthProperty().multiply(0.15));
+        startDateColumn.prefWidthProperty().bind(taskTable.widthProperty().multiply(0.15));
+        endDateColumn.prefWidthProperty().bind(taskTable.widthProperty().multiply(0.15));
+        assignedColumn.prefWidthProperty().bind(taskTable.widthProperty().multiply(0.15));
+    }
+
+    private void fillFormWithSelectedTask(Task task) {
+        nameField.setText(task.getNazwa());
+        statusBox.setValue(task.getStatus());
+        priorityBox.setValue(task.getPriorytet());
+        employeeBox.getItems().stream()
+                .filter(emp -> emp.contains(task.getPracownik()))
+                .findFirst()
+                .ifPresent(employeeBox::setValue);
+        startDatePicker.setValue(LocalDate.parse(task.getData()));
+        endDatePicker.setValue(LocalDate.parse(task.getKoniec()));
+    }
+
     private void loadComboBoxes() {
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD)) {
-            ResultSet rs = conn.createStatement().executeQuery("SELECT nazwa FROM statusy");
-            while (rs.next()) statusList.add(rs.getString("nazwa"));
-            statusBox.setItems(statusList);
-
-            rs = conn.createStatement().executeQuery("SELECT nazwa FROM priorytety");
-            while (rs.next()) priorityList.add(rs.getString("nazwa"));
-            priorityBox.setItems(priorityList);
-
-            rs = conn.createStatement().executeQuery("SELECT id_pracownika, imie, nazwisko FROM pracownicy");
-            while (rs.next()) {
-                String emp = rs.getInt("id_pracownika") + ": " + rs.getString("imie") + " " + rs.getString("nazwisko");
-                employeeList.add(emp);
-            }
-            employeeBox.setItems(employeeList);
-
+            loadStatuses(conn);
+            loadPriorities(conn);
+            loadEmployees(conn);
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Błąd ładowania danych do comboboxów", e);
+            showAlert("Błąd ładowania danych", "Nie udało się załadować danych do formularza");
         }
+    }
+
+    private void loadStatuses(Connection conn) throws SQLException {
+        statusList.clear();
+        ResultSet rs = conn.createStatement().executeQuery("SELECT nazwa FROM statusy");
+        while (rs.next()) {
+            statusList.add(rs.getString("nazwa"));
+        }
+        statusBox.setItems(statusList);
+    }
+
+    private void loadPriorities(Connection conn) throws SQLException {
+        priorityList.clear();
+        ResultSet rs = conn.createStatement().executeQuery("SELECT nazwa FROM priorytety");
+        while (rs.next()) {
+            priorityList.add(rs.getString("nazwa"));
+        }
+        priorityBox.setItems(priorityList);
+    }
+
+    private void loadEmployees(Connection conn) throws SQLException {
+        employeeList.clear();
+        ResultSet rs = conn.createStatement().executeQuery("SELECT id_pracownika, imie, nazwisko FROM pracownicy");
+        while (rs.next()) {
+            String emp = rs.getInt("id_pracownika") + ": " + rs.getString("imie") + " " + rs.getString("nazwisko");
+            employeeList.add(emp);
+        }
+        employeeBox.setItems(employeeList);
     }
 
     private void loadData() {
@@ -122,28 +159,19 @@ public class TaskController {
             }
             taskTable.setItems(taskList);
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Błąd ładowania zadań", e);
+            showAlert("Błąd ładowania danych", "Nie udało się załadować listy zadań");
         }
     }
 
     @FXML
     private void handleAddTask() {
-        String name = nameField.getText();
-        String status = statusBox.getValue();
-        String priority = priorityBox.getValue();
-        String employee = employeeBox.getValue();
-        LocalDate startDate = startDatePicker.getValue();
-        LocalDate endDate = endDatePicker.getValue();
-
-        if (name.isEmpty() || status == null || priority == null || employee == null || startDate == null || endDate == null) {
-            showAlert("Uzupełnij wszystkie pola!");
-            return;
-        }
+        if (!validateForm()) return;
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD)) {
-            int statusId = getIdFromTable(conn, "statusy", status);
-            int priorityId = getIdFromTable(conn, "priorytety", priority);
-            int employeeId = Integer.parseInt(employee.split(":")[0]);
+            int statusId = getIdFromTable(conn, "statusy", statusBox.getValue());
+            int priorityId = getIdFromTable(conn, "priorytety", priorityBox.getValue());
+            int employeeId = Integer.parseInt(employeeBox.getValue().split(":")[0]);
 
             String sql = """
                 INSERT INTO zadania (id_pracownika, nazwa, id_statusu, id_priorytetu, data_rozpoczecia, data_zakonczenia)
@@ -151,16 +179,19 @@ public class TaskController {
             """;
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setInt(1, employeeId);
-            stmt.setString(2, name);
+            stmt.setString(2, nameField.getText());
             stmt.setInt(3, statusId);
             stmt.setInt(4, priorityId);
-            stmt.setDate(5, Date.valueOf(startDate));
-            stmt.setDate(6, Date.valueOf(endDate));
+            stmt.setDate(5, Date.valueOf(startDatePicker.getValue()));
+            stmt.setDate(6, Date.valueOf(endDatePicker.getValue()));
             stmt.executeUpdate();
+
             loadData();
             clearFields();
+            showAlert("Sukces", "Zadanie zostało dodane");
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Błąd dodawania zadania", e);
+            showAlert("Błąd", "Nie udało się dodać zadania");
         }
     }
 
@@ -168,46 +199,40 @@ public class TaskController {
     private void handleEditTask() {
         Task selected = taskTable.getSelectionModel().getSelectedItem();
         if (selected == null) {
-            showAlert("Wybierz zadanie do edycji.");
+            showAlert("Błąd", "Wybierz zadanie do edycji");
             return;
         }
 
-        String name = nameField.getText();
-        String status = statusBox.getValue();
-        String priority = priorityBox.getValue();
-        String employee = employeeBox.getValue();
-        LocalDate startDate = startDatePicker.getValue();
-        LocalDate endDate = endDatePicker.getValue();
-
-        if (name.isEmpty() || status == null || priority == null || employee == null || startDate == null || endDate == null) {
-            showAlert("Uzupełnij wszystkie pola!");
-            return;
-        }
+        if (!validateForm()) return;
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD)) {
-            int statusId = getIdFromTable(conn, "statusy", status);
-            int priorityId = getIdFromTable(conn, "priorytety", priority);
-            int employeeId = Integer.parseInt(employee.split(":")[0]);
+            int statusId = getIdFromTable(conn, "statusy", statusBox.getValue());
+            int priorityId = getIdFromTable(conn, "priorytety", priorityBox.getValue());
+            int employeeId = Integer.parseInt(employeeBox.getValue().split(":")[0]);
 
             String sql = """
                 UPDATE zadania
-                SET nazwa = ?, id_statusu = ?, id_priorytetu = ?, data_rozpoczecia = ?, data_zakonczenia = ?, id_pracownika = ?
+                SET nazwa = ?, id_statusu = ?, id_priorytetu = ?, 
+                    data_rozpoczecia = ?, data_zakonczenia = ?, id_pracownika = ?
                 WHERE id_zadania = ?
             """;
 
             PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setString(1, name);
+            stmt.setString(1, nameField.getText());
             stmt.setInt(2, statusId);
             stmt.setInt(3, priorityId);
-            stmt.setDate(4, Date.valueOf(startDate));
-            stmt.setDate(5, Date.valueOf(endDate));
+            stmt.setDate(4, Date.valueOf(startDatePicker.getValue()));
+            stmt.setDate(5, Date.valueOf(endDatePicker.getValue()));
             stmt.setInt(6, employeeId);
             stmt.setInt(7, selected.getId());
             stmt.executeUpdate();
+
             loadData();
             clearFields();
+            showAlert("Sukces", "Zadanie zostało zaktualizowane");
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Błąd edycji zadania", e);
+            showAlert("Błąd", "Nie udało się zaktualizować zadania");
         }
     }
 
@@ -215,7 +240,7 @@ public class TaskController {
     private void handleDeleteTask() {
         Task selected = taskTable.getSelectionModel().getSelectedItem();
         if (selected == null) {
-            showAlert("Wybierz zadanie do usunięcia.");
+            showAlert("Błąd", "Wybierz zadanie do usunięcia");
             return;
         }
 
@@ -223,10 +248,25 @@ public class TaskController {
             PreparedStatement stmt = conn.prepareStatement("DELETE FROM zadania WHERE id_zadania = ?");
             stmt.setInt(1, selected.getId());
             stmt.executeUpdate();
+
             loadData();
+            clearFields();
+            showAlert("Sukces", "Zadanie zostało usunięte");
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Błąd usuwania zadania", e);
+            showAlert("Błąd", "Nie udało się usunąć zadania");
         }
+    }
+
+    private boolean validateForm() {
+        if (nameField.getText().isEmpty() || statusBox.getValue() == null ||
+                priorityBox.getValue() == null || employeeBox.getValue() == null ||
+                startDatePicker.getValue() == null || endDatePicker.getValue() == null) {
+
+            showAlert("Błąd", "Wypełnij wszystkie pola formularza");
+            return false;
+        }
+        return true;
     }
 
     private int getIdFromTable(Connection conn, String table, String name) throws SQLException {
@@ -241,9 +281,9 @@ public class TaskController {
         throw new SQLException("Nie znaleziono: " + name);
     }
 
-    private void showAlert(String msg) {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Błąd");
+    private void showAlert(String title, String msg) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(msg);
         alert.showAndWait();
@@ -270,6 +310,7 @@ public class TaskController {
             stage.setTitle("Dashboard");
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Błąd powrotu do dashboardu", e);
+            showAlert("Błąd", "Nie udało się przejść do dashboardu");
         }
     }
 }
