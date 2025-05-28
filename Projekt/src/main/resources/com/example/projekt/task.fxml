@@ -7,16 +7,17 @@
 <BorderPane xmlns:fx="http://javafx.com/fxml"
             xmlns="http://javafx.com/javafx/8"
             fx:controller="com.example.projekt.TaskController"
-            style="-fx-background-color: linear-gradient(to bottom right, #4a148c, #7b1fa2);">
+            fx:id="taskRoot"
+            styleClass="root">
 
     <top>
         <Label text="Panel Kierownika - Zarządzanie Zadaniami"
-               style="-fx-font-size: 24px; -fx-text-fill: white; -fx-padding: 20;"
+               styleClass="header-label"
                BorderPane.alignment="CENTER"/>
     </top>
 
     <center>
-        <VBox spacing="10" style="-fx-background-color: white; -fx-background-radius: 10;">
+        <VBox spacing="10" styleClass="content-box">
             <padding>
                 <Insets top="20" right="20" bottom="20" left="20"/>
             </padding>
@@ -33,31 +34,31 @@
             </TableView>
 
             <HBox spacing="10">
-                <Label text="Nazwa:"/>
-                <TextField fx:id="nameField" promptText="Wpisz nazwę"/>
+                <Label text="Nazwa:" styleClass="label"/>
+                <TextField fx:id="nameField" promptText="Wpisz nazwę" styleClass="input-field"/>
 
-                <Label text="Status:"/>
-                <ComboBox fx:id="statusBox"/>
+                <Label text="Status:" styleClass="label"/>
+                <ComboBox fx:id="statusBox" styleClass="combo-box"/>
 
-                <Label text="Priorytet:"/>
-                <ComboBox fx:id="priorityBox"/>
+                <Label text="Priorytet:" styleClass="label"/>
+                <ComboBox fx:id="priorityBox" styleClass="combo-box"/>
             </HBox>
 
             <HBox spacing="10">
-                <Label text="Data startu:"/>
-                <DatePicker fx:id="startDatePicker"/>
+                <Label text="Data startu:" styleClass="label"/>
+                <DatePicker fx:id="startDatePicker" styleClass="date-picker"/>
 
-                <Label text="Data końca:"/>
-                <DatePicker fx:id="endDatePicker"/>
+                <Label text="Data końca:" styleClass="label"/>
+                <DatePicker fx:id="endDatePicker" styleClass="date-picker"/>
 
-                <Label text="Przypisz do:"/>
-                <ComboBox fx:id="employeeBox"/>
+                <Label text="Przypisz do:" styleClass="label"/>
+                <ComboBox fx:id="employeeBox" styleClass="combo-box"/>
             </HBox>
 
             <HBox spacing="10">
-                <Button text="Dodaj zadanie" onAction="#handleAddTask"/>
-                <Button text="Edytuj zadanie" onAction="#handleEditTask"/>
-                <Button text="Usuń zadanie" onAction="#handleDeleteTask"/>
+                <Button text="Dodaj zadanie" onAction="#handleAddTask" styleClass="primary-button"/>
+                <Button text="Edytuj zadanie" onAction="#handleEditTask" styleClass="primary-button"/>
+                <Button text="Usuń zadanie" onAction="#handleDeleteTask" styleClass="primary-button"/>
             </HBox>
         </VBox>
     </center>
@@ -65,7 +66,7 @@
     <bottom>
         <Button text="Powrót do Dashboardu"
                 onAction="#goBackToDashboard"
-                style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 10;"
+                styleClass="return-button"
                 BorderPane.alignment="CENTER"/>
     </bottom>
 </BorderPane>

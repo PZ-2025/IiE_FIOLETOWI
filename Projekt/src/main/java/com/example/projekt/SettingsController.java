@@ -9,6 +9,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -54,28 +56,56 @@ public class SettingsController {
 
     @FXML
     public void initialize() {
-        // Inicjalizacja motywów
         themeChoiceBox.getItems().addAll("Jasny", "Ciemny", "Domyślny");
-        themeChoiceBox.setValue("Domyślny");
-        themeChoiceBox.setOnAction(e -> applyTheme(themeChoiceBox.getValue()));
+        themeChoiceBox.setValue(AppSettings.getTheme());
 
-        // Konfiguracja suwaka czcionki - tylko liczby całkowite
         fontSizeChoiceBox.getItems().addAll(10, 12, 14, 16, 18, 20, 24);
-        fontSizeChoiceBox.setValue(14); // domyślny rozmiar
+        fontSizeChoiceBox.setValue(AppSettings.getFontSize());
 
-        fontSizeChoiceBox.setOnAction(e -> {
-            int fontSize = fontSizeChoiceBox.getValue();
-            applyFontSize(fontSize);
+        // Wywołaj style dopiero, gdy VBox pojawi się na ekranie i ma przypisaną scenę
+        rootVBox.sceneProperty().addListener((obs, oldScene, newScene) -> {
+            if (newScene != null) {
+                applyTheme(themeChoiceBox.getValue());
+                applyFontSize(fontSizeChoiceBox.getValue());
+            }
         });
 
+        themeChoiceBox.setOnAction(e -> {
+            String selected = themeChoiceBox.getValue();
+            applyTheme(selected);
+            AppSettings.setTheme(selected);
+        });
 
+        fontSizeChoiceBox.setOnAction(e -> {
+            int size = fontSizeChoiceBox.getValue();
+            applyFontSize(size);
+            AppSettings.setFontSize(size);
+        });
     }
+
 
 
     private void applyTheme(String theme) {
-        // Placeholder - tutaj można zmieniać style CSS
-        System.out.println("Wybrano motyw: " + theme);
+        Scene scene = themeChoiceBox.getScene();
+        if (scene == null) return;
+
+        scene.getStylesheets().clear();
+
+        String cssFile = switch (theme) {
+            case "Jasny" -> "/styles/themes/light.css";
+            case "Ciemny" -> "/styles/themes/dark.css";
+            default -> "/styles/themes/default.css";
+        };
+
+        URL cssUrl = getClass().getResource(cssFile);
+        if (cssUrl != null) {
+            scene.getStylesheets().add(cssUrl.toExternalForm());
+        } else {
+            System.err.println("Nie znaleziono pliku stylu: " + cssFile);
+        }
     }
+
+
 
     private void applyFontSize(double size) {
         Scene scene = themeChoiceBox.getScene();

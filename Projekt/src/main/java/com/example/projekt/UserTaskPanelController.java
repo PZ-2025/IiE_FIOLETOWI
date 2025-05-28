@@ -11,8 +11,10 @@ import javafx.scene.Parent;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
+import java.net.URL;
 import java.sql.*;
 import java.util.*;
 import java.util.logging.Level;
@@ -35,12 +37,20 @@ public class UserTaskPanelController {
     @FXML private ListView<String> historyList;
     @FXML private TextArea commentTextArea;
 
+    @FXML private BorderPane userTaskRoot;
+
     private static final Logger LOGGER = Logger.getLogger(UserTaskPanelController.class.getName());
     private Task selectedTask;
     private Map<String, Integer> statusOrder = new LinkedHashMap<>();
 
     @FXML
     public void initialize() {
+        userTaskRoot.sceneProperty().addListener((obs, oldScene, newScene) -> {
+            if (newScene != null) {
+                applyTheme(AppSettings.getTheme());
+                applyFontSize(AppSettings.getFontSize());
+            }
+        });
         // Inicjalizacja kolejności statusów
         initializeStatusOrder();
 
@@ -388,4 +398,26 @@ public class UserTaskPanelController {
         alert.setContentText(message);
         alert.showAndWait();
     }
+    private void applyTheme(String theme) {
+        Scene scene = userTaskRoot.getScene();
+        if (scene == null) return;
+
+        scene.getStylesheets().clear();
+
+        String cssFile = switch (theme) {
+            case "Jasny" -> "/styles/themes/light.css";
+            case "Ciemny" -> "/styles/themes/dark.css";
+            default -> "/styles/themes/default.css";
+        };
+
+        URL cssUrl = getClass().getResource(cssFile);
+        if (cssUrl != null) {
+            scene.getStylesheets().add(cssUrl.toExternalForm());
+        }
+    }
+
+    private void applyFontSize(double size) {
+        userTaskRoot.getScene().getRoot().setStyle("-fx-font-size: " + (int) size + "px;");
+    }
+
 }

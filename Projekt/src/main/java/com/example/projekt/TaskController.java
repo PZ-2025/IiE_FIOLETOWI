@@ -10,8 +10,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
+import java.net.URL;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.logging.Level;
@@ -35,6 +37,8 @@ public class TaskController {
     @FXML private DatePicker startDatePicker;
     @FXML private DatePicker endDatePicker;
 
+    @FXML private BorderPane taskRoot;
+
     private ObservableList<Task> taskList = FXCollections.observableArrayList();
     private ObservableList<String> statusList = FXCollections.observableArrayList();
     private ObservableList<String> priorityList = FXCollections.observableArrayList();
@@ -46,6 +50,14 @@ public class TaskController {
 
     @FXML
     public void initialize() {
+
+        taskRoot.sceneProperty().addListener((obs, oldScene, newScene) -> {
+            if (newScene != null) {
+                applyTheme(AppSettings.getTheme());
+                applyFontSize(AppSettings.getFontSize());
+            }
+        });
+
         // Konfiguracja tabeli
         configureTableColumns();
 
@@ -312,5 +324,26 @@ public class TaskController {
             LOGGER.log(Level.SEVERE, "Błąd powrotu do dashboardu", e);
             showAlert("Błąd", "Nie udało się przejść do dashboardu");
         }
+    }
+    private void applyTheme(String theme) {
+        Scene scene = taskRoot.getScene();
+        if (scene == null) return;
+
+        scene.getStylesheets().clear();
+
+        String cssFile = switch (theme) {
+            case "Jasny" -> "/styles/themes/light.css";
+            case "Ciemny" -> "/styles/themes/dark.css";
+            default -> "/styles/themes/default.css";
+        };
+
+        URL cssUrl = getClass().getResource(cssFile);
+        if (cssUrl != null) {
+            scene.getStylesheets().add(cssUrl.toExternalForm());
+        }
+    }
+
+    private void applyFontSize(double size) {
+        taskRoot.getScene().getRoot().setStyle("-fx-font-size: " + (int) size + "px;");
     }
 }

@@ -12,10 +12,12 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.net.URL;
 import java.sql.*;
 import java.util.function.UnaryOperator;
 import java.util.logging.Level;
@@ -37,11 +39,20 @@ public class ProductManagementController {
     @FXML private TextField limitField;
     @FXML private ComboBox<ProductType> typComboBox;
 
+    @FXML private VBox productRoot;
+
     private Product selectedProduct = null;
     private ObservableList<ProductType> productTypes = FXCollections.observableArrayList();
 
     @FXML
     public void initialize() {
+        productRoot.sceneProperty().addListener((obs, oldScene, newScene) -> {
+            if (newScene != null) {
+                applyTheme(AppSettings.getTheme());
+                applyFontSize(AppSettings.getFontSize());
+            }
+        });
+
         productTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         nazwaColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getNazwa()));
@@ -308,5 +319,25 @@ public class ProductManagementController {
         alert.setHeaderText(null);
         alert.setContentText(content);
         alert.showAndWait();
+    }
+    private void applyTheme(String theme) {
+        Scene scene = productRoot.getScene();
+        if (scene == null) return;
+
+        scene.getStylesheets().clear();
+        String cssFile = switch (theme) {
+            case "Jasny" -> "/styles/themes/light.css";
+            case "Ciemny" -> "/styles/themes/dark.css";
+            default -> "/styles/themes/default.css";
+        };
+
+        URL cssUrl = getClass().getResource(cssFile);
+        if (cssUrl != null) {
+            scene.getStylesheets().add(cssUrl.toExternalForm());
+        }
+    }
+
+    private void applyFontSize(double size) {
+        productRoot.getScene().getRoot().setStyle("-fx-font-size: " + (int) size + "px;");
     }
 }

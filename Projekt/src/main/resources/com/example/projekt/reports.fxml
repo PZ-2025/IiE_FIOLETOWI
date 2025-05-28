@@ -6,44 +6,43 @@
 <VBox xmlns="http://javafx.com/javafx/8"
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.example.projekt.ReportController"
+      fx:id="reportRoot"
       spacing="20"
-      style="-fx-background-color: linear-gradient(to bottom right, #6a1b9a, #9c27b0);">
+      styleClass="root">
 
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
 
-
-
-
-
+    <!-- Nagłówek -->
     <Label text="Raporty"
-           style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: white;"/>
+           styleClass="header-label"/>
 
     <!-- Wybór głównego typu raportu -->
     <HBox spacing="10">
         <ComboBox fx:id="mainReportTypeComboBox"
                   promptText="Wybierz typ raportu"
-                  style="-fx-background-color: white;"/>
+                  styleClass="combo-box"/>
     </HBox>
 
     <!-- Dynamiczna sekcja filtrów -->
-    <VBox fx:id="filterContainer"
-          spacing="10"/>
+    <VBox fx:id="filterContainer" spacing="10"/>
 
     <!-- Przycisk generowania raportu -->
     <HBox spacing="10">
         <Button text="Generuj raport"
                 onAction="#generateReport"
-                style="-fx-background-color: #2196F3; -fx-text-fill: white;"/>
+                styleClass="primary-button"/>
         <Button text="Zapisz do PDF"
                 onAction="#saveReportAsPDF"
-                style="-fx-background-color: #4CAF50; -fx-text-fill: white;"/>
+                styleClass="return-button"/>
     </HBox>
 
     <!-- Podgląd raportu -->
-    <ScrollPane fitToWidth="true" style="-fx-background-color: white;">
+    <ScrollPane fitToWidth="true" styleClass="scroll-pane">
         <VBox fx:id="reportPreviewContainer" spacing="10">
             <TableView fx:id="reportTableView">
-                <columns>
-                </columns>
+                <columns/>
             </TableView>
         </VBox>
     </ScrollPane>
@@ -51,8 +50,6 @@
     <!-- Przycisk powrotu -->
     <Button text="Powrót do menu głównego"
             onAction="#goBackToDashboard"
-            style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-padding: 10; -fx-font-weight: bold;"
+            styleClass="return-button"
             alignment="CENTER"/>
-
-
 </VBox>

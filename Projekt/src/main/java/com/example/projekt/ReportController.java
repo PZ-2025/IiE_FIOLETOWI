@@ -17,6 +17,7 @@ import com.example.reportlib.PDFGenerator;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.sql.*;
 import java.sql.Date;
 import java.time.LocalDate;
@@ -29,6 +30,8 @@ public class ReportController {
     @FXML private VBox reportPreviewContainer;
     @FXML private TableView<Map<String, String>> reportTableView;
 
+    @FXML private VBox reportRoot;
+
     private final Map<String, Control> dynamicFilters = new HashMap<>();
     private String currentReportType;
     private List<Map<String, String>> lastReportData;
@@ -36,8 +39,17 @@ public class ReportController {
     private final Map<String, String> headerKeyMap = new LinkedHashMap<>();
 
 
+
+
     @FXML
     public void initialize() {
+        reportRoot.sceneProperty().addListener((obs, oldScene, newScene) -> {
+            if (newScene != null) {
+                applyTheme(AppSettings.getTheme());
+                applyFontSize(AppSettings.getFontSize());
+            }
+        });
+
         mainReportTypeComboBox.getItems().addAll("Transakcje", "Zadania", "Produkty");
         mainReportTypeComboBox.setOnAction(e -> {
             currentReportType = mainReportTypeComboBox.getValue();
@@ -471,6 +483,26 @@ public class ReportController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    private void applyTheme(String theme) {
+        Scene scene = reportRoot.getScene();
+        if (scene == null) return;
+
+        scene.getStylesheets().clear();
+        String cssFile = switch (theme) {
+            case "Jasny" -> "/styles/themes/light.css";
+            case "Ciemny" -> "/styles/themes/dark.css";
+            default -> "/styles/themes/default.css";
+        };
+
+        URL cssUrl = getClass().getResource(cssFile);
+        if (cssUrl != null) {
+            scene.getStylesheets().add(cssUrl.toExternalForm());
+        }
+    }
+
+    private void applyFontSize(double size) {
+        reportRoot.getScene().getRoot().setStyle("-fx-font-size: " + (int) size + "px;");
     }
 
 }

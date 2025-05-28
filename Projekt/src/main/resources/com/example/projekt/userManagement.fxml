@@ -4,47 +4,46 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox spacing="20" style="-fx-background-color: linear-gradient(to bottom right, #6a1b9a, #9c27b0);" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.projekt.UserManagementController">
+<VBox spacing="20"
+      xmlns="http://javafx.com/javafx/17.0.12"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.projekt.UserManagementController"
+      fx:id="userRoot"
+      styleClass="root">
 
     <padding>
-        <Insets bottom="20" left="20" right="20" top="20" />
+        <Insets bottom="20" left="20" right="20" top="20"/>
     </padding>
 
-    <Label style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: white;" text="Panel administratora" />
+    <Label text="Panel administratora" styleClass="header-label"/>
 
     <HBox alignment="CENTER_LEFT" spacing="10">
-        <TextField fx:id="usernameField" promptText="Login" style="-fx-background-color: white;" HBox.hgrow="ALWAYS" />
-
-        <PasswordField fx:id="passwordField" promptText="Hasło" style="-fx-background-color: white;" HBox.hgrow="ALWAYS" />
-
-        <ComboBox fx:id="roleComboBox" promptText="Rola" style="-fx-background-color: white;" HBox.hgrow="ALWAYS" />
+        <TextField fx:id="usernameField" promptText="Login" styleClass="input-field" HBox.hgrow="ALWAYS"/>
+        <PasswordField fx:id="passwordField" promptText="Hasło" styleClass="input-field" HBox.hgrow="ALWAYS"/>
+        <ComboBox fx:id="roleComboBox" promptText="Rola" styleClass="combo-box" HBox.hgrow="ALWAYS"/>
     </HBox>
 
     <HBox alignment="CENTER_LEFT" spacing="10">
-        <TextField fx:id="firstNameField" promptText="Imię" style="-fx-background-color: white;" />
-
-        <TextField fx:id="lastNameField" promptText="Nazwisko" style="-fx-background-color: white;" />
-
-        <TextField fx:id="salaryField" promptText="Płaca" style="-fx-background-color: white;" />
-        <ComboBox fx:id="groupComboBox" promptText="Grupa" style="-fx-background-color: white;" HBox.hgrow="ALWAYS" />
-
-        <Button fx:id="createUserButton" onAction="#createUser" style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-font-weight: bold;" text="Dodaj użytkownika" />
-        <Button onAction="#clearForm" style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-font-weight: bold;" text="Wyczyść dane" />
+        <TextField fx:id="firstNameField" promptText="Imię" styleClass="input-field"/>
+        <TextField fx:id="lastNameField" promptText="Nazwisko" styleClass="input-field"/>
+        <TextField fx:id="salaryField" promptText="Płaca" styleClass="input-field"/>
+        <ComboBox fx:id="groupComboBox" promptText="Grupa" styleClass="combo-box" HBox.hgrow="ALWAYS"/>
+        <Button fx:id="createUserButton" onAction="#createUser" text="Dodaj użytkownika" styleClass="primary-button"/>
+        <Button onAction="#clearForm" text="Wyczyść dane" styleClass="primary-button"/>
     </HBox>
 
-    <TableView fx:id="usersTable" style="-fx-background-color: rgba(255,255,255,0.9);" VBox.vgrow="ALWAYS">
+    <TableView fx:id="usersTable" VBox.vgrow="ALWAYS" styleClass="table-view">
         <columns>
-            <TableColumn fx:id="imieColumn" text="Imię" />
-            <TableColumn fx:id="nazwiskoColumn" text="Nazwisko" />
-            <TableColumn fx:id="loginColumn" text="Login" />
-            <TableColumn fx:id="placaColumn" text="Płaca" />
-            <TableColumn fx:id="rolaColumn" text="Rola" />
+            <TableColumn fx:id="imieColumn" text="Imię"/>
+            <TableColumn fx:id="nazwiskoColumn" text="Nazwisko"/>
+            <TableColumn fx:id="loginColumn" text="Login"/>
+            <TableColumn fx:id="placaColumn" text="Płaca"/>
+            <TableColumn fx:id="rolaColumn" text="Rola"/>
         </columns>
     </TableView>
 
     <HBox alignment="BOTTOM_LEFT" prefWidth="598.0" spacing="10">
-        <Button minHeight="40" onAction="#goToDashboard" prefHeight="40" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold;" text="Powrót do Dashboardu" />
-
-        <Button minHeight="40" onAction="#handleUpdateUser" prefHeight="40" style="-fx-background-color: #FF9800; -fx-text-fill: white; -fx-font-weight: bold;" text="Zaktualizuj użytkownika" />
+        <Button minHeight="40" prefHeight="40" onAction="#goToDashboard" text="Powrót do Dashboardu" styleClass="return-button"/>
+        <Button minHeight="40" prefHeight="40" onAction="#handleUpdateUser" text="Zaktualizuj użytkownika" styleClass="update-button"/>
     </HBox>
 </VBox>

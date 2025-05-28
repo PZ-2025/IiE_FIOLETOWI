@@ -10,10 +10,12 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 
 import java.io.IOException;
+import java.net.URL;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -67,6 +69,10 @@ public class UserManagementController {
     @FXML
     private TextField salaryField;
 
+    @FXML
+    private VBox userRoot;
+
+
     private ObservableList<Role> roles = FXCollections.observableArrayList();
     private ObservableList<Group> groups = FXCollections.observableArrayList();
 
@@ -74,6 +80,13 @@ public class UserManagementController {
 
     @FXML
     public void initialize() {
+        userRoot.sceneProperty().addListener((obs, oldScene, newScene) -> {
+            if (newScene != null) {
+                applyTheme(AppSettings.getTheme());
+                applyFontSize(AppSettings.getFontSize());
+            }
+        });
+
         imieColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getImie()));
         nazwiskoColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNazwisko()));
         loginColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getLogin()));
@@ -392,6 +405,27 @@ public class UserManagementController {
             return;
         }
         updateUser();
+    }
+    private void applyTheme(String theme) {
+        Scene scene = userRoot.getScene();
+        if (scene == null) return;
+
+        scene.getStylesheets().clear();
+
+        String cssFile = switch (theme) {
+            case "Jasny" -> "/styles/themes/light.css";
+            case "Ciemny" -> "/styles/themes/dark.css";
+            default -> "/styles/themes/default.css";
+        };
+
+        URL cssUrl = getClass().getResource(cssFile);
+        if (cssUrl != null) {
+            scene.getStylesheets().add(cssUrl.toExternalForm());
+        }
+    }
+
+    private void applyFontSize(double size) {
+        userRoot.getScene().getRoot().setStyle("-fx-font-size: " + (int) size + "px;");
     }
 
 }
