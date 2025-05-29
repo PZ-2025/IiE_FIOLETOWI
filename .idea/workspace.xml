@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="93580640-a4f6-4848-877d-83f2d9fe0546" name="Changes" comment="Nie wiem">
+    <list default="true" id="93580640-a4f6-4848-877d-83f2d9fe0546" name="Changes" comment="Panel użytkownika">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/TaskController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/TaskController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/UserTaskPanelController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/UserTaskPanelController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -150,7 +149,15 @@
       <option name="project" value="LOCAL" />
       <updated>1748528171593</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Panel użytkownika">
+      <option name="closed" value="true" />
+      <created>1748534285847</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1748534285847</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -178,13 +185,13 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Pierwsze moduły" />
-    <MESSAGE value="Panel użytkownika" />
     <MESSAGE value="Kierownik" />
     <MESSAGE value="CRUD produkty" />
     <MESSAGE value="Nowa tabela i triggery" />
     <MESSAGE value="Nie wiem co się dzieje" />
     <MESSAGE value="Przekierowanie użytkownika do odpowiedniego panelu po zalogowaniu" />
     <MESSAGE value="Nie wiem" />
-    <option name="LAST_COMMIT_MESSAGE" value="Nie wiem" />
+    <MESSAGE value="Panel użytkownika" />
+    <option name="LAST_COMMIT_MESSAGE" value="Panel użytkownika" />
   </component>
 </project>

@@ -187,11 +187,11 @@ public class TaskController {
                        z.data_rozpoczecia, z.data_zakonczenia, z.komentarz, pk.nazwa AS produkt, k.nazwa AS kierunek,
                        CONCAT(pr.imie, ' ', pr.nazwisko) AS pracownik
                 FROM zadania z
-                JOIN statusy s ON z.id_statusu = s.id_statusu
-                JOIN priorytety p ON z.id_priorytetu = p.id_priorytetu
-                JOIN pracownicy pr ON z.id_pracownika = pr.id_pracownika
-                JOIN produkty pk ON z.id_produktu = pk.id_produktu
-                JOIN kierunki k ON z.id_kierunku = k.id_kierunku
+                LEFT JOIN statusy s ON z.id_statusu = s.id_statusu
+                LEFT JOIN priorytety p ON z.id_priorytetu = p.id_priorytetu
+                LEFT JOIN pracownicy pr ON z.id_pracownika = pr.id_pracownika
+                LEFT JOIN produkty pk ON z.id_produktu = pk.id_produktu
+                LEFT JOIN kierunki k ON z.id_kierunku = k.id_kierunku
             """;
 
             ResultSet rs = conn.createStatement().executeQuery(query);
@@ -231,18 +231,18 @@ public class TaskController {
 
             String sql = """
                 INSERT INTO zadania (id_pracownika, nazwa, id_statusu, id_priorytetu, data_rozpoczecia, data_zakonczenia, komentarz,  id_produktu, id_kierunku)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
             """;
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setInt(1, employeeId);
             stmt.setString(2, nameField.getText());
             stmt.setInt(3, statusId);
             stmt.setInt(4, priorityId);
-            stmt.setInt(5, productId);
-            stmt.setInt(6, directionId);
-            stmt.setString(7, nameField.getText());
-            stmt.setDate(8, Date.valueOf(startDatePicker.getValue()));
-            stmt.setDate(9, Date.valueOf(endDatePicker.getValue()));
+            stmt.setDate(5, Date.valueOf(startDatePicker.getValue()));
+            stmt.setDate(6, Date.valueOf(endDatePicker.getValue()));
+            stmt.setString(7, commentField.getText());
+            stmt.setInt(8, productId);
+            stmt.setInt(9, directionId);
             stmt.executeUpdate();
 
             loadData();
@@ -282,12 +282,12 @@ public class TaskController {
             stmt.setString(1, nameField.getText());
             stmt.setInt(2, statusId);
             stmt.setInt(3, priorityId);
-            stmt.setInt(4, productId);
-            stmt.setInt(5, directionId);
-            stmt.setDate(6, Date.valueOf(startDatePicker.getValue()));
-            stmt.setDate(7, Date.valueOf(endDatePicker.getValue()));
-            stmt.setString(8, commentField.getText());
-            stmt.setInt(9, employeeId);
+            stmt.setDate(4, Date.valueOf(startDatePicker.getValue()));
+            stmt.setDate(5, Date.valueOf(endDatePicker.getValue()));
+            stmt.setString(6, commentField.getText());
+            stmt.setInt(7, employeeId);
+            stmt.setInt(8, productId);
+            stmt.setInt(9, directionId);
             stmt.setInt(10, selected.getId());
             stmt.executeUpdate();
 
@@ -334,7 +334,7 @@ public class TaskController {
     }
 
     private int getIdFromTable(Connection conn, String table, String name) throws SQLException {
-        String baseName = table.endsWith("y") ? table.substring(0, table.length() - 1) + "u" : table;
+        String baseName = table.endsWith("y") || table.endsWith("i") ? table.substring(0, table.length() - 1) + "u" : table;
         String columnName = "id_" + baseName;
 
         String sql = "SELECT " + columnName + " FROM " + table + " WHERE nazwa = ?";
