@@ -22,11 +22,11 @@ public class Task {
         this.priorytet = new SimpleStringProperty(priorytet);
         this.data = new SimpleStringProperty(data);
         this.koniec = new SimpleStringProperty("");
-        this.pracownik = new SimpleStringProperty("");
+        this.pracownik = new SimpleStringProperty(pracownik);
         this.komentarz = new SimpleStringProperty(komentarz);
         this.produkt = new SimpleStringProperty(produkt);
         this.kierunek = new SimpleStringProperty(kierunek);
-        this.ilosc = new SimpleStringProperty();
+        this.ilosc = new SimpleStringProperty(ilosc);
     }
 
     // Gettery

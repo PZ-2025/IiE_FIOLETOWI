@@ -38,9 +38,6 @@ public class ReportController {
     private Map<String, Integer> lastChartData;
     private final Map<String, String> headerKeyMap = new LinkedHashMap<>();
 
-
-
-
     @FXML
     public void initialize() {
         reportRoot.sceneProperty().addListener((obs, oldScene, newScene) -> {

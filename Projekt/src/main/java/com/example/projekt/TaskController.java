@@ -209,9 +209,9 @@ public class TaskController {
                         rs.getString("status"),
                         rs.getString("priorytet"),
                         rs.getString("data_rozpoczecia"),
-                        rs.getString("komentarz"),
-                        rs.getString("pracownik"),
                         rs.getString("produkt"),
+                        rs.getString("pracownik"),
+                        rs.getString("komentarz"),
                         rs.getString("ilosc"),
                         rs.getString("kierunek")
                 );
@@ -297,9 +297,9 @@ public class TaskController {
             stmt.setString(6, commentField.getText());
             stmt.setInt(7, employeeId);
             stmt.setInt(8, productId);
-            stmt.setString(8, quantityField.getText());
-            stmt.setInt(9, directionId);
-            stmt.setInt(10, selected.getId());
+            stmt.setString(9, quantityField.getText());
+            stmt.setInt(10, directionId);
+            stmt.setInt(11, selected.getId());
             stmt.executeUpdate();
 
             loadData();

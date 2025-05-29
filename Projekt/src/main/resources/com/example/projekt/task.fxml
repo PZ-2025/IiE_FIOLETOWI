@@ -48,7 +48,8 @@
 
                 <Label text="Priorytet:" styleClass="label"/>
                 <ComboBox fx:id="priorityBox" styleClass="combo-box"/>
-
+            </HBox>
+            <HBox spacing="10">
                 <Label text="Produkt:" styleClass="label"/>
                 <ComboBox fx:id="productBox" styleClass="combo-box"/>
 

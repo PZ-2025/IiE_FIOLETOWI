@@ -82,8 +82,6 @@ public class SettingsController {
         });
     }
 
-
-
     private void applyTheme(String theme) {
         Scene scene = themeChoiceBox.getScene();
         if (scene == null) return;
