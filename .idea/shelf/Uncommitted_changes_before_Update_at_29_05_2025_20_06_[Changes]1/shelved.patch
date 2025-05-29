@@ -1,0 +1,18 @@
+Index: user-settings.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>#Ustawienia aplikacji\r\n#Thu May 29 00:18:52 CEST 2025\r\nfontSize=20\r\ntheme=Ciemny\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>ISO-8859-1
+===================================================================
+diff --git a/user-settings.properties b/user-settings.properties
+--- a/user-settings.properties	(revision fb0041cdfb1eb4840b580fcf3381e0213ec16a55)
++++ b/user-settings.properties	(date 1748518031977)
+@@ -1,4 +1,4 @@
+ #Ustawienia aplikacji
+-#Thu May 29 00:18:52 CEST 2025
+-fontSize=20
+-theme=Ciemny
++#Thu May 29 13:27:11 CEST 2025
++fontSize=14
++theme=Jasny

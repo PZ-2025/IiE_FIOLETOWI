@@ -75,4 +75,13 @@
             style="-fx-background-color: #7b1fa2; -fx-text-fill: white; -fx-font-size: 14px;
                -fx-font-weight: bold; -fx-padding: 10 20; -fx-border-radius: 5;
                -fx-background-radius: 5; -fx-cursor: hand;"/>
+
+    <!-- Wylogowanie -->
+    <Button fx:id="logoutButton"
+            text="Wyloguj"
+            onAction="#handleLogout"
+            style="-fx-background-color: #7b1fa2; -fx-text-fill: white; -fx-font-size: 14px;
+               -fx-font-weight: bold; -fx-padding: 10 20; -fx-border-radius: 5;
+               -fx-background-radius: 5; -fx-cursor: hand;"/>
+
 </VBox>

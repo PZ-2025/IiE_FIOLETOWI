@@ -179,5 +179,20 @@ public class DashboardController {
         }
     }
 
+    @FXML
+    private void handleLogout(ActionEvent event) {
+        // 1. Wyczyszczenie sesji użytkownika
+        UserSession.clearSession();
 
+        // 2. Przełączenie sceny na ekran logowania
+        try {
+            Parent loginRoot = FXMLLoader.load(getClass().getResource("/com/example/projekt/login.fxml"));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(loginRoot));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            // Można dodać komunikat błędu do użytkownika
+        }
+    }
 }
