@@ -135,10 +135,10 @@ public class UserTaskPanelController {
     }
 
     private void configureTaskTable() {
-        nameColumn.setCellValueFactory(data -> data.getValue().nazwaProperty());
-        statusColumn.setCellValueFactory(data -> data.getValue().statusProperty());
-        priorityColumn.setCellValueFactory(data -> data.getValue().priorytetProperty());
-        dateColumn.setCellValueFactory(data -> data.getValue().dataProperty());
+        nameColumn.setCellValueFactory(cellData -> cellData.getValue().nazwaProperty());
+        statusColumn.setCellValueFactory(cellData -> cellData.getValue().statusProperty());
+        priorityColumn.setCellValueFactory(cellData -> cellData.getValue().priorytetProperty());
+        dateColumn.setCellValueFactory(cellData -> cellData.getValue().dataProperty());
     }
 
     private void updateAvailableStatuses(String currentStatus) {
@@ -184,18 +184,22 @@ public class UserTaskPanelController {
     }
 
     private void loadTasks() {
-        ObservableList<Task> taskList = FXCollections.observableArrayList();
+        ObservableList<Task> tasks = FXCollections.observableArrayList();
         String sql = """
-            SELECT z.id_zadania, z.nazwa, s.nazwa AS status, p.nazwa AS priorytet,
-                       z.data_rozpoczecia, z.data_zakonczenia, z.komentarz, pk.nazwa AS produkt, k.nazwa AS kierunek
-            FROM zadania z
-            LEFT JOIN statusy s ON z.id_statusu = s.id_statusu
-            LEFT JOIN priorytety p ON z.id_priorytetu = p.id_priorytetu
-            LEFT JOIN produkty pk ON z.id_produktu = pk.id_produktu
-            LEFT JOIN kierunki k ON z.id_kierunku = k.id_kierunku
-            WHERE z.id_pracownika = ? 
-            AND s.nazwa != 'Zakończone'
-            """;
+        SELECT 
+            z.id_zadania, z.nazwa, s.nazwa AS status, p.nazwa AS priorytet,
+            z.data_rozpoczecia, z.komentarz, pk.nazwa AS produkt, 
+            z.ilosc, k.nazwa AS kierunek, 
+            CONCAT(pr.imie, ' ', pr.nazwisko) AS pracownik
+        FROM zadania z
+        LEFT JOIN statusy s ON z.id_statusu = s.id_statusu
+        LEFT JOIN priorytety p ON z.id_priorytetu = p.id_priorytetu
+        LEFT JOIN produkty pk ON z.id_produktu = pk.id_produktu
+        LEFT JOIN kierunki k ON z.id_kierunku = k.id_kierunku
+        LEFT JOIN pracownicy pr ON z.id_pracownika = pr.id_pracownika
+        WHERE z.id_pracownika = ? 
+        AND s.nazwa != 'Zakończone'
+        """;
 
         try (Connection conn = DatabaseConnector.connect();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -204,26 +208,37 @@ public class UserTaskPanelController {
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
-                taskList.add(new Task(
+                // ilosc może być NULL, więc sprawdzamy
+                String ilosc = "";
+                int iloscInt = rs.getInt("ilosc");
+                if (!rs.wasNull()) {
+                    ilosc = String.valueOf(iloscInt);
+                }
+
+                Task task = new Task(
                         rs.getInt("id_zadania"),
                         rs.getString("nazwa"),
                         rs.getString("status"),
                         rs.getString("priorytet"),
                         rs.getDate("data_rozpoczecia") != null ? rs.getDate("data_rozpoczecia").toString() : "",
-                        rs.getString("komentarz"),
-                        rs.getString("pracownik"),
                         rs.getString("produkt"),
-                        rs.getString("ilosc"),
-                        rs.getString("kierunek")
-                ));
+                        rs.getString("kierunek"),
+                        rs.getString("komentarz") != null ? rs.getString("komentarz") : "",
+                        ilosc,
+                        rs.getString("pracownik")
+                );
+                tasks.add(task);
             }
-            taskTable.setItems(taskList);
+
+            taskTable.setItems(tasks);
 
         } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "Błąd ładowania zadań", e);
-            showAlert("Błąd", "Nie udało się załadować zadań");
+            e.printStackTrace();
+            showAlert("Błąd", "Nie udało się pobrać zadań.");
         }
     }
+
+
 
     private void loadStatuses() {
         try (Connection conn = DatabaseConnector.connect();
