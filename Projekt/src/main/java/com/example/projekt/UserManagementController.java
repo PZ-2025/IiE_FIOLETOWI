@@ -11,9 +11,11 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
+import javafx.util.Callback;
 
 import java.io.IOException;
 import java.net.URL;
@@ -64,6 +66,19 @@ public class UserManagementController {
         placaColumn.setCellValueFactory(cellData -> new SimpleDoubleProperty(cellData.getValue().getPlaca()).asObject());
         rolaColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getRole()));
 
+        // Formatowanie kolumny z płacą do 2 miejsc po przecinku
+        placaColumn.setCellFactory(column -> new TableCell<User, Double>() {
+            @Override
+            protected void updateItem(Double item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(String.format("%.2f zł", item));
+                }
+            }
+        });
+
         roles = loadRolesFromDatabase();
         groups = loadGroupsFromDatabase();
         roleComboBox.setItems(roles);
@@ -103,7 +118,7 @@ public class UserManagementController {
         usernameField.setText(user.getLogin());
         firstNameField.setText(user.getImie());
         lastNameField.setText(user.getNazwisko());
-        salaryField.setText(String.valueOf(user.getPlaca()));
+        salaryField.setText(String.format("%.2f", user.getPlaca()));
 
         roleComboBox.getSelectionModel().select(
                 roles.stream().filter(r -> r.getId() == user.getIdRoli()).findFirst().orElse(null)
