@@ -65,8 +65,6 @@ public class LoginController {
         }
     }
 
-
-
     /**
      * Uwierzytelnia użytkownika na podstawie loginu i hasła w bazie danych.
      *
@@ -92,7 +90,6 @@ public class LoginController {
                 if (rs.next()) {
                     String storedHashedPassword = rs.getString("haslo");
 
-                    // Weryfikujemy hasło
                     if (PasswordHasher.verifyPassword(password, storedHashedPassword)) {
                         int id = rs.getInt("id_pracownika");
                         String imie = rs.getString("imie");
@@ -112,8 +109,6 @@ public class LoginController {
         }
         return null;
     }
-
-
 
     /**
      * Przekierowuje zalogowanego użytkownika do panelu głównego.

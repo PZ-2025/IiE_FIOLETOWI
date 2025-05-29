@@ -2,9 +2,12 @@ package com.example.projekt;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
+
 import java.util.Objects;
 
 /**
@@ -14,8 +17,6 @@ import java.util.Objects;
 public class Main extends Application {
     private static final String LOGIN_VIEW_PATH = "/com/example/projekt/login.fxml";
     private static final String LOGIN_WINDOW_TITLE = "Ekran logowania";
-    private static final int WINDOW_WIDTH = 1000;
-    private static final int WINDOW_HEIGHT = 600;
 
     /**
      * Punkt wejścia dla aplikacji JavaFX.
@@ -29,10 +30,23 @@ public class Main extends Application {
             Parent root = FXMLLoader.load(Objects.requireNonNull(
                     getClass().getResource(LOGIN_VIEW_PATH)));
 
+            // Pobierz rozmiar dostępnego ekranu (bez paska zadań itp.)
+            Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+
+            Scene scene = new Scene(root, screenBounds.getWidth(), screenBounds.getHeight());
+
             primaryStage.setTitle(LOGIN_WINDOW_TITLE);
-            primaryStage.setScene(new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT));
-            primaryStage.setMinWidth(WINDOW_WIDTH);
-            primaryStage.setMinHeight(WINDOW_HEIGHT);
+            primaryStage.setScene(scene);
+
+            // Ustaw rozmiar i pozycję okna na cały ekran
+            primaryStage.setX(screenBounds.getMinX());
+            primaryStage.setY(screenBounds.getMinY());
+            primaryStage.setWidth(screenBounds.getWidth());
+            primaryStage.setHeight(screenBounds.getHeight());
+
+            // Opcjonalnie: zablokuj zmianę rozmiaru
+            // primaryStage.setResizable(false);
+
             primaryStage.show();
 
         } catch (Exception e) {

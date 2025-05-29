@@ -10,6 +10,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
@@ -33,14 +34,16 @@ public class UserManagementController {
      */
 
     private static final Logger LOGGER = Logger.getLogger(UserManagementController.class.getName());
-    private static final double WINDOW_WIDTH = 800;
-    private static final double WINDOW_HEIGHT = 600;
     private static final String DASHBOARD_VIEW_PATH = "/com/example/projekt/dashboard.fxml";
     private static final String DASHBOARD_TITLE = "Dashboard";
 
+
     @FXML
     private Button createUserButton;
-
+    @FXML
+    private Label adminLabel;
+    @FXML
+    private Label managerLabel;
     @FXML
     private TableView<User> usersTable;
     @FXML
@@ -53,7 +56,6 @@ public class UserManagementController {
     private TableColumn<User, Double> placaColumn;
     @FXML
     private TableColumn<User, String> rolaColumn;
-
     @FXML
     private TextField usernameField;
     @FXML
@@ -228,6 +230,8 @@ public class UserManagementController {
             lastNameField.setVisible(true);
             salaryField.setVisible(true);
             groupComboBox.setVisible(true);
+            adminLabel.setVisible(true);
+            managerLabel.setVisible(false);
 
         } else if (currentUser.isManager()) {
             usernameField.setVisible(false);
@@ -237,6 +241,8 @@ public class UserManagementController {
             lastNameField.setVisible(false);
             salaryField.setVisible(true);
             groupComboBox.setVisible(true);
+            adminLabel.setVisible(false);
+            managerLabel.setVisible(true);
 
         }
     }
@@ -382,7 +388,6 @@ public class UserManagementController {
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setTitle(DASHBOARD_TITLE);
-            stage.setScene(new Scene(dashboardRoot, WINDOW_WIDTH, WINDOW_HEIGHT));
             stage.show();
 
         } catch (IOException | NullPointerException e) {

@@ -15,21 +15,25 @@
         <Insets bottom="20" left="20" right="20" top="20"/>
     </padding>
 
-    <Label text="Panel administratora" styleClass="header-label"/>
+    <StackPane>
+        <Label fx:id="adminLabel" text="Panel administratora" styleClass="header-label"/>
+        <Label fx:id="managerLabel" text="Panel menagera" styleClass="header-label"/>
+    </StackPane>
 
     <HBox alignment="CENTER_LEFT" spacing="10">
         <TextField fx:id="usernameField" promptText="Login" styleClass="input-field" HBox.hgrow="ALWAYS"/>
         <PasswordField fx:id="passwordField" promptText="Hasło" styleClass="input-field" HBox.hgrow="ALWAYS"/>
-        <ComboBox fx:id="roleComboBox" promptText="Rola" styleClass="combo-box" HBox.hgrow="ALWAYS"/>
+        <TextField fx:id="firstNameField" promptText="Imię" styleClass="input-field"/>
+        <TextField fx:id="lastNameField" promptText="Nazwisko" styleClass="input-field"/>
     </HBox>
 
     <HBox alignment="CENTER_LEFT" spacing="10">
-        <TextField fx:id="firstNameField" promptText="Imię" styleClass="input-field"/>
-        <TextField fx:id="lastNameField" promptText="Nazwisko" styleClass="input-field"/>
         <TextField fx:id="salaryField" promptText="Płaca" styleClass="input-field"/>
+        <ComboBox fx:id="roleComboBox" promptText="Rola" styleClass="combo-box" HBox.hgrow="ALWAYS"/>
         <ComboBox fx:id="groupComboBox" promptText="Grupa" styleClass="combo-box" HBox.hgrow="ALWAYS"/>
-        <Button fx:id="createUserButton" onAction="#createUser" text="Dodaj użytkownika" styleClass="primary-button"/>
         <Button onAction="#clearForm" text="Wyczyść dane" styleClass="primary-button"/>
+        <Button onAction="#handleUpdateUser" text="Zaktualizuj użytkownika" styleClass="primary-button"/>
+        <Button fx:id="createUserButton" onAction="#createUser" text="Dodaj użytkownika" styleClass="primary-button"/>
     </HBox>
 
     <TableView fx:id="usersTable" VBox.vgrow="ALWAYS" styleClass="table-view">
@@ -44,6 +48,5 @@
 
     <HBox alignment="BOTTOM_LEFT" prefWidth="598.0" spacing="10">
         <Button minHeight="40" prefHeight="40" onAction="#goToDashboard" text="Powrót do Dashboardu" styleClass="return-button"/>
-        <Button minHeight="40" prefHeight="40" onAction="#handleUpdateUser" text="Zaktualizuj użytkownika" styleClass="update-button"/>
     </HBox>
 </VBox>
