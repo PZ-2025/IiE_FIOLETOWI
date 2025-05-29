@@ -209,8 +209,9 @@ public class UserTaskPanelController {
                         rs.getString("nazwa"),
                         rs.getString("status"),
                         rs.getString("priorytet"),
-                        rs.getDate("data_rozpoczecia") != null ?
-                                rs.getDate("data_rozpoczecia").toString() : ""
+                        rs.getDate("data_rozpoczecia") != null ? rs.getDate("data_rozpoczecia").toString() : "",
+                        rs.getString("produkt"),
+                        rs.getString("kierunek")
                 ));
             }
             taskTable.setItems(taskList);

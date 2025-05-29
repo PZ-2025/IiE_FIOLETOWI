@@ -30,6 +30,8 @@
                     <TableColumn fx:id="startDateColumn" text="Start"/>
                     <TableColumn fx:id="endDateColumn" text="Koniec"/>
                     <TableColumn fx:id="assignedColumn" text="Pracownik"/>
+                    <TableColumn fx:id="assignedproductColumn" text="Produkt"/>
+                    <TableColumn fx:id="directionColumn" text="Kierunek"/>
                 </columns>
             </TableView>
 
@@ -42,6 +44,12 @@
 
                 <Label text="Priorytet:" styleClass="label"/>
                 <ComboBox fx:id="priorityBox" styleClass="combo-box"/>
+
+                <Label text="Produkt:" styleClass="label"/>
+                <ComboBox fx:id="productBox" styleClass="combo-box"/>
+
+                <Label text="Kierunek:" styleClass="label"/>
+                <ComboBox fx:id="directionBox" styleClass="combo-box"/>
             </HBox>
 
             <HBox spacing="10">

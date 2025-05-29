@@ -10,8 +10,10 @@ public class Task {
     private final SimpleStringProperty data;
     private final SimpleStringProperty koniec;
     private final SimpleStringProperty pracownik;
+    private final SimpleStringProperty produkt;
+    private final SimpleStringProperty kierunek;
 
-    public Task(int id, String nazwa, String status, String priorytet, String data) {
+    public Task(int id, String nazwa, String status, String priorytet, String data, String produkt, String kierunek) {
         this.id = id;
         this.nazwa = new SimpleStringProperty(nazwa);
         this.status = new SimpleStringProperty(status);
@@ -19,6 +21,8 @@ public class Task {
         this.data = new SimpleStringProperty(data);
         this.koniec = new SimpleStringProperty("");
         this.pracownik = new SimpleStringProperty("");
+        this.produkt = new SimpleStringProperty(produkt);
+        this.kierunek = new SimpleStringProperty(kierunek);
     }
 
     // Gettery
@@ -29,6 +33,9 @@ public class Task {
     public String getData() { return data.get(); }
     public String getKoniec() { return koniec.get(); }
     public String getPracownik() { return pracownik.get(); }
+    public String getProdukt() {return produkt.get();}
+    public String getKierunek() {return kierunek.get();}
+
 
     // Settery
     public void setEndDate(String koniec) {

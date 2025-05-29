@@ -33,7 +33,9 @@ public class TaskDB {
                         rs.getString("nazwa"),
                         rs.getString("status"),
                         rs.getString("priorytet"),
-                        rs.getString("data_rozpoczecia")
+                        rs.getString("data_rozpoczecia"),
+                        rs.getString("produkt"),
+                        rs.getString("kierunek")
                 ));
             }
         } catch (SQLException e) {
