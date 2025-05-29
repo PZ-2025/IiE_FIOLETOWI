@@ -184,7 +184,7 @@ public class TaskController {
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD)) {
             String query = """
                 SELECT z.id_zadania, z.nazwa, s.nazwa AS status, p.nazwa AS priorytet,
-                       z.data_rozpoczecia, z.data_zakonczenia, z.komentarz, pk.nazwa AS produkt, z.id_kierunku AS kierunek,
+                       z.data_rozpoczecia, z.data_zakonczenia, z.komentarz, pk.nazwa AS produkt, k.nazwa AS kierunek,
                        CONCAT(pr.imie, ' ', pr.nazwisko) AS pracownik
                 FROM zadania z
                 JOIN statusy s ON z.id_statusu = s.id_statusu
@@ -202,10 +202,11 @@ public class TaskController {
                         rs.getString("status"),
                         rs.getString("priorytet"),
                         rs.getString("data_rozpoczecia"),
-                        rs.getString("komentarz"),
                         rs.getString("produkt"),
-                        rs.getString("kierunek")
+                        rs.getString("kierunek"),
+                        rs.getString("komentarz")
                 );
+
                 task.setEndDate(rs.getString("data_zakonczenia"));
                 task.setAssignedTo(rs.getString("pracownik"));
                 taskList.add(task);
