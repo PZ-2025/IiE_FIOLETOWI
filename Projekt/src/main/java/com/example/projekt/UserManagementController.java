@@ -1,5 +1,6 @@
 package com.example.projekt;
 
+import javafx.application.Platform;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -93,11 +94,13 @@ public class UserManagementController {
         if (currentUser.isManager()) {
             createUserButton.setVisible(false);
         }
+        Platform.runLater(() -> {
+            userRoot.requestFocus();
+        });
     }
 
     private void fillFormForEditing(User user) {
         usernameField.setText(user.getLogin());
-        passwordField.setText(user.getHaslo());
         firstNameField.setText(user.getImie());
         lastNameField.setText(user.getNazwisko());
         salaryField.setText(String.valueOf(user.getPlaca()));
@@ -287,7 +290,7 @@ public class UserManagementController {
             }
             haslo = PasswordHasher.hashPassword(haslo, PasswordHasher.generateSalt());
         } else {
-            haslo = selectedUserToEdit.getHaslo(); // zachowaj stare hasło
+            haslo = selectedUserToEdit.getHaslo();
         }
 
         double placa;
