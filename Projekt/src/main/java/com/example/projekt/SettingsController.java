@@ -62,7 +62,6 @@ public class SettingsController {
         fontSizeChoiceBox.getItems().addAll(10, 12, 14, 16, 18, 20, 24);
         fontSizeChoiceBox.setValue(AppSettings.getFontSize());
 
-        // Wywołaj style dopiero, gdy VBox pojawi się na ekranie i ma przypisaną scenę
         rootVBox.sceneProperty().addListener((obs, oldScene, newScene) -> {
             if (newScene != null) {
                 applyTheme(themeChoiceBox.getValue());
@@ -105,14 +104,10 @@ public class SettingsController {
         }
     }
 
-
-
     private void applyFontSize(double size) {
         Scene scene = themeChoiceBox.getScene();
         scene.getRoot().setStyle("-fx-font-size: " + (int) size + "px;");
     }
-
-
 
     @FXML
     private void handleChangePassword() {
@@ -121,60 +116,70 @@ public class SettingsController {
         String confirmPass = confirmPasswordField.getText();
 
         if (oldPass.isEmpty() || newPass.isEmpty() || confirmPass.isEmpty()) {
-            passwordMessageLabel.setText("Wypełnij wszystkie pola.");
+            AlertUtils.showError("Wypełnij wszystkie pola.");
             return;
         }
 
         if (!newPass.equals(confirmPass)) {
-            passwordMessageLabel.setText("Nowe hasła nie są zgodne.");
+            AlertUtils.showError("Nowe hasła nie są zgodne.");
             return;
         }
 
         if (oldPass.equals(newPass)) {
-            passwordMessageLabel.setText("Nowe hasło musi być inne niż stare.");
+            AlertUtils.showError("Nowe hasło musi być inne niż stare.");
             return;
         }
 
-        // Pobieranie aktualnego użytkownika z sesji
+        if (!PasswordValidator.isPasswordValid(newPass)) {
+            AlertUtils.showError(PasswordValidator.getPasswordRequirementsMessage());
+            return;
+        }
+
         User currentUser = UserSession.getInstance().getUser();
 
         try (Connection conn = DatabaseConnector.connect()) {
-            // Weryfikacja starego hasła
             String query = "SELECT haslo FROM pracownicy WHERE id_pracownika = ?";
             PreparedStatement stmt = conn.prepareStatement(query);
             stmt.setInt(1, currentUser.getId());
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
-                String actualPassword = rs.getString("haslo");
+                String storedHashedPassword = rs.getString("haslo");
 
-                if (!actualPassword.equals(oldPass)) {
-                    passwordMessageLabel.setText("Stare hasło jest nieprawidłowe.");
+                if (!PasswordHasher.verifyPassword(oldPass, storedHashedPassword)) {
+                    AlertUtils.showError("Stare hasło jest nieprawidłowe.");
                     return;
                 }
             } else {
-                passwordMessageLabel.setText("Nie znaleziono użytkownika.");
+                AlertUtils.showError("Nie znaleziono użytkownika.");
                 return;
             }
 
-            // Aktualizacja hasła
+            byte[] newSalt = PasswordHasher.generateSalt();
+            String hashedNewPass = PasswordHasher.hashPassword(newPass, newSalt);
+
             String update = "UPDATE pracownicy SET haslo = ? WHERE id_pracownika = ?";
             PreparedStatement updateStmt = conn.prepareStatement(update);
-            updateStmt.setString(1, newPass);
+            updateStmt.setString(1, hashedNewPass);
             updateStmt.setInt(2, currentUser.getId());
 
             int rowsAffected = updateStmt.executeUpdate();
             if (rowsAffected > 0) {
-                passwordMessageLabel.setText("Hasło zmienione pomyślnie.");
+                AlertUtils.showAlert("Hasło zmienione pomyślnie.");
+                oldPasswordField.clear();
+                newPasswordField.clear();
+                confirmPasswordField.clear();
             } else {
-                passwordMessageLabel.setText("Błąd podczas aktualizacji hasła.");
+                AlertUtils.showError("Błąd podczas aktualizacji hasła.");
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
-            passwordMessageLabel.setText("Błąd połączenia z bazą danych.");
+            AlertUtils.showError("Błąd połączenia z bazą danych.");
         }
     }
+
+
 
 
     @FXML

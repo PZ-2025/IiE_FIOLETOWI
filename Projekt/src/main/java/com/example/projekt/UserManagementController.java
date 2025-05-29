@@ -10,7 +10,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
@@ -23,62 +22,31 @@ import java.util.logging.Logger;
 
 public class UserManagementController {
 
-    /**
-     * Kontroler odpowiedzialny za zarządzanie użytkownikami w aplikacji przez administratora.
-     * <p>
-     * Obsługuje wyświetlanie tabeli użytkowników, dodawanie nowych użytkowników do bazy danych,
-     * edycję istniejących danych, oraz inicjalizację pól wyboru (ComboBox) dla ról i grup.
-     * @author KrzysztofDrozda
-     * @version 1.1
-     * @since 2025-04-25
-     */
-
     private static final Logger LOGGER = Logger.getLogger(UserManagementController.class.getName());
     private static final String DASHBOARD_VIEW_PATH = "/com/example/projekt/dashboard.fxml";
     private static final String DASHBOARD_TITLE = "Dashboard";
 
-
-    @FXML
-    private Button createUserButton;
-    @FXML
-    private Label adminLabel;
-    @FXML
-    private Label managerLabel;
-    @FXML
-    private TableView<User> usersTable;
-    @FXML
-    private TableColumn<User, String> imieColumn;
-    @FXML
-    private TableColumn<User, String> nazwiskoColumn;
-    @FXML
-    private TableColumn<User, String> loginColumn;
-    @FXML
-    private TableColumn<User, Double> placaColumn;
-    @FXML
-    private TableColumn<User, String> rolaColumn;
-    @FXML
-    private TextField usernameField;
-    @FXML
-    private PasswordField passwordField;
-    @FXML
-    private ComboBox<Role> roleComboBox;
-    @FXML
-    private ComboBox<Group> groupComboBox;
-    @FXML
-    private TextField firstNameField;
-    @FXML
-    private TextField lastNameField;
-    @FXML
-    private TextField salaryField;
-
-    @FXML
-    private VBox userRoot;
-
+    @FXML private Button createUserButton;
+    @FXML private Label adminLabel;
+    @FXML private Label managerLabel;
+    @FXML private TableView<User> usersTable;
+    @FXML private TableColumn<User, String> imieColumn;
+    @FXML private TableColumn<User, String> nazwiskoColumn;
+    @FXML private TableColumn<User, String> loginColumn;
+    @FXML private TableColumn<User, Double> placaColumn;
+    @FXML private TableColumn<User, String> rolaColumn;
+    @FXML private TextField usernameField;
+    @FXML private PasswordField passwordField;
+    @FXML private ComboBox<Role> roleComboBox;
+    @FXML private ComboBox<Group> groupComboBox;
+    @FXML private TextField firstNameField;
+    @FXML private TextField lastNameField;
+    @FXML private TextField salaryField;
+    @FXML private VBox userRoot;
 
     private ObservableList<Role> roles = FXCollections.observableArrayList();
     private ObservableList<Group> groups = FXCollections.observableArrayList();
-
-    private User selectedUserToEdit = null; // Przechowuje użytkownika do edycji
+    private User selectedUserToEdit = null;
 
     @FXML
     public void initialize() {
@@ -110,7 +78,6 @@ public class UserManagementController {
 
         configureFieldsByRole();
 
-        // Obsługa kliknięcia na wiersz tabeli - wczytanie danych do formularza
         usersTable.setRowFactory(tv -> {
             TableRow<User> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
@@ -121,6 +88,7 @@ public class UserManagementController {
             });
             return row;
         });
+
         User currentUser = UserSession.getInstance().getUser();
         if (currentUser.isManager()) {
             createUserButton.setVisible(false);
@@ -156,23 +124,23 @@ public class UserManagementController {
              ResultSet rs = stmt.executeQuery(sql)) {
 
             while (rs.next()) {
-                int id = rs.getInt("id_pracownika");
-                String imie = rs.getString("imie");
-                String nazwisko = rs.getString("nazwisko");
-                String login = rs.getString("login");
-                String haslo = rs.getString("haslo");
-                double placa = rs.getDouble("placa");
-                int idGrupy = rs.getInt("id_grupy");
-                int idRoli = rs.getInt("id_roli");
-                String nazwaRoli = rs.getString("nazwa_roli");
-
-                User user = new User(id, imie, nazwisko, login, haslo, placa, idGrupy, idRoli, nazwaRoli);
+                User user = new User(
+                        rs.getInt("id_pracownika"),
+                        rs.getString("imie"),
+                        rs.getString("nazwisko"),
+                        rs.getString("login"),
+                        rs.getString("haslo"),
+                        rs.getDouble("placa"),
+                        rs.getInt("id_grupy"),
+                        rs.getInt("id_roli"),
+                        rs.getString("nazwa_roli")
+                );
                 usersList.add(user);
             }
 
         } catch (SQLException e) {
             LOGGER.log(Level.SEVERE, "Błąd ładowania danych z bazy", e);
-            showAlert("Błąd ładowania danych z bazy danych.");
+            AlertUtils.showError("Błąd ładowania danych z bazy danych.");
         }
 
         usersTable.setItems(usersList);
@@ -187,13 +155,12 @@ public class UserManagementController {
              ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
-                int id = rs.getInt("id_roli");
-                String nazwa = rs.getString("nazwa");
-                roles.add(new Role(id, nazwa));
+                roles.add(new Role(rs.getInt("id_roli"), rs.getString("nazwa")));
             }
 
         } catch (SQLException e) {
             LOGGER.log(Level.SEVERE, "Błąd ładowania ról", e);
+            AlertUtils.showError("Nie udało się załadować ról.");
         }
 
         return roles;
@@ -208,44 +175,35 @@ public class UserManagementController {
              ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
-                int id = rs.getInt("id_grupy");
-                String nazwa = rs.getString("nazwa");
-                groups.add(new Group(id, nazwa));
+                groups.add(new Group(rs.getInt("id_grupy"), rs.getString("nazwa")));
             }
 
         } catch (SQLException e) {
             LOGGER.log(Level.SEVERE, "Błąd ładowania grup", e);
+            AlertUtils.showError("Nie udało się załadować grup.");
         }
 
         return groups;
     }
+
     private void configureFieldsByRole() {
-        User currentUser = UserSession.getInstance() != null ? UserSession.getInstance().getUser() : null;
+        User currentUser = UserSession.getInstance().getUser();
 
-        if (currentUser.isAdmin()) {
-            usernameField.setVisible(true);
-            passwordField.setVisible(true);
-            roleComboBox.setVisible(true);
-            firstNameField.setVisible(true);
-            lastNameField.setVisible(true);
-            salaryField.setVisible(true);
-            groupComboBox.setVisible(true);
-            adminLabel.setVisible(true);
-            managerLabel.setVisible(false);
+        boolean isAdmin = currentUser.isAdmin();
+        boolean isManager = currentUser.isManager();
 
-        } else if (currentUser.isManager()) {
-            usernameField.setVisible(false);
-            passwordField.setVisible(false);
-            roleComboBox.setVisible(true);
-            firstNameField.setVisible(false);
-            lastNameField.setVisible(false);
-            salaryField.setVisible(true);
-            groupComboBox.setVisible(true);
-            adminLabel.setVisible(false);
-            managerLabel.setVisible(true);
+        usernameField.setVisible(isAdmin);
+        passwordField.setVisible(isAdmin);
+        firstNameField.setVisible(isAdmin);
+        lastNameField.setVisible(isAdmin);
+        adminLabel.setVisible(isAdmin);
 
-        }
+        roleComboBox.setVisible(true);
+        salaryField.setVisible(true);
+        groupComboBox.setVisible(true);
+        managerLabel.setVisible(isManager);
     }
+
     @FXML
     void createUser() {
         if (selectedUserToEdit != null) {
@@ -265,23 +223,24 @@ public class UserManagementController {
         Group selectedGroup = groupComboBox.getValue();
 
         if (login.isEmpty() || haslo.isEmpty() || imie.isEmpty() || nazwisko.isEmpty() || placaStr.isEmpty() || selectedRole == null || selectedGroup == null) {
-            showAlert("Wszystkie pola muszą być wypełnione!");
+            AlertUtils.showError("Wszystkie pola muszą być wypełnione!");
             return;
         }
-        if (!PasswordValidator.isPasswordValid(haslo)) {
-            showAlert(PasswordValidator.getPasswordRequirementsMessage());
-            return;
-        }
-        String hashedPassword = PasswordHasher.hashPassword(haslo, PasswordHasher.generateSalt());
 
+        if (!PasswordValidator.isPasswordValid(haslo)) {
+            AlertUtils.showError(PasswordValidator.getPasswordRequirementsMessage());
+            return;
+        }
 
         double placa;
         try {
             placa = Double.parseDouble(placaStr);
         } catch (NumberFormatException e) {
-            showAlert("Nieprawidłowa wartość płacy.");
+            AlertUtils.showError("Nieprawidłowa wartość płacy.");
             return;
         }
+
+        String hashedPassword = PasswordHasher.hashPassword(haslo, PasswordHasher.generateSalt());
 
         String sql = "INSERT INTO pracownicy (imie, nazwisko, login, haslo, placa, id_roli, id_grupy) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
@@ -297,13 +256,13 @@ public class UserManagementController {
             stmt.setInt(7, selectedGroup.getId());
 
             stmt.executeUpdate();
-            showAlert("Użytkownik został dodany!");
+            AlertUtils.showAlert("Użytkownik został dodany!");
             clearForm();
             loadUsersFromDatabase();
 
         } catch (SQLException e) {
             LOGGER.log(Level.SEVERE, "Błąd przy dodawaniu użytkownika", e);
-            showAlert("Błąd podczas dodawania użytkownika.");
+            AlertUtils.showError("Błąd podczas dodawania użytkownika.");
         }
     }
 
@@ -317,22 +276,25 @@ public class UserManagementController {
         Group selectedGroup = groupComboBox.getValue();
 
         if (login.isEmpty() || imie.isEmpty() || nazwisko.isEmpty() || placaStr.isEmpty() || selectedRole == null || selectedGroup == null) {
-            showAlert("Wszystkie pola muszą być wypełnione!");
+            AlertUtils.showError("Wszystkie pola muszą być wypełnione!");
             return;
         }
+
         if (!haslo.isEmpty()) {
             if (!PasswordValidator.isPasswordValid(haslo)) {
-                showAlert(PasswordValidator.getPasswordRequirementsMessage());
+                AlertUtils.showError(PasswordValidator.getPasswordRequirementsMessage());
                 return;
             }
             haslo = PasswordHasher.hashPassword(haslo, PasswordHasher.generateSalt());
+        } else {
+            haslo = selectedUserToEdit.getHaslo(); // zachowaj stare hasło
         }
 
         double placa;
         try {
             placa = Double.parseDouble(placaStr);
         } catch (NumberFormatException e) {
-            showAlert("Nieprawidłowa wartość płacy.");
+            AlertUtils.showError("Nieprawidłowa wartość płacy.");
             return;
         }
 
@@ -355,16 +317,17 @@ public class UserManagementController {
             stmt.setInt(8, selectedUserToEdit.getId());
 
             stmt.executeUpdate();
-            showAlert("Dane użytkownika zostały zaktualizowane!");
+            AlertUtils.showAlert("Dane użytkownika zostały zaktualizowane!");
             clearForm();
             loadUsersFromDatabase();
             selectedUserToEdit = null;
 
         } catch (SQLException e) {
             LOGGER.log(Level.SEVERE, "Błąd przy aktualizacji użytkownika", e);
-            showAlert("Błąd podczas aktualizacji użytkownika.");
+            AlertUtils.showError("Błąd podczas aktualizacji użytkownika.");
         }
     }
+
     @FXML
     private void clearForm() {
         usernameField.clear();
@@ -388,29 +351,24 @@ public class UserManagementController {
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setTitle(DASHBOARD_TITLE);
+            stage.setScene(new Scene(dashboardRoot));
             stage.show();
 
         } catch (IOException | NullPointerException e) {
             LOGGER.log(Level.SEVERE, "Błąd ładowania dashboardu", e);
-            showAlert("Nie można załadować dashboardu.");
+            AlertUtils.showError("Nie można załadować dashboardu.");
         }
     }
 
-    void showAlert(String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Informacja");
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
     @FXML
     private void handleUpdateUser() {
         if (selectedUserToEdit == null) {
-            showAlert("Wybierz użytkownika z tabeli do edycji!");
+            AlertUtils.showError("Wybierz użytkownika z tabeli do edycji!");
             return;
         }
         updateUser();
     }
+
     private void applyTheme(String theme) {
         Scene scene = userRoot.getScene();
         if (scene == null) return;
@@ -432,5 +390,4 @@ public class UserManagementController {
     private void applyFontSize(double size) {
         userRoot.getScene().getRoot().setStyle("-fx-font-size: " + (int) size + "px;");
     }
-
 }
