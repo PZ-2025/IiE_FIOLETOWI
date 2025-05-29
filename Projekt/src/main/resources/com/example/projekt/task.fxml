@@ -9,7 +9,6 @@
             fx:controller="com.example.projekt.TaskController"
             fx:id="taskRoot"
             styleClass="root">
-
     <top>
         <Label text="Panel Kierownika - Zarządzanie Zadaniami"
                styleClass="header-label"
@@ -29,6 +28,7 @@
                     <TableColumn fx:id="priorityColumn" text="Priorytet"/>
                     <TableColumn fx:id="startDateColumn" text="Start"/>
                     <TableColumn fx:id="endDateColumn" text="Koniec"/>
+                    <TableColumn fx:id="commentColumn" text="Komentarz"/>
                     <TableColumn fx:id="assignedColumn" text="Pracownik"/>
                     <TableColumn fx:id="assignedproductColumn" text="Produkt"/>
                     <TableColumn fx:id="directionColumn" text="Kierunek"/>
@@ -38,6 +38,9 @@
             <HBox spacing="10">
                 <Label text="Nazwa:" styleClass="label"/>
                 <TextField fx:id="nameField" promptText="Wpisz nazwę" styleClass="input-field"/>
+
+                <Label text="Komentarz:" styleClass="label"/>
+                <TextField fx:id="commentField" promptText="Wpisz komentarz" styleClass="input-field"/>
 
                 <Label text="Status:" styleClass="label"/>
                 <ComboBox fx:id="statusBox" styleClass="combo-box"/>

@@ -118,16 +118,27 @@ public class LoginController {
      * @throws IOException jeśli wystąpi błąd podczas ładowania widoku dashboardu
      */
     private void redirectToDashboard(ActionEvent event, User user) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/projekt/dashboard.fxml"));
+        String fxmlPath;
+
+        switch (user.getRole().toLowerCase()) {
+            case "admin" -> fxmlPath = "/com/example/projekt/userManagement.fxml";
+            case "kierownik" -> fxmlPath = "/com/example/projekt/task.fxml";
+            default -> fxmlPath = "/com/example/projekt/usertaskpanel.fxml";
+        }
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
         Parent root = loader.load();
 
-        DashboardController dashboardController = loader.getController();
-        dashboardController.setCurrentUser(user);
+        Object controller = loader.getController();
+        if (controller instanceof DashboardController dashboardController) {
+            dashboardController.setCurrentUser(user);
+        }
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));
-        stage.setTitle("Dashboard - " + user.getLogin());
+        stage.setTitle("Panel - " + user.getRole());
     }
+
 
     /**
      * Wyświetla komunikat o błędzie w interfejsie użytkownika.

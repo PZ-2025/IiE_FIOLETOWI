@@ -26,17 +26,19 @@ public class TaskController {
     @FXML private TableColumn<Task, String> nameColumn;
     @FXML private TableColumn<Task, String> statusColumn;
     @FXML private TableColumn<Task, String> priorityColumn;
-    @FXML private TableColumn<Task, String> productColumn;
     @FXML private TableColumn<Task, String> startDateColumn;
     @FXML private TableColumn<Task, String> endDateColumn;
     @FXML private TableColumn<Task, String> assignedColumn;
+    @FXML private TableColumn<Task, String> commentColumn;
     @FXML private TableColumn<Task, String> assignedproductColumn;
     @FXML private TableColumn<Task, String> directionColumn;
 
     @FXML private TextField nameField;
+    @FXML private TextField commentField;
     @FXML private ComboBox<String> statusBox;
     @FXML private ComboBox<String> priorityBox;
     @FXML private ComboBox<String> productBox;
+    @FXML private ComboBox<String> directionBox;
     @FXML private ComboBox<String> employeeBox;
     @FXML private DatePicker startDatePicker;
     @FXML private DatePicker endDatePicker;
@@ -47,11 +49,13 @@ public class TaskController {
     private ObservableList<String> statusList = FXCollections.observableArrayList();
     private ObservableList<String> priorityList = FXCollections.observableArrayList();
     private ObservableList<String> productList = FXCollections.observableArrayList();
+    private ObservableList<String> directionList = FXCollections.observableArrayList();
     private ObservableList<String> employeeList = FXCollections.observableArrayList();
 
     private final String URL = "jdbc:mysql://localhost:3306/HurtPolSan";
     private final String USER = "root";
     private final String PASSWORD = "";
+
 
     @FXML
     public void initialize() {
@@ -86,6 +90,7 @@ public class TaskController {
         priorityColumn.setCellValueFactory(new PropertyValueFactory<>("priorytet"));
         startDateColumn.setCellValueFactory(new PropertyValueFactory<>("data"));
         endDateColumn.setCellValueFactory(new PropertyValueFactory<>("koniec"));
+        commentColumn.setCellValueFactory(new PropertyValueFactory<>("komentarz"));
         assignedColumn.setCellValueFactory(new PropertyValueFactory<>("pracownik"));
         assignedproductColumn.setCellValueFactory(new PropertyValueFactory<>("produkt"));
         directionColumn.setCellValueFactory(new PropertyValueFactory<>("kierunek"));
@@ -97,15 +102,18 @@ public class TaskController {
         startDateColumn.prefWidthProperty().bind(taskTable.widthProperty().multiply(0.15));
         endDateColumn.prefWidthProperty().bind(taskTable.widthProperty().multiply(0.15));
         assignedColumn.prefWidthProperty().bind(taskTable.widthProperty().multiply(0.15));
+        commentColumn.prefWidthProperty().bind(taskTable.widthProperty().multiply(0.15));
         assignedproductColumn.prefWidthProperty().bind(taskTable.widthProperty().multiply(0.15));
         directionColumn.prefWidthProperty().bind(taskTable.widthProperty().multiply(0.15));
     }
 
     private void fillFormWithSelectedTask(Task task) {
         nameField.setText(task.getNazwa());
+        commentField.setText(task.getKomentarz());
         statusBox.setValue(task.getStatus());
         priorityBox.setValue(task.getPriorytet());
         productBox.setValue(task.getProdukt());
+        directionBox.setValue(task.getKierunek());
         employeeBox.getItems().stream()
                 .filter(emp -> emp.contains(task.getPracownik()))
                 .findFirst()
@@ -119,6 +127,7 @@ public class TaskController {
             loadStatuses(conn);
             loadPriorities(conn);
             loadProducts(conn);
+            loadDirections(conn);
             loadEmployees(conn);
         } catch (SQLException e) {
             LOGGER.log(Level.SEVERE, "Błąd ładowania danych do comboboxów", e);
@@ -151,6 +160,14 @@ public class TaskController {
         }
         priorityBox.setItems(priorityList);
     }
+    private void loadDirections(Connection conn) throws SQLException {
+        directionList.clear();
+        ResultSet rs = conn.createStatement().executeQuery("SELECT nazwa FROM kierunki");
+        while (rs.next()) {
+            directionList.add(rs.getString("nazwa"));
+        }
+        directionBox.setItems(directionList);
+    }
 
     private void loadEmployees(Connection conn) throws SQLException {
         employeeList.clear();
@@ -167,13 +184,14 @@ public class TaskController {
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD)) {
             String query = """
                 SELECT z.id_zadania, z.nazwa, s.nazwa AS status, p.nazwa AS priorytet,
-                       z.data_rozpoczecia, z.data_zakonczenia, pk.nazwa AS produkt, z.kierunek,
+                       z.data_rozpoczecia, z.data_zakonczenia, z.komentarz, pk.nazwa AS produkt, z.id_kierunku AS kierunek,
                        CONCAT(pr.imie, ' ', pr.nazwisko) AS pracownik
                 FROM zadania z
                 JOIN statusy s ON z.id_statusu = s.id_statusu
                 JOIN priorytety p ON z.id_priorytetu = p.id_priorytetu
                 JOIN pracownicy pr ON z.id_pracownika = pr.id_pracownika
                 JOIN produkty pk ON z.id_produktu = pk.id_produktu
+                JOIN kierunki k ON z.id_kierunku = k.id_kierunku
             """;
 
             ResultSet rs = conn.createStatement().executeQuery(query);
@@ -184,6 +202,7 @@ public class TaskController {
                         rs.getString("status"),
                         rs.getString("priorytet"),
                         rs.getString("data_rozpoczecia"),
+                        rs.getString("komentarz"),
                         rs.getString("produkt"),
                         rs.getString("kierunek")
                 );
@@ -206,10 +225,11 @@ public class TaskController {
             int statusId = getIdFromTable(conn, "statusy", statusBox.getValue());
             int priorityId = getIdFromTable(conn, "priorytety", priorityBox.getValue());
             int productId = getIdFromTable(conn, "produkty", productBox.getValue());
+            int directionId = getIdFromTable(conn, "kierunki", directionBox.getValue());
             int employeeId = Integer.parseInt(employeeBox.getValue().split(":")[0]);
 
             String sql = """
-                INSERT INTO zadania (id_pracownika, nazwa, id_statusu, id_priorytetu, data_rozpoczecia, data_zakonczenia, id_produktu, kierunek)
+                INSERT INTO zadania (id_pracownika, nazwa, id_statusu, id_priorytetu, data_rozpoczecia, data_zakonczenia, komentarz,  id_produktu, id_kierunku)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?)
             """;
             PreparedStatement stmt = conn.prepareStatement(sql);
@@ -218,8 +238,10 @@ public class TaskController {
             stmt.setInt(3, statusId);
             stmt.setInt(4, priorityId);
             stmt.setInt(5, productId);
-            stmt.setDate(6, Date.valueOf(startDatePicker.getValue()));
-            stmt.setDate(7, Date.valueOf(endDatePicker.getValue()));
+            stmt.setInt(6, directionId);
+            stmt.setString(7, nameField.getText());
+            stmt.setDate(8, Date.valueOf(startDatePicker.getValue()));
+            stmt.setDate(9, Date.valueOf(endDatePicker.getValue()));
             stmt.executeUpdate();
 
             loadData();
@@ -245,12 +267,13 @@ public class TaskController {
             int statusId = getIdFromTable(conn, "statusy", statusBox.getValue());
             int priorityId = getIdFromTable(conn, "priorytety", priorityBox.getValue());
             int productId = getIdFromTable(conn, "produkty", productBox.getValue());
+            int directionId = getIdFromTable(conn, "kierunki", directionBox.getValue());
             int employeeId = Integer.parseInt(employeeBox.getValue().split(":")[0]);
 
             String sql = """
                 UPDATE zadania
                 SET nazwa = ?, id_statusu = ?, id_priorytetu = ?, 
-                    data_rozpoczecia = ?, data_zakonczenia = ?, id_pracownika = ?, id_produktu = ?, kierunek = ?
+                    data_rozpoczecia = ?, data_zakonczenia = ?, komentarz = ? id_pracownika = ?, id_produktu = ?, id_kierunku = ?
                 WHERE id_zadania = ?
             """;
 
@@ -259,10 +282,12 @@ public class TaskController {
             stmt.setInt(2, statusId);
             stmt.setInt(3, priorityId);
             stmt.setInt(4, productId);
-            stmt.setDate(5, Date.valueOf(startDatePicker.getValue()));
-            stmt.setDate(6, Date.valueOf(endDatePicker.getValue()));
-            stmt.setInt(7, employeeId);
-            stmt.setInt(8, selected.getId());
+            stmt.setInt(5, directionId);
+            stmt.setDate(6, Date.valueOf(startDatePicker.getValue()));
+            stmt.setDate(7, Date.valueOf(endDatePicker.getValue()));
+            stmt.setString(8, commentField.getText());
+            stmt.setInt(9, employeeId);
+            stmt.setInt(10, selected.getId());
             stmt.executeUpdate();
 
             loadData();
@@ -332,6 +357,7 @@ public class TaskController {
         statusBox.getSelectionModel().clearSelection();
         priorityBox.getSelectionModel().clearSelection();
         productBox.getSelectionModel().clearSelection();
+        directionBox.getSelectionModel().clearSelection();
         employeeBox.getSelectionModel().clearSelection();
         startDatePicker.setValue(null);
         endDatePicker.setValue(null);

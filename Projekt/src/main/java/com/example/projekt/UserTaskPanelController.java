@@ -186,13 +186,12 @@ public class UserTaskPanelController {
     private void loadTasks() {
         ObservableList<Task> taskList = FXCollections.observableArrayList();
         String sql = """
-            SELECT z.id_zadania, z.nazwa,
-                   COALESCE(s.nazwa, 'Brak') AS status,
-                   COALESCE(p.nazwa, 'Brak') AS priorytet,
-                   z.data_rozpoczecia
+            SELECT *
             FROM zadania z
             LEFT JOIN statusy s ON z.id_statusu = s.id_statusu
             LEFT JOIN priorytety p ON z.id_priorytetu = p.id_priorytetu
+            LEFT JOIN produkty pk ON z.id_produktu = pk.id_produktu
+            LEFT JOIN kierunki k ON z.id_kierunku = k.id_kierunku
             WHERE z.id_pracownika = ? 
             AND s.nazwa != 'Zakończone'
             """;
@@ -210,6 +209,7 @@ public class UserTaskPanelController {
                         rs.getString("status"),
                         rs.getString("priorytet"),
                         rs.getDate("data_rozpoczecia") != null ? rs.getDate("data_rozpoczecia").toString() : "",
+                        rs.getString("komentarz"),
                         rs.getString("produkt"),
                         rs.getString("kierunek")
                 ));
