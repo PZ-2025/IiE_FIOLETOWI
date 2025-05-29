@@ -54,12 +54,6 @@
                   -fx-font-weight: bold; -fx-padding: 10 20; -fx-border-radius: 5;
                   -fx-background-radius: 5; -fx-cursor: hand;"/>
 
-    <Button fx:id="managerUsersButton"
-            text="Zarządzaj użytkownikami (Manager)"
-            onAction="#openManagerUsersWindow"
-            style="-fx-background-color: #7b1fa2; -fx-text-fill: white; -fx-font-size: 14px;
-               -fx-font-weight: bold; -fx-padding: 10 20; -fx-border-radius: 5;
-               -fx-background-radius: 5; -fx-cursor: hand;"/>
 
     <Button fx:id="Settings"
             text="Ustawienia"

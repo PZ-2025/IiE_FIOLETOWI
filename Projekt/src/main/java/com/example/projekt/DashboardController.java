@@ -110,27 +110,7 @@ public class DashboardController {
             e.printStackTrace();
         }
     }
-    @FXML
-    private void openManagerUsersWindow() {
-        if (currentUser != null && currentUser.isManager()|| currentUser.isAdmin()) {
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/projekt/ManagerUsers.fxml"));
-                Parent root = loader.load();
 
-                Stage stage = new Stage();
-                stage.setTitle("Zarządzaj użytkownikami");
-                stage.setScene(new Scene(root, 800, 600));
-                stage.initModality(Modality.APPLICATION_MODAL); // blokuje inne okna do zamknięcia
-                stage.show();
-
-            } catch (IOException e) {
-                e.printStackTrace();
-                System.err.println("Błąd otwierania okna zarządzania użytkownikami: " + e.getMessage());
-            }
-        } else {
-            System.out.println("Brak dostępu - tylko kierownik może zarządzać użytkownikami.");
-        }
-    }
     @FXML
     private void openProductManager(ActionEvent event) {
         try {
