@@ -30,7 +30,6 @@ public class Main extends Application {
             Parent root = FXMLLoader.load(Objects.requireNonNull(
                     getClass().getResource(LOGIN_VIEW_PATH)));
 
-            // Pobierz rozmiar dostępnego ekranu (bez paska zadań itp.)
             Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
 
             Scene scene = new Scene(root, screenBounds.getWidth(), screenBounds.getHeight());
@@ -38,14 +37,10 @@ public class Main extends Application {
             primaryStage.setTitle(LOGIN_WINDOW_TITLE);
             primaryStage.setScene(scene);
 
-            // Ustaw rozmiar i pozycję okna na cały ekran
             primaryStage.setX(screenBounds.getMinX());
             primaryStage.setY(screenBounds.getMinY());
             primaryStage.setWidth(screenBounds.getWidth());
             primaryStage.setHeight(screenBounds.getHeight());
-
-            // Opcjonalnie: zablokuj zmianę rozmiaru
-            // primaryStage.setResizable(false);
 
             primaryStage.show();
 

@@ -35,17 +35,17 @@ public class UserManagementController {
     @FXML private TableColumn<User, String> loginColumn;
     @FXML private TableColumn<User, Double> placaColumn;
     @FXML private TableColumn<User, String> rolaColumn;
-    @FXML private TextField usernameField;
-    @FXML private PasswordField passwordField;
+    @FXML protected TextField usernameField;
+    @FXML protected PasswordField passwordField;
     @FXML private ComboBox<Role> roleComboBox;
     @FXML private ComboBox<Group> groupComboBox;
-    @FXML private TextField firstNameField;
-    @FXML private TextField lastNameField;
-    @FXML private TextField salaryField;
+    @FXML protected TextField firstNameField;
+    @FXML protected TextField lastNameField;
+    @FXML protected TextField salaryField;
     @FXML private VBox userRoot;
 
-    private ObservableList<Role> roles = FXCollections.observableArrayList();
-    private ObservableList<Group> groups = FXCollections.observableArrayList();
+    protected ObservableList<Role> roles = FXCollections.observableArrayList();
+    protected ObservableList<Group> groups = FXCollections.observableArrayList();
     private User selectedUserToEdit = null;
 
     @FXML
@@ -213,7 +213,7 @@ public class UserManagementController {
         }
     }
 
-    private void addNewUser() {
+    protected void addNewUser() {
         String login = usernameField.getText();
         String haslo = passwordField.getText();
         String imie = firstNameField.getText();
