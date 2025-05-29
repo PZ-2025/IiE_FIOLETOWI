@@ -54,16 +54,12 @@ public class TaskController {
     private ObservableList<String> directionList = FXCollections.observableArrayList();
     private ObservableList<String> employeeList = FXCollections.observableArrayList();
 
-
-
     private final String URL = "jdbc:mysql://localhost:3306/HurtPolSan";
     private final String USER = "root";
     private final String PASSWORD = "";
 
-
     @FXML
     public void initialize() {
-
         taskRoot.sceneProperty().addListener((obs, oldScene, newScene) -> {
             if (newScene != null) {
                 applyTheme(AppSettings.getTheme());
@@ -120,13 +116,30 @@ public class TaskController {
         priorityBox.setValue(task.getPriorytet());
         productBox.setValue(task.getProdukt());
         directionBox.setValue(task.getKierunek());
-        quantityField.setText(task.getKierunek());
+        quantityField.setText(task.getIlosc()); // Naprawiono - było getKierunek() zamiast getIlosc()
+
+        // Znalezienie i ustawienie pracownika
         employeeBox.getItems().stream()
                 .filter(emp -> emp.contains(task.getPracownik()))
                 .findFirst()
                 .ifPresent(employeeBox::setValue);
-        startDatePicker.setValue(LocalDate.parse(task.getData()));
-        endDatePicker.setValue(LocalDate.parse(task.getKoniec()));
+
+        // Ustawienie dat z obsługą błędów
+        try {
+            if (task.getData() != null && !task.getData().isEmpty()) {
+                startDatePicker.setValue(LocalDate.parse(task.getData()));
+            }
+        } catch (Exception e) {
+            LOGGER.log(Level.WARNING, "Błąd parsowania daty rozpoczęcia: " + task.getData(), e);
+        }
+
+        try {
+            if (task.getKoniec() != null && !task.getKoniec().isEmpty()) {
+                endDatePicker.setValue(LocalDate.parse(task.getKoniec()));
+            }
+        } catch (Exception e) {
+            LOGGER.log(Level.WARNING, "Błąd parsowania daty zakończenia: " + task.getKoniec(), e);
+        }
     }
 
     private void loadComboBoxes() {
@@ -150,6 +163,7 @@ public class TaskController {
         }
         statusBox.setItems(statusList);
     }
+
     private void loadProducts(Connection conn) throws SQLException {
         productList.clear();
         ResultSet rs = conn.createStatement().executeQuery("SELECT nazwa FROM produkty");
@@ -167,6 +181,7 @@ public class TaskController {
         }
         priorityBox.setItems(priorityList);
     }
+
     private void loadDirections(Connection conn) throws SQLException {
         directionList.clear();
         ResultSet rs = conn.createStatement().executeQuery("SELECT nazwa FROM kierunki");
@@ -188,44 +203,63 @@ public class TaskController {
 
     private void loadData() {
         taskList.clear();
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD)) {
-            String query = """
-                SELECT z.id_zadania, z.nazwa, s.nazwa AS status, p.nazwa AS priorytet,
-                       z.data_rozpoczecia, z.data_zakonczenia, z.komentarz, z.ilosc, pk.nazwa AS produkt, z.ilosc, k.nazwa AS kierunek,
-                       CONCAT(pr.imie, ' ', pr.nazwisko) AS pracownik
-                FROM zadania z
-                LEFT JOIN statusy s ON z.id_statusu = s.id_statusu
-                LEFT JOIN priorytety p ON z.id_priorytetu = p.id_priorytetu
-                LEFT JOIN pracownicy pr ON z.id_pracownika = pr.id_pracownika
-                LEFT JOIN produkty pk ON z.id_produktu = pk.id_produktu
-                LEFT JOIN kierunki k ON z.id_kierunku = k.id_kierunku
-            """;
+        String query = """
+        SELECT z.id_zadania, z.nazwa, s.nazwa AS status, p.nazwa AS priorytet,
+               z.data_rozpoczecia, z.data_zakonczenia, z.komentarz, z.ilosc,
+               pk.nazwa AS produkt, k.nazwa AS kierunek,
+               CONCAT(pr.imie, ' ', pr.nazwisko) AS pracownik
+        FROM zadania z
+        LEFT JOIN statusy s ON z.id_statusu = s.id_statusu
+        LEFT JOIN priorytety p ON z.id_priorytetu = p.id_priorytetu
+        LEFT JOIN pracownicy pr ON z.id_pracownika = pr.id_pracownika
+        LEFT JOIN produkty pk ON z.id_produktu = pk.id_produktu
+        LEFT JOIN kierunki k ON z.id_kierunku = k.id_kierunku
+    """;
 
-            ResultSet rs = conn.createStatement().executeQuery(query);
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+
             while (rs.next()) {
+                int id = rs.getInt("id_zadania");
+                String nazwa = rs.getString("nazwa");
+                String status = rs.getString("status");
+                String priorytet = rs.getString("priorytet");
+                String dataRozpoczecia = rs.getString("data_rozpoczecia");
+                String komentarz = rs.getString("komentarz");
+                String ilosc = rs.getString("ilosc");
+                String produkt = rs.getString("produkt");
+                String kierunek = rs.getString("kierunek");
+                String pracownik = rs.getString("pracownik");
+                String dataZakonczenia = rs.getString("data_zakonczenia");
+
                 Task task = new Task(
-                        rs.getInt("id_zadania"),
-                        rs.getString("nazwa"),
-                        rs.getString("status"),
-                        rs.getString("priorytet"),
-                        rs.getString("data_rozpoczecia"),
-                        rs.getString("produkt"),
-                        rs.getString("pracownik"),
-                        rs.getString("komentarz"),
-                        rs.getString("ilosc"),
-                        rs.getString("kierunek")
+                        id,
+                        nazwa,
+                        status,
+                        priorytet,
+                        dataRozpoczecia,
+                        produkt,
+                        kierunek,
+                        komentarz,
+                        ilosc,
+                        pracownik
                 );
 
-                task.setEndDate(rs.getString("data_zakonczenia"));
-                task.setAssignedTo(rs.getString("pracownik"));
+                task.setEndDate(dataZakonczenia);
+
                 taskList.add(task);
             }
+
             taskTable.setItems(taskList);
+
         } catch (SQLException e) {
             LOGGER.log(Level.SEVERE, "Błąd ładowania zadań", e);
             showAlert("Błąd ładowania danych", "Nie udało się załadować listy zadań");
         }
     }
+
+
 
     @FXML
     private void handleAddTask() {
@@ -239,7 +273,7 @@ public class TaskController {
             int employeeId = Integer.parseInt(employeeBox.getValue().split(":")[0]);
 
             String sql = """
-                INSERT INTO zadania (id_pracownika, nazwa, id_statusu, id_priorytetu, data_rozpoczecia, data_zakonczenia, komentarz,  id_produktu, ilosc, id_kierunku)
+                INSERT INTO zadania (id_pracownika, nazwa, id_statusu, id_priorytetu, data_rozpoczecia, data_zakonczenia, komentarz, id_produktu, ilosc, id_kierunku)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """;
             PreparedStatement stmt = conn.prepareStatement(sql);
@@ -260,7 +294,10 @@ public class TaskController {
             showAlert("Sukces", "Zadanie zostało dodane");
         } catch (SQLException e) {
             LOGGER.log(Level.SEVERE, "Błąd dodawania zadania", e);
-            showAlert("Błąd", "Nie udało się dodać zadania");
+            showAlert("Błąd", "Nie udało się dodać zadania: " + e.getMessage());
+        } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, "Nieoczekiwany błąd podczas dodawania zadania", e);
+            showAlert("Błąd", "Nieoczekiwany błąd: " + e.getMessage());
         }
     }
 
@@ -275,16 +312,49 @@ public class TaskController {
         if (!validateForm()) return;
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD)) {
-            int statusId = getIdFromTable(conn, "statusy", statusBox.getValue());
-            int priorityId = getIdFromTable(conn, "priorytety", priorityBox.getValue());
-            int productId = getIdFromTable(conn, "produkty", productBox.getValue());
-            int directionId = getIdFromTable(conn, "kierunki", directionBox.getValue());
-            int employeeId = Integer.parseInt(employeeBox.getValue().split(":")[0]);
+            // Dodano sprawdzanie null przed wywołaniem getIdFromTable
+            Integer statusId = null, priorityId = null, productId = null, directionId = null, employeeId = null;
 
+            if (statusBox.getValue() != null) {
+                statusId = getIdFromTable(conn, "statusy", statusBox.getValue());
+            } else {
+                showAlert("Błąd", "Wybierz status zadania");
+                return;
+            }
+
+            if (priorityBox.getValue() != null) {
+                priorityId = getIdFromTable(conn, "priorytety", priorityBox.getValue());
+            } else {
+                showAlert("Błąd", "Wybierz priorytet zadania");
+                return;
+            }
+
+            if (productBox.getValue() != null) {
+                productId = getIdFromTable(conn, "produkty", productBox.getValue());
+            } else {
+                showAlert("Błąd", "Wybierz produkt");
+                return;
+            }
+
+            if (directionBox.getValue() != null) {
+                directionId = getIdFromTable(conn, "kierunki", directionBox.getValue());
+            } else {
+                showAlert("Błąd", "Wybierz kierunek");
+                return;
+            }
+
+            if (employeeBox.getValue() != null) {
+                employeeId = Integer.parseInt(employeeBox.getValue().split(":")[0]);
+            } else {
+                showAlert("Błąd", "Wybierz pracownika");
+                return;
+            }
+
+            // Naprawiono SQL - dodano brakujący przecinek
             String sql = """
                 UPDATE zadania
                 SET nazwa = ?, id_statusu = ?, id_priorytetu = ?, 
-                    data_rozpoczecia = ?, data_zakonczenia = ?, komentarz = ? id_pracownika = ?, id_produktu = ?, ilosc = ?, id_kierunku = ?
+                    data_rozpoczecia = ?, data_zakonczenia = ?, komentarz = ?, id_pracownika = ?, id_produktu = ?, ilosc = ?, id_kierunku = ?
                 WHERE id_zadania = ?
             """;
 
@@ -307,7 +377,10 @@ public class TaskController {
             showAlert("Sukces", "Zadanie zostało zaktualizowane");
         } catch (SQLException e) {
             LOGGER.log(Level.SEVERE, "Błąd edycji zadania", e);
-            showAlert("Błąd", "Nie udało się zaktualizować zadania");
+            showAlert("Błąd", "Nie udało się zaktualizować zadania: " + e.getMessage());
+        } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, "Nieoczekiwany błąd podczas edycji zadania", e);
+            showAlert("Błąd", "Nieoczekiwany błąd: " + e.getMessage());
         }
     }
 
@@ -316,6 +389,16 @@ public class TaskController {
         Task selected = taskTable.getSelectionModel().getSelectedItem();
         if (selected == null) {
             showAlert("Błąd", "Wybierz zadanie do usunięcia");
+            return;
+        }
+
+        // Dodano potwierdzenie usunięcia
+        Alert confirmAlert = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmAlert.setTitle("Potwierdzenie");
+        confirmAlert.setHeaderText("Czy na pewno chcesz usunąć to zadanie?");
+        confirmAlert.setContentText("Zadanie: " + selected.getNazwa());
+
+        if (confirmAlert.showAndWait().orElse(ButtonType.CANCEL) != ButtonType.OK) {
             return;
         }
 
@@ -329,31 +412,68 @@ public class TaskController {
             showAlert("Sukces", "Zadanie zostało usunięte");
         } catch (SQLException e) {
             LOGGER.log(Level.SEVERE, "Błąd usuwania zadania", e);
-            showAlert("Błąd", "Nie udało się usunąć zadania");
+            showAlert("Błąd", "Nie udało się usunąć zadania: " + e.getMessage());
         }
     }
 
     private boolean validateForm() {
-        if (nameField.getText().isEmpty() || statusBox.getValue() == null ||
-                priorityBox.getValue() == null || employeeBox.getValue() == null ||
-                startDatePicker.getValue() == null || endDatePicker.getValue() == null) {
-
-            showAlert("Błąd", "Wypełnij wszystkie pola formularza");
+        if (nameField.getText().isEmpty()) {
+            showAlert("Błąd", "Nazwa zadania nie może być pusta");
             return false;
         }
+
+        if (statusBox.getValue() == null) {
+            showAlert("Błąd", "Wybierz status zadania");
+            return false;
+        }
+
+        if (priorityBox.getValue() == null) {
+            showAlert("Błąd", "Wybierz priorytet zadania");
+            return false;
+        }
+
+        if (productBox.getValue() == null) {
+            showAlert("Błąd", "Wybierz produkt");
+            return false;
+        }
+
+        if (directionBox.getValue() == null) {
+            showAlert("Błąd", "Wybierz kierunek");
+            return false;
+        }
+
+        if (employeeBox.getValue() == null) {
+            showAlert("Błąd", "Wybierz pracownika");
+            return false;
+        }
+
+        if (startDatePicker.getValue() == null) {
+            showAlert("Błąd", "Wybierz datę rozpoczęcia");
+            return false;
+        }
+
+        if (endDatePicker.getValue() == null) {
+            showAlert("Błąd", "Wybierz datę zakończenia");
+            return false;
+        }
+
         return true;
     }
 
     private int getIdFromTable(Connection conn, String table, String name) throws SQLException {
+        if (name == null || name.trim().isEmpty()) {
+            throw new SQLException("Nazwa nie może być pusta dla tabeli: " + table);
+        }
+
         String baseName = table.endsWith("y") || table.endsWith("i") ? table.substring(0, table.length() - 1) + "u" : table;
         String columnName = "id_" + baseName;
 
         String sql = "SELECT " + columnName + " FROM " + table + " WHERE nazwa = ?";
         PreparedStatement stmt = conn.prepareStatement(sql);
-        stmt.setString(1, name);
+        stmt.setString(1, name.trim());
         ResultSet rs = stmt.executeQuery();
         if (rs.next()) return rs.getInt(1);
-        throw new SQLException("Nie znaleziono: " + name);
+        throw new SQLException("Nie znaleziono: " + name + " w tabeli: " + table);
     }
 
     private void showAlert(String title, String msg) {
@@ -366,6 +486,8 @@ public class TaskController {
 
     private void clearFields() {
         nameField.clear();
+        commentField.clear();
+        quantityField.clear();
         statusBox.getSelectionModel().clearSelection();
         priorityBox.getSelectionModel().clearSelection();
         productBox.getSelectionModel().clearSelection();
@@ -390,6 +512,7 @@ public class TaskController {
             showAlert("Błąd", "Nie udało się przejść do dashboardu");
         }
     }
+
     private void applyTheme(String theme) {
         Scene scene = taskRoot.getScene();
         if (scene == null) return;
