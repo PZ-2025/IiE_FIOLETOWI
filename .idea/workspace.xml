@@ -4,13 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="93580640-a4f6-4848-877d-83f2d9fe0546" name="Changes" comment="Nowa tabela i triggery">
+    <list default="true" id="93580640-a4f6-4848-877d-83f2d9fe0546" name="Changes" comment="Nie wiem">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/Task.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/Task.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/TaskController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/TaskController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/TaskDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/TaskDB.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/UserTaskPanelController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/UserTaskPanelController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/task.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/task.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,6 +23,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="PREVIOUS_COMMIT_AUTHORS">
+      <list>
+        <option value="KrzysztofDrozda &lt;kd125178@stud.ur.edu.pl&gt;" />
+      </list>
+    </option>
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
         <entry key="$PROJECT_DIR$" value="master" />
@@ -140,7 +142,15 @@
       <option name="project" value="LOCAL" />
       <updated>1748517970547</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Nie wiem">
+      <option name="closed" value="true" />
+      <created>1748528171593</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1748528171593</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -172,6 +182,9 @@
     <MESSAGE value="Kierownik" />
     <MESSAGE value="CRUD produkty" />
     <MESSAGE value="Nowa tabela i triggery" />
-    <option name="LAST_COMMIT_MESSAGE" value="Nowa tabela i triggery" />
+    <MESSAGE value="Nie wiem co się dzieje" />
+    <MESSAGE value="Przekierowanie użytkownika do odpowiedniego panelu po zalogowaniu" />
+    <MESSAGE value="Nie wiem" />
+    <option name="LAST_COMMIT_MESSAGE" value="Nie wiem" />
   </component>
 </project>
