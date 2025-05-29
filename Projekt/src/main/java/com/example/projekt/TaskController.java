@@ -187,11 +187,11 @@ public class TaskController {
                        z.data_rozpoczecia, z.data_zakonczenia, z.komentarz, pk.nazwa AS produkt, k.nazwa AS kierunek,
                        CONCAT(pr.imie, ' ', pr.nazwisko) AS pracownik
                 FROM zadania z
-                JOIN statusy s ON z.id_statusu = s.id_statusu
-                JOIN priorytety p ON z.id_priorytetu = p.id_priorytetu
-                JOIN pracownicy pr ON z.id_pracownika = pr.id_pracownika
-                JOIN produkty pk ON z.id_produktu = pk.id_produktu
-                JOIN kierunki k ON z.id_kierunku = k.id_kierunku
+                LEFT JOIN statusy s ON z.id_statusu = s.id_statusu
+                LEFT JOIN priorytety p ON z.id_priorytetu = p.id_priorytetu
+                LEFT JOIN pracownicy pr ON z.id_pracownika = pr.id_pracownika
+                LEFT JOIN produkty pk ON z.id_produktu = pk.id_produktu
+                LEFT JOIN kierunki k ON z.id_kierunku = k.id_kierunku
             """;
 
             ResultSet rs = conn.createStatement().executeQuery(query);

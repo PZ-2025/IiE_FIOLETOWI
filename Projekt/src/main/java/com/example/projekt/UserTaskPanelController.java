@@ -186,7 +186,8 @@ public class UserTaskPanelController {
     private void loadTasks() {
         ObservableList<Task> taskList = FXCollections.observableArrayList();
         String sql = """
-            SELECT *
+            SELECT z.id_zadania, z.nazwa, s.nazwa AS status, p.nazwa AS priorytet,
+                       z.data_rozpoczecia, z.data_zakonczenia, z.komentarz, pk.nazwa AS produkt, k.nazwa AS kierunek
             FROM zadania z
             LEFT JOIN statusy s ON z.id_statusu = s.id_statusu
             LEFT JOIN priorytety p ON z.id_priorytetu = p.id_priorytetu
