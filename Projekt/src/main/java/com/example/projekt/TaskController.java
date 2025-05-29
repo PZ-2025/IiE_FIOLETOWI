@@ -190,8 +190,8 @@ public class TaskController {
                 JOIN statusy s ON z.id_statusu = s.id_statusu
                 JOIN priorytety p ON z.id_priorytetu = p.id_priorytetu
                 JOIN pracownicy pr ON z.id_pracownika = pr.id_pracownika
-                JOIN produkty pk ON z.id_produktu = pk.id_produktu
-                JOIN kierunki k ON z.id_kierunku = k.id_kierunku
+                LEFT JOIN produkty pk ON z.id_produktu = pk.id_produktu
+                LEFT JOIN kierunki k ON z.id_kierunku = k.id_kierunku
             """;
 
             ResultSet rs = conn.createStatement().executeQuery(query);
@@ -225,24 +225,45 @@ public class TaskController {
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD)) {
             int statusId = getIdFromTable(conn, "statusy", statusBox.getValue());
             int priorityId = getIdFromTable(conn, "priorytety", priorityBox.getValue());
-            int productId = getIdFromTable(conn, "produkty", productBox.getValue());
-            int directionId = getIdFromTable(conn, "kierunki", directionBox.getValue());
+
+            Integer productId = null;
+            if (productBox.getValue() != null && !productBox.getValue().isEmpty()) {
+                productId = getIdFromTable(conn, "produkty", productBox.getValue());
+            }
+
+            Integer directionId = null;
+            if (directionBox.getValue() != null && !directionBox.getValue().isEmpty()) {
+                directionId = getIdFromTable(conn, "kierunki", directionBox.getValue());
+            }
+
             int employeeId = Integer.parseInt(employeeBox.getValue().split(":")[0]);
 
             String sql = """
-                INSERT INTO zadania (id_pracownika, nazwa, id_statusu, id_priorytetu, data_rozpoczecia, data_zakonczenia, komentarz,  id_produktu, id_kierunku)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-            """;
+            INSERT INTO zadania (id_pracownika, nazwa, id_statusu, id_priorytetu, data_rozpoczecia, data_zakonczenia, komentarz, id_produktu, id_kierunku)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+        """;
+
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setInt(1, employeeId);
             stmt.setString(2, nameField.getText());
             stmt.setInt(3, statusId);
             stmt.setInt(4, priorityId);
-            stmt.setInt(5, productId);
-            stmt.setInt(6, directionId);
-            stmt.setString(7, nameField.getText());
-            stmt.setDate(8, Date.valueOf(startDatePicker.getValue()));
-            stmt.setDate(9, Date.valueOf(endDatePicker.getValue()));
+            stmt.setDate(5, Date.valueOf(startDatePicker.getValue()));
+            stmt.setDate(6, Date.valueOf(endDatePicker.getValue()));
+            stmt.setString(7, commentField.getText());
+
+            if (productId != null) {
+                stmt.setInt(8, productId);
+            } else {
+                stmt.setNull(8, Types.INTEGER);
+            }
+
+            if (directionId != null) {
+                stmt.setInt(9, directionId);
+            } else {
+                stmt.setNull(9, Types.INTEGER);
+            }
+
             stmt.executeUpdate();
 
             loadData();
@@ -267,28 +288,51 @@ public class TaskController {
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD)) {
             int statusId = getIdFromTable(conn, "statusy", statusBox.getValue());
             int priorityId = getIdFromTable(conn, "priorytety", priorityBox.getValue());
-            int productId = getIdFromTable(conn, "produkty", productBox.getValue());
-            int directionId = getIdFromTable(conn, "kierunki", directionBox.getValue());
+
+            Integer productId = null;
+            if (productBox.getValue() != null && !productBox.getValue().isEmpty()) {
+                productId = getIdFromTable(conn, "produkty", productBox.getValue());
+            }
+
+            Integer directionId = null;
+            if (directionBox.getValue() != null && !directionBox.getValue().isEmpty()) {
+                directionId = getIdFromTable(conn, "kierunki", directionBox.getValue());
+            }
+
             int employeeId = Integer.parseInt(employeeBox.getValue().split(":")[0]);
 
             String sql = """
-                UPDATE zadania
-                SET nazwa = ?, id_statusu = ?, id_priorytetu = ?, 
-                    data_rozpoczecia = ?, data_zakonczenia = ?, komentarz = ? id_pracownika = ?, id_produktu = ?, id_kierunku = ?
-                WHERE id_zadania = ?
-            """;
+            UPDATE zadania
+            SET nazwa = ?, id_statusu = ?, id_priorytetu = ?, 
+                data_rozpoczecia = ?, data_zakonczenia = ?, komentarz = ?, id_pracownika = ?, id_produktu = ?, id_kierunku = ?
+            WHERE id_zadania = ?
+        """;
 
             PreparedStatement stmt = conn.prepareStatement(sql);
+
+            // Ustawiamy parametry zgodnie z kolejnością
             stmt.setString(1, nameField.getText());
             stmt.setInt(2, statusId);
             stmt.setInt(3, priorityId);
-            stmt.setInt(4, productId);
-            stmt.setInt(5, directionId);
-            stmt.setDate(6, Date.valueOf(startDatePicker.getValue()));
-            stmt.setDate(7, Date.valueOf(endDatePicker.getValue()));
-            stmt.setString(8, commentField.getText());
-            stmt.setInt(9, employeeId);
+            stmt.setDate(4, Date.valueOf(startDatePicker.getValue()));
+            stmt.setDate(5, Date.valueOf(endDatePicker.getValue()));
+            stmt.setString(6, commentField.getText());
+            stmt.setInt(7, employeeId);
+
+            if (productId != null) {
+                stmt.setInt(8, productId);
+            } else {
+                stmt.setNull(8, Types.INTEGER);
+            }
+
+            if (directionId != null) {
+                stmt.setInt(9, directionId);
+            } else {
+                stmt.setNull(9, Types.INTEGER);
+            }
+
             stmt.setInt(10, selected.getId());
+
             stmt.executeUpdate();
 
             loadData();
@@ -299,6 +343,7 @@ public class TaskController {
             showAlert("Błąd", "Nie udało się zaktualizować zadania");
         }
     }
+
 
     @FXML
     private void handleDeleteTask() {
