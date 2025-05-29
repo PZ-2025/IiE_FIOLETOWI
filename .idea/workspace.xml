@@ -4,14 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="93580640-a4f6-4848-877d-83f2d9fe0546" name="Changes" comment="Poprawki javadoc">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projekt/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/AlertUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/AlertUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/LoginController.java" afterDir="false" />
+    <list default="true" id="93580640-a4f6-4848-877d-83f2d9fe0546" name="Changes" comment="Testy">
       <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/ReportController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/ReportController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/UserManagementController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/UserManagementController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projekt/src/test/java/com/example/projekt/TaskTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/test/java/com/example/projekt/TaskTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -300,7 +294,15 @@
       <option name="project" value="LOCAL" />
       <updated>1748547819537</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Testy">
+      <option name="closed" value="true" />
+      <created>1748550820086</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1748550820086</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -338,7 +340,8 @@
     <MESSAGE value="Wylogowywanie" />
     <MESSAGE value="Zarządzanie użytkownikami" />
     <MESSAGE value="Poprawki javadoc" />
-    <option name="LAST_COMMIT_MESSAGE" value="Poprawki javadoc" />
+    <MESSAGE value="Testy" />
+    <option name="LAST_COMMIT_MESSAGE" value="Testy" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/IiE_FIOLETOWI$TestPolaczeniaTest.ic" NAME="TestPolaczeniaTest Coverage Results" MODIFIED="1748548885996" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
@@ -369,6 +372,9 @@
       <FILTER>com.example.projekt.*</FILTER>
     </SUITE>
     <SUITE FILE_PATH="coverage/IiE_FIOLETOWI$UserSessionTest.ic" NAME="UserSessionTest Coverage Results" MODIFIED="1748548798117" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>com.example.projekt.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/IiE_FIOLETOWI$ReportControllerTest.ic" NAME="ReportControllerTest Coverage Results" MODIFIED="1748550635141" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
       <FILTER>com.example.projekt.*</FILTER>
     </SUITE>
     <SUITE FILE_PATH="coverage/IiE_FIOLETOWI$RoleTest.ic" NAME="RoleTest Coverage Results" MODIFIED="1748548789379" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">

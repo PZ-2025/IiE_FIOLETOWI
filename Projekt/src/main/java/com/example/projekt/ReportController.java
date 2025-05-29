@@ -25,18 +25,23 @@ import java.util.*;
 
 public class ReportController {
 
-    @FXML private ComboBox<String> mainReportTypeComboBox;
-    @FXML private VBox filterContainer;
-    @FXML private VBox reportPreviewContainer;
-    @FXML private TableView<Map<String, String>> reportTableView;
+    @FXML
+    protected ComboBox<String> mainReportTypeComboBox;
+    @FXML
+    protected VBox filterContainer;
+    @FXML
+    protected VBox reportPreviewContainer;
+    @FXML
+    protected TableView<Map<String, String>> reportTableView;
 
-    @FXML private VBox reportRoot;
+    @FXML
+    protected VBox reportRoot;
 
     public final Map<String, Control> dynamicFilters = new HashMap<>();
-    private String currentReportType;
-    private List<Map<String, String>> lastReportData;
-    private Map<String, Integer> lastChartData;
-    private final Map<String, String> headerKeyMap = new LinkedHashMap<>();
+    protected String currentReportType;
+    protected List<Map<String, String>> lastReportData;
+    protected Map<String, Integer> lastChartData;
+    protected final Map<String, String> headerKeyMap = new LinkedHashMap<>();
 
     @FXML
     public void initialize() {
@@ -63,7 +68,7 @@ public class ReportController {
 
     }
 
-    private void renderFilterUI(String type) {
+    protected void renderFilterUI(String type) {
         filterContainer.getChildren().clear();
         dynamicFilters.clear();
 
@@ -429,7 +434,7 @@ public class ReportController {
                 .orElse(defaultValue);
     }
 
-    private void addColumn(String header, String key) {
+    protected void addColumn(String header, String key) {
         TableColumn<Map<String, String>, String> col = new TableColumn<>(header);
         col.setCellValueFactory(data -> new javafx.beans.property.SimpleStringProperty(data.getValue().get(key)));
         reportTableView.getColumns().add(col);
