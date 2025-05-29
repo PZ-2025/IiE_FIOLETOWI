@@ -13,8 +13,9 @@ public class Task {
     private final SimpleStringProperty pracownik;
     private final SimpleStringProperty produkt;
     private final SimpleStringProperty kierunek;
+    private final SimpleStringProperty ilosc;  // nullable Integer
 
-    public Task(int id, String nazwa, String status, String priorytet, String data, String produkt, String kierunek, String komentarz) {
+    public Task(int id, String nazwa, String status, String priorytet, String data, String produkt, String kierunek, String komentarz, String ilosc, String pracownik) {
         this.id = id;
         this.nazwa = new SimpleStringProperty(nazwa);
         this.status = new SimpleStringProperty(status);
@@ -22,9 +23,10 @@ public class Task {
         this.data = new SimpleStringProperty(data);
         this.koniec = new SimpleStringProperty("");
         this.pracownik = new SimpleStringProperty("");
-        this.komentarz = new SimpleStringProperty("");
+        this.komentarz = new SimpleStringProperty(komentarz);
         this.produkt = new SimpleStringProperty(produkt);
         this.kierunek = new SimpleStringProperty(kierunek);
+        this.ilosc = new SimpleStringProperty();
     }
 
     // Gettery
@@ -36,9 +38,9 @@ public class Task {
     public String getKoniec() { return koniec.get(); }
     public String getPracownik() { return pracownik.get(); }
     public String getKomentarz() { return komentarz.get(); }
-    public String getProdukt() {return produkt.get();}
-    public String getKierunek() {return kierunek.get();}
-
+    public String getProdukt() { return produkt.get(); }
+    public String getKierunek() { return kierunek.get(); }
+    public String getIlosc() { return ilosc.get(); }
 
     // Settery
     public void setEndDate(String koniec) {

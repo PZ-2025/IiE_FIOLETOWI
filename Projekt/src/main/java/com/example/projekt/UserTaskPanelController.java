@@ -211,7 +211,9 @@ public class UserTaskPanelController {
                         rs.getString("priorytet"),
                         rs.getDate("data_rozpoczecia") != null ? rs.getDate("data_rozpoczecia").toString() : "",
                         rs.getString("komentarz"),
+                        rs.getString("pracownik"),
                         rs.getString("produkt"),
+                        rs.getString("ilosc"),
                         rs.getString("kierunek")
                 ));
             }

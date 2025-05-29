@@ -31,6 +31,7 @@
                     <TableColumn fx:id="commentColumn" text="Komentarz"/>
                     <TableColumn fx:id="assignedColumn" text="Pracownik"/>
                     <TableColumn fx:id="assignedproductColumn" text="Produkt"/>
+                    <TableColumn fx:id="quantityColumn" text="Ilość"/>
                     <TableColumn fx:id="directionColumn" text="Kierunek"/>
                 </columns>
             </TableView>
@@ -53,6 +54,9 @@
 
                 <Label text="Kierunek:" styleClass="label"/>
                 <ComboBox fx:id="directionBox" styleClass="combo-box"/>
+
+                <Label text="Ilość:" styleClass="label"/>
+                <TextField fx:id="quantityField" promptText="Wpisz ilość" styleClass="input-field"/>
             </HBox>
 
             <HBox spacing="10">

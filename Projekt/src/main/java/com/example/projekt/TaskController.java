@@ -30,11 +30,13 @@ public class TaskController {
     @FXML private TableColumn<Task, String> endDateColumn;
     @FXML private TableColumn<Task, String> assignedColumn;
     @FXML private TableColumn<Task, String> commentColumn;
+    @FXML private TableColumn<Task, String> quantityColumn;
     @FXML private TableColumn<Task, String> assignedproductColumn;
     @FXML private TableColumn<Task, String> directionColumn;
 
     @FXML private TextField nameField;
     @FXML private TextField commentField;
+    @FXML private TextField quantityField;
     @FXML private ComboBox<String> statusBox;
     @FXML private ComboBox<String> priorityBox;
     @FXML private ComboBox<String> productBox;
@@ -51,6 +53,8 @@ public class TaskController {
     private ObservableList<String> productList = FXCollections.observableArrayList();
     private ObservableList<String> directionList = FXCollections.observableArrayList();
     private ObservableList<String> employeeList = FXCollections.observableArrayList();
+
+
 
     private final String URL = "jdbc:mysql://localhost:3306/HurtPolSan";
     private final String USER = "root";
@@ -93,6 +97,7 @@ public class TaskController {
         commentColumn.setCellValueFactory(new PropertyValueFactory<>("komentarz"));
         assignedColumn.setCellValueFactory(new PropertyValueFactory<>("pracownik"));
         assignedproductColumn.setCellValueFactory(new PropertyValueFactory<>("produkt"));
+        quantityColumn.setCellValueFactory(new PropertyValueFactory<>("ilosc"));
         directionColumn.setCellValueFactory(new PropertyValueFactory<>("kierunek"));
 
         // Ustawienie proporcjonalnego rozkładu szerokości kolumn
@@ -104,6 +109,7 @@ public class TaskController {
         assignedColumn.prefWidthProperty().bind(taskTable.widthProperty().multiply(0.15));
         commentColumn.prefWidthProperty().bind(taskTable.widthProperty().multiply(0.15));
         assignedproductColumn.prefWidthProperty().bind(taskTable.widthProperty().multiply(0.15));
+        quantityColumn.prefWidthProperty().bind(taskTable.widthProperty().multiply(0.15));
         directionColumn.prefWidthProperty().bind(taskTable.widthProperty().multiply(0.15));
     }
 
@@ -114,6 +120,7 @@ public class TaskController {
         priorityBox.setValue(task.getPriorytet());
         productBox.setValue(task.getProdukt());
         directionBox.setValue(task.getKierunek());
+        quantityField.setText(task.getKierunek());
         employeeBox.getItems().stream()
                 .filter(emp -> emp.contains(task.getPracownik()))
                 .findFirst()
@@ -184,7 +191,7 @@ public class TaskController {
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD)) {
             String query = """
                 SELECT z.id_zadania, z.nazwa, s.nazwa AS status, p.nazwa AS priorytet,
-                       z.data_rozpoczecia, z.data_zakonczenia, z.komentarz, pk.nazwa AS produkt, k.nazwa AS kierunek,
+                       z.data_rozpoczecia, z.data_zakonczenia, z.komentarz, z.ilosc, pk.nazwa AS produkt, z.ilosc, k.nazwa AS kierunek,
                        CONCAT(pr.imie, ' ', pr.nazwisko) AS pracownik
                 FROM zadania z
                 LEFT JOIN statusy s ON z.id_statusu = s.id_statusu
@@ -202,9 +209,11 @@ public class TaskController {
                         rs.getString("status"),
                         rs.getString("priorytet"),
                         rs.getString("data_rozpoczecia"),
+                        rs.getString("komentarz"),
+                        rs.getString("pracownik"),
                         rs.getString("produkt"),
-                        rs.getString("kierunek"),
-                        rs.getString("komentarz")
+                        rs.getString("ilosc"),
+                        rs.getString("kierunek")
                 );
 
                 task.setEndDate(rs.getString("data_zakonczenia"));
@@ -230,8 +239,8 @@ public class TaskController {
             int employeeId = Integer.parseInt(employeeBox.getValue().split(":")[0]);
 
             String sql = """
-                INSERT INTO zadania (id_pracownika, nazwa, id_statusu, id_priorytetu, data_rozpoczecia, data_zakonczenia, komentarz,  id_produktu, id_kierunku)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                INSERT INTO zadania (id_pracownika, nazwa, id_statusu, id_priorytetu, data_rozpoczecia, data_zakonczenia, komentarz,  id_produktu, ilosc, id_kierunku)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """;
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setInt(1, employeeId);
@@ -242,7 +251,8 @@ public class TaskController {
             stmt.setDate(6, Date.valueOf(endDatePicker.getValue()));
             stmt.setString(7, commentField.getText());
             stmt.setInt(8, productId);
-            stmt.setInt(9, directionId);
+            stmt.setString(9, quantityField.getText());
+            stmt.setInt(10, directionId);
             stmt.executeUpdate();
 
             loadData();
@@ -274,7 +284,7 @@ public class TaskController {
             String sql = """
                 UPDATE zadania
                 SET nazwa = ?, id_statusu = ?, id_priorytetu = ?, 
-                    data_rozpoczecia = ?, data_zakonczenia = ?, komentarz = ? id_pracownika = ?, id_produktu = ?, id_kierunku = ?
+                    data_rozpoczecia = ?, data_zakonczenia = ?, komentarz = ? id_pracownika = ?, id_produktu = ?, ilosc = ?, id_kierunku = ?
                 WHERE id_zadania = ?
             """;
 
@@ -287,6 +297,7 @@ public class TaskController {
             stmt.setString(6, commentField.getText());
             stmt.setInt(7, employeeId);
             stmt.setInt(8, productId);
+            stmt.setString(8, quantityField.getText());
             stmt.setInt(9, directionId);
             stmt.setInt(10, selected.getId());
             stmt.executeUpdate();
