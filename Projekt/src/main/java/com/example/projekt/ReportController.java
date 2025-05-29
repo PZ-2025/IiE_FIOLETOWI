@@ -51,7 +51,16 @@ public class ReportController {
         mainReportTypeComboBox.setOnAction(e -> {
             currentReportType = mainReportTypeComboBox.getValue();
             renderFilterUI(currentReportType);
+
+            // Czyszczenie podglądu po zmianie typu raportu
+            reportTableView.getColumns().clear();
+            reportTableView.getItems().clear();
+            reportPreviewContainer.getChildren().clear();
+            headerKeyMap.clear();
+            lastReportData = null;
+            lastChartData = null;
         });
+
     }
 
     private void renderFilterUI(String type) {
