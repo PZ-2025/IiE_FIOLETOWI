@@ -4,19 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="93580640-a4f6-4848-877d-83f2d9fe0546" name="Changes" comment="Zarządzanie użytkownikami">
+    <list default="true" id="93580640-a4f6-4848-877d-83f2d9fe0546" name="Changes" comment="Poprawki javadoc">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projekt/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/AlertUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/AlertUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/AppSettings.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/AppSettings.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/DatabaseConnector.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/DatabaseConnector.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/Group.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/Group.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/PasswordHasher.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/PasswordHasher.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/PasswordValidator.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/PasswordValidator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/Product.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/ProductType.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/ProductType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/Task.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/Task.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/TestPołączenia.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/TestPołączenia.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/UserSession.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/UserSession.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/LoginController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/ReportController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/ReportController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/UserManagementController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/UserManagementController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projekt/src/test/java/com/example/projekt/TaskTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/test/java/com/example/projekt/TaskTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,8 +21,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="FxmlFile" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -72,10 +67,24 @@
     "Application.Main.executor": "Run",
     "Application.TestPołączenia.executor": "Run",
     "Downloaded.Files.Path.Enabled": "false",
+    "JUnit.AlertUtilsTest.executor": "Coverage",
+    "JUnit.AppSettingsTest.executor": "Coverage",
+    "JUnit.DatabaseConnectorTest.executor": "Coverage",
+    "JUnit.DatabaseConnectorTest.testConnectReturnsConnection.executor": "Run",
+    "JUnit.GroupTest.executor": "Coverage",
+    "JUnit.LoginControllerTest.executor": "Coverage",
+    "JUnit.PasswordHasherTest.executor": "Coverage",
+    "JUnit.PasswordValidatorTest.executor": "Coverage",
     "JUnit.ProductTest.executor": "Coverage",
     "JUnit.ProductTypeTest.executor": "Coverage",
+    "JUnit.ReportControllerTest.executor": "Run",
     "JUnit.RoleTest.executor": "Coverage",
     "JUnit.RoleTest.testConstructorAndGetters.executor": "Coverage",
+    "JUnit.TaskTest.executor": "Coverage",
+    "JUnit.TestPolaczeniaTest.executor": "Coverage",
+    "JUnit.UserManagementControllerTest.addNewUser_withValidData_executesInsert.executor": "Run",
+    "JUnit.UserManagementControllerTest.executor": "Coverage",
+    "JUnit.UserSessionTest.executor": "Coverage",
     "JUnit.UserTest.executor": "Coverage",
     "JUnit.UserTest.testConstructorAndGetters.executor": "Coverage",
     "Repository.Attach.Annotations": "false",
@@ -100,7 +109,7 @@
       <recent name="C:\Users\ABC\Documents\IiE_FIOLETOWI\Projekt\src\main\java\com\example\projekt" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="JUnit.ReportControllerTest">
     <configuration name="Main" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="com.example.projekt.Main" />
       <module name="Projekt" />
@@ -108,7 +117,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ProductTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="LoginControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Projekt" />
       <extension name="coverage">
         <pattern>
@@ -117,13 +126,13 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="com.example.projekt" />
-      <option name="MAIN_CLASS_NAME" value="com.example.projekt.ProductTest" />
+      <option name="MAIN_CLASS_NAME" value="com.example.projekt.LoginControllerTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="RoleTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="ReportControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Projekt" />
       <extension name="coverage">
         <pattern>
@@ -132,13 +141,13 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="com.example.projekt" />
-      <option name="MAIN_CLASS_NAME" value="com.example.projekt.RoleTest" />
+      <option name="MAIN_CLASS_NAME" value="com.example.projekt.ReportControllerTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="RoleTest.testConstructorAndGetters" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="TaskTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Projekt" />
       <extension name="coverage">
         <pattern>
@@ -147,29 +156,13 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="com.example.projekt" />
-      <option name="MAIN_CLASS_NAME" value="com.example.projekt.RoleTest" />
-      <option name="METHOD_NAME" value="testConstructorAndGetters" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="UserTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Projekt" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.example.projekt.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.example.projekt" />
-      <option name="MAIN_CLASS_NAME" value="com.example.projekt.UserTest" />
+      <option name="MAIN_CLASS_NAME" value="com.example.projekt.TaskTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="UserTest.testConstructorAndGetters" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="UserManagementControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Projekt" />
       <extension name="coverage">
         <pattern>
@@ -178,8 +171,23 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="com.example.projekt" />
-      <option name="MAIN_CLASS_NAME" value="com.example.projekt.UserTest" />
-      <option name="METHOD_NAME" value="testConstructorAndGetters" />
+      <option name="MAIN_CLASS_NAME" value="com.example.projekt.UserManagementControllerTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="UserManagementControllerTest.addNewUser_withValidData_executesInsert" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Projekt" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.projekt.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.example.projekt" />
+      <option name="MAIN_CLASS_NAME" value="com.example.projekt.UserManagementControllerTest" />
+      <option name="METHOD_NAME" value="addNewUser_withValidData_executesInsert" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -187,11 +195,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.UserTest" />
-        <item itemvalue="JUnit.RoleTest" />
-        <item itemvalue="JUnit.ProductTest" />
-        <item itemvalue="JUnit.UserTest.testConstructorAndGetters" />
-        <item itemvalue="JUnit.RoleTest.testConstructorAndGetters" />
+        <item itemvalue="JUnit.ReportControllerTest" />
+        <item itemvalue="JUnit.UserManagementControllerTest" />
+        <item itemvalue="JUnit.UserManagementControllerTest.addNewUser_withValidData_executesInsert" />
+        <item itemvalue="JUnit.TaskTest" />
+        <item itemvalue="JUnit.LoginControllerTest" />
       </list>
     </recent_temporary>
   </component>
@@ -284,7 +292,15 @@
       <option name="project" value="LOCAL" />
       <updated>1748546999194</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Poprawki javadoc">
+      <option name="closed" value="true" />
+      <created>1748547819537</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1748547819537</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -321,16 +337,53 @@
     <MESSAGE value="Panel użytkownika" />
     <MESSAGE value="Wylogowywanie" />
     <MESSAGE value="Zarządzanie użytkownikami" />
-    <option name="LAST_COMMIT_MESSAGE" value="Zarządzanie użytkownikami" />
+    <MESSAGE value="Poprawki javadoc" />
+    <option name="LAST_COMMIT_MESSAGE" value="Poprawki javadoc" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/IiE_FIOLETOWI$RoleTest.ic" NAME="RoleTest Coverage Results" MODIFIED="1748544277203" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+    <SUITE FILE_PATH="coverage/IiE_FIOLETOWI$TestPolaczeniaTest.ic" NAME="TestPolaczeniaTest Coverage Results" MODIFIED="1748548885996" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
       <FILTER>com.example.projekt.*</FILTER>
     </SUITE>
-    <SUITE FILE_PATH="coverage/IiE_FIOLETOWI$UserTest.ic" NAME="UserTest Coverage Results" MODIFIED="1748544286619" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+    <SUITE FILE_PATH="coverage/IiE_FIOLETOWI$DatabaseConnectorTest.ic" NAME="DatabaseConnectorTest Coverage Results" MODIFIED="1748548577061" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
       <FILTER>com.example.projekt.*</FILTER>
     </SUITE>
-    <SUITE FILE_PATH="coverage/IiE_FIOLETOWI$ProductTest.ic" NAME="ProductTest Coverage Results" MODIFIED="1748543946354" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+    <SUITE FILE_PATH="coverage/IiE_FIOLETOWI$ProductTypeTest.ic" NAME="ProductTypeTest Coverage Results" MODIFIED="1748548782100" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>com.example.projekt.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/IiE_FIOLETOWI$UserManagementControllerTest.ic" NAME="UserManagementControllerTest Coverage Results" MODIFIED="1748550314573" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>com.example.projekt.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/IiE_FIOLETOWI$PasswordValidatorTest.ic" NAME="PasswordValidatorTest Coverage Results" MODIFIED="1748548754047" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>com.example.projekt.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/IiE_FIOLETOWI$GroupTest.ic" NAME="GroupTest Coverage Results" MODIFIED="1748548708982" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>com.example.projekt.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/IiE_FIOLETOWI$ProductTest.ic" NAME="ProductTest Coverage Results" MODIFIED="1748548773636" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>com.example.projekt.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/IiE_FIOLETOWI$LoginControllerTest.ic" NAME="LoginControllerTest Coverage Results" MODIFIED="1748549316626" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>com.example.projekt.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/IiE_FIOLETOWI$TaskTest.ic" NAME="TaskTest Coverage Results" MODIFIED="1748549380555" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>com.example.projekt.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/IiE_FIOLETOWI$UserSessionTest.ic" NAME="UserSessionTest Coverage Results" MODIFIED="1748548798117" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>com.example.projekt.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/IiE_FIOLETOWI$RoleTest.ic" NAME="RoleTest Coverage Results" MODIFIED="1748548789379" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>com.example.projekt.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/IiE_FIOLETOWI$AppSettingsTest.ic" NAME="AppSettingsTest Coverage Results" MODIFIED="1748549084584" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>com.example.projekt.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/IiE_FIOLETOWI$PasswordHasherTest.ic" NAME="PasswordHasherTest Coverage Results" MODIFIED="1748548972803" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>com.example.projekt.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/IiE_FIOLETOWI$UserTest.ic" NAME="UserTest Coverage Results" MODIFIED="1748548806817" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>com.example.projekt.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/IiE_FIOLETOWI$AlertUtilsTest.ic" NAME="AlertUtilsTest Coverage Results" MODIFIED="1748549164396" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
       <FILTER>com.example.projekt.*</FILTER>
     </SUITE>
   </component>

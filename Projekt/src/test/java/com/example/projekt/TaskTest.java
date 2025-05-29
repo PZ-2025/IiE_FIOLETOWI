@@ -1,49 +1,40 @@
-/*package com.example.projekt;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+package com.example.projekt;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class TaskTest {
+import org.junit.jupiter.api.Test;
 
-    private Task task;
-
-    @BeforeEach
-    void setUp() {
-        task = new Task(1, "Napisać raport", "Nowe", "Wysoki", "2025-06-01");
-    }
+public class TaskTest {
 
     @Test
-    void testConstructorAndGetters() {
+    public void testTaskCreationAndGetters() {
+        Task task = new Task(1, "Test Task", "Open", "High", "2025-05-29", "ProduktX", "KierunekY", "Komentarz", "10", "Jan Kowalski");
+
         assertEquals(1, task.getId());
-        assertEquals("Napisać raport", task.getNazwa());
-        assertEquals("Nowe", task.getStatus());
-        assertEquals("Wysoki", task.getPriorytet());
-        assertEquals("2025-06-01", task.getData());
-        assertEquals("", task.getKoniec());
-        assertEquals("", task.getPracownik());
-    }
-
-    @Test
-    void testSetEndDate() {
-        task.setEndDate("2025-06-10");
-        assertEquals("2025-06-10", task.getKoniec());
-    }
-
-    @Test
-    void testSetAssignedTo() {
-        task.setAssignedTo("Jan Kowalski");
+        assertEquals("Test Task", task.getNazwa());
+        assertEquals("Open", task.getStatus());
+        assertEquals("High", task.getPriorytet());
+        assertEquals("2025-05-29", task.getData());
+        assertEquals("ProduktX", task.getProdukt());
+        assertEquals("KierunekY", task.getKierunek());
+        assertEquals("Komentarz", task.getKomentarz());
+        assertEquals("10", task.getIlosc());
         assertEquals("Jan Kowalski", task.getPracownik());
+
+        // Data zakończenia powinna być domyślnie pusta
+        assertEquals("", task.getKoniec());
     }
 
     @Test
-    void testPropertiesReflectChanges() {
-        task.setEndDate("2025-06-12");
-        assertEquals("2025-06-12", task.koniecProperty().get());
+    public void testSetters() {
+        Task task = new Task(2, "Inne Zadanie", "W trakcie", "Medium", "2025-05-28", "ProduktY", "KierunekZ", "Brak komentarza", "5", "Anna Nowak");
 
-        task.setAssignedTo("Ewa Nowak");
-        assertEquals("Ewa Nowak", task.pracownikProperty().get());
+        // Sprawdź ustawianie daty zakończenia
+        task.setEndDate("2025-06-01");
+        assertEquals("2025-06-01", task.getKoniec());
+
+        // Sprawdź ustawianie pracownika
+        task.setAssignedTo("Piotr Wiśniewski");
+        assertEquals("Piotr Wiśniewski", task.getPracownik());
     }
 }
-*/

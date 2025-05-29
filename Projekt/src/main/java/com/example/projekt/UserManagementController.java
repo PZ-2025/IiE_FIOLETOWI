@@ -25,6 +25,7 @@ import java.util.logging.Logger;
 
 public class UserManagementController {
 
+
     private static final Logger LOGGER = Logger.getLogger(UserManagementController.class.getName());
     private static final String DASHBOARD_VIEW_PATH = "/com/example/projekt/dashboard.fxml";
     private static final String DASHBOARD_TITLE = "Dashboard";
@@ -40,15 +41,17 @@ public class UserManagementController {
     @FXML private TableColumn<User, String> rolaColumn;
     @FXML protected TextField usernameField;
     @FXML protected PasswordField passwordField;
-    @FXML private ComboBox<Role> roleComboBox;
-    @FXML private ComboBox<Group> groupComboBox;
+    @FXML
+    public ComboBox<Role> roleComboBox;
+    @FXML
+    public ComboBox<Group> groupComboBox;
     @FXML protected TextField firstNameField;
     @FXML protected TextField lastNameField;
     @FXML protected TextField salaryField;
     @FXML private VBox userRoot;
 
-    protected ObservableList<Role> roles = FXCollections.observableArrayList();
-    protected ObservableList<Group> groups = FXCollections.observableArrayList();
+    public ObservableList<Role> roles = FXCollections.observableArrayList();
+    public ObservableList<Group> groups = FXCollections.observableArrayList();
     private User selectedUserToEdit = null;
 
     @FXML

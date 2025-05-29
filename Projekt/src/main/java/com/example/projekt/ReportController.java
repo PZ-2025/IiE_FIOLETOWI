@@ -32,7 +32,7 @@ public class ReportController {
 
     @FXML private VBox reportRoot;
 
-    private final Map<String, Control> dynamicFilters = new HashMap<>();
+    public final Map<String, Control> dynamicFilters = new HashMap<>();
     private String currentReportType;
     private List<Map<String, String>> lastReportData;
     private Map<String, Integer> lastChartData;
@@ -422,7 +422,7 @@ public class ReportController {
     }
 
 
-    private String getFilterValue(String key, String defaultValue) {
+    public String getFilterValue(String key, String defaultValue) {
         return Optional.ofNullable(dynamicFilters.get(key))
                 .filter(c -> c instanceof ComboBox<?>)
                 .map(c -> ((ComboBox<String>) c).getValue())

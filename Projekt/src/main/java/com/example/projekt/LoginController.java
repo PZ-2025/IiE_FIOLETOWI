@@ -40,7 +40,7 @@ public class LoginController {
      * @param event zdarzenie wywołane kliknięciem przycisku
      */
     @FXML
-    private void handleLogin(ActionEvent event) {
+    public void handleLogin(ActionEvent event) {
         String username = usernameField.getText().trim();
         String password = passwordField.getText().trim();
 
@@ -117,7 +117,7 @@ public class LoginController {
      * @param user obiekt reprezentujący zalogowanego użytkownika
      * @throws IOException jeśli wystąpi błąd podczas ładowania widoku dashboardu
      */
-    private void redirectToDashboard(ActionEvent event, User user) throws IOException {
+    public void redirectToDashboard(ActionEvent event, User user) throws IOException {
         String fxmlPath;
 
         switch (user.getRole().toLowerCase()) {

@@ -1,5 +1,6 @@
 package com.example.projekt;
 
+import javafx.application.Platform;
 import javafx.scene.control.Alert;
 
 /**
@@ -15,11 +16,13 @@ public class AlertUtils {
      * @param message treść komunikatu do wyświetlenia
      */
     public static void showAlert(String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Informacja");
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
+        Platform.runLater(() -> {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Informacja");
+            alert.setHeaderText(null);
+            alert.setContentText(message);
+            alert.showAndWait();
+        });
     }
 
     /**
@@ -28,10 +31,12 @@ public class AlertUtils {
      * @param message treść komunikatu o błędzie do wyświetlenia
      */
     public static void showError(String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Błąd");
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
+        Platform.runLater(() -> {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Błąd");
+            alert.setHeaderText(null);
+            alert.setContentText(message);
+            alert.showAndWait();
+        });
     }
 }
