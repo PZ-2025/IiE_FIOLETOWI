@@ -52,6 +52,9 @@ public class ReportController {
             }
         });
 
+        // Ustawienie polityki zmiany rozmiaru tabeli
+        reportTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
         mainReportTypeComboBox.getItems().addAll("Transakcje", "Zadania", "Produkty");
         mainReportTypeComboBox.setOnAction(e -> {
             currentReportType = mainReportTypeComboBox.getValue();
@@ -65,7 +68,6 @@ public class ReportController {
             lastReportData = null;
             lastChartData = null;
         });
-
     }
 
     protected void renderFilterUI(String type) {
@@ -134,7 +136,6 @@ public class ReportController {
 
         headerKeyMap.clear();
 
-
         switch (currentReportType) {
             case "Transakcje" -> generateTransactionPreview();
             case "Zadania"     -> generateTaskPreview();
@@ -165,7 +166,6 @@ public class ReportController {
         ImageView chart = ChartUtils.createChartImage(chartData, "Sprzedaż dzienna");
         reportPreviewContainer.getChildren().add(chart);
     }
-
 
     private List<Map<String, String>> getTransactionData(String sortKey, LocalDate start, LocalDate end) {
         List<Map<String, String>> list = new ArrayList<>();
@@ -211,8 +211,6 @@ public class ReportController {
         return list;
     }
 
-
-
     private Map<String, Integer> getTransactionChartData(LocalDate start, LocalDate end) {
         Map<String, Integer> data = new LinkedHashMap<>();
         StringBuilder query = new StringBuilder(
@@ -241,8 +239,6 @@ public class ReportController {
         return data;
     }
 
-
-
     private void generateTaskPreview() {
         String sortKey = Optional.ofNullable(getFilterValue("sortTask", "Data rozpoczęcia")).orElse("Data rozpoczęcia");
         String statusFilter = getFilterValue("status", null);
@@ -256,9 +252,6 @@ public class ReportController {
 
         List<Map<String, String>> data = getTaskData(sortKey, statusFilter, priorityFilter, start, end);
 
-        // Logowanie pobranych danych
-        System.out.println("Dane zadań: " + data);
-
         addColumn("Zadanie", "task");
         addColumn("Status", "status");
         addColumn("Priorytet", "priority");
@@ -267,16 +260,12 @@ public class ReportController {
         reportTableView.setItems(FXCollections.observableArrayList(data));
         lastReportData = data;
 
-
         Map<String, Integer> chartData = getTaskChartData(statusFilter, priorityFilter, start, end);
         lastChartData = chartData;
 
         ImageView chart = ChartUtils.createChartImage(chartData, "Liczba zadań wg statusu");
         reportPreviewContainer.getChildren().add(chart);
     }
-
-
-
 
     private List<Map<String, String>> getTaskData(String sortKey, String statusFilter, String priorityFilter, LocalDate start, LocalDate end) {
         List<Map<String, String>> list = new ArrayList<>();
@@ -299,7 +288,7 @@ public class ReportController {
             default -> "z.data_rozpoczecia";
         });
 
-        System.out.println("Zapytanie SQL: " + query); // Logowanie zapytania SQL
+        System.out.println("Zapytanie SQL: " + query);
 
         try (Connection conn = DatabaseConnector.connect();
              PreparedStatement stmt = conn.prepareStatement(query.toString())) {
@@ -323,12 +312,9 @@ public class ReportController {
             e.printStackTrace();
         }
 
-        // Logowanie danych
         System.out.println("Dane zadań po zapytaniu: " + list);
         return list;
     }
-
-
 
     private Map<String, Integer> getTaskChartData(String statusFilter, String priorityFilter, LocalDate start, LocalDate end) {
         Map<String, Integer> data = new LinkedHashMap<>();
@@ -380,7 +366,6 @@ public class ReportController {
         lastChartData = chartData;
         ImageView chart = ChartUtils.createChartImage(chartData, "Stan magazynowy produktów");
         reportPreviewContainer.getChildren().add(chart);
-
     }
 
     private List<Map<String, String>> getProductData(String sortKey) {
@@ -426,7 +411,6 @@ public class ReportController {
         return data;
     }
 
-
     public String getFilterValue(String key, String defaultValue) {
         return Optional.ofNullable(dynamicFilters.get(key))
                 .filter(c -> c instanceof ComboBox<?>)
@@ -437,10 +421,13 @@ public class ReportController {
     protected void addColumn(String header, String key) {
         TableColumn<Map<String, String>, String> col = new TableColumn<>(header);
         col.setCellValueFactory(data -> new javafx.beans.property.SimpleStringProperty(data.getValue().get(key)));
-        reportTableView.getColumns().add(col);
-        headerKeyMap.put(header, key); // zapamiętujemy mapowanie nagłówek → klucz mapy
-    }
 
+        // Ustawienie proporcjonalnego rozkładu szerokości kolumn
+        col.prefWidthProperty().bind(reportTableView.widthProperty().divide(reportTableView.getColumns().size() + 1));
+
+        reportTableView.getColumns().add(col);
+        headerKeyMap.put(header, key);
+    }
 
     @FXML
     public void saveReportAsPDF() {
@@ -453,9 +440,7 @@ public class ReportController {
                 List<Map<String, String>> data = lastReportData;
                 Map<String, Integer> chartData = lastChartData;
 
-                // Tablica nagłówków
                 String[] headers = headerKeyMap.keySet().toArray(new String[0]);
-                // Tablica kluczy (do odczytu wartości z map danych)
                 String[] keys = headerKeyMap.values().toArray(new String[0]);
 
                 PDFGenerator.generateReport(currentReportType, data, headers, keys, file, chartData);
@@ -467,12 +452,6 @@ public class ReportController {
         }
     }
 
-
-
-
-
-
-
     private void showAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Informacja");
@@ -481,20 +460,19 @@ public class ReportController {
         alert.showAndWait();
     }
 
-
     @FXML
     private void goBackToDashboard() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/projekt/dashboard.fxml"));
             Parent root = loader.load();
 
-            // Pobranie aktualnej sceny
             Stage stage = (Stage) mainReportTypeComboBox.getScene().getWindow();
             stage.setScene(new Scene(root));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
     private void applyTheme(String theme) {
         Scene scene = reportRoot.getScene();
         if (scene == null) return;
@@ -515,5 +493,4 @@ public class ReportController {
     private void applyFontSize(double size) {
         reportRoot.getScene().getRoot().setStyle("-fx-font-size: " + (int) size + "px;");
     }
-
 }
