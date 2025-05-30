@@ -83,6 +83,19 @@ public class TaskController {
             }
         });
     }
+    @FXML
+    private void clearForm() {
+        nameField.clear();
+        commentField.clear();
+        statusBox.getSelectionModel().clearSelection();
+        priorityBox.getSelectionModel().clearSelection();
+        productBox.getSelectionModel().clearSelection();
+        directionBox.getSelectionModel().clearSelection();
+        quantityField.clear();
+        startDatePicker.setValue(null);
+        endDatePicker.setValue(null);
+        employeeBox.getSelectionModel().clearSelection();
+    }
 
     private void configureTableColumns() {
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("nazwa"));
