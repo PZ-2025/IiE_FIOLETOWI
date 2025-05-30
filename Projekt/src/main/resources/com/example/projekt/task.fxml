@@ -75,6 +75,7 @@
                 <Button text="Dodaj zadanie" onAction="#handleAddTask" styleClass="primary-button"/>
                 <Button text="Edytuj zadanie" onAction="#handleEditTask" styleClass="primary-button"/>
                 <Button text="Usuń zadanie" onAction="#handleDeleteTask" styleClass="primary-button"/>
+                <Button text="Wyczyść formularz" onAction="#clearForm" styleClass="secondary-button"/>
             </HBox>
         </VBox>
     </center>

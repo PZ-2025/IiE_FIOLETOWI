@@ -83,6 +83,19 @@ public class TaskController {
             }
         });
     }
+    @FXML
+    private void clearForm() {
+        nameField.clear();
+        commentField.clear();
+        statusBox.getSelectionModel().clearSelection();
+        priorityBox.getSelectionModel().clearSelection();
+        productBox.getSelectionModel().clearSelection();
+        directionBox.getSelectionModel().clearSelection();
+        quantityField.clear();
+        startDatePicker.setValue(null);
+        endDatePicker.setValue(null);
+        employeeBox.getSelectionModel().clearSelection();
+    }
 
     private void configureTableColumns() {
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("nazwa"));
@@ -266,32 +279,91 @@ public class TaskController {
         if (!validateForm()) return;
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD)) {
-            int statusId = getIdFromTable(conn, "statusy", statusBox.getValue());
-            int priorityId = getIdFromTable(conn, "priorytety", priorityBox.getValue());
-            int productId = getIdFromTable(conn, "produkty", productBox.getValue());
-            int directionId = getIdFromTable(conn, "kierunki", directionBox.getValue());
-            int employeeId = Integer.parseInt(employeeBox.getValue().split(":")[0]);
+            Integer statusId = null, priorityId = null, productId = null, directionId = null, employeeId = null;
+
+            // status i priorytet wymagane
+            statusId = getIdFromTable(conn, "statusy", statusBox.getValue());
+            priorityId = getIdFromTable(conn, "priorytety", priorityBox.getValue());
+
+            // produkt może być null
+            if (productBox.getValue() != null) {
+                productId = getIdFromTable(conn, "produkty", productBox.getValue());
+            } else {
+                productId = null;
+            }
+
+            // kierunek może być null
+            if (directionBox.getValue() != null) {
+                directionId = getIdFromTable(conn, "kierunki", directionBox.getValue());
+            } else {
+                directionId = null;
+            }
+
+            // pracownik wymagany
+            employeeId = Integer.parseInt(employeeBox.getValue().split(":")[0]);
+
+            // walidacja dat
+            LocalDate startDate = startDatePicker.getValue();
+            LocalDate endDate = endDatePicker.getValue();
+            if (endDate.isBefore(startDate)) {
+                showAlert("Błąd", "Data zakończenia nie może być wcześniejsza niż data rozpoczęcia");
+                return;
+            }
 
             String sql = """
-                INSERT INTO zadania (id_pracownika, nazwa, id_statusu, id_priorytetu, data_rozpoczecia, data_zakonczenia, komentarz, id_produktu, ilosc, id_kierunku)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-            """;
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setInt(1, employeeId);
-            stmt.setString(2, nameField.getText());
-            stmt.setInt(3, statusId);
-            stmt.setInt(4, priorityId);
-            stmt.setDate(5, Date.valueOf(startDatePicker.getValue()));
-            stmt.setDate(6, Date.valueOf(endDatePicker.getValue()));
-            stmt.setString(7, commentField.getText());
-            stmt.setInt(8, productId);
-            stmt.setString(9, quantityField.getText());
-            stmt.setInt(10, directionId);
-            stmt.executeUpdate();
+            INSERT INTO zadania (nazwa, id_statusu, id_priorytetu, data_rozpoczecia, 
+                                 data_zakonczenia, komentarz, id_pracownika, id_produktu, 
+                                 ilosc, id_kierunku)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        """;
 
+            PreparedStatement stmt = conn.prepareStatement(sql);
+
+            String name = nameField.getText().trim();
+            String comment = commentField.getText().trim();
+
+            stmt.setString(1, name);
+            stmt.setInt(2, statusId);
+            stmt.setInt(3, priorityId);
+            stmt.setDate(4, Date.valueOf(startDate));
+            stmt.setDate(5, Date.valueOf(endDate));
+            stmt.setString(6, comment);
+            stmt.setInt(7, employeeId);
+
+            if (productId != null) {
+                stmt.setInt(8, productId);
+            } else {
+                stmt.setNull(8, Types.INTEGER);
+            }
+
+            String quantityText = quantityField.getText() != null ? quantityField.getText().trim() : "";
+            if (quantityText.isEmpty()) {
+                stmt.setNull(9, Types.INTEGER);
+            } else {
+                try {
+                    int quantity = Integer.parseInt(quantityText);
+                    if (quantity < 0) {
+                        showAlert("Błąd", "Ilość nie może być ujemna");
+                        return;
+                    }
+                    stmt.setInt(9, quantity);
+                } catch (NumberFormatException e) {
+                    showAlert("Błąd", "Wartość w polu Ilość musi być liczbą całkowitą");
+                    return;
+                }
+            }
+
+            if (directionId != null) {
+                stmt.setInt(10, directionId);
+            } else {
+                stmt.setNull(10, Types.INTEGER);
+            }
+
+            stmt.executeUpdate();
             loadData();
             clearFields();
             showAlert("Sukces", "Zadanie zostało dodane");
+
         } catch (SQLException e) {
             LOGGER.log(Level.SEVERE, "Błąd dodawania zadania", e);
             showAlert("Błąd", "Nie udało się dodać zadania: " + e.getMessage());
@@ -300,6 +372,7 @@ public class TaskController {
             showAlert("Błąd", "Nieoczekiwany błąd: " + e.getMessage());
         }
     }
+
 
     @FXML
     private void handleEditTask() {
@@ -312,69 +385,89 @@ public class TaskController {
         if (!validateForm()) return;
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD)) {
-            // Dodano sprawdzanie null przed wywołaniem getIdFromTable
             Integer statusId = null, priorityId = null, productId = null, directionId = null, employeeId = null;
 
-            if (statusBox.getValue() != null) {
-                statusId = getIdFromTable(conn, "statusy", statusBox.getValue());
-            } else {
-                showAlert("Błąd", "Wybierz status zadania");
-                return;
-            }
-
-            if (priorityBox.getValue() != null) {
-                priorityId = getIdFromTable(conn, "priorytety", priorityBox.getValue());
-            } else {
-                showAlert("Błąd", "Wybierz priorytet zadania");
-                return;
-            }
+            statusId = getIdFromTable(conn, "statusy", statusBox.getValue());
+            priorityId = getIdFromTable(conn, "priorytety", priorityBox.getValue());
 
             if (productBox.getValue() != null) {
                 productId = getIdFromTable(conn, "produkty", productBox.getValue());
             } else {
-                showAlert("Błąd", "Wybierz produkt");
-                return;
+                productId = null;
             }
 
             if (directionBox.getValue() != null) {
                 directionId = getIdFromTable(conn, "kierunki", directionBox.getValue());
             } else {
-                showAlert("Błąd", "Wybierz kierunek");
+                directionId = null;
+            }
+
+            employeeId = Integer.parseInt(employeeBox.getValue().split(":")[0]);
+
+            LocalDate startDate = startDatePicker.getValue();
+            LocalDate endDate = endDatePicker.getValue();
+            if (endDate.isBefore(startDate)) {
+                showAlert("Błąd", "Data zakończenia nie może być wcześniejsza niż data rozpoczęcia");
                 return;
             }
 
-            if (employeeBox.getValue() != null) {
-                employeeId = Integer.parseInt(employeeBox.getValue().split(":")[0]);
-            } else {
-                showAlert("Błąd", "Wybierz pracownika");
-                return;
-            }
-
-            // Naprawiono SQL - dodano brakujący przecinek
             String sql = """
-                UPDATE zadania
-                SET nazwa = ?, id_statusu = ?, id_priorytetu = ?, 
-                    data_rozpoczecia = ?, data_zakonczenia = ?, komentarz = ?, id_pracownika = ?, id_produktu = ?, ilosc = ?, id_kierunku = ?
-                WHERE id_zadania = ?
-            """;
+            UPDATE zadania
+            SET nazwa = ?, id_statusu = ?, id_priorytetu = ?, 
+                data_rozpoczecia = ?, data_zakonczenia = ?, komentarz = ?, 
+                id_pracownika = ?, id_produktu = ?, ilosc = ?, id_kierunku = ?
+            WHERE id_zadania = ?
+        """;
 
             PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setString(1, nameField.getText());
+
+            String name = nameField.getText().trim();
+            String comment = commentField.getText().trim();
+
+            stmt.setString(1, name);
             stmt.setInt(2, statusId);
             stmt.setInt(3, priorityId);
-            stmt.setDate(4, Date.valueOf(startDatePicker.getValue()));
-            stmt.setDate(5, Date.valueOf(endDatePicker.getValue()));
-            stmt.setString(6, commentField.getText());
+            stmt.setDate(4, Date.valueOf(startDate));
+            stmt.setDate(5, Date.valueOf(endDate));
+            stmt.setString(6, comment);
             stmt.setInt(7, employeeId);
-            stmt.setInt(8, productId);
-            stmt.setString(9, quantityField.getText());
-            stmt.setInt(10, directionId);
-            stmt.setInt(11, selected.getId());
-            stmt.executeUpdate();
 
+            if (productId != null) {
+                stmt.setInt(8, productId);
+            } else {
+                stmt.setNull(8, Types.INTEGER);
+            }
+
+            String quantityText = quantityField.getText() != null ? quantityField.getText().trim() : "";
+            if (quantityText.isEmpty()) {
+                stmt.setNull(9, Types.INTEGER);
+            } else {
+                try {
+                    int quantity = Integer.parseInt(quantityText);
+                    if (quantity < 0) {
+                        showAlert("Błąd", "Ilość nie może być ujemna");
+                        return;
+                    }
+                    stmt.setInt(9, quantity);
+                } catch (NumberFormatException e) {
+                    showAlert("Błąd", "Wartość w polu Ilość musi być liczbą całkowitą");
+                    return;
+                }
+            }
+
+            if (directionId != null) {
+                stmt.setInt(10, directionId);
+            } else {
+                stmt.setNull(10, Types.INTEGER);
+            }
+
+            stmt.setInt(11, selected.getId());
+
+            stmt.executeUpdate();
             loadData();
             clearFields();
             showAlert("Sukces", "Zadanie zostało zaktualizowane");
+
         } catch (SQLException e) {
             LOGGER.log(Level.SEVERE, "Błąd edycji zadania", e);
             showAlert("Błąd", "Nie udało się zaktualizować zadania: " + e.getMessage());
@@ -383,6 +476,8 @@ public class TaskController {
             showAlert("Błąd", "Nieoczekiwany błąd: " + e.getMessage());
         }
     }
+
+
 
     @FXML
     private void handleDeleteTask() {
@@ -432,15 +527,7 @@ public class TaskController {
             return false;
         }
 
-        if (productBox.getValue() == null) {
-            showAlert("Błąd", "Wybierz produkt");
-            return false;
-        }
-
-        if (directionBox.getValue() == null) {
-            showAlert("Błąd", "Wybierz kierunek");
-            return false;
-        }
+        // Usunięto walidację produktu i kierunku - mogą być puste
 
         if (employeeBox.getValue() == null) {
             showAlert("Błąd", "Wybierz pracownika");

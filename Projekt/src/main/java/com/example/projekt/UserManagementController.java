@@ -23,7 +23,6 @@ import java.util.logging.Logger;
 
 public class UserManagementController {
 
-
     private static final Logger LOGGER = Logger.getLogger(UserManagementController.class.getName());
     private static final String DASHBOARD_VIEW_PATH = "/com/example/projekt/dashboard.fxml";
     private static final String DASHBOARD_TITLE = "Dashboard";
@@ -67,7 +66,6 @@ public class UserManagementController {
         placaColumn.setCellValueFactory(cellData -> new SimpleDoubleProperty(cellData.getValue().getPlaca()).asObject());
         rolaColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getRole()));
 
-        // Formatowanie kolumny z płacą do 2 miejsc po przecinku
         placaColumn.setCellFactory(column -> new TableCell<User, Double>() {
             @Override
             protected void updateItem(Double item, boolean empty) {
@@ -254,6 +252,10 @@ public class UserManagementController {
         double placa;
         try {
             placa = Double.parseDouble(placaStr);
+            if (placa < 0) {
+                AlertUtils.showError("Płaca nie może być mniejsza niż 0.");
+                return;
+            }
         } catch (NumberFormatException e) {
             AlertUtils.showError("Nieprawidłowa wartość płacy.");
             return;
@@ -312,6 +314,10 @@ public class UserManagementController {
         double placa;
         try {
             placa = Double.parseDouble(placaStr);
+            if (placa < 0) {
+                AlertUtils.showError("Płaca nie może być mniejsza niż 0.");
+                return;
+            }
         } catch (NumberFormatException e) {
             AlertUtils.showError("Nieprawidłowa wartość płacy.");
             return;
