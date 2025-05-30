@@ -281,48 +281,30 @@ public class TaskController {
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD)) {
             Integer statusId = null, priorityId = null, productId = null, directionId = null, employeeId = null;
 
-            if (statusBox.getValue() != null) {
-                statusId = getIdFromTable(conn, "statusy", statusBox.getValue());
-            } else {
-                showAlert("Błąd", "Wybierz status zadania");
-                return;
-            }
+            // status i priorytet wymagane
+            statusId = getIdFromTable(conn, "statusy", statusBox.getValue());
+            priorityId = getIdFromTable(conn, "priorytety", priorityBox.getValue());
 
-            if (priorityBox.getValue() != null) {
-                priorityId = getIdFromTable(conn, "priorytety", priorityBox.getValue());
-            } else {
-                showAlert("Błąd", "Wybierz priorytet zadania");
-                return;
-            }
-
+            // produkt może być null
             if (productBox.getValue() != null) {
                 productId = getIdFromTable(conn, "produkty", productBox.getValue());
             } else {
-                showAlert("Błąd", "Wybierz produkt");
-                return;
+                productId = null;
             }
 
+            // kierunek może być null
             if (directionBox.getValue() != null) {
                 directionId = getIdFromTable(conn, "kierunki", directionBox.getValue());
             } else {
-                showAlert("Błąd", "Wybierz kierunek");
-                return;
+                directionId = null;
             }
 
-            if (employeeBox.getValue() != null) {
-                employeeId = Integer.parseInt(employeeBox.getValue().split(":")[0]);
-            } else {
-                showAlert("Błąd", "Wybierz pracownika");
-                return;
-            }
+            // pracownik wymagany
+            employeeId = Integer.parseInt(employeeBox.getValue().split(":")[0]);
 
-            // Walidacja dat
+            // walidacja dat
             LocalDate startDate = startDatePicker.getValue();
             LocalDate endDate = endDatePicker.getValue();
-            if (startDate == null || endDate == null) {
-                showAlert("Błąd", "Wybierz daty rozpoczęcia i zakończenia");
-                return;
-            }
             if (endDate.isBefore(startDate)) {
                 showAlert("Błąd", "Data zakończenia nie może być wcześniejsza niż data rozpoczęcia");
                 return;
@@ -337,8 +319,8 @@ public class TaskController {
 
             PreparedStatement stmt = conn.prepareStatement(sql);
 
-            String name = nameField.getText() != null ? nameField.getText().trim() : "";
-            String comment = commentField.getText() != null ? commentField.getText().trim() : "";
+            String name = nameField.getText().trim();
+            String comment = commentField.getText().trim();
 
             stmt.setString(1, name);
             stmt.setInt(2, statusId);
@@ -347,9 +329,13 @@ public class TaskController {
             stmt.setDate(5, Date.valueOf(endDate));
             stmt.setString(6, comment);
             stmt.setInt(7, employeeId);
-            stmt.setInt(8, productId);
 
-            // Walidacja ilości
+            if (productId != null) {
+                stmt.setInt(8, productId);
+            } else {
+                stmt.setNull(8, Types.INTEGER);
+            }
+
             String quantityText = quantityField.getText() != null ? quantityField.getText().trim() : "";
             if (quantityText.isEmpty()) {
                 stmt.setNull(9, Types.INTEGER);
@@ -367,7 +353,11 @@ public class TaskController {
                 }
             }
 
-            stmt.setInt(10, directionId);
+            if (directionId != null) {
+                stmt.setInt(10, directionId);
+            } else {
+                stmt.setNull(10, Types.INTEGER);
+            }
 
             stmt.executeUpdate();
             loadData();
@@ -384,7 +374,6 @@ public class TaskController {
     }
 
 
-
     @FXML
     private void handleEditTask() {
         Task selected = taskTable.getSelectionModel().getSelectedItem();
@@ -398,48 +387,25 @@ public class TaskController {
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD)) {
             Integer statusId = null, priorityId = null, productId = null, directionId = null, employeeId = null;
 
-            if (statusBox.getValue() != null) {
-                statusId = getIdFromTable(conn, "statusy", statusBox.getValue());
-            } else {
-                showAlert("Błąd", "Wybierz status zadania");
-                return;
-            }
-
-            if (priorityBox.getValue() != null) {
-                priorityId = getIdFromTable(conn, "priorytety", priorityBox.getValue());
-            } else {
-                showAlert("Błąd", "Wybierz priorytet zadania");
-                return;
-            }
+            statusId = getIdFromTable(conn, "statusy", statusBox.getValue());
+            priorityId = getIdFromTable(conn, "priorytety", priorityBox.getValue());
 
             if (productBox.getValue() != null) {
                 productId = getIdFromTable(conn, "produkty", productBox.getValue());
             } else {
-                showAlert("Błąd", "Wybierz produkt");
-                return;
+                productId = null;
             }
 
             if (directionBox.getValue() != null) {
                 directionId = getIdFromTable(conn, "kierunki", directionBox.getValue());
             } else {
-                showAlert("Błąd", "Wybierz kierunek");
-                return;
+                directionId = null;
             }
 
-            if (employeeBox.getValue() != null) {
-                employeeId = Integer.parseInt(employeeBox.getValue().split(":")[0]);
-            } else {
-                showAlert("Błąd", "Wybierz pracownika");
-                return;
-            }
+            employeeId = Integer.parseInt(employeeBox.getValue().split(":")[0]);
 
-            // Walidacja dat
             LocalDate startDate = startDatePicker.getValue();
             LocalDate endDate = endDatePicker.getValue();
-            if (startDate == null || endDate == null) {
-                showAlert("Błąd", "Wybierz daty rozpoczęcia i zakończenia");
-                return;
-            }
             if (endDate.isBefore(startDate)) {
                 showAlert("Błąd", "Data zakończenia nie może być wcześniejsza niż data rozpoczęcia");
                 return;
@@ -455,8 +421,8 @@ public class TaskController {
 
             PreparedStatement stmt = conn.prepareStatement(sql);
 
-            String name = nameField.getText() != null ? nameField.getText().trim() : "";
-            String comment = commentField.getText() != null ? commentField.getText().trim() : "";
+            String name = nameField.getText().trim();
+            String comment = commentField.getText().trim();
 
             stmt.setString(1, name);
             stmt.setInt(2, statusId);
@@ -465,9 +431,13 @@ public class TaskController {
             stmt.setDate(5, Date.valueOf(endDate));
             stmt.setString(6, comment);
             stmt.setInt(7, employeeId);
-            stmt.setInt(8, productId);
 
-            // Walidacja ilości
+            if (productId != null) {
+                stmt.setInt(8, productId);
+            } else {
+                stmt.setNull(8, Types.INTEGER);
+            }
+
             String quantityText = quantityField.getText() != null ? quantityField.getText().trim() : "";
             if (quantityText.isEmpty()) {
                 stmt.setNull(9, Types.INTEGER);
@@ -485,7 +455,12 @@ public class TaskController {
                 }
             }
 
-            stmt.setInt(10, directionId);
+            if (directionId != null) {
+                stmt.setInt(10, directionId);
+            } else {
+                stmt.setNull(10, Types.INTEGER);
+            }
+
             stmt.setInt(11, selected.getId());
 
             stmt.executeUpdate();
@@ -552,15 +527,7 @@ public class TaskController {
             return false;
         }
 
-        if (productBox.getValue() == null) {
-            showAlert("Błąd", "Wybierz produkt");
-            return false;
-        }
-
-        if (directionBox.getValue() == null) {
-            showAlert("Błąd", "Wybierz kierunek");
-            return false;
-        }
+        // Usunięto walidację produktu i kierunku - mogą być puste
 
         if (employeeBox.getValue() == null) {
             showAlert("Błąd", "Wybierz pracownika");
