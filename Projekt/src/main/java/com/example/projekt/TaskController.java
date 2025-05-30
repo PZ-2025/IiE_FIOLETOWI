@@ -266,53 +266,6 @@ public class TaskController {
         if (!validateForm()) return;
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD)) {
-            int statusId = getIdFromTable(conn, "statusy", statusBox.getValue());
-            int priorityId = getIdFromTable(conn, "priorytety", priorityBox.getValue());
-            int productId = getIdFromTable(conn, "produkty", productBox.getValue());
-            int directionId = getIdFromTable(conn, "kierunki", directionBox.getValue());
-            int employeeId = Integer.parseInt(employeeBox.getValue().split(":")[0]);
-
-            String sql = """
-                INSERT INTO zadania (id_pracownika, nazwa, id_statusu, id_priorytetu, data_rozpoczecia, data_zakonczenia, komentarz, id_produktu, ilosc, id_kierunku)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-            """;
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setInt(1, employeeId);
-            stmt.setString(2, nameField.getText());
-            stmt.setInt(3, statusId);
-            stmt.setInt(4, priorityId);
-            stmt.setDate(5, Date.valueOf(startDatePicker.getValue()));
-            stmt.setDate(6, Date.valueOf(endDatePicker.getValue()));
-            stmt.setString(7, commentField.getText());
-            stmt.setInt(8, productId);
-            stmt.setString(9, quantityField.getText());
-            stmt.setInt(10, directionId);
-            stmt.executeUpdate();
-
-            loadData();
-            clearFields();
-            showAlert("Sukces", "Zadanie zostało dodane");
-        } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "Błąd dodawania zadania", e);
-            showAlert("Błąd", "Nie udało się dodać zadania: " + e.getMessage());
-        } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "Nieoczekiwany błąd podczas dodawania zadania", e);
-            showAlert("Błąd", "Nieoczekiwany błąd: " + e.getMessage());
-        }
-    }
-
-    @FXML
-    private void handleEditTask() {
-        Task selected = taskTable.getSelectionModel().getSelectedItem();
-        if (selected == null) {
-            showAlert("Błąd", "Wybierz zadanie do edycji");
-            return;
-        }
-
-        if (!validateForm()) return;
-
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD)) {
-            // Dodano sprawdzanie null przed wywołaniem getIdFromTable
             Integer statusId = null, priorityId = null, productId = null, directionId = null, employeeId = null;
 
             if (statusBox.getValue() != null) {
@@ -350,31 +303,183 @@ public class TaskController {
                 return;
             }
 
-            // Naprawiono SQL - dodano brakujący przecinek
+            // Walidacja dat
+            LocalDate startDate = startDatePicker.getValue();
+            LocalDate endDate = endDatePicker.getValue();
+            if (startDate == null || endDate == null) {
+                showAlert("Błąd", "Wybierz daty rozpoczęcia i zakończenia");
+                return;
+            }
+            if (endDate.isBefore(startDate)) {
+                showAlert("Błąd", "Data zakończenia nie może być wcześniejsza niż data rozpoczęcia");
+                return;
+            }
+
             String sql = """
-                UPDATE zadania
-                SET nazwa = ?, id_statusu = ?, id_priorytetu = ?, 
-                    data_rozpoczecia = ?, data_zakonczenia = ?, komentarz = ?, id_pracownika = ?, id_produktu = ?, ilosc = ?, id_kierunku = ?
-                WHERE id_zadania = ?
-            """;
+            INSERT INTO zadania (nazwa, id_statusu, id_priorytetu, data_rozpoczecia, 
+                                 data_zakonczenia, komentarz, id_pracownika, id_produktu, 
+                                 ilosc, id_kierunku)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        """;
 
             PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setString(1, nameField.getText());
+
+            String name = nameField.getText() != null ? nameField.getText().trim() : "";
+            String comment = commentField.getText() != null ? commentField.getText().trim() : "";
+
+            stmt.setString(1, name);
             stmt.setInt(2, statusId);
             stmt.setInt(3, priorityId);
-            stmt.setDate(4, Date.valueOf(startDatePicker.getValue()));
-            stmt.setDate(5, Date.valueOf(endDatePicker.getValue()));
-            stmt.setString(6, commentField.getText());
+            stmt.setDate(4, Date.valueOf(startDate));
+            stmt.setDate(5, Date.valueOf(endDate));
+            stmt.setString(6, comment);
             stmt.setInt(7, employeeId);
             stmt.setInt(8, productId);
-            stmt.setString(9, quantityField.getText());
+
+            // Walidacja ilości
+            String quantityText = quantityField.getText() != null ? quantityField.getText().trim() : "";
+            if (quantityText.isEmpty()) {
+                stmt.setNull(9, Types.INTEGER);
+            } else {
+                try {
+                    int quantity = Integer.parseInt(quantityText);
+                    if (quantity < 0) {
+                        showAlert("Błąd", "Ilość nie może być ujemna");
+                        return;
+                    }
+                    stmt.setInt(9, quantity);
+                } catch (NumberFormatException e) {
+                    showAlert("Błąd", "Wartość w polu Ilość musi być liczbą całkowitą");
+                    return;
+                }
+            }
+
+            stmt.setInt(10, directionId);
+
+            stmt.executeUpdate();
+            loadData();
+            clearFields();
+            showAlert("Sukces", "Zadanie zostało dodane");
+
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Błąd dodawania zadania", e);
+            showAlert("Błąd", "Nie udało się dodać zadania: " + e.getMessage());
+        } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, "Nieoczekiwany błąd podczas dodawania zadania", e);
+            showAlert("Błąd", "Nieoczekiwany błąd: " + e.getMessage());
+        }
+    }
+
+
+
+    @FXML
+    private void handleEditTask() {
+        Task selected = taskTable.getSelectionModel().getSelectedItem();
+        if (selected == null) {
+            showAlert("Błąd", "Wybierz zadanie do edycji");
+            return;
+        }
+
+        if (!validateForm()) return;
+
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD)) {
+            Integer statusId = null, priorityId = null, productId = null, directionId = null, employeeId = null;
+
+            if (statusBox.getValue() != null) {
+                statusId = getIdFromTable(conn, "statusy", statusBox.getValue());
+            } else {
+                showAlert("Błąd", "Wybierz status zadania");
+                return;
+            }
+
+            if (priorityBox.getValue() != null) {
+                priorityId = getIdFromTable(conn, "priorytety", priorityBox.getValue());
+            } else {
+                showAlert("Błąd", "Wybierz priorytet zadania");
+                return;
+            }
+
+            if (productBox.getValue() != null) {
+                productId = getIdFromTable(conn, "produkty", productBox.getValue());
+            } else {
+                showAlert("Błąd", "Wybierz produkt");
+                return;
+            }
+
+            if (directionBox.getValue() != null) {
+                directionId = getIdFromTable(conn, "kierunki", directionBox.getValue());
+            } else {
+                showAlert("Błąd", "Wybierz kierunek");
+                return;
+            }
+
+            if (employeeBox.getValue() != null) {
+                employeeId = Integer.parseInt(employeeBox.getValue().split(":")[0]);
+            } else {
+                showAlert("Błąd", "Wybierz pracownika");
+                return;
+            }
+
+            // Walidacja dat
+            LocalDate startDate = startDatePicker.getValue();
+            LocalDate endDate = endDatePicker.getValue();
+            if (startDate == null || endDate == null) {
+                showAlert("Błąd", "Wybierz daty rozpoczęcia i zakończenia");
+                return;
+            }
+            if (endDate.isBefore(startDate)) {
+                showAlert("Błąd", "Data zakończenia nie może być wcześniejsza niż data rozpoczęcia");
+                return;
+            }
+
+            String sql = """
+            UPDATE zadania
+            SET nazwa = ?, id_statusu = ?, id_priorytetu = ?, 
+                data_rozpoczecia = ?, data_zakonczenia = ?, komentarz = ?, 
+                id_pracownika = ?, id_produktu = ?, ilosc = ?, id_kierunku = ?
+            WHERE id_zadania = ?
+        """;
+
+            PreparedStatement stmt = conn.prepareStatement(sql);
+
+            String name = nameField.getText() != null ? nameField.getText().trim() : "";
+            String comment = commentField.getText() != null ? commentField.getText().trim() : "";
+
+            stmt.setString(1, name);
+            stmt.setInt(2, statusId);
+            stmt.setInt(3, priorityId);
+            stmt.setDate(4, Date.valueOf(startDate));
+            stmt.setDate(5, Date.valueOf(endDate));
+            stmt.setString(6, comment);
+            stmt.setInt(7, employeeId);
+            stmt.setInt(8, productId);
+
+            // Walidacja ilości
+            String quantityText = quantityField.getText() != null ? quantityField.getText().trim() : "";
+            if (quantityText.isEmpty()) {
+                stmt.setNull(9, Types.INTEGER);
+            } else {
+                try {
+                    int quantity = Integer.parseInt(quantityText);
+                    if (quantity < 0) {
+                        showAlert("Błąd", "Ilość nie może być ujemna");
+                        return;
+                    }
+                    stmt.setInt(9, quantity);
+                } catch (NumberFormatException e) {
+                    showAlert("Błąd", "Wartość w polu Ilość musi być liczbą całkowitą");
+                    return;
+                }
+            }
+
             stmt.setInt(10, directionId);
             stmt.setInt(11, selected.getId());
-            stmt.executeUpdate();
 
+            stmt.executeUpdate();
             loadData();
             clearFields();
             showAlert("Sukces", "Zadanie zostało zaktualizowane");
+
         } catch (SQLException e) {
             LOGGER.log(Level.SEVERE, "Błąd edycji zadania", e);
             showAlert("Błąd", "Nie udało się zaktualizować zadania: " + e.getMessage());
@@ -383,6 +488,8 @@ public class TaskController {
             showAlert("Błąd", "Nieoczekiwany błąd: " + e.getMessage());
         }
     }
+
+
 
     @FXML
     private void handleDeleteTask() {
