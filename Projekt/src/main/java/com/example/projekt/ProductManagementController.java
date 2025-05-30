@@ -14,7 +14,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
+import javafx.application.Platform;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.net.URL;
@@ -58,10 +58,10 @@ public class ProductManagementController {
         nazwaColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getNazwa()));
 
         stanColumn.setCellValueFactory(data -> new SimpleIntegerProperty(data.getValue().getStan()).asObject());
-        stanColumn.setStyle("-fx-alignment: CENTER-RIGHT;"); // 🔢 do prawej
+        stanColumn.setStyle("-fx-alignment: CENTER-RIGHT;");
 
         limitColumn.setCellValueFactory(data -> new SimpleIntegerProperty(data.getValue().getLimitStanow()).asObject());
-        limitColumn.setStyle("-fx-alignment: CENTER-RIGHT;"); // 🔢 do prawej
+        limitColumn.setStyle("-fx-alignment: CENTER-RIGHT;");
 
         cenaColumn.setCellValueFactory(data -> new SimpleDoubleProperty(data.getValue().getCena()).asObject());
         cenaColumn.setCellFactory(column -> new TableCell<>() {
@@ -73,7 +73,7 @@ public class ProductManagementController {
                 } else {
                     setText(String.format("%.2f", item));
                 }
-                setStyle("-fx-alignment: CENTER-RIGHT;"); // 🔢 do prawej
+                setStyle("-fx-alignment: CENTER-RIGHT;");
             }
         });
 
@@ -83,7 +83,9 @@ public class ProductManagementController {
         typComboBox.setItems(productTypes);
 
         loadProducts();
-
+        Platform.runLater(() -> productRoot.requestFocus());
+        productTable.getSelectionModel().clearSelection();
+        typComboBox.getSelectionModel().clearSelection();
         productTable.setRowFactory(tv -> {
             TableRow<Product> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
@@ -102,7 +104,6 @@ public class ProductManagementController {
         cenaField.setTextFormatter(new TextFormatter<>(filter));
     }
 
-
     private void fillForm(Product p) {
         nazwaField.setText(p.getNazwa());
         stanField.setText(String.valueOf(p.getStan()));
@@ -118,6 +119,7 @@ public class ProductManagementController {
 
     @FXML
     private void handleAddProduct() {
+        saveProduct();
         selectedProduct = null;
         clearForm();
     }
@@ -236,6 +238,10 @@ public class ProductManagementController {
 
         try {
             limit = Integer.parseInt(limitField.getText());
+            if (limit < 0) {
+                showAlert("Błąd walidacji", "Limit nie może być ujemny.");
+                return;
+            }
         } catch (NumberFormatException e) {
             showAlert("Błąd danych", "Wprowadź poprawny limit.");
             return;
