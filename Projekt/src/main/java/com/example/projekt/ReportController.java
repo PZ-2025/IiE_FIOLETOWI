@@ -69,6 +69,22 @@ public class ReportController {
             lastChartData = null;
         });
     }
+    @FXML
+    private void clearFilters() {
+        for (Map.Entry<String, Control> entry : dynamicFilters.entrySet()) {
+            Control control = entry.getValue();
+            if (control instanceof ComboBox<?>) {
+                ((ComboBox<?>) control).setValue(null);
+            } else if (control instanceof DatePicker) {
+                ((DatePicker) control).setValue(null);
+            }
+        }
+        reportTableView.getItems().clear();
+        reportTableView.getColumns().clear();
+        reportPreviewContainer.getChildren().clear();
+        lastReportData = null;
+        lastChartData = null;
+    }
 
     protected void renderFilterUI(String type) {
         filterContainer.getChildren().clear();

@@ -26,7 +26,8 @@
     </HBox>
 
     <!-- Dynamiczna sekcja filtrów -->
-    <VBox fx:id="filterContainer" spacing="10"/>
+    <VBox fx:id="filterContainer" spacing="10">
+    </VBox>
 
     <!-- Przycisk generowania raportu -->
     <HBox spacing="10">
@@ -36,6 +37,9 @@
         <Button text="Zapisz do PDF"
                 onAction="#saveReportAsPDF"
                 styleClass="return-button"/>
+        <Button text="Wyczyść filtry"
+                onAction="#clearFilters"
+                styleClass="secondary-button"/>
     </HBox>
 
     <!-- Podgląd raportu -->
