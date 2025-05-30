@@ -95,7 +95,6 @@ public class ProductManagementController {
             return row;
         });
 
-        // 🔒 Walidacja ceny (2 miejsca po przecinku)
         UnaryOperator<TextFormatter.Change> filter = change -> {
             String newText = change.getControlNewText();
             return newText.matches("\\d*(\\.\\d{0,2})?") ? change : null;

@@ -256,6 +256,10 @@ public class UserManagementController {
         double placa;
         try {
             placa = Double.parseDouble(placaStr);
+            if (placa < 0) {
+                AlertUtils.showError("Płaca nie może być mniejsza niż 0.");
+                return;
+            }
         } catch (NumberFormatException e) {
             AlertUtils.showError("Nieprawidłowa wartość płacy.");
             return;
@@ -314,6 +318,10 @@ public class UserManagementController {
         double placa;
         try {
             placa = Double.parseDouble(placaStr);
+            if (placa < 0) {
+                AlertUtils.showError("Płaca nie może być mniejsza niż 0.");
+                return;
+            }
         } catch (NumberFormatException e) {
             AlertUtils.showError("Nieprawidłowa wartość płacy.");
             return;
