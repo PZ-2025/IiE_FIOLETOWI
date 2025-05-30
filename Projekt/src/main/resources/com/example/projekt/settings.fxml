@@ -32,5 +32,5 @@
         <Label fx:id="passwordMessageLabel" styleClass="message-label" />
     </VBox>
 
-    <Button alignment="CENTER" onAction="#goToDashboard" styleClass="return-button" text="Powrót do menu głównego" />
+    <!--<Button alignment="CENTER" onAction="#goToDashboard" styleClass="return-button" text="Powrót do menu głównego" />-->
 </VBox>

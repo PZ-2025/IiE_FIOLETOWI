@@ -66,10 +66,10 @@
         </VBox>
     </center>
 
-    <bottom>
+    <!--<bottom>
         <Button text="Powrót do Dashboardu"
                 onAction="#goToDashboard"
                 styleClass="return-button"
                 BorderPane.alignment="CENTER"/>
-    </bottom>
+    </bottom>-->
 </BorderPane>

@@ -56,6 +56,15 @@
         public static void clearSession() {
             instance = null;
         }
+        private static String currentTheme = "/styles/themes/default.css";
+
+        public static String getCurrentTheme() {
+            return currentTheme;
+        }
+
+        public static void setCurrentTheme(String themePath) {
+            currentTheme = themePath;
+        }
 
 
 

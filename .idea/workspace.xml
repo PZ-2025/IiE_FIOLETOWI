@@ -5,7 +5,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="93580640-a4f6-4848-877d-83f2d9fe0546" name="Changes" comment="Testy">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projekt/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/LoginController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/ProductManagementController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/ProductManagementController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/ReportController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/ReportController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/SettingsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/SettingsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/TaskController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/TaskController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/UserManagementController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/UserManagementController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/UserSession.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/UserSession.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/UserTaskPanelController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/UserTaskPanelController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/Product_Management.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/Product_Management.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/reports.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/reports.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/settings.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/settings.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/task.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/task.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/userManagement.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/userManagement.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/usertaskpanel.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/usertaskpanel.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projekt/src/main/resources/styles/themes/dark.css" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/styles/themes/dark.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projekt/src/main/resources/styles/themes/default.css" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/styles/themes/default.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projekt/src/main/resources/styles/themes/light.css" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/styles/themes/light.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,7 +60,7 @@
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/PZ-2025/IiE_FIOLETOWI.git&quot;,
-    &quot;accountId&quot;: &quot;9b500b68-c45e-4292-b426-a1ebc04dbb6e&quot;
+    &quot;accountId&quot;: &quot;b1f7b158-4475-45f9-92b8-f1f8ef44342c&quot;
   }
 }</component>
   <component name="ProjectColorInfo">{
@@ -56,54 +74,59 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.Main.executor": "Run",
-    "Application.TestPołączenia.executor": "Run",
-    "Downloaded.Files.Path.Enabled": "false",
-    "JUnit.AlertUtilsTest.executor": "Coverage",
-    "JUnit.AppSettingsTest.executor": "Coverage",
-    "JUnit.DatabaseConnectorTest.executor": "Coverage",
-    "JUnit.DatabaseConnectorTest.testConnectReturnsConnection.executor": "Run",
-    "JUnit.GroupTest.executor": "Coverage",
-    "JUnit.LoginControllerTest.executor": "Coverage",
-    "JUnit.PasswordHasherTest.executor": "Coverage",
-    "JUnit.PasswordValidatorTest.executor": "Coverage",
-    "JUnit.ProductTest.executor": "Coverage",
-    "JUnit.ProductTypeTest.executor": "Coverage",
-    "JUnit.ReportControllerTest.executor": "Run",
-    "JUnit.RoleTest.executor": "Coverage",
-    "JUnit.RoleTest.testConstructorAndGetters.executor": "Coverage",
-    "JUnit.TaskTest.executor": "Coverage",
-    "JUnit.TestPolaczeniaTest.executor": "Coverage",
-    "JUnit.UserManagementControllerTest.addNewUser_withValidData_executesInsert.executor": "Run",
-    "JUnit.UserManagementControllerTest.executor": "Coverage",
-    "JUnit.UserSessionTest.executor": "Coverage",
-    "JUnit.UserTest.executor": "Coverage",
-    "JUnit.UserTest.testConstructorAndGetters.executor": "Coverage",
-    "Repository.Attach.Annotations": "false",
-    "Repository.Attach.JavaDocs": "false",
-    "Repository.Attach.Sources": "false",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/remix/IdeaProjects/IiE_FIOLETOWI/Projekt/lib/reportlib.jar",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "MavenSettings"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;Application.TestPołączenia.executor&quot;: &quot;Run&quot;,
+    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
+    &quot;JUnit.AlertUtilsTest.executor&quot;: &quot;Coverage&quot;,
+    &quot;JUnit.AppSettingsTest.executor&quot;: &quot;Coverage&quot;,
+    &quot;JUnit.DatabaseConnectorTest.executor&quot;: &quot;Coverage&quot;,
+    &quot;JUnit.DatabaseConnectorTest.testConnectReturnsConnection.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.GroupTest.executor&quot;: &quot;Coverage&quot;,
+    &quot;JUnit.LoginControllerTest.executor&quot;: &quot;Coverage&quot;,
+    &quot;JUnit.PasswordHasherTest.executor&quot;: &quot;Coverage&quot;,
+    &quot;JUnit.PasswordValidatorTest.executor&quot;: &quot;Coverage&quot;,
+    &quot;JUnit.ProductTest.executor&quot;: &quot;Coverage&quot;,
+    &quot;JUnit.ProductTypeTest.executor&quot;: &quot;Coverage&quot;,
+    &quot;JUnit.ReportControllerTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.RoleTest.executor&quot;: &quot;Coverage&quot;,
+    &quot;JUnit.RoleTest.testConstructorAndGetters.executor&quot;: &quot;Coverage&quot;,
+    &quot;JUnit.TaskTest.executor&quot;: &quot;Coverage&quot;,
+    &quot;JUnit.TestPolaczeniaTest.executor&quot;: &quot;Coverage&quot;,
+    &quot;JUnit.UserManagementControllerTest.addNewUser_withValidData_executesInsert.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UserManagementControllerTest.executor&quot;: &quot;Coverage&quot;,
+    &quot;JUnit.UserSessionTest.executor&quot;: &quot;Coverage&quot;,
+    &quot;JUnit.UserTest.executor&quot;: &quot;Coverage&quot;,
+    &quot;JUnit.UserTest.testConstructorAndGetters.executor&quot;: &quot;Coverage&quot;,
+    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/IiE_FIOLETOWI1/Projekt/src/main/resources/com/example/projekt/icons&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;MavenSettings&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\IiE_FIOLETOWI1\Projekt\src\main\resources\com\example\projekt\icons" />
+      <recent name="D:\IiE_FIOLETOWI1\Projekt\src\main\resources\icons" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\IiE_FIOLETOWI1\Projekt\src\main\resources\com\example\projekt\styles\themes" />
       <recent name="C:\Users\ABC\Documents\IiE_FIOLETOWI\Projekt\src\main\resources\com\example" />
       <recent name="C:\Users\ABC\Documents\IiE_FIOLETOWI\Projekt\src\main\java\com\example" />
       <recent name="C:\Users\ABC\Documents\IiE_FIOLETOWI\Projekt\src\main\java\com\example\projekt" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.ReportControllerTest">
+  <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="com.example.projekt.Main" />
       <module name="Projekt" />

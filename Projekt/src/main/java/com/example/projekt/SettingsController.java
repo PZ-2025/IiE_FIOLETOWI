@@ -89,9 +89,9 @@ public class SettingsController {
         scene.getStylesheets().clear();
 
         String cssFile = switch (theme) {
-            case "Jasny" -> "/styles/themes/light.css";
-            case "Ciemny" -> "/styles/themes/dark.css";
-            default -> "/styles/themes/default.css";
+            case "Jasny" -> "/com/example/projekt/styles/themes/light.css";
+            case "Ciemny" -> "/com/example/projekt/styles/themes/dark.css";
+            default -> "/com/example/projekt/styles/themes/default.css";
         };
 
         URL cssUrl = getClass().getResource(cssFile);
@@ -177,7 +177,26 @@ public class SettingsController {
         }
     }
 
+    @FXML
+    private void handleThemeChange() {
+        String selectedTheme = themeChoiceBox.getValue(); // np. "Dark", "Light", "Default"
 
+        String themePath = switch (selectedTheme.toLowerCase()) {
+            case "dark" -> "/styles/themes/dark.css";
+            case "light" -> "/styles/themes/light.css";
+            default -> "/styles/themes/default.css";
+        };
+
+        // Zapisz nowy motyw w sesji
+        UserSession.setCurrentTheme(themePath);
+
+        // Zastosuj do głównej sceny
+        Scene scene = themeChoiceBox.getScene();
+        if (scene != null) {
+            scene.getStylesheets().clear();
+            scene.getStylesheets().add(getClass().getResource(themePath).toExternalForm());
+        }
+    }
 
 
     @FXML

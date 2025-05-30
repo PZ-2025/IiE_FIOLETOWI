@@ -10,7 +10,6 @@ import javafx.scene.Scene;
 import javafx.scene.Parent;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
@@ -424,9 +423,9 @@ public class UserTaskPanelController {
         scene.getStylesheets().clear();
 
         String cssFile = switch (theme) {
-            case "Jasny" -> "/styles/themes/light.css";
-            case "Ciemny" -> "/styles/themes/dark.css";
-            default -> "/styles/themes/default.css";
+            case "Jasny" -> "/com/example/projekt/styles/themes/light.css";
+            case "Ciemny" -> "/com/example/projekt/styles/themes/dark.css";
+            default -> "/com/example/projekt/styles/themes/default.css";
         };
 
         URL cssUrl = getClass().getResource(cssFile);

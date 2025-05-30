@@ -11,11 +11,9 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
-import javafx.util.Callback;
 
 import java.io.IOException;
 import java.net.URL;
@@ -397,9 +395,9 @@ public class UserManagementController {
         scene.getStylesheets().clear();
 
         String cssFile = switch (theme) {
-            case "Jasny" -> "/styles/themes/light.css";
-            case "Ciemny" -> "/styles/themes/dark.css";
-            default -> "/styles/themes/default.css";
+            case "Jasny" -> "/com/example/projekt/styles/themes/light.css";
+            case "Ciemny" -> "/com/example/projekt/styles/themes/dark.css";
+            default -> "/com/example/projekt/styles/themes/default.css";
         };
 
         URL cssUrl = getClass().getResource(cssFile);

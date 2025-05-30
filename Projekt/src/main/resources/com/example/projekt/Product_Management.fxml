@@ -39,8 +39,8 @@
         <Button text="Usuń zaznaczony produkt" onAction="#handleDeleteProduct" styleClass="danger-button"/>
     </HBox>
 
-    <Button text="Powrót do menu głównego"
+    <!--<Button text="Powrót do menu głównego"
             onAction="#goBackToDashboard"
             styleClass="return-button"
-            alignment="CENTER"/>
+            alignment="CENTER"/>-->
 </VBox>

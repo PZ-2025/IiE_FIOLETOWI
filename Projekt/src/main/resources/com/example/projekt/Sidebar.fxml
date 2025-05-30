@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+
+<VBox xmlns="http://javafx.com/javafx/8"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.projekt.SidebarController"
+      spacing="10"
+      styleClass="sidebar">
+
+    <!-- Przycisk rozwijania/zamykania panelu -->
+    <Button fx:id="toggleButton" onAction="#toggleSidebar" text="☰" styleClass="icon-button" />
+
+    <!-- Moduly (widoczne wg roli) -->
+    <VBox fx:id="buttonContainer" spacing="10">
+        <Button fx:id="userTaskPanelButton" text="Panel użytkownika" onAction="#openUserTaskPanel" styleClass="sidebar-button" />
+        <Button fx:id="taskManagerButton" text="Zarządzaj zadaniami" onAction="#openTaskManager" styleClass="sidebar-button" />
+        <Button fx:id="reportButton" text="Raporty" onAction="#openReports" styleClass="sidebar-button" />
+        <Button fx:id="adminButton" text="Zarządzaj użytkownikami" onAction="#openUserManagement" styleClass="sidebar-button" />
+        <Button fx:id="productCrudButton" text="Zarządzaj produktami" onAction="#openProductManager" styleClass="sidebar-button" />
+    </VBox>
+
+    <VBox fx:id="spacer" VBox.vgrow="ALWAYS" />
+</VBox>

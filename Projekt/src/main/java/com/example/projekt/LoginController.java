@@ -117,26 +117,39 @@ public class LoginController {
      * @param user obiekt reprezentujący zalogowanego użytkownika
      * @throws IOException jeśli wystąpi błąd podczas ładowania widoku dashboardu
      */
-    public void redirectToDashboard(ActionEvent event, User user) throws IOException {
-        String fxmlPath;
+    private void redirectToDashboard(ActionEvent event, User user) throws IOException {
+        // Inicjalizacja sesji
+        UserSession.init(user);
 
-        switch (user.getRole().toLowerCase()) {
-            case "admin" -> fxmlPath = "/com/example/projekt/userManagement.fxml";
-            case "kierownik" -> fxmlPath = "/com/example/projekt/task.fxml";
-            default -> fxmlPath = "/com/example/projekt/usertaskpanel.fxml";
-        }
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+        // Wczytanie MainLayout.fxml
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/projekt/MainLayout.fxml"));
         Parent root = loader.load();
 
-        Object controller = loader.getController();
-        if (controller instanceof DashboardController dashboardController) {
-            dashboardController.setCurrentUser(user);
+
+        // Pobranie kontrolera
+        MainController mainController = loader.getController();
+
+        // Inicjalizacja sidebaru i załadowanie pierwszego widoku
+        mainController.initializeSidebar();
+        mainController.loadView("/com/example/projekt/usertaskpanel.fxml", "userTaskPanelButton");
+
+        // Pobranie aktualnej sceny i zmiana root
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+        Scene scene = stage.getScene();
+        if (scene == null) {
+            scene = new Scene(root); // jeśli nie istnieje (np. pierwsze uruchomienie)
+            stage.setScene(scene);
+        } else {
+            scene.setRoot(root); // tylko zmień root, nie twórz nowej sceny
         }
 
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(root));
-        stage.setTitle("Panel - " + user.getRole());
+        // Ustawienia stylu (motywu)
+        scene.getStylesheets().clear();
+        scene.getStylesheets().add(getClass().getResource(UserSession.getCurrentTheme()).toExternalForm());
+
+        stage.setTitle("Panel główny - " + user.getRole());
+        stage.show();
     }
 
 

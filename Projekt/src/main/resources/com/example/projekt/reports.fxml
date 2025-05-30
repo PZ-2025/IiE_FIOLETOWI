@@ -48,8 +48,8 @@
     </ScrollPane>
 
     <!-- Przycisk powrotu -->
-    <Button text="Powrót do menu głównego"
+    <!--<Button text="Powrót do menu głównego"
             onAction="#goBackToDashboard"
             styleClass="return-button"
-            alignment="CENTER"/>
+            alignment="CENTER"/>-->
 </VBox>

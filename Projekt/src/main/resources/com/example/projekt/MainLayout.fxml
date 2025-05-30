@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.projekt.MainController"
+            fx:id="mainLayout"
+            stylesheets="@styles/themes/dark.css">
+
+    <!-- Pasek boczny -->
+    <left>
+        <VBox fx:id="sidebarContainer" styleClass="sidebar" spacing="10">
+            <fx:include source="Sidebar.fxml"/>
+        </VBox>
+    </left>
+
+    <!-- Główna zawartość -->
+    <center>
+        <StackPane fx:id="contentArea" styleClass="main-content"/>
+    </center>
+
+    <!-- Ustawienia i Wyloguj w prawym dolnym rogu -->
+    <bottom>
+        <HBox alignment="BOTTOM_RIGHT" spacing="10">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <Button fx:id="settingsButton"
+                    onAction="#openSettings"
+                    styleClass="icon-button">
+                <tooltip>
+                    <Tooltip text="Ustawienia"/>
+                </tooltip>
+                <graphic>
+                    <FontAwesomeIconView glyphName="GEAR" size="18"/>
+                </graphic>
+            </Button>
+
+            <Button fx:id="logoutButton"
+                    onAction="#handleLogout"
+                    styleClass="icon-button">
+                <tooltip>
+                    <Tooltip text="Wyloguj"/>
+                </tooltip>
+                <graphic>
+                    <FontAwesomeIconView glyphName="SIGN_OUT" size="18"/>
+                </graphic>
+            </Button>
+        </HBox>
+    </bottom>
+
+</BorderPane>

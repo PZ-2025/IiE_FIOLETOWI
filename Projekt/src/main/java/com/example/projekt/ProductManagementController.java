@@ -326,9 +326,9 @@ public class ProductManagementController {
 
         scene.getStylesheets().clear();
         String cssFile = switch (theme) {
-            case "Jasny" -> "/styles/themes/light.css";
-            case "Ciemny" -> "/styles/themes/dark.css";
-            default -> "/styles/themes/default.css";
+            case "Jasny" -> "/com/example/projekt/styles/themes/light.css";
+            case "Ciemny" -> "/com/example/projekt/styles/themes/dark.css";
+            default -> "/com/example/projekt/styles/themes/default.css";
         };
 
         URL cssUrl = getClass().getResource(cssFile);

@@ -1,7 +1,6 @@
 package com.example.projekt;
 
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -11,7 +10,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.scene.control.cell.PropertyValueFactory;
 import com.example.reportlib.ChartUtils;
 import com.example.reportlib.PDFGenerator;
 
@@ -501,9 +499,9 @@ public class ReportController {
 
         scene.getStylesheets().clear();
         String cssFile = switch (theme) {
-            case "Jasny" -> "/styles/themes/light.css";
-            case "Ciemny" -> "/styles/themes/dark.css";
-            default -> "/styles/themes/default.css";
+            case "Jasny" -> "/com/example/projekt/styles/themes/light.css";
+            case "Ciemny" -> "/com/example/projekt/styles/themes/dark.css";
+            default -> "/com/example/projekt/styles/themes/default.css";
         };
 
         URL cssUrl = getClass().getResource(cssFile);
