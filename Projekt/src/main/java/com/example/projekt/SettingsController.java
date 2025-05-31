@@ -37,7 +37,7 @@ public class SettingsController {
     private ComboBox<String> themeChoiceBox;
 
     @FXML
-    private ComboBox<Integer> fontSizeChoiceBox;
+    private ComboBox<String> fontSizeChoiceBox;
 
     @FXML
     private PasswordField oldPasswordField;
@@ -59,8 +59,9 @@ public class SettingsController {
         themeChoiceBox.getItems().addAll("Jasny", "Ciemny", "Domyślny");
         themeChoiceBox.setValue(AppSettings.getTheme());
 
-        fontSizeChoiceBox.getItems().addAll(10, 12, 14, 16, 18, 20, 24);
-        fontSizeChoiceBox.setValue(AppSettings.getFontSize());
+        fontSizeChoiceBox.getItems().addAll("Mała", "Średnia", "Duża");
+        fontSizeChoiceBox.setValue(AppSettings.getFontSizeLabel());
+
 
         rootVBox.sceneProperty().addListener((obs, oldScene, newScene) -> {
             if (newScene != null) {
@@ -76,9 +77,9 @@ public class SettingsController {
         });
 
         fontSizeChoiceBox.setOnAction(e -> {
-            int size = fontSizeChoiceBox.getValue();
-            applyFontSize(size);
-            AppSettings.setFontSize(size);
+            String label = fontSizeChoiceBox.getValue();
+            applyFontSize(label);
+            AppSettings.setFontSizeLabel(label);
         });
     }
 
@@ -102,32 +103,28 @@ public class SettingsController {
         }
     }
 
-    private void applyFontSize(int size) {
-        // Wybór odpowiedniego arkusza czcionki
-        String fontCss = switch (size) {
-            case 10 -> "/com/example/projekt/styles/fonts/small.css";
-            case 18, 20, 24 -> "/com/example/projekt/styles/fonts/large.css";
+    private void applyFontSize(String label) {
+        String fontCss = switch (label.toLowerCase()) {
+            case "mała" -> "/com/example/projekt/styles/fonts/small.css";
+            case "duża" -> "/com/example/projekt/styles/fonts/large.css";
             default -> "/com/example/projekt/styles/fonts/medium.css";
         };
 
-        // Zapisz do sesji
         UserSession.setCurrentFontSize(fontCss);
 
-        // Pobierz aktualną scenę
         Scene scene = rootVBox.getScene();
         if (scene == null) return;
 
-        // Usuń stare style fontów i motywów
         scene.getStylesheets().removeIf(css ->
                 css.contains("/styles/fonts/") || css.contains("/styles/themes/"));
 
-        // Załaduj ponownie styl motywu i czcionki z UserSession
         URL themeUrl = getClass().getResource(UserSession.getCurrentTheme());
         URL fontUrl = getClass().getResource(UserSession.getCurrentFontSize());
 
         if (themeUrl != null) scene.getStylesheets().add(themeUrl.toExternalForm());
         if (fontUrl != null) scene.getStylesheets().add(fontUrl.toExternalForm());
     }
+
 
 
 

@@ -56,7 +56,7 @@ public class UserManagementController {
         userRoot.sceneProperty().addListener((obs, oldScene, newScene) -> {
             if (newScene != null) {
                 applyTheme(AppSettings.getTheme());
-                applyFontSize(AppSettings.getFontSize());
+                applyFontSize(AppSettings.getFontSizeLabel());
             }
         });
 
@@ -412,7 +412,24 @@ public class UserManagementController {
         }
     }
 
-    private void applyFontSize(double size) {
-        userRoot.getScene().getRoot().setStyle("-fx-font-size: " + (int) size + "px;");
+    private void applyFontSize(String label) {
+        Scene scene = userRoot.getScene();
+        if (scene == null) return;
+
+        scene.getStylesheets().removeIf(css -> css.contains("/styles/fonts/"));
+
+        String fontCss = switch (label.toLowerCase()) {
+            case "mała" -> "/com/example/projekt/styles/fonts/small.css";
+            case "duża" -> "/com/example/projekt/styles/fonts/large.css";
+            default -> "/com/example/projekt/styles/fonts/medium.css";
+        };
+
+        UserSession.setCurrentFontSize(fontCss); // aktualizacja sesji
+
+        URL fontUrl = getClass().getResource(fontCss);
+        if (fontUrl != null) {
+            scene.getStylesheets().add(fontUrl.toExternalForm());
+        }
     }
+
 }

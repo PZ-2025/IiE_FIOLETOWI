@@ -177,3 +177,7 @@
     -fx-background-color: white;
     -fx-text-fill: black;
 }
+.sidebar-button.active {
+    -fx-background-color: #7b1fa2;
+    -fx-text-fill: white;
+}

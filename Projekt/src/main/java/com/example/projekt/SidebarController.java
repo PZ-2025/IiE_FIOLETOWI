@@ -53,13 +53,40 @@ public class SidebarController {
 
     @FXML
     private void initialize() {
-        // Mapujemy przyciski po ich fx:id
+        // Mapowanie przycisków
         buttonMap.put("userTaskPanelButton", userTaskPanelButton);
         buttonMap.put("taskManagerButton", taskManagerButton);
         buttonMap.put("reportButton", reportButton);
         buttonMap.put("adminButton", adminButton);
         buttonMap.put("productCrudButton", productCrudButton);
+
+        // Ograniczenia widoczności według roli
+        String rola = UserSession.getInstance().getUser().getRole();
+
+        switch (rola.toLowerCase()) {
+            case "pracownik":
+                adminButton.setManaged(false);
+                adminButton.setVisible(false);
+                productCrudButton.setManaged(false);
+                productCrudButton.setVisible(false);
+                break;
+            case "kierownik":
+                adminButton.setManaged(false);
+                adminButton.setVisible(false);
+                break;
+            case "admin":
+                // Widzi wszystko
+                break;
+            default:
+                // Dla nieznanych ról – schowaj wszystko
+                buttonMap.values().forEach(btn -> {
+                    btn.setVisible(false);
+                    btn.setManaged(false);
+                });
+                break;
+        }
     }
+
 
     public void setMainController(MainController mainController) {
         this.mainController = mainController;
@@ -68,13 +95,15 @@ public class SidebarController {
     // Ustawia aktywny przycisk po fx:id
     public void setActive(String buttonId) {
         buttonMap.forEach((id, button) -> {
+            button.getStyleClass().remove("active"); // usuń aktywny z każdego
             if (id.equals(buttonId)) {
-                button.getStyleClass().add("active");
-            } else {
-                button.getStyleClass().remove("active");
+                if (!button.getStyleClass().contains("active")) {
+                    button.getStyleClass().add("active");
+                }
             }
         });
     }
+
 
     @FXML
     private void openUserTaskPanel() {

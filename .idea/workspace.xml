@@ -4,17 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="93580640-a4f6-4848-877d-83f2d9fe0546" name="Changes" comment="-Zmiana GUI, dodanie sidebaru">
+    <list default="true" id="93580640-a4f6-4848-877d-83f2d9fe0546" name="Changes" comment="-Naprawienie zmiany czcionki, i przycisku do chowania sidebaru">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/LoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/MainController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/AppSettings.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/AppSettings.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/ProductManagementController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/ProductManagementController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/ReportController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/ReportController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/SettingsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/SettingsController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/UserSession.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/UserSession.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/MainLayout.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/MainLayout.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/Sidebar.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/Sidebar.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/icons/logout.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/icons/setting.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-settings.properties" beforeDir="false" afterPath="$PROJECT_DIR$/user-settings.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/SidebarController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/SidebarController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/TaskController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/TaskController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/UserManagementController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/UserManagementController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/UserTaskPanelController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/UserTaskPanelController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/styles/themes/default.css" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/styles/themes/default.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,6 +54,9 @@
     &quot;accountId&quot;: &quot;b1f7b158-4475-45f9-92b8-f1f8ef44342c&quot;
   }
 }</component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 0
 }</component>
@@ -65,46 +68,46 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.Main.executor": "Run",
-    "Application.TestPołączenia.executor": "Run",
-    "Downloaded.Files.Path.Enabled": "false",
-    "JUnit.AlertUtilsTest.executor": "Coverage",
-    "JUnit.AppSettingsTest.executor": "Coverage",
-    "JUnit.DatabaseConnectorTest.executor": "Coverage",
-    "JUnit.DatabaseConnectorTest.testConnectReturnsConnection.executor": "Run",
-    "JUnit.GroupTest.executor": "Coverage",
-    "JUnit.LoginControllerTest.executor": "Coverage",
-    "JUnit.PasswordHasherTest.executor": "Coverage",
-    "JUnit.PasswordValidatorTest.executor": "Coverage",
-    "JUnit.ProductTest.executor": "Coverage",
-    "JUnit.ProductTypeTest.executor": "Coverage",
-    "JUnit.ReportControllerTest.executor": "Run",
-    "JUnit.RoleTest.executor": "Coverage",
-    "JUnit.RoleTest.testConstructorAndGetters.executor": "Coverage",
-    "JUnit.TaskTest.executor": "Coverage",
-    "JUnit.TestPolaczeniaTest.executor": "Coverage",
-    "JUnit.UserManagementControllerTest.addNewUser_withValidData_executesInsert.executor": "Run",
-    "JUnit.UserManagementControllerTest.executor": "Coverage",
-    "JUnit.UserSessionTest.executor": "Coverage",
-    "JUnit.UserTest.executor": "Coverage",
-    "JUnit.UserTest.testConstructorAndGetters.executor": "Coverage",
-    "Repository.Attach.Annotations": "false",
-    "Repository.Attach.JavaDocs": "false",
-    "Repository.Attach.Sources": "false",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/IiE_FIOLETOWI1/Projekt/src/main/resources/com/example/projekt/styles",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "MavenSettings"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;Application.TestPołączenia.executor&quot;: &quot;Run&quot;,
+    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
+    &quot;JUnit.AlertUtilsTest.executor&quot;: &quot;Coverage&quot;,
+    &quot;JUnit.AppSettingsTest.executor&quot;: &quot;Coverage&quot;,
+    &quot;JUnit.DatabaseConnectorTest.executor&quot;: &quot;Coverage&quot;,
+    &quot;JUnit.DatabaseConnectorTest.testConnectReturnsConnection.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.GroupTest.executor&quot;: &quot;Coverage&quot;,
+    &quot;JUnit.LoginControllerTest.executor&quot;: &quot;Coverage&quot;,
+    &quot;JUnit.PasswordHasherTest.executor&quot;: &quot;Coverage&quot;,
+    &quot;JUnit.PasswordValidatorTest.executor&quot;: &quot;Coverage&quot;,
+    &quot;JUnit.ProductTest.executor&quot;: &quot;Coverage&quot;,
+    &quot;JUnit.ProductTypeTest.executor&quot;: &quot;Coverage&quot;,
+    &quot;JUnit.ReportControllerTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.RoleTest.executor&quot;: &quot;Coverage&quot;,
+    &quot;JUnit.RoleTest.testConstructorAndGetters.executor&quot;: &quot;Coverage&quot;,
+    &quot;JUnit.TaskTest.executor&quot;: &quot;Coverage&quot;,
+    &quot;JUnit.TestPolaczeniaTest.executor&quot;: &quot;Coverage&quot;,
+    &quot;JUnit.UserManagementControllerTest.addNewUser_withValidData_executesInsert.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UserManagementControllerTest.executor&quot;: &quot;Coverage&quot;,
+    &quot;JUnit.UserSessionTest.executor&quot;: &quot;Coverage&quot;,
+    &quot;JUnit.UserTest.executor&quot;: &quot;Coverage&quot;,
+    &quot;JUnit.UserTest.testConstructorAndGetters.executor&quot;: &quot;Coverage&quot;,
+    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/IiE_FIOLETOWI1/Projekt/src/main/resources/com/example/projekt/styles&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;MavenSettings&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\IiE_FIOLETOWI1\Projekt\src\main\resources\com\example\projekt\icons" />
@@ -333,7 +336,23 @@
       <option name="project" value="LOCAL" />
       <updated>1748627608787</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="-Naprawienie zmiany czcionki, i przycisku do chowania sidebaru">
+      <option name="closed" value="true" />
+      <created>1748707380826</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1748707380826</updated>
+    </task>
+    <task id="LOCAL-00016" summary="-Naprawienie zmiany czcionki, i przycisku do chowania sidebaru">
+      <option name="closed" value="true" />
+      <created>1748707387900</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1748707387900</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -373,7 +392,8 @@
     <MESSAGE value="Poprawki javadoc" />
     <MESSAGE value="Testy" />
     <MESSAGE value="-Zmiana GUI, dodanie sidebaru" />
-    <option name="LAST_COMMIT_MESSAGE" value="-Zmiana GUI, dodanie sidebaru" />
+    <MESSAGE value="-Naprawienie zmiany czcionki, i przycisku do chowania sidebaru" />
+    <option name="LAST_COMMIT_MESSAGE" value="-Naprawienie zmiany czcionki, i przycisku do chowania sidebaru" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/IiE_FIOLETOWI$TestPolaczeniaTest.ic" NAME="TestPolaczeniaTest Coverage Results" MODIFIED="1748548885996" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">

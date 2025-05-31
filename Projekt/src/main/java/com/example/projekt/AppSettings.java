@@ -3,68 +3,57 @@ package com.example.projekt;
 import java.io.*;
 import java.util.Properties;
 
-/**
- * Klasa AppSettings odpowiada za zarządzanie ustawieniami aplikacji,
- * takimi jak motyw graficzny i rozmiar czcionki.
- * Ustawienia są przechowywane w pliku properties i ładowane podczas uruchomienia aplikacji.
- */
 public class AppSettings {
-    /** Ścieżka do pliku konfiguracyjnego z ustawieniami użytkownika. */
     private static final String CONFIG_FILE = "user-settings.properties";
-
-    /** Obiekt właściwości przechowujący ustawienia aplikacji. */
     private static final Properties props = new Properties();
 
-    // Blok statyczny do ładowania ustawień z pliku
     static {
         try (InputStream in = new FileInputStream(CONFIG_FILE)) {
             props.load(in);
         } catch (IOException e) {
             System.out.println("Używanie domyślnych ustawień.");
         }
+
+        // Ustaw motyw i czcionkę globalnie po starcie
+        setTheme(getTheme());
+        setFontSizeLabel(getFontSizeLabel());
     }
 
-    /**
-     * Zwraca aktualny motyw aplikacji.
-     *
-     * @return nazwa motywu, domyślnie "Domyślny" jeśli nie ustawiono
-     */
+    // Motyw graficzny: Jasny / Ciemny / Domyślny
     public static String getTheme() {
         return props.getProperty("theme", "Domyślny");
     }
 
-    /**
-     * Zwraca aktualny rozmiar czcionki.
-     *
-     * @return rozmiar czcionki, domyślnie 14 jeśli nie ustawiono
-     */
-    public static int getFontSize() {
-        return Integer.parseInt(props.getProperty("fontSize", "14"));
-    }
-
-    /**
-     * Ustawia nowy motyw aplikacji i zapisuje zmianę do pliku konfiguracyjnego.
-     *
-     * @param theme nowy motyw aplikacji
-     */
     public static void setTheme(String theme) {
         props.setProperty("theme", theme);
         save();
+
+        // Automatycznie ustaw motyw globalnie
+        String themePath = switch (theme.toLowerCase()) {
+            case "jasny" -> "/com/example/projekt/styles/themes/light.css";
+            case "ciemny" -> "/com/example/projekt/styles/themes/dark.css";
+            default -> "/com/example/projekt/styles/themes/default.css";
+        };
+        UserSession.setCurrentTheme(themePath);
     }
 
-    /**
-     * Ustawia nowy rozmiar czcionki i zapisuje zmianę do pliku konfiguracyjnego.
-     *
-     * @param size nowy rozmiar czcionki
-     */
-    public static void setFontSize(int size) {
-        props.setProperty("fontSize", String.valueOf(size));
+    // Czcionka jako tekst: Mała / Średnia / Duża
+    public static String getFontSizeLabel() {
+        return props.getProperty("fontSizeLabel", "Średnia");
+    }
+
+    public static void setFontSizeLabel(String label) {
+        props.setProperty("fontSizeLabel", label);
         save();
+
+        String fontPath = switch (label.toLowerCase()) {
+            case "mała" -> "/com/example/projekt/styles/fonts/small.css";
+            case "duża" -> "/com/example/projekt/styles/fonts/large.css";
+            default -> "/com/example/projekt/styles/fonts/medium.css";
+        };
+        UserSession.setCurrentFontSize(fontPath);
     }
 
-    /**
-     * Zapisuje bieżące ustawienia do pliku konfiguracyjnego.
-     */
     private static void save() {
         try (OutputStream out = new FileOutputStream(CONFIG_FILE)) {
             props.store(out, "Ustawienia aplikacji");
