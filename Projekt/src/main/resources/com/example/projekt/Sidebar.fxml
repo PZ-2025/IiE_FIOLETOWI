@@ -2,16 +2,14 @@
 
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
-<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 
-<VBox xmlns="http://javafx.com/javafx/8"
+
+<VBox fx:id="sidebar"
+      xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.example.projekt.SidebarController"
       spacing="10"
       styleClass="sidebar">
-
-    <!-- Przycisk rozwijania/zamykania panelu -->
-    <Button fx:id="toggleButton" onAction="#toggleSidebar" text="☰" styleClass="icon-button" />
 
     <!-- Moduly (widoczne wg roli) -->
     <VBox fx:id="buttonContainer" spacing="10">

@@ -3,7 +3,9 @@ package com.example.projekt;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -19,6 +21,8 @@ public class MainController {
     @FXML
     private BorderPane mainLayout;
 
+    @FXML
+    private Button toggleSidebarButton;
 
     @FXML
     private StackPane contentArea;
@@ -66,14 +70,31 @@ public class MainController {
         }
     }
 
+    @FXML
+    private void toggleSidebar() {
+        boolean visible = sidebarContainer.isVisible();
+        sidebarContainer.setVisible(!visible);
+        sidebarContainer.setManaged(!visible);
+    }
+
     /**
      * Wywoływana z SidebarController do załadowania widoku i ustawienia aktywnego przycisku.
      */
     public void loadView(String fxmlPath, String buttonId) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
-            Node content = loader.load();
-            contentArea.getChildren().setAll(content);// fx:id="contentContainer" w MainLayout.fxml
+            Parent content = loader.load(); // zmiana Node na Parent
+
+            Scene scene = mainLayout.getScene();
+            if (scene != null) {
+                content.getStylesheets().clear();
+                if (UserSession.getCurrentTheme() != null)
+                    content.getStylesheets().add(getClass().getResource(UserSession.getCurrentTheme()).toExternalForm());
+                if (UserSession.getCurrentFontSize() != null)
+                    content.getStylesheets().add(getClass().getResource(UserSession.getCurrentFontSize()).toExternalForm());
+            }
+
+            contentArea.getChildren().setAll(content); // fx:id="contentContainer" w MainLayout.fxml
 
             if (sidebarController != null) {
                 sidebarController.setActive(buttonId);
@@ -84,4 +105,17 @@ public class MainController {
             e.printStackTrace();
         }
     }
+    public void applyCurrentStyles() {
+        Scene scene = mainLayout.getScene();
+        if (scene == null) return;
+
+        scene.getStylesheets().clear();
+
+        if (UserSession.getCurrentTheme() != null)
+            scene.getStylesheets().add(getClass().getResource(UserSession.getCurrentTheme()).toExternalForm());
+
+        if (UserSession.getCurrentFontSize() != null)
+            scene.getStylesheets().add(getClass().getResource(UserSession.getCurrentFontSize()).toExternalForm());
+    }
+
 }

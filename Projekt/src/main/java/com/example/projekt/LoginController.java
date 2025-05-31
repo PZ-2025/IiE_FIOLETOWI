@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 
 import java.io.IOException;
+import java.net.URL;
 import java.sql.*;
 
 /**
@@ -146,7 +147,26 @@ public class LoginController {
 
         // Ustawienia stylu (motywu)
         scene.getStylesheets().clear();
-        scene.getStylesheets().add(getClass().getResource(UserSession.getCurrentTheme()).toExternalForm());
+
+        mainController.applyCurrentStyles();
+
+        stage.setTitle("Panel główny - " + user.getRole());
+        stage.show();
+
+        URL themeUrl = getClass().getResource(UserSession.getCurrentTheme());
+        if (themeUrl != null) {
+            scene.getStylesheets().add(themeUrl.toExternalForm());
+        } else {
+            System.err.println("Nie znaleziono pliku motywu: " + UserSession.getCurrentTheme());
+        }
+
+        URL fontUrl = getClass().getResource(UserSession.getCurrentFontSize());
+        if (fontUrl != null) {
+            scene.getStylesheets().add(fontUrl.toExternalForm());
+        } else {
+            System.err.println("Nie znaleziono pliku stylu czcionki: " + UserSession.getCurrentFontSize());
+        }
+
 
         stage.setTitle("Panel główny - " + user.getRole());
         stage.show();

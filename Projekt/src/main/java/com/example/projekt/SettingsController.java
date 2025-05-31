@@ -86,7 +86,7 @@ public class SettingsController {
         Scene scene = themeChoiceBox.getScene();
         if (scene == null) return;
 
-        scene.getStylesheets().clear();
+        scene.getStylesheets().removeIf(css -> css.contains("/styles/themes/"));
 
         String cssFile = switch (theme) {
             case "Jasny" -> "/com/example/projekt/styles/themes/light.css";
@@ -102,10 +102,34 @@ public class SettingsController {
         }
     }
 
-    private void applyFontSize(double size) {
-        Scene scene = themeChoiceBox.getScene();
-        scene.getRoot().setStyle("-fx-font-size: " + (int) size + "px;");
+    private void applyFontSize(int size) {
+        // Wybór odpowiedniego arkusza czcionki
+        String fontCss = switch (size) {
+            case 10 -> "/com/example/projekt/styles/fonts/small.css";
+            case 18, 20, 24 -> "/com/example/projekt/styles/fonts/large.css";
+            default -> "/com/example/projekt/styles/fonts/medium.css";
+        };
+
+        // Zapisz do sesji
+        UserSession.setCurrentFontSize(fontCss);
+
+        // Pobierz aktualną scenę
+        Scene scene = rootVBox.getScene();
+        if (scene == null) return;
+
+        // Usuń stare style fontów i motywów
+        scene.getStylesheets().removeIf(css ->
+                css.contains("/styles/fonts/") || css.contains("/styles/themes/"));
+
+        // Załaduj ponownie styl motywu i czcionki z UserSession
+        URL themeUrl = getClass().getResource(UserSession.getCurrentTheme());
+        URL fontUrl = getClass().getResource(UserSession.getCurrentFontSize());
+
+        if (themeUrl != null) scene.getStylesheets().add(themeUrl.toExternalForm());
+        if (fontUrl != null) scene.getStylesheets().add(fontUrl.toExternalForm());
     }
+
+
 
     @FXML
     private void handleChangePassword() {
@@ -182,9 +206,9 @@ public class SettingsController {
         String selectedTheme = themeChoiceBox.getValue(); // np. "Dark", "Light", "Default"
 
         String themePath = switch (selectedTheme.toLowerCase()) {
-            case "dark" -> "/styles/themes/dark.css";
-            case "light" -> "/styles/themes/light.css";
-            default -> "/styles/themes/default.css";
+            case "dark" -> "/com/example/projekt/styles/themes/dark.css";
+            case "light" -> "/com/example/projekt/styles/themes/light.css";
+            default -> "/com/example/projekt/styles/themes/default.css";
         };
 
         // Zapisz nowy motyw w sesji

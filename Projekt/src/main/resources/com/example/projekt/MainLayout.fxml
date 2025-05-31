@@ -9,7 +9,19 @@
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.example.projekt.MainController"
             fx:id="mainLayout"
-            stylesheets="@styles/themes/dark.css">
+            stylesheets="@styles/themes/default.css, @styles/fonts/medium.css"
+>
+    <top>
+        <HBox alignment="TOP_LEFT" spacing="5">
+            <padding>
+                <Insets top="5" right="5" bottom="5" left="5" />
+            </padding>
+        <Button fx:id="toggleSidebarButton"
+                    text="☰"
+                    onAction="#toggleSidebar"
+                    styleClass="icon-button"/>
+        </HBox>
+    </top>
 
     <!-- Pasek boczny -->
     <left>
