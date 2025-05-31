@@ -22,8 +22,10 @@ import static com.example.projekt.DashboardController.LOGGER;
 
 public class TaskController {
 
-    @FXML private TableView<Task> taskTable;
-    @FXML private TableColumn<Task, String> nameColumn;
+    @FXML
+    protected TableView<Task> taskTable;
+    @FXML
+    protected TableColumn<Task, String> nameColumn;
     @FXML private TableColumn<Task, String> statusColumn;
     @FXML private TableColumn<Task, String> priorityColumn;
     @FXML private TableColumn<Task, String> startDateColumn;
@@ -34,18 +36,30 @@ public class TaskController {
     @FXML private TableColumn<Task, String> assignedproductColumn;
     @FXML private TableColumn<Task, String> directionColumn;
 
-    @FXML private TextField nameField;
-    @FXML private TextField commentField;
-    @FXML private TextField quantityField;
-    @FXML private ComboBox<String> statusBox;
-    @FXML private ComboBox<String> priorityBox;
-    @FXML private ComboBox<String> productBox;
-    @FXML private ComboBox<String> directionBox;
-    @FXML private ComboBox<String> employeeBox;
-    @FXML private DatePicker startDatePicker;
-    @FXML private DatePicker endDatePicker;
-    @FXML private CheckBox TaskCheckBox;
-    @FXML private BorderPane taskRoot;
+    @FXML
+    protected TextField nameField;
+    @FXML
+    protected TextField commentField;
+    @FXML
+    protected TextField quantityField;
+    @FXML
+    protected ComboBox<String> statusBox;
+    @FXML
+    protected ComboBox<String> priorityBox;
+    @FXML
+    protected ComboBox<String> productBox;
+    @FXML
+    protected ComboBox<String> directionBox;
+    @FXML
+    protected ComboBox<String> employeeBox;
+    @FXML
+    protected DatePicker startDatePicker;
+    @FXML
+    protected DatePicker endDatePicker;
+    @FXML
+    protected CheckBox TaskCheckBox;
+    @FXML
+    protected BorderPane taskRoot;
 
     private ObservableList<Task> taskList = FXCollections.observableArrayList();
     private ObservableList<String> statusList = FXCollections.observableArrayList();
@@ -87,7 +101,7 @@ public class TaskController {
         quantityField.disableProperty().bind(TaskCheckBox.selectedProperty().not());
     }
     @FXML
-    private void clearForm() {
+    protected void clearForm() {
         nameField.clear();
         commentField.clear();
         statusBox.getSelectionModel().clearSelection();
@@ -101,7 +115,7 @@ public class TaskController {
     }
 
     @FXML
-    private void toggleCustomTaskFields() {
+    protected void toggleCustomTaskFields() {
         boolean enabled = TaskCheckBox.isSelected();
         productBox.setDisable(!enabled);
         directionBox.setDisable(!enabled);
@@ -133,7 +147,7 @@ public class TaskController {
         directionColumn.prefWidthProperty().bind(taskTable.widthProperty().multiply(0.15));
     }
 
-    private void fillFormWithSelectedTask(Task task) {
+    protected void fillFormWithSelectedTask(Task task) {
         nameField.setText(task.getNazwa());
         commentField.setText(task.getKomentarz());
         statusBox.setValue(task.getStatus());
@@ -166,7 +180,7 @@ public class TaskController {
         }
     }
 
-    private void loadComboBoxes() {
+    public void loadComboBoxes() {
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD)) {
             loadStatuses(conn);
             loadPriorities(conn);
@@ -225,7 +239,7 @@ public class TaskController {
         employeeBox.setItems(employeeList);
     }
 
-    private void loadData() {
+    protected void loadData() {
         taskList.clear();
         String query = """
         SELECT z.id_zadania, z.nazwa, s.nazwa AS status, p.nazwa AS priorytet,
@@ -286,7 +300,7 @@ public class TaskController {
 
 
     @FXML
-    private void handleAddTask() {
+    protected void handleAddTask() {
         if (!validateForm()) return;
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD)) {
@@ -386,7 +400,7 @@ public class TaskController {
 
 
     @FXML
-    private void handleEditTask() {
+    protected void handleEditTask() {
         Task selected = taskTable.getSelectionModel().getSelectedItem();
         if (selected == null) {
             showAlert("Błąd", "Wybierz zadanie do edycji");
@@ -491,7 +505,7 @@ public class TaskController {
 
 
     @FXML
-    private void handleDeleteTask() {
+    protected void handleDeleteTask() {
         Task selected = taskTable.getSelectionModel().getSelectedItem();
         if (selected == null) {
             showAlert("Błąd", "Wybierz zadanie do usunięcia");
@@ -522,7 +536,7 @@ public class TaskController {
         }
     }
 
-    private boolean validateForm() {
+    protected boolean validateForm() {
         if (nameField.getText().isEmpty()) {
             showAlert("Błąd", "Nazwa zadania nie może być pusta");
             return false;
@@ -558,7 +572,7 @@ public class TaskController {
         return true;
     }
 
-    private int getIdFromTable(Connection conn, String table, String name) throws SQLException {
+    protected int getIdFromTable(Connection conn, String table, String name) throws SQLException {
         if (name == null || name.trim().isEmpty()) {
             throw new SQLException("Nazwa nie może być pusta dla tabeli: " + table);
         }
@@ -574,7 +588,7 @@ public class TaskController {
         throw new SQLException("Nie znaleziono: " + name + " w tabeli: " + table);
     }
 
-    private void showAlert(String title, String msg) {
+    protected void showAlert(String title, String msg) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
         alert.setHeaderText(null);
@@ -582,7 +596,7 @@ public class TaskController {
         alert.showAndWait();
     }
 
-    private void clearFields() {
+    protected void clearFields() {
         nameField.clear();
         commentField.clear();
         quantityField.clear();
@@ -596,7 +610,7 @@ public class TaskController {
     }
 
     @FXML
-    private void goBackToDashboard(ActionEvent event) {
+    protected void goBackToDashboard(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/projekt/dashboard.fxml"));
             Parent root = loader.load();

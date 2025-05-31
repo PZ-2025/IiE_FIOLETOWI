@@ -16,24 +16,24 @@ import java.io.IOException;
 public class MainController {
 
     @FXML
-    private Pane sidebarContainer;  // musi odpowiadać fx:id z MainLayout.fxml
+    protected Pane sidebarContainer;  // musi odpowiadać fx:id z MainLayout.fxml
 
     @FXML
-    private BorderPane mainLayout;
+    protected BorderPane mainLayout;
 
     @FXML
     private Button toggleSidebarButton;
 
     @FXML
-    private StackPane contentArea;
+    protected StackPane contentArea;
 
     @FXML
-    private void openSettings() {
+    protected void openSettings() {
         loadView("/com/example/projekt/settings.fxml", "ustawienia");
     }
 
     @FXML
-    private void handleLogout() {
+    protected void handleLogout() {
         // Przykładowo: wyczyść sesję i wróć do loginu
         UserSession.clearSession();
         try {

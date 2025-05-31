@@ -361,5 +361,4 @@ public class ProductManagementController {
             scene.getStylesheets().add(fontUrl.toExternalForm());
         }
     }
-
 }

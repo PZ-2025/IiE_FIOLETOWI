@@ -4,17 +4,26 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="93580640-a4f6-4848-877d-83f2d9fe0546" name="Changes" comment="-Naprawienie zmiany czcionki, i przycisku do chowania sidebaru">
+    <list default="true" id="93580640-a4f6-4848-877d-83f2d9fe0546" name="Changes" comment="Testy">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/AppSettings.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/AppSettings.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projekt/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/LoginController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/ProductManagementController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/ProductManagementController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/ReportController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/ReportController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/SettingsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/SettingsController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/SidebarController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/SidebarController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/TaskController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/TaskController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/UserManagementController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/UserManagementController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/UserSession.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/UserSession.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/UserTaskPanelController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/UserTaskPanelController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/styles/themes/default.css" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/styles/themes/default.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/Product_Management.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/Product_Management.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/reports.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/reports.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/settings.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/settings.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/task.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/task.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/userManagement.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/userManagement.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/usertaskpanel.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/usertaskpanel.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projekt/src/main/resources/styles/themes/dark.css" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/styles/themes/dark.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projekt/src/main/resources/styles/themes/default.css" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/styles/themes/default.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projekt/src/main/resources/styles/themes/light.css" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/styles/themes/light.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,9 +63,6 @@
     &quot;accountId&quot;: &quot;b1f7b158-4475-45f9-92b8-f1f8ef44342c&quot;
   }
 }</component>
-  <component name="ProblemsViewState">
-    <option name="selectedTabId" value="CurrentFile" />
-  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 0
 }</component>
@@ -101,7 +107,7 @@
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/IiE_FIOLETOWI1/Projekt/src/main/resources/com/example/projekt/styles&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/IiE_FIOLETOWI1/Projekt/src/main/resources/com/example/projekt/icons&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
@@ -114,7 +120,6 @@
       <recent name="D:\IiE_FIOLETOWI1\Projekt\src\main\resources\icons" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\IiE_FIOLETOWI1\Projekt\src\main\resources\com\example\projekt\styles" />
       <recent name="D:\IiE_FIOLETOWI1\Projekt\src\main\resources\com\example\projekt\styles\themes" />
       <recent name="C:\Users\ABC\Documents\IiE_FIOLETOWI\Projekt\src\main\resources\com\example" />
       <recent name="C:\Users\ABC\Documents\IiE_FIOLETOWI\Projekt\src\main\java\com\example" />
@@ -320,39 +325,7 @@
       <option name="project" value="LOCAL" />
       <updated>1748550820086</updated>
     </task>
-    <task id="LOCAL-00013" summary="-Zmiana GUI, dodanie sidebaru">
-      <option name="closed" value="true" />
-      <created>1748627580985</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1748627580985</updated>
-    </task>
-    <task id="LOCAL-00014" summary="-Zmiana GUI, dodanie sidebaru">
-      <option name="closed" value="true" />
-      <created>1748627608787</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1748627608787</updated>
-    </task>
-    <task id="LOCAL-00015" summary="-Naprawienie zmiany czcionki, i przycisku do chowania sidebaru">
-      <option name="closed" value="true" />
-      <created>1748707380826</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1748707380826</updated>
-    </task>
-    <task id="LOCAL-00016" summary="-Naprawienie zmiany czcionki, i przycisku do chowania sidebaru">
-      <option name="closed" value="true" />
-      <created>1748707387900</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1748707387900</updated>
-    </task>
-    <option name="localTasksCounter" value="17" />
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -391,9 +364,7 @@
     <MESSAGE value="Zarządzanie użytkownikami" />
     <MESSAGE value="Poprawki javadoc" />
     <MESSAGE value="Testy" />
-    <MESSAGE value="-Zmiana GUI, dodanie sidebaru" />
-    <MESSAGE value="-Naprawienie zmiany czcionki, i przycisku do chowania sidebaru" />
-    <option name="LAST_COMMIT_MESSAGE" value="-Naprawienie zmiany czcionki, i przycisku do chowania sidebaru" />
+    <option name="LAST_COMMIT_MESSAGE" value="Testy" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/IiE_FIOLETOWI$TestPolaczeniaTest.ic" NAME="TestPolaczeniaTest Coverage Results" MODIFIED="1748548885996" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
