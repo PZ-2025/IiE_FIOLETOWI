@@ -26,22 +26,34 @@ import static com.example.projekt.DashboardController.LOGGER;
 
 public class ProductManagementController {
 
-    @FXML private TableView<Product> productTable;
-    @FXML private TableColumn<Product, String> nazwaColumn;
-    @FXML private TableColumn<Product, Integer> stanColumn;
-    @FXML private TableColumn<Product, Double> cenaColumn;
-    @FXML private TableColumn<Product, Integer> limitColumn;
-    @FXML private TableColumn<Product, String> typColumn;
+    @FXML
+    protected TableView<Product> productTable;
+    @FXML
+    protected TableColumn<Product, String> nazwaColumn;
+    @FXML
+    protected TableColumn<Product, Integer> stanColumn;
+    @FXML
+    protected TableColumn<Product, Double> cenaColumn;
+    @FXML
+    protected TableColumn<Product, Integer> limitColumn;
+    @FXML
+    protected TableColumn<Product, String> typColumn;
 
-    @FXML private TextField nazwaField;
-    @FXML private TextField stanField;
-    @FXML private TextField cenaField;
-    @FXML private TextField limitField;
-    @FXML private ComboBox<ProductType> typComboBox;
+    @FXML
+    protected TextField nazwaField;
+    @FXML
+    protected TextField stanField;
+    @FXML
+    protected TextField cenaField;
+    @FXML
+    protected TextField limitField;
+    @FXML
+    protected ComboBox<ProductType> typComboBox;
 
-    @FXML private VBox productRoot;
+    @FXML
+    protected VBox productRoot;
 
-    private Product selectedProduct = null;
+    protected Product selectedProduct = null;
     private ObservableList<ProductType> productTypes = FXCollections.observableArrayList();
 
     @FXML
@@ -104,7 +116,7 @@ public class ProductManagementController {
         cenaField.setTextFormatter(new TextFormatter<>(filter));
     }
 
-    private void fillForm(Product p) {
+    protected void fillForm(Product p) {
         nazwaField.setText(p.getNazwa());
         stanField.setText(String.valueOf(p.getStan()));
         cenaField.setText(String.format("%.2f", p.getCena()));
@@ -118,7 +130,7 @@ public class ProductManagementController {
     }
 
     @FXML
-    private void handleAddProduct() {
+    protected void handleAddProduct() {
         saveProduct();
         selectedProduct = null;
         clearForm();
@@ -158,7 +170,7 @@ public class ProductManagementController {
         }
     }
 
-    private void loadProducts() {
+    protected void loadProducts() {
         ObservableList<Product> products = FXCollections.observableArrayList();
         String sql = """
             SELECT p.id_produktu, p.nazwa, p.stan, p.cena, p.limit_stanow, p.id_typu_produktu, t.nazwa AS typ
@@ -189,7 +201,7 @@ public class ProductManagementController {
         productTable.setItems(products);
     }
 
-    private ObservableList<ProductType> loadProductTypes() {
+    protected ObservableList<ProductType> loadProductTypes() {
         ObservableList<ProductType> types = FXCollections.observableArrayList();
         String sql = "SELECT * FROM typ_produktu";
 
@@ -209,7 +221,7 @@ public class ProductManagementController {
     }
 
     @FXML
-    private void saveProduct() {
+    protected void saveProduct() {
         String nazwa = nazwaField.getText();
         int stan, limit;
         BigDecimal cena;
@@ -309,7 +321,7 @@ public class ProductManagementController {
     }
 
     @FXML
-    private void clearForm() {
+    protected void clearForm() {
         nazwaField.clear();
         stanField.clear();
         cenaField.clear();
@@ -325,7 +337,7 @@ public class ProductManagementController {
         alert.setContentText(content);
         alert.showAndWait();
     }
-    private void applyTheme(String theme) {
+    protected void applyTheme(String theme) {
         Scene scene = productRoot.getScene();
         if (scene == null) return;
 
@@ -342,7 +354,7 @@ public class ProductManagementController {
         }
     }
 
-    private void applyFontSize(double size) {
+    protected void applyFontSize(double size) {
         productRoot.getScene().getRoot().setStyle("-fx-font-size: " + (int) size + "px;");
     }
 }

@@ -20,27 +20,41 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class UserTaskPanelController {
-    @FXML private TableView<Product> productTable;
-    @FXML private TableColumn<Product, String> productNameColumn;
-    @FXML private TableColumn<Product, Integer> productStockColumn;
-    @FXML private TableColumn<Product, Integer> productLimitColumn;
-    @FXML private TableColumn<Product, Double> productPriceColumn;
+    @FXML
+    protected TableView<Product> productTable;
+    @FXML
+    protected TableColumn<Product, String> productNameColumn;
+    @FXML
+    protected TableColumn<Product, Integer> productStockColumn;
+    @FXML
+    protected TableColumn<Product, Integer> productLimitColumn;
+    @FXML
+    protected TableColumn<Product, Double> productPriceColumn;
 
-    @FXML private TableView<Task> taskTable;
-    @FXML private TableColumn<Task, String> nameColumn;
-    @FXML private TableColumn<Task, String> statusColumn;
-    @FXML private TableColumn<Task, String> priorityColumn;
-    @FXML private TableColumn<Task, String> dateColumn;
+    @FXML
+    protected TableView<Task> taskTable;
+    @FXML
+    protected TableColumn<Task, String> nameColumn;
+    @FXML
+    protected TableColumn<Task, String> statusColumn;
+    @FXML
+    protected TableColumn<Task, String> priorityColumn;
+    @FXML
+    protected TableColumn<Task, String> dateColumn;
 
-    @FXML private ComboBox<String> statusComboBox;
-    @FXML private ListView<String> historyList;
-    @FXML private TextArea commentTextArea;
+    @FXML
+    protected ComboBox<String> statusComboBox;
+    @FXML
+    protected ListView<String> historyList;
+    @FXML
+    protected TextArea commentTextArea;
 
-    @FXML private BorderPane userTaskRoot;
+    @FXML
+    protected BorderPane userTaskRoot;
 
     private static final Logger LOGGER = Logger.getLogger(UserTaskPanelController.class.getName());
-    private Task selectedTask;
-    private Map<String, Integer> statusOrder = new LinkedHashMap<>();
+    protected Task selectedTask;
+    protected Map<String, Integer> statusOrder = new LinkedHashMap<>();
 
     @FXML
     public void initialize() {
@@ -78,14 +92,14 @@ public class UserTaskPanelController {
         checkForNotifications();
     }
 
-    private void initializeStatusOrder() {
+    protected void initializeStatusOrder() {
         statusOrder.put("Oczekujące", 1);
         statusOrder.put("Rozpoczęte", 2);
         statusOrder.put("W trakcie", 3);
         statusOrder.put("Zakończone", 4);
     }
 
-    private void configureProductTable() {
+    protected void configureProductTable() {
         productNameColumn.setCellValueFactory(data -> data.getValue().nazwaProperty());
         productStockColumn.setCellValueFactory(data -> data.getValue().stanProperty().asObject());
         productLimitColumn.setCellValueFactory(data -> data.getValue().limitStanowProperty().asObject());
@@ -133,14 +147,14 @@ public class UserTaskPanelController {
         });
     }
 
-    private void configureTaskTable() {
+    protected void configureTaskTable() {
         nameColumn.setCellValueFactory(cellData -> cellData.getValue().nazwaProperty());
         statusColumn.setCellValueFactory(cellData -> cellData.getValue().statusProperty());
         priorityColumn.setCellValueFactory(cellData -> cellData.getValue().priorytetProperty());
         dateColumn.setCellValueFactory(cellData -> cellData.getValue().dataProperty());
     }
 
-    private void updateAvailableStatuses(String currentStatus) {
+    protected void updateAvailableStatuses(String currentStatus) {
         statusComboBox.getItems().clear();
 
         // Znajdź aktualną pozycję statusu
@@ -153,7 +167,7 @@ public class UserTaskPanelController {
                 .forEach(entry -> statusComboBox.getItems().add(entry.getKey()));
     }
 
-    private void loadProducts() {
+    protected void loadProducts() {
         ObservableList<Product> products = FXCollections.observableArrayList();
         String sql = "SELECT p.id_produktu, p.nazwa, p.stan, p.cena, p.limit_stanow, p.id_typu_produktu, t.nazwa AS typ_nazwa " +
                 "FROM produkty p " +
@@ -182,7 +196,7 @@ public class UserTaskPanelController {
         }
     }
 
-    private void loadTasks() {
+    protected void loadTasks() {
         ObservableList<Task> tasks = FXCollections.observableArrayList();
         String sql = """
         SELECT 
@@ -250,7 +264,7 @@ public class UserTaskPanelController {
         }
     }
 
-    private void loadTaskComment(int taskId) {
+    protected void loadTaskComment(int taskId) {
         String sql = "SELECT komentarz FROM zadania WHERE id_zadania = ?";
         try (Connection conn = DatabaseConnector.connect();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -266,7 +280,7 @@ public class UserTaskPanelController {
     }
 
     @FXML
-    private void saveTaskComment() {
+    protected void saveTaskComment() {
         if (selectedTask == null) {
             showAlert("Błąd", "Nie wybrano zadania");
             return;
@@ -288,7 +302,7 @@ public class UserTaskPanelController {
     }
 
     @FXML
-    private void changeTaskStatus() {
+    protected void changeTaskStatus() {
         if (selectedTask == null || statusComboBox.getValue() == null) {
             showAlert("Błąd", "Nie wybrano zadania lub statusu");
             return;
@@ -335,7 +349,7 @@ public class UserTaskPanelController {
         }
     }
 
-    private void loadTaskHistory() {
+    protected void loadTaskHistory() {
         String sql = """
             SELECT z.nazwa, z.data_rozpoczecia, z.data_zakonczenia 
             FROM zadania z
@@ -363,7 +377,7 @@ public class UserTaskPanelController {
         }
     }
 
-    private void checkForNotifications() {
+    protected void checkForNotifications() {
         String sql = "SELECT nazwa FROM zadania WHERE id_pracownika = ? AND powiadomienia = 1";
 
         try (Connection conn = DatabaseConnector.connect();
@@ -409,14 +423,14 @@ public class UserTaskPanelController {
         }
     }
 
-    private void showAlert(String title, String message) {
+    protected void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
     }
-    private void applyTheme(String theme) {
+    protected void applyTheme(String theme) {
         Scene scene = userTaskRoot.getScene();
         if (scene == null) return;
 
@@ -434,7 +448,7 @@ public class UserTaskPanelController {
         }
     }
 
-    private void applyFontSize(double size) {
+    protected void applyFontSize(double size) {
         userTaskRoot.getScene().getRoot().setStyle("-fx-font-size: " + (int) size + "px;");
     }
 
