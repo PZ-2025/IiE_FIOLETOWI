@@ -44,7 +44,7 @@ public class TaskController {
     @FXML private ComboBox<String> employeeBox;
     @FXML private DatePicker startDatePicker;
     @FXML private DatePicker endDatePicker;
-
+    @FXML private CheckBox TaskCheckBox;
     @FXML private BorderPane taskRoot;
 
     private ObservableList<Task> taskList = FXCollections.observableArrayList();
@@ -82,6 +82,9 @@ public class TaskController {
                 fillFormWithSelectedTask(selected);
             }
         });
+        productBox.disableProperty().bind(TaskCheckBox.selectedProperty().not());
+        directionBox.disableProperty().bind(TaskCheckBox.selectedProperty().not());
+        quantityField.disableProperty().bind(TaskCheckBox.selectedProperty().not());
     }
     @FXML
     private void clearForm() {
@@ -95,6 +98,14 @@ public class TaskController {
         startDatePicker.setValue(null);
         endDatePicker.setValue(null);
         employeeBox.getSelectionModel().clearSelection();
+    }
+
+    @FXML
+    private void toggleCustomTaskFields() {
+        boolean enabled = TaskCheckBox.isSelected();
+        productBox.setDisable(!enabled);
+        directionBox.setDisable(!enabled);
+        quantityField.setDisable(!enabled);
     }
 
     private void configureTableColumns() {

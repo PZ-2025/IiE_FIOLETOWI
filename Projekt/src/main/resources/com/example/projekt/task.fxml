@@ -50,6 +50,11 @@
                 <ComboBox fx:id="priorityBox" styleClass="combo-box"/>
             </HBox>
             <HBox spacing="10">
+
+                <CheckBox fx:id="TaskCheckBox"
+                          text="Transakcja"
+                          onAction="#toggleCustomTaskFields"/>
+
                 <Label text="Produkt:" styleClass="label"/>
                 <ComboBox fx:id="productBox" styleClass="combo-box"/>
 
@@ -60,7 +65,7 @@
                 <TextField fx:id="quantityField" promptText="Wpisz ilość" styleClass="input-field"/>
             </HBox>
 
-            <HBox spacing="10">
+            <HBox spacing="10" >
                 <Label text="Data startu:" styleClass="label"/>
                 <DatePicker fx:id="startDatePicker" styleClass="date-picker"/>
 
