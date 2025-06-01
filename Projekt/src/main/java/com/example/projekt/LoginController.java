@@ -75,12 +75,13 @@ public class LoginController {
      */
     private User authenticateUser(String username, String password) {
         String sql = """
-        SELECT p.id_pracownika, p.imie, p.nazwisko, p.login, p.haslo, p.placa, 
-               p.id_grupy, p.id_roli, r.nazwa AS nazwa_roli
-        FROM pracownicy p
-        JOIN role r ON p.id_roli = r.id_roli
-        WHERE p.login = ?
-    """;
+            SELECT p.id_pracownika, p.imie, p.nazwisko, p.login, p.haslo, p.placa, 
+            p.id_grupy, p.id_roli, r.nazwa AS nazwa_roli
+            FROM pracownicy p
+            JOIN role r ON p.id_roli = r.id_roli
+            WHERE BINARY p.login = ?
+        """;
+
 
         try (Connection conn = DatabaseConnector.connect();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -101,7 +102,7 @@ public class LoginController {
                         int id_roli = rs.getInt("id_roli");
                         String nazwa_roli = rs.getString("nazwa_roli");
 
-                        return new User(id, imie, nazwisko, login, storedHashedPassword, placa, id_grupy, id_roli, nazwa_roli);
+                        return new User(id, imie, nazwisko, login, storedHashedPassword, placa, id_grupy, id_roli, nazwa_roli, nazwa_roli);
                     }
                 }
             }

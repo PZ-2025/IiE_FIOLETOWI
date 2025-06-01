@@ -18,6 +18,7 @@ public class User {
     private int idRoli;
     private Role role;
     private String nazwaRoli;
+    private String nazwaGrupy;
 
     /**
      * Tworzy nową instancję użytkownika.
@@ -33,7 +34,7 @@ public class User {
      * @param nazwaRoli  nazwa roli (np. "Admin")
      */
     public User(int id, String imie, String nazwisko, String login, String haslo,
-                double placa, int idGrupy, int idRoli, String nazwaRoli) {
+                double placa, int idGrupy, int idRoli, String nazwaRoli, String nazwaGrupy) {
         this.id = id;
         this.imie = imie;
         this.nazwisko = nazwisko;
@@ -43,6 +44,7 @@ public class User {
         this.idGrupy = idGrupy;
         this.idRoli = idRoli;
         this.nazwaRoli = nazwaRoli;
+        this.nazwaGrupy=nazwaGrupy;
     }
 
     // Gettery
@@ -61,6 +63,10 @@ public class User {
         this.nazwaRoli = nazwaRoli;
     }
 
+    public String getGroup() {return nazwaGrupy;}
+    public void setGroup(String nazwaGrupy) {
+        this.nazwaGrupy = nazwaGrupy;
+    }
     /**
      * Sprawdza, czy użytkownik ma rolę administratora.
      * @return {@code true} jeśli rola to "Admin", w przeciwnym razie {@code false}

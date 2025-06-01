@@ -35,7 +35,7 @@ public class MainController {
 
     @FXML
     protected void handleLogout() {
-        // Przykładowo: wyczyść sesję i wróć do loginu
+
         UserSession.clearSession();
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/projekt/login.fxml"));

@@ -43,10 +43,8 @@
             <TableColumn fx:id="loginColumn" text="Login"/>
             <TableColumn fx:id="placaColumn" text="Płaca"/>
             <TableColumn fx:id="rolaColumn" text="Rola"/>
+            <TableColumn fx:id="grupaColumn" text="Grupa"/>
         </columns>
     </TableView>
 
-    <!--<HBox alignment="BOTTOM_LEFT" prefWidth="598.0" spacing="10">
-        <Button minHeight="40" prefHeight="40" onAction="#goToDashboard" text="Powrót do Dashboardu" styleClass="return-button"/>
-    </HBox>-->
 </VBox>

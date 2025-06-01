@@ -36,15 +36,15 @@ public class UserManagementController {
     @FXML private TableColumn<User, String> loginColumn;
     @FXML private TableColumn<User, Double> placaColumn;
     @FXML private TableColumn<User, String> rolaColumn;
+    @FXML private TableColumn<User, String> grupaColumn;
     @FXML protected TextField usernameField;
     @FXML protected PasswordField passwordField;
-    @FXML
-    public ComboBox<Role> roleComboBox;
-    @FXML
-    public ComboBox<Group> groupComboBox;
+    @FXML public ComboBox<Role> roleComboBox;
+    @FXML public ComboBox<Group> groupComboBox;
     @FXML protected TextField firstNameField;
     @FXML protected TextField lastNameField;
     @FXML protected TextField salaryField;
+    @FXML protected TextField grupaField;
     @FXML private VBox userRoot;
 
     public ObservableList<Role> roles = FXCollections.observableArrayList();
@@ -65,6 +65,7 @@ public class UserManagementController {
         loginColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getLogin()));
         placaColumn.setCellValueFactory(cellData -> new SimpleDoubleProperty(cellData.getValue().getPlaca()).asObject());
         rolaColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getRole()));
+        grupaColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getGroup()));
 
         placaColumn.setCellFactory(column -> new TableCell<User, Double>() {
             @Override
@@ -131,9 +132,11 @@ public class UserManagementController {
         ObservableList<User> usersList = FXCollections.observableArrayList();
         String sql = """
             SELECT p.id_pracownika, p.imie, p.nazwisko, p.login, p.haslo, p.placa, p.id_grupy, p.id_roli,
-                   r.nazwa AS nazwa_roli
-            FROM pracownicy p
-            JOIN role r ON p.id_roli = r.id_roli
+                 r.nazwa AS nazwa_roli,
+                 g.nazwa AS nazwa_grupy
+                 FROM pracownicy p
+                 JOIN role r ON p.id_roli = r.id_roli
+                 JOIN grupy g ON p.id_grupy = g.id_grupy
         """;
 
         try (Connection conn = DatabaseConnector.connect();
@@ -150,7 +153,8 @@ public class UserManagementController {
                         rs.getDouble("placa"),
                         rs.getInt("id_grupy"),
                         rs.getInt("id_roli"),
-                        rs.getString("nazwa_roli")
+                        rs.getString("nazwa_roli"),
+                        rs.getString("nazwa_grupy")
                 );
                 usersList.add(user);
             }
