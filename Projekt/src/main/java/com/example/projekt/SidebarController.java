@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 
 import java.awt.event.ActionEvent;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,23 +34,38 @@ public class SidebarController {
     }
 
     @FXML
-    private void openSettings() {
-        mainController.loadView("/com/example/projekt/settings.fxml", null);
-    }
-
-    @FXML
-    private void handleLogout() {
-        // logika wylogowania
-        System.out.println("Wylogowywanie...");
-    }
-
-    @FXML
     private VBox sidebar;
 
     private MainController mainController;
 
     // Przechowujemy wszystkie przyciski, aby łatwo resetować style
     private final Map<String, Button> buttonMap = new HashMap<>();
+
+    public void applySidebarStyles() {
+        System.out.println("[DEBUG] applySidebarStyles() uruchomione.");
+
+        Scene scene = sidebar.getScene();
+        if (scene == null) {
+            System.out.println("[DEBUG] sidebar.getScene() == null ❌");
+            return;
+        } else {
+            System.out.println("[DEBUG] sidebar.getScene() OK ✅");
+        }
+
+        scene.getStylesheets().removeIf(css ->
+                css.contains("/styles/themes/") || css.contains("/styles/fonts/"));
+
+        URL themeUrl = getClass().getResource(UserSession.getCurrentTheme());
+        URL fontUrl = getClass().getResource(UserSession.getCurrentFontSize());
+
+        if (themeUrl != null) scene.getStylesheets().add(themeUrl.toExternalForm());
+        if (fontUrl != null) scene.getStylesheets().add(fontUrl.toExternalForm());
+
+        // Przeładuj styl dla sidebaru i całej sceny
+        scene.getRoot().applyCss();
+        scene.getRoot().layout();
+    }
+
 
     @FXML
     private void initialize() {
@@ -85,6 +101,8 @@ public class SidebarController {
                 });
                 break;
         }
+        applySidebarStyles();
+
     }
 
 
@@ -103,6 +121,8 @@ public class SidebarController {
             }
         });
     }
+
+
 
 
     @FXML

@@ -8,8 +8,7 @@
       xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.example.projekt.SidebarController"
-      spacing="10"
-      styleClass="sidebar">
+      spacing="10">
 
     <!-- Moduly (widoczne wg roli) -->
     <VBox fx:id="buttonContainer" spacing="10">

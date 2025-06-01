@@ -135,15 +135,24 @@ public class LoginController {
         mainController.loadView("/com/example/projekt/usertaskpanel.fxml", "userTaskPanelButton");
 
         // Pobranie aktualnej sceny i zmiana root
+        // Pobierz stage
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
         Scene scene = stage.getScene();
+
+// Utwórz scenę jeśli brak
         if (scene == null) {
-            scene = new Scene(root); // jeśli nie istnieje (np. pierwsze uruchomienie)
+            scene = new Scene(root);
             stage.setScene(scene);
         } else {
-            scene.setRoot(root); // tylko zmień root, nie twórz nowej sceny
+            scene.setRoot(root);
         }
+
+// ➤ dopiero teraz wywołuj initializeSidebar()
+        mainController.initializeSidebar();
+
+// Kontynuuj dalej
+        mainController.loadView("/com/example/projekt/usertaskpanel.fxml", "userTaskPanelButton");
+
 
         // Ustawienia stylu (motywu)
         scene.getStylesheets().clear();

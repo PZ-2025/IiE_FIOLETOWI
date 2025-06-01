@@ -8,9 +8,7 @@
 <BorderPane xmlns="http://javafx.com/javafx/8"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.example.projekt.MainController"
-            fx:id="mainLayout"
-            stylesheets="@styles/themes/default.css, @styles/fonts/medium.css"
->
+            fx:id="mainLayout">
     <top>
         <HBox alignment="TOP_LEFT" spacing="5">
             <padding>
@@ -50,7 +48,7 @@
                     <Tooltip text="Ustawienia"/>
                 </tooltip>
                 <graphic>
-                    <FontAwesomeIconView glyphName="GEAR" size="18"/>
+                    <FontAwesomeIconView glyphName="GEAR" size="18" styleClass="fontawesome-icon" />
                 </graphic>
             </Button>
 
@@ -61,7 +59,7 @@
                     <Tooltip text="Wyloguj"/>
                 </tooltip>
                 <graphic>
-                    <FontAwesomeIconView glyphName="SIGN_OUT" size="18"/>
+                    <FontAwesomeIconView glyphName="SIGN_OUT" size="18" styleClass="fontawesome-icon" />
                 </graphic>
             </Button>
         </HBox>

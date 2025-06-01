@@ -6,42 +6,50 @@
 
 <GridPane xmlns:fx="http://javafx.com/fxml"
           alignment="center"
-          hgap="10"
-          vgap="10"
+          hgap="12"
+          vgap="12"
           fx:controller="com.example.projekt.LoginController"
-          style="-fx-background-color: linear-gradient(to bottom right, #6a1b9a, #9c27b0);">
+          style="-fx-background-color: #ffffff; -fx-font-family: 'Segoe UI', sans-serif;">
 
     <padding>
-        <Insets top="20" right="20" bottom="20" left="20"/>
+        <Insets top="30" right="30" bottom="30" left="30"/>
     </padding>
 
     <!-- Nagłówek -->
     <Label text="HurtPolSan"
-           style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: white;"
+           style="-fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: #4a148c;
+                  -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 5, 0.2, 2, 2);"
            GridPane.columnSpan="2"
            GridPane.rowIndex="0"
            GridPane.halignment="CENTER"/>
 
-    <!-- Formularz logowania -->
+    <!-- Etykieta użytkownika -->
     <Label text="Nazwa użytkownika:"
-           style="-fx-font-size: 14px; -fx-text-fill: white;"
+           style="-fx-font-size: 14px; -fx-text-fill: #333333;"
            GridPane.rowIndex="1"
            GridPane.columnIndex="0"/>
 
+    <!-- Pole użytkownika -->
     <TextField fx:id="usernameField"
-               style="-fx-background-color: rgba(255, 255, 255, 0.8); -fx-font-size: 14px;
-                     -fx-padding: 5; -fx-border-radius: 5; -fx-background-radius: 5;"
+               promptText="Wpisz login"
+               style="-fx-background-color: #f5f5f5; -fx-border-color: #cccccc;
+                      -fx-border-radius: 6; -fx-background-radius: 6;
+                      -fx-padding: 8; -fx-font-size: 14px;"
                GridPane.rowIndex="1"
                GridPane.columnIndex="1"/>
 
+    <!-- Etykieta hasła -->
     <Label text="Hasło:"
-           style="-fx-font-size: 14px; -fx-text-fill: white;"
+           style="-fx-font-size: 14px; -fx-text-fill: #333333;"
            GridPane.rowIndex="2"
            GridPane.columnIndex="0"/>
 
+    <!-- Pole hasła -->
     <PasswordField fx:id="passwordField"
-                   style="-fx-background-color: rgba(255, 255, 255, 0.8); -fx-font-size: 14px;
-                         -fx-padding: 5; -fx-border-radius: 5; -fx-background-radius: 5;"
+                   promptText="Wpisz hasło"
+                   style="-fx-background-color: #f5f5f5; -fx-border-color: #cccccc;
+                          -fx-border-radius: 6; -fx-background-radius: 6;
+                          -fx-padding: 8; -fx-font-size: 14px;"
                    GridPane.rowIndex="2"
                    GridPane.columnIndex="1"/>
 
@@ -50,16 +58,17 @@
             onAction="#handleLogin"
             defaultButton="true"
             style="-fx-background-color: #7b1fa2; -fx-text-fill: white; -fx-font-size: 14px;
-                  -fx-font-weight: bold; -fx-padding: 10 20; -fx-border-radius: 5;
-                  -fx-background-radius: 5; -fx-cursor: hand;"
+                   -fx-font-weight: bold; -fx-padding: 10 20; -fx-border-radius: 6;
+                   -fx-background-radius: 6; -fx-cursor: hand;"
             GridPane.rowIndex="3"
             GridPane.columnIndex="1"
             GridPane.halignment="RIGHT"/>
 
-    <!-- Komunikaty -->
+    <!-- Komunikat błędu -->
     <Label fx:id="messageLabel"
-           style="-fx-text-fill: #ffeb3b; -fx-font-size: 12px;"
+           style="-fx-text-fill: #d32f2f; -fx-font-size: 13px;"
            GridPane.rowIndex="4"
            GridPane.columnSpan="2"
            GridPane.halignment="CENTER"/>
+
 </GridPane>

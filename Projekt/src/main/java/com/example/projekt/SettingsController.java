@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -62,26 +63,26 @@ public class SettingsController {
         fontSizeChoiceBox.getItems().addAll("Mała", "Średnia", "Duża");
         fontSizeChoiceBox.setValue(AppSettings.getFontSizeLabel());
 
-
-        rootVBox.sceneProperty().addListener((obs, oldScene, newScene) -> {
-            if (newScene != null) {
-                applyTheme(themeChoiceBox.getValue());
-                applyFontSize(fontSizeChoiceBox.getValue());
-            }
-        });
-
         themeChoiceBox.setOnAction(e -> {
             String selected = themeChoiceBox.getValue();
-            applyTheme(selected);
-            AppSettings.setTheme(selected);
+            AppSettings.setTheme(selected); // zapis + ustawienie ścieżki do CSS w UserSession
+            reloadSettingsScene();          // przeładuj widok
         });
 
         fontSizeChoiceBox.setOnAction(e -> {
-            String label = fontSizeChoiceBox.getValue();
-            applyFontSize(label);
-            AppSettings.setFontSizeLabel(label);
+            String selected = fontSizeChoiceBox.getValue();
+            AppSettings.setFontSizeLabel(selected); // zapis + ścieżka CSS
+            reloadSettingsScene();                 // przeładuj widok
+        });
+
+        // Po starcie zastosuj aktualne
+        rootVBox.sceneProperty().addListener((obs, oldScene, newScene) -> {
+            if (newScene != null) {
+                applyCurrentStyles();
+            }
         });
     }
+
 
     private void applyTheme(String theme) {
         Scene scene = themeChoiceBox.getScene();
@@ -231,4 +232,121 @@ public class SettingsController {
             e.printStackTrace();
         }
     }
+    private MainController mainController;
+
+    public void setMainController(MainController controller) {
+        this.mainController = controller;
+    }
+
+
+    @FXML
+    private void handleApplySettings() {
+        // Zastosuj motyw i rozmiar czcionki z ComboBoxów
+        String selectedTheme = themeChoiceBox.getValue();
+        String selectedFontLabel = fontSizeChoiceBox.getValue();
+
+        // Zapisz do pliku
+        AppSettings.setTheme(selectedTheme);
+        AppSettings.setFontSizeLabel(selectedFontLabel);
+
+        // Zaktualizuj UserSession
+        String themePath = switch (selectedTheme.toLowerCase()) {
+            case "ciemny" -> "/com/example/projekt/styles/themes/dark.css";
+            case "jasny" -> "/com/example/projekt/styles/themes/light.css";
+            default -> "/com/example/projekt/styles/themes/default.css";
+        };
+        String fontPath = switch (selectedFontLabel.toLowerCase()) {
+            case "mała" -> "/com/example/projekt/styles/fonts/small.css";
+            case "duża" -> "/com/example/projekt/styles/fonts/large.css";
+            default -> "/com/example/projekt/styles/fonts/medium.css";
+        };
+
+        UserSession.setCurrentTheme(themePath);
+        UserSession.setCurrentFontSize(fontPath);
+
+        // Odśwież style sceny
+        Scene scene = rootVBox.getScene();
+        if (scene != null) {
+            scene.getStylesheets().removeIf(css ->
+                    css.contains("/styles/themes/") || css.contains("/styles/fonts/"));
+
+            URL themeUrl = getClass().getResource(themePath);
+            URL fontUrl = getClass().getResource(fontPath);
+            if (themeUrl != null) scene.getStylesheets().add(themeUrl.toExternalForm());
+            if (fontUrl != null) scene.getStylesheets().add(fontUrl.toExternalForm());
+
+            scene.getRoot().applyCss();
+        }
+
+        // Zastosuj do MainController
+        if (mainController != null) {
+            mainController.applyCurrentStyles(); // odświeża całą scenę, w tym sidebar
+        }
+    }
+    private void applyCurrentStyles() {
+        Scene scene = rootVBox.getScene();
+        if (scene == null) return;
+
+        scene.getStylesheets().removeIf(css ->
+                css.contains("/styles/themes/") || css.contains("/styles/fonts/"));
+
+        String theme = UserSession.getCurrentTheme();
+        String font = UserSession.getCurrentFontSize();
+
+        if (theme != null) {
+            URL themeUrl = getClass().getResource(theme);
+            if (themeUrl != null) scene.getStylesheets().add(themeUrl.toExternalForm());
+        }
+
+        if (font != null) {
+            URL fontUrl = getClass().getResource(font);
+            if (fontUrl != null) scene.getStylesheets().add(fontUrl.toExternalForm());
+        }
+
+        Node root = scene.getRoot();
+        root.applyCss();
+        if (root instanceof Region r) {
+            r.layout(); // tylko jeśli root to np. VBox, BorderPane itp.
+        }
+    }
+    private void reloadSettingsScene() {
+        try {
+            FXMLLoader mainLoader = new FXMLLoader(getClass().getResource("/com/example/projekt/MainLayout.fxml"));
+            Parent mainRoot = mainLoader.load();
+
+            // Pobierz scenę i ustaw nowy root
+            Scene scene = rootVBox.getScene();
+            if (scene != null) {
+                scene.setRoot(mainRoot);
+            }
+
+            // Załaduj widok ustawień jako zawartość centralną
+            MainController mainController = mainLoader.getController();
+            mainController.initializeSidebar(); // ponowne załadowanie sidebaru
+            mainController.loadView("/com/example/projekt/settings.fxml", null);
+
+            // Ustaw style
+            scene.getStylesheets().clear();
+
+            String theme = UserSession.getCurrentTheme();
+            String font = UserSession.getCurrentFontSize();
+
+            if (theme != null) {
+                URL themeUrl = getClass().getResource(theme);
+                if (themeUrl != null) scene.getStylesheets().add(themeUrl.toExternalForm());
+            }
+
+            if (font != null) {
+                URL fontUrl = getClass().getResource(font);
+                if (fontUrl != null) scene.getStylesheets().add(fontUrl.toExternalForm());
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+
 }
