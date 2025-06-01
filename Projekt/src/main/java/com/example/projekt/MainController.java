@@ -138,20 +138,10 @@ public class MainController {
     }
 
     public void debugStyles(Scene scene, VBox sidebar) {
-        System.out.println("🎨 === AKTUALNE STYLE SCENY ===");
         for (String css : scene.getStylesheets()) {
-            System.out.println("SCENA: " + css);
         }
-
-        System.out.println("\n🎨 === AKTUALNE STYLE SIDEBARA ===");
         for (String css : sidebar.getStylesheets()) {
-            System.out.println("SIDEBAR: " + css);
         }
 
-        System.out.println("\n🎯 UserSession:");
-        System.out.println("Motyw: " + UserSession.getCurrentTheme());
-        System.out.println("Czcionka: " + UserSession.getCurrentFontSize());
     }
-
-
 }

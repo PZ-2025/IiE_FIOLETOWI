@@ -42,14 +42,11 @@ public class SidebarController {
     private final Map<String, Button> buttonMap = new HashMap<>();
 
     public void applySidebarStyles() {
-        System.out.println("[DEBUG] applySidebarStyles() uruchomione.");
+
 
         Scene scene = sidebar.getScene();
         if (scene == null) {
-            System.out.println("[DEBUG] sidebar.getScene() == null ❌");
             return;
-        } else {
-            System.out.println("[DEBUG] sidebar.getScene() OK ✅");
         }
 
         scene.getStylesheets().removeIf(css ->

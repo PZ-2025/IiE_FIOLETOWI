@@ -207,7 +207,6 @@ public class UserTaskPanelController {
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
-                // ilosc może być NULL, więc sprawdzamy
                 String ilosc = "";
                 int iloscInt = rs.getInt("ilosc");
                 if (!rs.wasNull()) {
@@ -237,14 +236,11 @@ public class UserTaskPanelController {
         }
     }
 
-
-
     private void loadStatuses() {
         try (Connection conn = DatabaseConnector.connect();
              PreparedStatement stmt = conn.prepareStatement("SELECT nazwa FROM statusy");
              ResultSet rs = stmt.executeQuery()) {
 
-            // Nie czyścimy tutaj ComboBox, bo jest wypełniany dynamicznie w updateAvailableStatuses()
         } catch (SQLException e) {
             LOGGER.log(Level.SEVERE, "Błąd ładowania statusów", e);
         }

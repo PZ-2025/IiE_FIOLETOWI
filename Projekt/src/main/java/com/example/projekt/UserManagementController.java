@@ -44,7 +44,7 @@ public class UserManagementController {
     @FXML protected TextField firstNameField;
     @FXML protected TextField lastNameField;
     @FXML protected TextField salaryField;
-    @FXML protected TextField grupaField;
+
     @FXML private VBox userRoot;
 
     public ObservableList<Role> roles = FXCollections.observableArrayList();
@@ -85,12 +85,13 @@ public class UserManagementController {
         groupComboBox.setItems(groups);
         loadUsersFromDatabase();
 
-        double colWidth = 1.0 / 5;
+        double colWidth = 1.0 / 6;
         imieColumn.prefWidthProperty().bind(usersTable.widthProperty().multiply(colWidth));
         nazwiskoColumn.prefWidthProperty().bind(usersTable.widthProperty().multiply(colWidth));
         loginColumn.prefWidthProperty().bind(usersTable.widthProperty().multiply(colWidth));
         placaColumn.prefWidthProperty().bind(usersTable.widthProperty().multiply(colWidth));
         rolaColumn.prefWidthProperty().bind(usersTable.widthProperty().multiply(colWidth));
+        grupaColumn.prefWidthProperty().bind(usersTable.widthProperty().multiply(colWidth));
 
         configureFieldsByRole();
 
