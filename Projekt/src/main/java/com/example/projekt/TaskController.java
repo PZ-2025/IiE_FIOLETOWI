@@ -180,7 +180,7 @@ public class TaskController {
      */
     protected void fillFormWithSelectedTask(Task task) {
         nameField.setText(task.getNazwa());
-        commentField.setText(task.getKomentarz());
+        commentField.setText(task.getKomentarz() != null ? task.getKomentarz() : "");
         statusBox.setValue(task.getStatus());
         priorityBox.setValue(task.getPriorytet());
         productBox.setValue(task.getProdukt());
@@ -413,7 +413,7 @@ public class TaskController {
             PreparedStatement stmt = conn.prepareStatement(sql);
 
             String name = nameField.getText().trim();
-            String comment = commentField.getText().trim();
+            String comment = commentField.getText() != null ? commentField.getText().trim() : "";
 
             stmt.setString(1, name);
             stmt.setInt(2, statusId);
