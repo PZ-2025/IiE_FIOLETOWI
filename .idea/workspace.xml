@@ -4,15 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="93580640-a4f6-4848-877d-83f2d9fe0546" name="Changes" comment="Testy">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/DashboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/DashboardController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/SettingsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/SettingsController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/SidebarController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/SidebarController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/UserTaskPanelController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/UserTaskPanelController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projekt/src/test/java/com/example/projekt/AppSettingsTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/test/java/com/example/projekt/AppSettingsTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projekt/src/test/java/com/example/projekt/TestPolaczeniaTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/test/java/com/example/projekt/TestPolaczeniaTest.java" afterDir="false" />
-    </list>
+    <list default="true" id="93580640-a4f6-4848-877d-83f2d9fe0546" name="Changes" comment="Testy" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -92,7 +84,7 @@
       <recent name="C:\Users\ABC\Documents\IiE_FIOLETOWI\Projekt\src\main\java\com\example\projekt" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Main">
+  <component name="RunManager" selected="JUnit.com.example.projekt in Projekt">
     <configuration name="Main" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="com.example.projekt.Main" />
       <module name="Projekt" />
@@ -217,7 +209,15 @@
       <option name="project" value="LOCAL" />
       <updated>1748875297880</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Testy">
+      <option name="closed" value="true" />
+      <created>1748879954614</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1748879954614</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
