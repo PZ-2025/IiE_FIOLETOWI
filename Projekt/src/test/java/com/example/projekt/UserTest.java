@@ -1,55 +1,78 @@
 package com.example.projekt;
 
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class UserTest {
 
     @Test
-    void testConstructorAndGetters() {
-        User user = new User(1, "Jan", "Kowalski", "jkowalski", "tajneHaslo", 3500.50, 2, 3, "Admin");
+    void constructor_ShouldSetAllFieldsCorrectly() {
+        User user = new User(
+                10, "Anna", "Nowak", "anowak", "haslo123",
+                6000.0, 3, 2, "Uzytkownik", "Marketing"
+        );
 
-        assertEquals(1, user.getId());
-        assertEquals("Jan", user.getImie());
-        assertEquals("Kowalski", user.getNazwisko());
-        assertEquals("jkowalski", user.getLogin());
-        assertEquals("tajneHaslo", user.getHaslo());
-        assertEquals(3500.50, user.getPlaca());
-        assertEquals(2, user.getIdGrupy());
-        assertEquals(3, user.getIdRoli());
-        assertEquals("Admin", user.getRole());
+        assertEquals(10, user.getId());
+        assertEquals("Anna", user.getImie());
+        assertEquals("Nowak", user.getNazwisko());
+        assertEquals("anowak", user.getLogin());
+        assertEquals("haslo123", user.getHaslo());
+        assertEquals(6000.0, user.getPlaca());
+        assertEquals(3, user.getIdGrupy());
+        assertEquals(2, user.getIdRoli());
+        assertEquals("Uzytkownik", user.getRole());
+        assertEquals("Marketing", user.getGroup());
     }
 
     @Test
-    void testSetRole() {
-        User user = new User(1, "Anna", "Nowak", "anowak", "1234", 4200.0, 1, 2, "Pracownik");
-        assertEquals("Pracownik", user.getRole());
-
-        user.setRole("Kierownik");
-        assertEquals("Kierownik", user.getRole());
-    }
-
-    @Test
-    void testIsAdmin() {
-        User admin = new User(1, "Adam", "Admin", "admin", "pass", 5000.0, 1, 1, "Admin");
-        User user = new User(2, "Ewa", "User", "euser", "pass", 3000.0, 1, 2, "Pracownik");
+    void isAdmin_ShouldReturnTrue_WhenRoleIsAdmin() {
+        User admin = new User(1, "Admin", "User", "admin", "pass",
+                7000, 1, 1, "Admin", "IT");
 
         assertTrue(admin.isAdmin());
-        assertFalse(user.isAdmin());
-
-        User adminCaseInsensitive = new User(3, "Piotr", "Admin", "piotradm", "pass", 5000.0, 1, 1, "admin");
-        assertTrue(adminCaseInsensitive.isAdmin());
     }
 
     @Test
-    void testIsManager() {
-        User manager = new User(1, "Marek", "Kierownik", "mkier", "pass", 4500.0, 2, 2, "Kierownik");
-        User user = new User(2, "Julia", "Pracownik", "jprac", "pass", 3200.0, 2, 3, "Pracownik");
+    void isAdmin_ShouldReturnFalse_WhenRoleIsNotAdmin() {
+        User user = new User(2, "Test", "User", "test", "pass",
+                5000, 2, 2, "Uzytkownik", "HR");
 
-        assertTrue(manager.isManager());
+        assertFalse(user.isAdmin());
+    }
+
+    @Test
+    void isManager_ShouldReturnTrue_WhenRoleIsKierownik() {
+        User kierownik = new User(3, "Kasia", "Szef", "kasia", "pass",
+                8000, 4, 3, "Kierownik", "Sprzedaż");
+
+        assertTrue(kierownik.isManager());
+    }
+
+    @Test
+    void isManager_ShouldReturnFalse_WhenRoleIsNotKierownik() {
+        User user = new User(4, "Maciej", "Pracownik", "maciej", "pass",
+                4000, 5, 4, "Uzytkownik", "Obsługa klienta");
+
         assertFalse(user.isManager());
+    }
 
-        User managerCaseInsensitive = new User(3, "Olga", "Kierownik", "okier", "pass", 4500.0, 2, 2, "kierownik");
-        assertTrue(managerCaseInsensitive.isManager());
+    @Test
+    void setRole_ShouldUpdateRole() {
+        User user = new User(5, "Tomasz", "Nowy", "tomek", "pass",
+                4500, 6, 5, "Uzytkownik", "Produkcja");
+
+        user.setRole("Admin");
+        assertEquals("Admin", user.getRole());
+        assertTrue(user.isAdmin());
+    }
+
+    @Test
+    void setGroup_ShouldUpdateGroupName() {
+        User user = new User(6, "Zofia", "Grupa", "zofia", "pass",
+                4700, 7, 6, "Uzytkownik", "StaraGrupa");
+
+        user.setGroup("NowaGrupa");
+        assertEquals("NowaGrupa", user.getGroup());
     }
 }

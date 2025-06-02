@@ -1,15 +1,13 @@
 package com.example.projekt;
 
-import javafx.application.Platform;
-import javafx.collections.ObservableList;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-import org.junit.jupiter.api.BeforeAll;
+import javafx.collections.FXCollections;
+import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.MockedStatic;
-import org.mockito.Mockito;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.*;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.testfx.framework.junit5.ApplicationTest;
 
 import java.sql.Connection;
@@ -19,66 +17,80 @@ import java.sql.SQLException;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-class UserManagementControllerTest extends ApplicationTest {
+@ExtendWith(MockitoExtension.class)
+public class UserManagementControllerTest extends ApplicationTest {
 
-
-
+    @InjectMocks
     private UserManagementController controller;
 
-    @BeforeEach
-    void setUp() {
-        controller = new UserManagementController();
+    @Mock
+    private Connection mockConnection;
 
-        // Inicjalizacja pól UI
+    @Mock
+    private PreparedStatement mockStatement;
+
+    @BeforeEach
+    public void setUp() throws Exception {
         controller.usernameField = new TextField();
         controller.passwordField = new PasswordField();
         controller.firstNameField = new TextField();
         controller.lastNameField = new TextField();
         controller.salaryField = new TextField();
-
         controller.roleComboBox = new ComboBox<>();
         controller.groupComboBox = new ComboBox<>();
 
-        // Dodajemy jakieś Role i Group, które możemy wybrać
-        controller.roles.add(new Role(1, "Admin"));
-        controller.groups.add(new Group(1, "Grupa1"));
+        controller.roles = FXCollections.observableArrayList(new Role(1, "Admin"));
+        controller.groups = FXCollections.observableArrayList(new Group(1, "Grupa A"));
         controller.roleComboBox.setItems(controller.roles);
         controller.groupComboBox.setItems(controller.groups);
+
+        controller.roleComboBox.setValue(controller.roles.get(0));
+        controller.groupComboBox.setValue(controller.groups.get(0));
     }
 
     @Test
-    void addNewUser_withEmptyFields_showsError() {
-        // Wszystkie pola puste
+    public void testAddNewUser_withValidData_shouldInsertIntoDatabase() throws Exception {
+        // Arrange
+        controller.usernameField.setText("jan.kowalski");
+        controller.passwordField.setText("Haslo123!");
+        controller.firstNameField.setText("Jan");
+        controller.lastNameField.setText("Kowalski");
+        controller.salaryField.setText("5000");
+
+        mockStatic(DatabaseConnector.class);
+        when(DatabaseConnector.connect()).thenReturn(mockConnection);
+        when(mockConnection.prepareStatement(any(String.class))).thenReturn(mockStatement);
+
+        // Act
+        controller.addNewUser();
+
+        // Assert
+        verify(mockStatement, times(1)).executeUpdate();
+    }
+
+    @Test
+    public void testAddNewUser_withInvalidSalary_shouldShowError() {
+        controller.usernameField.setText("anna.nowak");
+        controller.passwordField.setText("Haslo123!");
+        controller.firstNameField.setText("Anna");
+        controller.lastNameField.setText("Nowak");
+        controller.salaryField.setText("-100");
+
+        controller.addNewUser();
+
+        // Nie sprawdzamy alertu GUI, ale możemy użyć AlertUtils z mockiem do testów
+    }
+
+    @Test
+    public void testAddNewUser_withEmptyField_shouldShowError() {
         controller.usernameField.setText("");
         controller.passwordField.setText("");
         controller.firstNameField.setText("");
         controller.lastNameField.setText("");
         controller.salaryField.setText("");
-        controller.roleComboBox.setValue(null);
-        controller.groupComboBox.setValue(null);
-
-        // Zamiast AlertUtils - można mockować lub sprawdzić, że metoda zwraca bez błędu
-        // Tutaj sprawdzimy, że metoda zwraca bez dodania użytkownika (bo nic nie zadziała)
-        controller.addNewUser();
-
-        // Możesz dodać tu mock AlertUtils.showError i sprawdzić czy zostało wywołane
-    }
-
-    @Test
-    void addNewUser_withInvalidSalary_showsError() {
-        controller.usernameField.setText("user");
-        controller.passwordField.setText("Password1!");
-        controller.firstNameField.setText("Jan");
-        controller.lastNameField.setText("Kowalski");
-        controller.salaryField.setText("abc"); // nieprawidłowa liczba
-        controller.roleComboBox.setValue(controller.roles.get(0));
-        controller.groupComboBox.setValue(controller.groups.get(0));
 
         controller.addNewUser();
 
-        // Tu również możesz mockować AlertUtils i sprawdzać wywołania
+        // Ponownie: w pełnych testach GUI sprawdzasz komunikaty, ale tutaj wystarczy, że nie ma wyjątków i nie wykonano zapytania
     }
-
-
-
 }

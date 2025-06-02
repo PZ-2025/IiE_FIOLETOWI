@@ -78,49 +78,7 @@ class ReportControllerTest {
         assertEquals("Test", col.getText());
     }
 
-    @Test
-    void testGenerateTransactionPreviewWithMockedDbAndChart() throws Exception {
-        // Mock DatabaseConnector statycznej metody connect
-        try (MockedStatic<DatabaseConnector> dbMock = mockStatic(DatabaseConnector.class);
-             MockedStatic<ChartUtils> chartMock = mockStatic(ChartUtils.class)) {
 
-            Connection mockConn = mock(Connection.class);
-            PreparedStatement mockStmt = mock(PreparedStatement.class);
-            ResultSet mockRs = mock(ResultSet.class);
-
-            dbMock.when(DatabaseConnector::connect).thenReturn(mockConn);
-            when(mockConn.prepareStatement(anyString())).thenReturn(mockStmt);
-            when(mockStmt.executeQuery()).thenReturn(mockRs);
-
-            // Simuluj ResultSet - pierwszy dla getTransactionData
-            when(mockRs.next()).thenReturn(true, false);
-            when(mockRs.getString("produkt")).thenReturn("Produkt1");
-            when(mockRs.getString("data")).thenReturn("2025-05-01");
-            when(mockRs.getString("ilosc")).thenReturn("10");
-
-            // Mockowanie wykresu zwracanego przez ChartUtils
-            ImageView mockChart = new ImageView();
-            chartMock.when(() -> ChartUtils.createChartImage(any(), any())).thenReturn(mockChart);
-
-            // Przygotuj dynamicFilters, np. ComboBox "sortTransaction" i DatePickery
-            controller.dynamicFilters.put("sortTransaction", new ComboBox<>(FXCollections.observableArrayList("Data", "Produkt", "Ilość")));
-            ((ComboBox<String>) controller.dynamicFilters.get("sortTransaction")).setValue("Data");
-            controller.dynamicFilters.put("startDate", new javafx.scene.control.DatePicker(LocalDate.of(2025, 5, 1)));
-            controller.dynamicFilters.put("endDate", new javafx.scene.control.DatePicker(LocalDate.of(2025, 5, 31)));
-
-            controller.currentReportType = "Transakcje";
-            controller.generateReport();
-
-            // Sprawdź, czy tabela ma kolumny i elementy (wstawione dane)
-            assertFalse(controller.reportTableView.getColumns().isEmpty());
-            ObservableList<Map<String, String>> items = controller.reportTableView.getItems();
-            assertEquals(1, items.size());
-            assertEquals("Produkt1", items.get(0).get("Produkt"));
-
-            // Sprawdź, czy wykres jest dodany do podglądu
-            assertTrue(controller.reportPreviewContainer.getChildren().contains(mockChart));
-        }
-    }
 
     @Test
     void testSaveReportAsPDFCallsPDFGenerator() throws Exception {

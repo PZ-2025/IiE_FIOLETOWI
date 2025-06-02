@@ -1,69 +1,72 @@
 package com.example.projekt;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class UserSessionTest {
 
-    @AfterEach
-    void tearDown() {
-        // Czyści sesję po każdym teście
-        UserSession.clearSession();
-    }
+    private User testUser;
 
-    private User createTestUser(String login) {
-        return new User(
-                1,
-                "Jan",
-                "Kowalski",
-                login,
-                "haslo123",
-                5000.0,
-                101,
-                1,
-                "Admin"
+    @BeforeEach
+    void setUp() {
+        // Czyszczenie singletona i resetowanie stylów przed każdym testem
+        UserSession.clearSession();
+        UserSession.setCurrentTheme("/com/example/projekt/styles/themes/default.css");
+        UserSession.setCurrentFontSize("/com/example/projekt/styles/fonts/medium.css");
+
+        // Testowy użytkownik
+        testUser = new User(
+                1, "Jan", "Kowalski", "janek", "1234",
+                5000.0, 2, 1, "Admin", "Zespół IT"
         );
     }
 
     @Test
-    void testInitCreatesSession() {
-        User user = createTestUser("jan.kowalski");
-        UserSession.init(user);
-
+    void init_ShouldCreateSession_WhenNoSessionExists() {
+        UserSession.init(testUser);
         UserSession session = UserSession.getInstance();
+
         assertNotNull(session);
-        assertNotNull(session.getUser());
-        assertEquals("jan.kowalski", session.getUser().getLogin());
+        assertEquals("janek", session.getUser().getLogin());
+        assertEquals("Jan", session.getUser().getImie());
     }
 
     @Test
-    void testInitDoesNotOverrideExistingSession() {
-        User firstUser = createTestUser("jan.kowalski");
-        User secondUser = createTestUser("adam.nowak");
+    void init_ShouldNotOverwriteExistingSession() {
+        User firstUser = new User(1, "A", "A", "user1", "pass", 4000.0, 1, 1, "Admin", "Grupa1");
+        User secondUser = new User(2, "B", "B", "user2", "pass", 4500.0, 2, 2, "Uzytkownik", "Grupa2");
 
         UserSession.init(firstUser);
-        UserSession.init(secondUser);
+        UserSession.init(secondUser); // Próba nadpisania
 
-        UserSession session = UserSession.getInstance();
-        assertEquals("jan.kowalski", session.getUser().getLogin());
+        assertEquals("user1", UserSession.getInstance().getUser().getLogin()); // nie powinno się zmienić
     }
 
     @Test
-    void testGetInstanceReturnsNullIfNotInitialized() {
-        assertNull(UserSession.getInstance());
-    }
-
-    @Test
-    void testClearSessionResetsInstance() {
-        User user = createTestUser("jan.kowalski");
-        UserSession.init(user);
-
+    void clearSession_ShouldNullifyInstance() {
+        UserSession.init(testUser);
         assertNotNull(UserSession.getInstance());
 
         UserSession.clearSession();
-
         assertNull(UserSession.getInstance());
+    }
+
+    @Test
+    void themeManagement_ShouldUpdateAndReturnThemePath() {
+        assertEquals("/com/example/projekt/styles/themes/default.css", UserSession.getCurrentTheme());
+
+        String newTheme = "/com/example/projekt/styles/themes/dark.css";
+        UserSession.setCurrentTheme(newTheme);
+        assertEquals(newTheme, UserSession.getCurrentTheme());
+    }
+
+    @Test
+    void fontSizeManagement_ShouldUpdateAndReturnFontSizePath() {
+        assertEquals("/com/example/projekt/styles/fonts/medium.css", UserSession.getCurrentFontSize());
+
+        String newFontSize = "/com/example/projekt/styles/fonts/large.css";
+        UserSession.setCurrentFontSize(newFontSize);
+        assertEquals(newFontSize, UserSession.getCurrentFontSize());
     }
 }
