@@ -42,13 +42,13 @@ public class DashboardController {
     private User currentUser;
 
     @FXML
-    private Label usernameLabel;
+    Label usernameLabel;
     @FXML
-    private Label roleLabel;
+    Label roleLabel;
     @FXML
-    private Button adminButton;
+    Button adminButton;
     @FXML
-    private Button reportButton;
+    Button reportButton;
 
     /**
      * Metoda inicjalizująca kontroler.
@@ -69,7 +69,7 @@ public class DashboardController {
      * @param event Zdarzenie wywołujące akcję
      */
     @FXML
-    private void goToTaskManager(ActionEvent event) {
+    void goToTaskManager(ActionEvent event) {
         try {
             Parent taskManagerRoot = FXMLLoader.load(
                     Objects.requireNonNull(getClass().getResource(TASK_VIEW_PATH)));
@@ -108,7 +108,7 @@ public class DashboardController {
      * @throws IOException Jeśli wystąpi błąd podczas ładowania widoku
      */
     @FXML
-    private void goToUserManagement(ActionEvent event) throws IOException {
+    void goToUserManagement(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/com/example/projekt/userManagement.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));
@@ -118,7 +118,7 @@ public class DashboardController {
      * Przechodzi do modułu raportów.
      */
     @FXML
-    private void goToReports() {
+    void goToReports() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/projekt/reports.fxml"));
             Parent root = loader.load();
@@ -138,7 +138,7 @@ public class DashboardController {
      * @param event Zdarzenie wywołujące akcję
      */
     @FXML
-    private void goToUserTaskPanel(ActionEvent event) {
+    void goToUserTaskPanel(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/projekt/userTaskPanel.fxml"));
             Parent root = loader.load();
@@ -155,7 +155,7 @@ public class DashboardController {
      * @param event Zdarzenie wywołujące akcję
      */
     @FXML
-    private void openProductManager(ActionEvent event) {
+    void openProductManager(ActionEvent event) {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/com/example/projekt/Product_Management.fxml"));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -195,7 +195,7 @@ public class DashboardController {
      * @param event Zdarzenie wywołujące akcję
      */
     @FXML
-    private void openSettings(ActionEvent event) {
+    void openSettings(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/projekt/settings.fxml"));
             Parent root = loader.load();
@@ -216,7 +216,7 @@ public class DashboardController {
      * @param event Zdarzenie wywołujące akcję
      */
     @FXML
-    private void handleLogout(ActionEvent event) {
+    void handleLogout(ActionEvent event) {
         // 1. Wyczyszczenie sesji użytkownika
         UserSession.clearSession();
 

@@ -60,7 +60,8 @@ public class UserTaskPanelController {
     @FXML private TableColumn<Task, String> dateColumn;
 
     /** ComboBox do wyboru statusu zadania */
-    @FXML private ComboBox<String> statusComboBox;
+    @FXML
+    ComboBox<String> statusComboBox;
 
     /** Lista historii wykonanych zadań */
     @FXML private ListView<String> historyList;
@@ -78,7 +79,7 @@ public class UserTaskPanelController {
     private Task selectedTask;
 
     /** Mapa definiująca kolejność statusów zadań */
-    private Map<String, Integer> statusOrder = new LinkedHashMap<>();
+    Map<String, Integer> statusOrder = new LinkedHashMap<>();
 
     /**
      * Inicjalizuje kontroler po załadowaniu FXML.
@@ -126,7 +127,7 @@ public class UserTaskPanelController {
      * Inicjalizuje mapę kolejności statusów zadań.
      * Definiuje logiczny przepływ zadań od oczekujących do zakończonych.
      */
-    private void initializeStatusOrder() {
+    void initializeStatusOrder() {
         statusOrder.put("Oczekujące", 1);
         statusOrder.put("Rozpoczęte", 2);
         statusOrder.put("W trakcie", 3);
@@ -202,7 +203,7 @@ public class UserTaskPanelController {
      *
      * @param currentStatus aktualny status zadania
      */
-    private void updateAvailableStatuses(String currentStatus) {
+    void updateAvailableStatuses(String currentStatus) {
         statusComboBox.getItems().clear();
 
         // Znajdź aktualną pozycję statusu

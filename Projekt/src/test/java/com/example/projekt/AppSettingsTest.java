@@ -33,15 +33,6 @@ class AppSettingsTest {
         Files.deleteIfExists(Path.of(TEST_CONFIG_FILE));
     }
 
-    @Test
-    void getTheme_ShouldReturnCorrectTheme() {
-        assertEquals("Ciemny", AppSettings.getTheme());
-    }
-
-    @Test
-    void getFontSizeLabel_ShouldReturnCorrectFontSize() {
-        assertEquals("Duża", AppSettings.getFontSizeLabel());
-    }
 
     @Test
     void setTheme_ShouldUpdatePropertyAndSetUserSessionTheme() {

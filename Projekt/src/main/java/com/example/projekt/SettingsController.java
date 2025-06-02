@@ -49,19 +49,19 @@ public class SettingsController {
      * Pole do wprowadzania starego hasła przy zmianie hasła.
      */
     @FXML
-    private PasswordField oldPasswordField;
+    PasswordField oldPasswordField;
 
     /**
      * Pole do wprowadzania nowego hasła przy zmianie hasła.
      */
     @FXML
-    private PasswordField newPasswordField;
+    PasswordField newPasswordField;
 
     /**
      * Pole do potwierdzania nowego hasła przy zmianie hasła.
      */
     @FXML
-    private PasswordField confirmPasswordField;
+    PasswordField confirmPasswordField;
 
     /**
      * Label wyświetlający komunikaty dotyczące zmiany hasła.
@@ -169,7 +169,7 @@ public class SettingsController {
      * aktualizuje je w bazie danych oraz wyświetla odpowiednie komunikaty.
      */
     @FXML
-    private void handleChangePassword() {
+    void handleChangePassword() {
         String oldPass = oldPasswordField.getText();
         String newPass = newPasswordField.getText();
         String confirmPass = confirmPasswordField.getText();

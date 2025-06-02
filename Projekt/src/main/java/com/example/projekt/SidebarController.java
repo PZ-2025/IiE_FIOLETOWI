@@ -18,27 +18,27 @@ public class SidebarController {
 
     /** Przycisk do panelu zadań użytkownika. */
     @FXML
-    private Button userTaskPanelButton;
+    Button userTaskPanelButton;
 
     /** Przycisk do menedżera zadań. */
     @FXML
-    private Button taskManagerButton;
+    Button taskManagerButton;
 
     /** Przycisk do raportów. */
     @FXML
-    private Button reportButton;
+    Button reportButton;
 
     /** Przycisk do zarządzania użytkownikami (panel admina). */
     @FXML
-    private Button adminButton;
+    Button adminButton;
 
     /** Przycisk do zarządzania produktami. */
     @FXML
-    private Button productCrudButton;
+    Button productCrudButton;
 
     /** Kontener VBox zawierający cały sidebar. */
     @FXML
-    private VBox sidebar;
+    VBox sidebar;
 
     /** Referencja do głównego kontrolera aplikacji. */
     private MainController mainController;
@@ -52,7 +52,7 @@ public class SidebarController {
      * oraz stosuje aktualne style CSS do sidebaru.
      */
     @FXML
-    private void initialize() {
+    void initialize() {
         buttonMap.put("userTaskPanelButton", userTaskPanelButton);
         buttonMap.put("taskManagerButton", taskManagerButton);
         buttonMap.put("reportButton", reportButton);
@@ -137,7 +137,7 @@ public class SidebarController {
      * Przełącza widoczność sidebaru (pokazuje/ukrywa).
      */
     @FXML
-    private void toggleSidebar() {
+    void toggleSidebar() {
         sidebar.setVisible(!sidebar.isVisible());
         sidebar.setManaged(sidebar.isVisible());
     }
@@ -147,7 +147,7 @@ public class SidebarController {
      * Przełącza widok na panel zadań użytkownika.
      */
     @FXML
-    private void openUserTaskPanel() {
+    void openUserTaskPanel() {
         mainController.loadView("/com/example/projekt/usertaskpanel.fxml", "userTaskPanelButton");
     }
 
@@ -156,7 +156,7 @@ public class SidebarController {
      * Przełącza widok na menedżera zadań.
      */
     @FXML
-    private void openTaskManager() {
+    void openTaskManager() {
         mainController.loadView("/com/example/projekt/task.fxml", "taskManagerButton");
     }
 
@@ -165,7 +165,7 @@ public class SidebarController {
      * Przełącza widok na raporty.
      */
     @FXML
-    private void openReports() {
+    void openReports() {
         mainController.loadView("/com/example/projekt/reports.fxml", "reportButton");
     }
 
@@ -174,7 +174,7 @@ public class SidebarController {
      * Przełącza widok na panel zarządzania użytkownikami (tylko dla admina).
      */
     @FXML
-    private void openUserManagement() {
+    void openUserManagement() {
         mainController.loadView("/com/example/projekt/userManagement.fxml", "adminButton");
     }
 
@@ -183,7 +183,7 @@ public class SidebarController {
      * Przełącza widok na panel zarządzania produktami.
      */
     @FXML
-    private void openProductManager() {
+    void openProductManager() {
         mainController.loadView("/com/example/projekt/Product_Management.fxml", "productCrudButton");
     }
 }
