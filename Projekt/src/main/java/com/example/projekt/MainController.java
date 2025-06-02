@@ -14,28 +14,51 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ * Główny kontroler aplikacji zarządzający podstawowym układem interfejsu.
+ * Odpowiada za:
+ * - Ładowanie i przełączanie widoków w głównym obszarze zawartości
+ * - Zarządzanie panelem bocznym (sidebar)
+ * - Obsługę logiki wylogowania
+ * - Stosowanie aktualnych stylów i motywów
+ * - Przełączanie widoczności panelu bocznego
+ */
 public class MainController {
 
+    /** Kontener dla panelu bocznego (musi odpowiadać fx:id z MainLayout.fxml) */
     @FXML
-    protected Pane sidebarContainer;  // musi odpowiadać fx:id z MainLayout.fxml
+    protected Pane sidebarContainer;
 
+    /** Główny układ aplikacji */
     @FXML
     protected BorderPane mainLayout;
 
+    /** Przycisk do przełączania widoczności panelu bocznego */
     @FXML
     private Button toggleSidebarButton;
 
+    /** Główny obszar zawartości aplikacji */
     @FXML
     protected StackPane contentArea;
 
+    /** Kontroler panelu bocznego */
+    private SidebarController sidebarController;
+
+    /**
+     * Otwiera widok ustawień aplikacji.
+     * Ładuje i wyświetla widok ustawień w głównym obszarze zawartości.
+     */
     @FXML
     protected void openSettings() {
         loadView("/com/example/projekt/settings.fxml", "ustawienia");
     }
 
+    /**
+     * Obsługuje proces wylogowania użytkownika.
+     * Czyści sesję użytkownika i przekierowuje do ekranu logowania.
+     */
     @FXML
     protected void handleLogout() {
-
         UserSession.clearSession();
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/projekt/login.fxml"));
@@ -47,10 +70,9 @@ public class MainController {
         }
     }
 
-    private SidebarController sidebarController;
-
     /**
-     * Inicjalizuje sidebar i przypisuje kontroler.
+     * Inicjalizuje panel boczny aplikacji.
+     * Ładuje widok panelu bocznego, konfiguruje jego kontroler i stosuje style.
      */
     public void initializeSidebar() {
         try {
@@ -77,7 +99,11 @@ public class MainController {
         }
     }
 
-
+    /**
+     * Ładuje i wyświetla określony widok w głównym obszarze zawartości.
+     * @param fxmlPath Ścieżka do pliku FXML z definicją widoku
+     * @param buttonId Identyfikator przycisku w panelu bocznym (dla zaznaczenia aktywnego elementu)
+     */
     public void loadView(String fxmlPath, String buttonId) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
@@ -113,6 +139,10 @@ public class MainController {
         }
     }
 
+    /**
+     * Stosuje aktualne style i motywy do całej sceny.
+     * Czyści poprzednie style i stosuje aktualnie wybrane w UserSession.
+     */
     public void applyCurrentStyles() {
         Scene scene = mainLayout.getScene();
         if (scene == null) return;
@@ -128,8 +158,12 @@ public class MainController {
 
         scene.getRoot().applyCss();
         debugStyles(mainLayout.getScene(), (VBox) sidebarContainer.getChildren().get(0));
-
     }
+
+    /**
+     * Przełącza widoczność panelu bocznego.
+     * Zmienia zarówno widoczność jak i flagę zarządzania panelem bocznym.
+     */
     @FXML
     private void toggleSidebar() {
         boolean visible = sidebarContainer.isVisible();
@@ -137,11 +171,13 @@ public class MainController {
         sidebarContainer.setManaged(!visible);
     }
 
+    /**
+     * Metoda pomocnicza do debugowania zastosowanych stylów.
+     * @param scene Scena do sprawdzenia
+     * @param sidebar Panel boczny do sprawdzenia
+     */
     public void debugStyles(Scene scene, VBox sidebar) {
-        for (String css : scene.getStylesheets()) {
-        }
-        for (String css : sidebar.getStylesheets()) {
-        }
-
+        // Metoda przeznaczona do debugowania - obecnie pusta implementacja
+        // Można dodać logikę diagnostyczną w przyszłości
     }
 }

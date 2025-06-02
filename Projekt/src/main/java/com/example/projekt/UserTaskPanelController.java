@@ -19,37 +19,81 @@ import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Kontroler panelu zadań użytkownika odpowiedzialny za zarządzanie zadaniami i produktami.
+ * Umożliwia użytkownikowi przeglądanie przypisanych zadań, zmianę ich statusów,
+ * dodawanie komentarzy oraz monitorowanie stanu produktów.
+ *
+ * @author System Zarządzania Zadaniami
+ * @version 1.0
+ */
 public class UserTaskPanelController {
+
+    /** Tabela wyświetlająca produkty */
     @FXML private TableView<Product> productTable;
+
+    /** Kolumna z nazwą produktu */
     @FXML private TableColumn<Product, String> productNameColumn;
+
+    /** Kolumna ze stanem produktu */
     @FXML private TableColumn<Product, Integer> productStockColumn;
+
+    /** Kolumna z limitem stanu produktu */
     @FXML private TableColumn<Product, Integer> productLimitColumn;
+
+    /** Kolumna z ceną produktu */
     @FXML private TableColumn<Product, Double> productPriceColumn;
 
+    /** Tabela wyświetlająca zadania */
     @FXML private TableView<Task> taskTable;
+
+    /** Kolumna z nazwą zadania */
     @FXML private TableColumn<Task, String> nameColumn;
+
+    /** Kolumna ze statusem zadania */
     @FXML private TableColumn<Task, String> statusColumn;
+
+    /** Kolumna z priorytetem zadania */
     @FXML private TableColumn<Task, String> priorityColumn;
+
+    /** Kolumna z datą zadania */
     @FXML private TableColumn<Task, String> dateColumn;
 
+    /** ComboBox do wyboru statusu zadania */
     @FXML private ComboBox<String> statusComboBox;
+
+    /** Lista historii wykonanych zadań */
     @FXML private ListView<String> historyList;
+
+    /** Pole tekstowe do wprowadzania komentarzy */
     @FXML private TextArea commentTextArea;
 
+    /** Główny panel aplikacji */
     @FXML private BorderPane userTaskRoot;
 
+    /** Logger do rejestrowania błędów i zdarzeń */
     private static final Logger LOGGER = Logger.getLogger(UserTaskPanelController.class.getName());
+
+    /** Aktualnie wybrane zadanie */
     private Task selectedTask;
+
+    /** Mapa definiująca kolejność statusów zadań */
     private Map<String, Integer> statusOrder = new LinkedHashMap<>();
 
+    /**
+     * Inicjalizuje kontroler po załadowaniu FXML.
+     * Konfiguruje tabele, ładuje dane oraz ustawia listenery.
+     */
     @FXML
     public void initialize() {
+        // Nasłuchiwanie zmian sceny w celu zastosowania motywu i rozmiaru czcionki
         userTaskRoot.sceneProperty().addListener((obs, oldScene, newScene) -> {
             if (newScene != null) {
                 applyTheme(AppSettings.getTheme());
                 applyFontSize(AppSettings.getFontSizeLabel());
             }
         });
+
         // Inicjalizacja kolejności statusów
         initializeStatusOrder();
 
@@ -78,6 +122,10 @@ public class UserTaskPanelController {
         checkForNotifications();
     }
 
+    /**
+     * Inicjalizuje mapę kolejności statusów zadań.
+     * Definiuje logiczny przepływ zadań od oczekujących do zakończonych.
+     */
     private void initializeStatusOrder() {
         statusOrder.put("Oczekujące", 1);
         statusOrder.put("Rozpoczęte", 2);
@@ -85,6 +133,10 @@ public class UserTaskPanelController {
         statusOrder.put("Zakończone", 4);
     }
 
+    /**
+     * Konfiguruje tabelę produktów, ustawiając fabryki komórek
+     * i formatowanie wyświetlanych danych.
+     */
     private void configureProductTable() {
         productNameColumn.setCellValueFactory(data -> data.getValue().nazwaProperty());
         productStockColumn.setCellValueFactory(data -> data.getValue().stanProperty().asObject());
@@ -133,6 +185,10 @@ public class UserTaskPanelController {
         });
     }
 
+    /**
+     * Konfiguruje tabelę zadań, ustawiając fabryki komórek
+     * dla każdej kolumny z danymi zadania.
+     */
     private void configureTaskTable() {
         nameColumn.setCellValueFactory(cellData -> cellData.getValue().nazwaProperty());
         statusColumn.setCellValueFactory(cellData -> cellData.getValue().statusProperty());
@@ -140,6 +196,12 @@ public class UserTaskPanelController {
         dateColumn.setCellValueFactory(cellData -> cellData.getValue().dataProperty());
     }
 
+    /**
+     * Aktualizuje dostępne statusy w ComboBox na podstawie aktualnego statusu zadania.
+     * Pozwala tylko na przejście do statusów o wyższej kolejności.
+     *
+     * @param currentStatus aktualny status zadania
+     */
     private void updateAvailableStatuses(String currentStatus) {
         statusComboBox.getItems().clear();
 
@@ -153,6 +215,10 @@ public class UserTaskPanelController {
                 .forEach(entry -> statusComboBox.getItems().add(entry.getKey()));
     }
 
+    /**
+     * Ładuje produkty z bazy danych i wyświetla je w tabeli.
+     * Pobiera informacje o produktach wraz z ich typami.
+     */
     private void loadProducts() {
         ObservableList<Product> products = FXCollections.observableArrayList();
         String sql = "SELECT p.id_produktu, p.nazwa, p.stan, p.cena, p.limit_stanow, p.id_typu_produktu, t.nazwa AS typ_nazwa " +
@@ -182,6 +248,10 @@ public class UserTaskPanelController {
         }
     }
 
+    /**
+     * Ładuje zadania przypisane do aktualnego użytkownika z bazy danych.
+     * Wyświetla tylko zadania, które nie są zakończone.
+     */
     private void loadTasks() {
         ObservableList<Task> tasks = FXCollections.observableArrayList();
         String sql = """
@@ -236,6 +306,10 @@ public class UserTaskPanelController {
         }
     }
 
+    /**
+     * Ładuje dostępne statusy zadań z bazy danych.
+     * Metoda przygotowana do rozszerzenia funkcjonalności.
+     */
     private void loadStatuses() {
         try (Connection conn = DatabaseConnector.connect();
              PreparedStatement stmt = conn.prepareStatement("SELECT nazwa FROM statusy");
@@ -246,6 +320,11 @@ public class UserTaskPanelController {
         }
     }
 
+    /**
+     * Ładuje komentarz dla wybranego zadania z bazy danych.
+     *
+     * @param taskId identyfikator zadania
+     */
     private void loadTaskComment(int taskId) {
         String sql = "SELECT komentarz FROM zadania WHERE id_zadania = ?";
         try (Connection conn = DatabaseConnector.connect();
@@ -261,6 +340,10 @@ public class UserTaskPanelController {
         }
     }
 
+    /**
+     * Zapisuje komentarz dla aktualnie wybranego zadania do bazy danych.
+     * Metoda wywoływana po kliknięciu przycisku zapisu komentarza.
+     */
     @FXML
     private void saveTaskComment() {
         if (selectedTask == null) {
@@ -283,6 +366,11 @@ public class UserTaskPanelController {
         }
     }
 
+    /**
+     * Zmienia status wybranego zadania na podstawie wyboru z ComboBox.
+     * Aktualizuje również datę zakończenia dla zadań zakończonych
+     * i ustawia flagę powiadomień.
+     */
     @FXML
     private void changeTaskStatus() {
         if (selectedTask == null || statusComboBox.getValue() == null) {
@@ -331,6 +419,10 @@ public class UserTaskPanelController {
         }
     }
 
+    /**
+     * Ładuje historię zakończonych zadań użytkownika z bazy danych.
+     * Wyświetla zadania posortowane według daty zakończenia.
+     */
     private void loadTaskHistory() {
         String sql = """
             SELECT z.nazwa, z.data_rozpoczecia, z.data_zakonczenia 
@@ -359,6 +451,10 @@ public class UserTaskPanelController {
         }
     }
 
+    /**
+     * Sprawdza czy istnieją powiadomienia o nowych zadaniach dla użytkownika.
+     * Wyświetla alert z listą nowych zadań i zeruje flagę powiadomień.
+     */
     private void checkForNotifications() {
         String sql = "SELECT nazwa FROM zadania WHERE id_pracownika = ? AND powiadomienia = 1";
 
@@ -388,6 +484,12 @@ public class UserTaskPanelController {
         }
     }
 
+    /**
+     * Przechodzi do głównego dashboardu aplikacji.
+     * Metoda wywoływana po kliknięciu przycisku powrotu.
+     *
+     * @param event wydarzenie akcji
+     */
     @FXML
     private void goToDashboard(ActionEvent event) {
         try {
@@ -405,6 +507,12 @@ public class UserTaskPanelController {
         }
     }
 
+    /**
+     * Wyświetla okno dialogowe z informacją dla użytkownika.
+     *
+     * @param title tytuł okna dialogowego
+     * @param message treść wiadomości
+     */
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
@@ -412,6 +520,13 @@ public class UserTaskPanelController {
         alert.setContentText(message);
         alert.showAndWait();
     }
+
+    /**
+     * Stosuje wybrany motyw do interfejsu użytkownika.
+     * Ładuje odpowiedni plik CSS na podstawie nazwy motywu.
+     *
+     * @param theme nazwa motywu do zastosowania
+     */
     private void applyTheme(String theme) {
         Scene scene = userTaskRoot.getScene();
         if (scene == null) return;
@@ -430,6 +545,12 @@ public class UserTaskPanelController {
         }
     }
 
+    /**
+     * Stosuje wybrany rozmiar czcionki do interfejsu użytkownika.
+     * Ładuje odpowiedni plik CSS z definicjami rozmiaru czcionki.
+     *
+     * @param label etykieta rozmiaru czcionki (mała, średnia, duża)
+     */
     private void applyFontSize(String label) {
         Scene scene = userTaskRoot.getScene();
         if (scene == null) return;
@@ -449,5 +570,4 @@ public class UserTaskPanelController {
             scene.getStylesheets().add(fontUrl.toExternalForm());
         }
     }
-
 }

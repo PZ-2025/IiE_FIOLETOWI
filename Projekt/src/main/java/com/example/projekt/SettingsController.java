@@ -19,42 +19,73 @@ import java.sql.SQLException;
 
 import java.io.IOException;
 
+/**
+ * Kontroler zarządzający ustawieniami aplikacji, takimi jak zmiana motywu,
+ * rozmiaru czcionki oraz hasła użytkownika.
+ *
+ * <p>Obsługuje interakcje użytkownika w widoku ustawień, zarządza zapisem i
+ * odczytem ustawień z sesji oraz aktualizacją wyglądu aplikacji.
+ *
+ * <p>Umożliwia przejście do panelu głównego oraz stosowanie stylów CSS zgodnie
+ * z wybranymi preferencjami użytkownika.
+ */
 public class SettingsController {
 
-    @FXML
-    private void goToDashboard(ActionEvent event) {
-        try {
-            Parent dashboardRoot = FXMLLoader.load(getClass().getResource("/com/example/projekt/dashboard.fxml"));
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(new Scene(dashboardRoot, 1000, 600));  // dopasuj rozmiar jeśli trzeba
-            stage.setTitle("Menu główne");
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.err.println("Błąd podczas powrotu do menu: " + e.getMessage());
-        }
-    }
-
+    /**
+     * ComboBox wyboru motywu kolorystycznego aplikacji.
+     * Dostępne opcje: "Jasny", "Ciemny", "Domyślny".
+     */
     @FXML
     private ComboBox<String> themeChoiceBox;
 
+    /**
+     * ComboBox wyboru rozmiaru czcionki.
+     * Dostępne opcje: "Mała", "Średnia", "Duża".
+     */
     @FXML
     private ComboBox<String> fontSizeChoiceBox;
 
+    /**
+     * Pole do wprowadzania starego hasła przy zmianie hasła.
+     */
     @FXML
     private PasswordField oldPasswordField;
 
+    /**
+     * Pole do wprowadzania nowego hasła przy zmianie hasła.
+     */
     @FXML
     private PasswordField newPasswordField;
 
+    /**
+     * Pole do potwierdzania nowego hasła przy zmianie hasła.
+     */
     @FXML
     private PasswordField confirmPasswordField;
 
+    /**
+     * Label wyświetlający komunikaty dotyczące zmiany hasła.
+     */
     @FXML
     private Label passwordMessageLabel;
 
+    /**
+     * Główny kontener VBox z pliku FXML, do którego przypisane są style CSS.
+     */
     @FXML
-    private VBox rootVBox; // lub inny główny kontener z pliku FXML
+    private VBox rootVBox;
 
+    /**
+     * Referencja do kontrolera głównego (MainController) aplikacji.
+     * Umożliwia odświeżenie stylów i widoków w głównym panelu.
+     */
+    private MainController mainController;
+
+    /**
+     * Inicjalizuje kontroler, ustawia domyślne wartości ComboBoxów oraz
+     * konfiguruje nasłuchiwanie zmian wyboru motywu i rozmiaru czcionki.
+     * Zastosowuje aktualne style po załadowaniu sceny.
+     */
     @FXML
     public void initialize() {
         themeChoiceBox.getItems().addAll("Jasny", "Ciemny", "Domyślny");
@@ -65,17 +96,16 @@ public class SettingsController {
 
         themeChoiceBox.setOnAction(e -> {
             String selected = themeChoiceBox.getValue();
-            AppSettings.setTheme(selected); // zapis + ustawienie ścieżki do CSS w UserSession
-            reloadSettingsScene();          // przeładuj widok
+            AppSettings.setTheme(selected);
+            reloadSettingsScene();
         });
 
         fontSizeChoiceBox.setOnAction(e -> {
             String selected = fontSizeChoiceBox.getValue();
-            AppSettings.setFontSizeLabel(selected); // zapis + ścieżka CSS
-            reloadSettingsScene();                 // przeładuj widok
+            AppSettings.setFontSizeLabel(selected);
+            reloadSettingsScene();
         });
 
-        // Po starcie zastosuj aktualne
         rootVBox.sceneProperty().addListener((obs, oldScene, newScene) -> {
             if (newScene != null) {
                 applyCurrentStyles();
@@ -83,7 +113,10 @@ public class SettingsController {
         });
     }
 
-
+    /**
+     * Ustawia wybrany motyw kolorystyczny do sceny.
+     * @param theme Nazwa motywu ("Jasny", "Ciemny", "Domyślny").
+     */
     private void applyTheme(String theme) {
         Scene scene = themeChoiceBox.getScene();
         if (scene == null) return;
@@ -104,6 +137,10 @@ public class SettingsController {
         }
     }
 
+    /**
+     * Ustawia rozmiar czcionki w scenie na podstawie wybranej etykiety.
+     * @param label Etykieta rozmiaru czcionki ("Mała", "Średnia", "Duża").
+     */
     private void applyFontSize(String label) {
         String fontCss = switch (label.toLowerCase()) {
             case "mała" -> "/com/example/projekt/styles/fonts/small.css";
@@ -126,9 +163,11 @@ public class SettingsController {
         if (fontUrl != null) scene.getStylesheets().add(fontUrl.toExternalForm());
     }
 
-
-
-
+    /**
+     * Obsługuje zdarzenie zmiany hasła użytkownika.
+     * Sprawdza poprawność i zgodność haseł, waliduje nowe hasło,
+     * aktualizuje je w bazie danych oraz wyświetla odpowiednie komunikaty.
+     */
     @FXML
     private void handleChangePassword() {
         String oldPass = oldPasswordField.getText();
@@ -199,9 +238,13 @@ public class SettingsController {
         }
     }
 
+    /**
+     * Obsługuje zmianę motywu na podstawie wyboru użytkownika
+     * i aktualizuje sesję oraz styl sceny.
+     */
     @FXML
     private void handleThemeChange() {
-        String selectedTheme = themeChoiceBox.getValue(); // np. "Dark", "Light", "Default"
+        String selectedTheme = themeChoiceBox.getValue();
 
         String themePath = switch (selectedTheme.toLowerCase()) {
             case "dark" -> "/com/example/projekt/styles/themes/dark.css";
@@ -209,10 +252,8 @@ public class SettingsController {
             default -> "/com/example/projekt/styles/themes/default.css";
         };
 
-        // Zapisz nowy motyw w sesji
         UserSession.setCurrentTheme(themePath);
 
-        // Zastosuj do głównej sceny
         Scene scene = themeChoiceBox.getScene();
         if (scene != null) {
             scene.getStylesheets().clear();
@@ -220,7 +261,9 @@ public class SettingsController {
         }
     }
 
-
+    /**
+     * Przechodzi do głównego menu aplikacji.
+     */
     @FXML
     private void handleReturnToMainMenu() {
         try {
@@ -232,24 +275,27 @@ public class SettingsController {
             e.printStackTrace();
         }
     }
-    private MainController mainController;
 
+    /**
+     * Ustawia referencję do kontrolera głównego.
+     * @param controller Instancja MainController
+     */
     public void setMainController(MainController controller) {
         this.mainController = controller;
     }
 
-
+    /**
+     * Zatwierdza zmiany ustawień motywu i rozmiaru czcionki.
+     * Zapisuje je w pliku i sesji, oraz odświeża style na scenie i w MainController.
+     */
     @FXML
     private void handleApplySettings() {
-        // Zastosuj motyw i rozmiar czcionki z ComboBoxów
         String selectedTheme = themeChoiceBox.getValue();
         String selectedFontLabel = fontSizeChoiceBox.getValue();
 
-        // Zapisz do pliku
         AppSettings.setTheme(selectedTheme);
         AppSettings.setFontSizeLabel(selectedFontLabel);
 
-        // Zaktualizuj UserSession
         String themePath = switch (selectedTheme.toLowerCase()) {
             case "ciemny" -> "/com/example/projekt/styles/themes/dark.css";
             case "jasny" -> "/com/example/projekt/styles/themes/light.css";
@@ -264,7 +310,6 @@ public class SettingsController {
         UserSession.setCurrentTheme(themePath);
         UserSession.setCurrentFontSize(fontPath);
 
-        // Odśwież style sceny
         Scene scene = rootVBox.getScene();
         if (scene != null) {
             scene.getStylesheets().removeIf(css ->
@@ -278,11 +323,14 @@ public class SettingsController {
             scene.getRoot().applyCss();
         }
 
-        // Zastosuj do MainController
         if (mainController != null) {
-            mainController.applyCurrentStyles(); // odświeża całą scenę, w tym sidebar
+            mainController.applyCurrentStyles();
         }
     }
+
+    /**
+     * Zastosowuje aktualne style motywu i czcionki zapisane w sesji do sceny.
+     */
     private void applyCurrentStyles() {
         Scene scene = rootVBox.getScene();
         if (scene == null) return;
@@ -306,26 +354,28 @@ public class SettingsController {
         Node root = scene.getRoot();
         root.applyCss();
         if (root instanceof Region r) {
-            r.layout(); // tylko jeśli root to np. VBox, BorderPane itp.
+            r.layout();
         }
     }
+
+    /**
+     * Przeładowuje widok ustawień, stosując aktualne style oraz ładując
+     * sidebar i widok ustawień w MainController.
+     */
     private void reloadSettingsScene() {
         try {
             FXMLLoader mainLoader = new FXMLLoader(getClass().getResource("/com/example/projekt/MainLayout.fxml"));
             Parent mainRoot = mainLoader.load();
 
-            // Pobierz scenę i ustaw nowy root
             Scene scene = rootVBox.getScene();
             if (scene != null) {
                 scene.setRoot(mainRoot);
             }
 
-            // Załaduj widok ustawień jako zawartość centralną
             MainController mainController = mainLoader.getController();
-            mainController.initializeSidebar(); // ponowne załadowanie sidebaru
+            mainController.initializeSidebar();
             mainController.loadView("/com/example/projekt/settings.fxml", null);
 
-            // Ustaw style
             scene.getStylesheets().clear();
 
             String theme = UserSession.getCurrentTheme();
@@ -345,8 +395,4 @@ public class SettingsController {
             e.printStackTrace();
         }
     }
-
-
-
-
 }

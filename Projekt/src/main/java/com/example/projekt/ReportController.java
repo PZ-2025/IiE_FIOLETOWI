@@ -21,26 +21,55 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.*;
 
+/**
+ * Kontroler odpowiedzialny za zarządzanie generowaniem i wyświetlaniem raportów w aplikacji.
+ * Obsługuje różne typy raportów: transakcje, zadania i produkty.
+ * Zapewnia funkcje filtrowania danych, generowania wykresów oraz eksportu do PDF.
+ *
+ * @author Twój autor
+ * @version 1.0
+ */
 public class ReportController {
 
+    /** Pole wyboru typu głównego raportu */
     @FXML
     protected ComboBox<String> mainReportTypeComboBox;
+
+    /** Kontener dla dynamicznych filtrów */
     @FXML
     protected VBox filterContainer;
+
+    /** Kontener dla podglądu raportu */
     @FXML
     protected VBox reportPreviewContainer;
+
+    /** Tabela wyświetlająca dane raportu */
     @FXML
     protected TableView<Map<String, String>> reportTableView;
 
+    /** Główny kontener interfejsu raportów */
     @FXML
     protected VBox reportRoot;
 
+    /** Mapa przechowująca dynamiczne kontrolki filtrów */
     public final Map<String, Control> dynamicFilters = new HashMap<>();
+
+    /** Aktualnie wybrany typ raportu */
     protected String currentReportType;
+
+    /** Ostatnie wygenerowane dane raportu */
     protected List<Map<String, String>> lastReportData;
+
+    /** Ostatnie dane wykresu */
     protected Map<String, Integer> lastChartData;
+
+    /** Mapa mapująca nagłówki kolumn na klucze danych */
     protected final Map<String, String> headerKeyMap = new LinkedHashMap<>();
 
+    /**
+     * Inicjalizuje kontroler po załadowaniu FXML.
+     * Konfiguruje nasłuchiwacze zdarzeń, ustawia opcje raportów i stosuje motyw aplikacji.
+     */
     @FXML
     public void initialize() {
         reportRoot.sceneProperty().addListener((obs, oldScene, newScene) -> {
@@ -67,6 +96,11 @@ public class ReportController {
             lastChartData = null;
         });
     }
+
+    /**
+     * Czyści wszystkie filtry i resetuje wyświetlanie raportu.
+     * Resetuje wartości w polach ComboBox i DatePicker do wartości domyślnych.
+     */
     @FXML
     private void clearFilters() {
         for (Map.Entry<String, Control> entry : dynamicFilters.entrySet()) {
@@ -84,6 +118,12 @@ public class ReportController {
         lastChartData = null;
     }
 
+    /**
+     * Renderuje interfejs filtrów na podstawie wybranego typu raportu.
+     * Dynamicznie tworzy odpowiednie kontrolki filtrujące.
+     *
+     * @param type typ raportu ("Transakcje", "Zadania", "Produkty")
+     */
     protected void renderFilterUI(String type) {
         filterContainer.getChildren().clear();
         dynamicFilters.clear();
@@ -95,11 +135,19 @@ public class ReportController {
         }
     }
 
+    /**
+     * Konfiguruje filtry dla raportów transakcji.
+     * Dodaje pola wyboru zakresu dat i opcje sortowania.
+     */
     private void setupTransactionFilters() {
         addDateRangePickers();
         addComboBox("Sortuj po", "sortTransaction", List.of("Data", "Produkt", "Ilość"));
     }
 
+    /**
+     * Konfiguruje filtry dla raportów zadań.
+     * Dodaje pola wyboru zakresu dat, statusu, priorytetu i opcje sortowania.
+     */
     private void setupTaskFilters() {
         addDateRangePickers();
         addComboBox("Status", "status", getDataFromDatabase("SELECT nazwa FROM statusy"));
@@ -107,11 +155,19 @@ public class ReportController {
         addComboBox("Sortuj po", "sortTask", List.of("Data rozpoczęcia", "Priorytet", "Status"));
     }
 
+    /**
+     * Konfiguruje filtry dla raportów produktów.
+     * Dodaje filtry stanu magazynowego i opcje sortowania.
+     */
     private void setupProductFilters() {
         addComboBox("Stan magazynowy", "stockFilter", List.of("Wszystkie", "Tylko poniżej limitu"));
         addComboBox("Sortuj po", "sortProduct", List.of("Nazwa", "Stan", "Cena"));
     }
 
+    /**
+     * Dodaje pola wyboru zakresu dat (od-do) do interfejsu filtrów.
+     * Tworzy dwa DatePickery dla daty początkowej i końcowej.
+     */
     private void addDateRangePickers() {
         DatePicker start = new DatePicker();
         DatePicker end = new DatePicker();
@@ -122,6 +178,13 @@ public class ReportController {
         filterContainer.getChildren().add(new HBox(10, start, end));
     }
 
+    /**
+     * Dodaje pole ComboBox z etykietą do interfejsu filtrów.
+     *
+     * @param label etykieta wyświetlana obok pola
+     * @param key klucz używany do identyfikacji filtru
+     * @param items lista opcji do wyboru
+     */
     private void addComboBox(String label, String key, List<String> items) {
         Label lbl = new Label(label);
         ComboBox<String> cb = new ComboBox<>(FXCollections.observableArrayList(items));
@@ -130,6 +193,12 @@ public class ReportController {
         dynamicFilters.put(key, cb);
     }
 
+    /**
+     * Pobiera dane z bazy danych na podstawie zapytania SQL.
+     *
+     * @param query zapytanie SQL do wykonania
+     * @return lista ciągów znaków będących wynikiem zapytania
+     */
     private List<String> getDataFromDatabase(String query) {
         List<String> list = new ArrayList<>();
         try (Connection conn = DatabaseConnector.connect();
@@ -142,6 +211,10 @@ public class ReportController {
         return list;
     }
 
+    /**
+     * Generuje raport na podstawie aktualnie wybranego typu i filtrów.
+     * Czyści poprzednie dane i wyświetla nowy raport z wykresem.
+     */
     @FXML
     public void generateReport() {
         reportTableView.getColumns().clear();
@@ -159,6 +232,10 @@ public class ReportController {
         reportPreviewContainer.getChildren().add(reportTableView);
     }
 
+    /**
+     * Generuje podgląd raportu transakcji.
+     * Pobiera dane transakcji z bazy, tworzy tabelę i wykres sprzedaży dziennej.
+     */
     private void generateTransactionPreview() {
         String sortKey = getFilterValue("sortTransaction","Data");
 
@@ -181,6 +258,14 @@ public class ReportController {
         reportPreviewContainer.getChildren().add(chart);
     }
 
+    /**
+     * Pobiera dane transakcji z bazy danych z zastosowaniem filtrów.
+     *
+     * @param sortKey klucz sortowania ("Produkt", "Data", "Ilość")
+     * @param start data początkowa zakresu (może być null)
+     * @param end data końcowa zakresu (może być null)
+     * @return lista map zawierających dane transakcji
+     */
     private List<Map<String, String>> getTransactionData(String sortKey, LocalDate start, LocalDate end) {
         List<Map<String, String>> list = new ArrayList<>();
         String orderBy;
@@ -225,6 +310,13 @@ public class ReportController {
         return list;
     }
 
+    /**
+     * Pobiera dane do wykresu transakcji - sumaryczne ilości sprzedaży dziennie.
+     *
+     * @param start data początkowa zakresu (może być null)
+     * @param end data końcowa zakresu (może być null)
+     * @return mapa zawierająca daty jako klucze i sumaryczne ilości jako wartości
+     */
     private Map<String, Integer> getTransactionChartData(LocalDate start, LocalDate end) {
         Map<String, Integer> data = new LinkedHashMap<>();
         StringBuilder query = new StringBuilder(
@@ -253,6 +345,10 @@ public class ReportController {
         return data;
     }
 
+    /**
+     * Generuje podgląd raportu zadań.
+     * Pobiera dane zadań z bazy, tworzy tabelę i wykres liczby zadań według statusu.
+     */
     private void generateTaskPreview() {
         String sortKey = Optional.ofNullable(getFilterValue("sortTask", "Data rozpoczęcia")).orElse("Data rozpoczęcia");
         String statusFilter = getFilterValue("status", null);
@@ -281,6 +377,16 @@ public class ReportController {
         reportPreviewContainer.getChildren().add(chart);
     }
 
+    /**
+     * Pobiera dane zadań z bazy danych z zastosowaniem filtrów.
+     *
+     * @param sortKey klucz sortowania ("Priorytet", "Status", "Data rozpoczęcia")
+     * @param statusFilter filtr statusu (może być null)
+     * @param priorityFilter filtr priorytetu (może być null)
+     * @param start data początkowa zakresu (może być null)
+     * @param end data końcowa zakresu (może być null)
+     * @return lista map zawierających dane zadań
+     */
     private List<Map<String, String>> getTaskData(String sortKey, String statusFilter, String priorityFilter, LocalDate start, LocalDate end) {
         List<Map<String, String>> list = new ArrayList<>();
         StringBuilder query = new StringBuilder(
@@ -330,6 +436,15 @@ public class ReportController {
         return list;
     }
 
+    /**
+     * Pobiera dane do wykresu zadań - liczba zadań według statusu.
+     *
+     * @param statusFilter filtr statusu (może być null)
+     * @param priorityFilter filtr priorytetu (może być null)
+     * @param start data początkowa zakresu (może być null)
+     * @param end data końcowa zakresu (może być null)
+     * @return mapa zawierająca statusy jako klucze i liczby zadań jako wartości
+     */
     private Map<String, Integer> getTaskChartData(String statusFilter, String priorityFilter, LocalDate start, LocalDate end) {
         Map<String, Integer> data = new LinkedHashMap<>();
         StringBuilder query = new StringBuilder(
@@ -365,6 +480,10 @@ public class ReportController {
         return data;
     }
 
+    /**
+     * Generuje podgląd raportu produktów.
+     * Pobiera dane produktów z bazy, tworzy tabelę i wykres stanu magazynowego.
+     */
     private void generateProductPreview() {
         String sortKey = getFilterValue("sortProduct", "Nazwa");
         List<Map<String, String>> data = getProductData(sortKey);
@@ -382,6 +501,12 @@ public class ReportController {
         reportPreviewContainer.getChildren().add(chart);
     }
 
+    /**
+     * Pobiera dane produktów z bazy danych z zastosowaniem sortowania.
+     *
+     * @param sortKey klucz sortowania ("Stan", "Cena", "Nazwa")
+     * @return lista map zawierających dane produktów
+     */
     private List<Map<String, String>> getProductData(String sortKey) {
         List<Map<String, String>> list = new ArrayList<>();
 
@@ -409,6 +534,11 @@ public class ReportController {
         return list;
     }
 
+    /**
+     * Pobiera dane do wykresu produktów - sumaryczny stan magazynowy według nazw produktów.
+     *
+     * @return mapa zawierająca nazwy produktów jako klucze i stany magazynowe jako wartości
+     */
     private Map<String, Integer> getProductChartData() {
         Map<String, Integer> data = new LinkedHashMap<>();
         String query = "SELECT nazwa, SUM(stan) AS total FROM produkty GROUP BY nazwa";
@@ -425,6 +555,13 @@ public class ReportController {
         return data;
     }
 
+    /**
+     * Pobiera wartość filtru o podanym kluczu.
+     *
+     * @param key klucz filtru w mapie dynamicFilters
+     * @param defaultValue wartość domyślna zwracana gdy filtr nie istnieje lub jest pusty
+     * @return wartość filtru lub wartość domyślna
+     */
     public String getFilterValue(String key, String defaultValue) {
         return Optional.ofNullable(dynamicFilters.get(key))
                 .filter(c -> c instanceof ComboBox<?>)
@@ -432,6 +569,12 @@ public class ReportController {
                 .orElse(defaultValue);
     }
 
+    /**
+     * Dodaje kolumnę do tabeli raportu.
+     *
+     * @param header nagłówek kolumny wyświetlany w tabeli
+     * @param key klucz używany do pobierania danych z map wierszy
+     */
     protected void addColumn(String header, String key) {
         TableColumn<Map<String, String>, String> col = new TableColumn<>(header);
         col.setCellValueFactory(data -> new javafx.beans.property.SimpleStringProperty(data.getValue().get(key)));
@@ -443,6 +586,10 @@ public class ReportController {
         headerKeyMap.put(header, key);
     }
 
+    /**
+     * Zapisuje aktualny raport jako plik PDF.
+     * Otwiera okno dialogowe wyboru pliku i generuje PDF zawierający dane raportu i wykres.
+     */
     @FXML
     public void saveReportAsPDF() {
         FileChooser fileChooser = new FileChooser();
@@ -466,6 +613,11 @@ public class ReportController {
         }
     }
 
+    /**
+     * Wyświetla okno dialogowe z informacją dla użytkownika.
+     *
+     * @param message wiadomość do wyświetlenia
+     */
     private void showAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Informacja");
@@ -474,6 +626,10 @@ public class ReportController {
         alert.showAndWait();
     }
 
+    /**
+     * Powraca do głównego pulpitu aplikacji.
+     * Ładuje widok dashboard.fxml i przełącza scenę.
+     */
     @FXML
     private void goBackToDashboard() {
         try {
@@ -487,6 +643,11 @@ public class ReportController {
         }
     }
 
+    /**
+     * Stosuje motyw do interfejsu użytkownika na podstawie ustawień aplikacji.
+     *
+     * @param theme nazwa motywu ("Jasny", "Ciemny" lub wartość domyślna)
+     */
     private void applyTheme(String theme) {
         Scene scene = reportRoot.getScene();
         if (scene == null) return;
@@ -504,6 +665,11 @@ public class ReportController {
         }
     }
 
+    /**
+     * Stosuje rozmiar czcionki do interfejsu użytkownika na podstawie etykiety rozmiaru.
+     *
+     * @param label etykieta rozmiaru czcionki ("mała", "duża" lub wartość domyślna)
+     */
     private void applyFontSize(String label) {
         Scene scene = reportRoot.getScene();
         if (scene == null) return;

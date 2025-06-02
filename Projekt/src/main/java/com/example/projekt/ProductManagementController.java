@@ -24,28 +24,67 @@ import java.util.logging.Level;
 
 import static com.example.projekt.DashboardController.LOGGER;
 
+/**
+ * Kontroler zarządzający modułem produktów w aplikacji.
+ * Odpowiada za:
+ * - Wyświetlanie listy produktów w formie tabeli
+ * - Dodawanie, edycję i usuwanie produktów
+ * - Walidację danych wprowadzanych przez użytkownika
+ * - Zarządzanie typami produktów
+ * - Integrację z bazą danych
+ * - Stosowanie motywów i stylów czcionek
+ */
 public class ProductManagementController {
 
+    /** Tabela wyświetlająca listę produktów */
     @FXML private TableView<Product> productTable;
+
+    /** Kolumna z nazwą produktu */
     @FXML private TableColumn<Product, String> nazwaColumn;
+
+    /** Kolumna z stanem magazynowym */
     @FXML private TableColumn<Product, Integer> stanColumn;
+
+    /** Kolumna z ceną produktu */
     @FXML private TableColumn<Product, Double> cenaColumn;
+
+    /** Kolumna z limitem stanu magazynowego */
     @FXML private TableColumn<Product, Integer> limitColumn;
+
+    /** Kolumna z typem produktu */
     @FXML private TableColumn<Product, String> typColumn;
 
+    /** Pole tekstowe dla nazwy produktu */
     @FXML private TextField nazwaField;
+
+    /** Pole tekstowe dla stanu magazynowego */
     @FXML private TextField stanField;
+
+    /** Pole tekstowe dla ceny produktu */
     @FXML private TextField cenaField;
+
+    /** Pole tekstowe dla limitu stanu magazynowego */
     @FXML private TextField limitField;
+
+    /** ComboBox z typami produktów */
     @FXML private ComboBox<ProductType> typComboBox;
 
+    /** Główny kontener VBox */
     @FXML private VBox productRoot;
 
+    /** Aktualnie wybrany produkt do edycji */
     private Product selectedProduct = null;
+
+    /** Lista typów produktów */
     private ObservableList<ProductType> productTypes = FXCollections.observableArrayList();
 
+    /**
+     * Metoda inicjalizująca kontroler.
+     * Konfiguruje tabelę produktów, ładowanie typów produktów oraz ustawienia walidacji.
+     */
     @FXML
     public void initialize() {
+        // Nasłuchiwacz zmiany sceny dla aplikacji motywu i czcionki
         productRoot.sceneProperty().addListener((obs, oldScene, newScene) -> {
             if (newScene != null) {
                 applyTheme(AppSettings.getTheme());
@@ -53,6 +92,7 @@ public class ProductManagementController {
             }
         });
 
+        // Konfiguracja tabeli produktów
         productTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         nazwaColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getNazwa()));
@@ -79,13 +119,17 @@ public class ProductManagementController {
 
         typColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getTypProduktuNazwa()));
 
+        // Ładowanie typów produktów
         productTypes = loadProductTypes();
         typComboBox.setItems(productTypes);
 
+        // Ładowanie produktów i konfiguracja interfejsu
         loadProducts();
         Platform.runLater(() -> productRoot.requestFocus());
         productTable.getSelectionModel().clearSelection();
         typComboBox.getSelectionModel().clearSelection();
+
+        // Obsługa wyboru wiersza w tabeli
         productTable.setRowFactory(tv -> {
             TableRow<Product> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
@@ -97,6 +141,7 @@ public class ProductManagementController {
             return row;
         });
 
+        // Walidacja pola ceny - tylko liczby z maksymalnie 2 miejscami po przecinku
         UnaryOperator<TextFormatter.Change> filter = change -> {
             String newText = change.getControlNewText();
             return newText.matches("\\d*(\\.\\d{0,2})?") ? change : null;
@@ -104,6 +149,10 @@ public class ProductManagementController {
         cenaField.setTextFormatter(new TextFormatter<>(filter));
     }
 
+    /**
+     * Wypełnia formularz danymi wybranego produktu.
+     * @param p Produkt, którego dane mają zostać wczytane do formularza
+     */
     private void fillForm(Product p) {
         nazwaField.setText(p.getNazwa());
         stanField.setText(String.valueOf(p.getStan()));
@@ -117,6 +166,10 @@ public class ProductManagementController {
         );
     }
 
+    /**
+     * Obsługuje dodawanie nowego produktu.
+     * Zapisuje produkt do bazy danych i czyści formularz.
+     */
     @FXML
     private void handleAddProduct() {
         saveProduct();
@@ -124,6 +177,10 @@ public class ProductManagementController {
         clearForm();
     }
 
+    /**
+     * Obsługuje usuwanie produktu.
+     * Wyświetla okno dialogowe z prośbą o potwierdzenie przed usunięciem.
+     */
     @FXML
     private void handleDeleteProduct() {
         Product selected = productTable.getSelectionModel().getSelectedItem();
@@ -158,6 +215,9 @@ public class ProductManagementController {
         }
     }
 
+    /**
+     * Ładuje listę produktów z bazy danych i wyświetla je w tabeli.
+     */
     private void loadProducts() {
         ObservableList<Product> products = FXCollections.observableArrayList();
         String sql = """
@@ -189,6 +249,10 @@ public class ProductManagementController {
         productTable.setItems(products);
     }
 
+    /**
+     * Ładuje typy produktów z bazy danych.
+     * @return Lista typów produktów
+     */
     private ObservableList<ProductType> loadProductTypes() {
         ObservableList<ProductType> types = FXCollections.observableArrayList();
         String sql = "SELECT * FROM typ_produktu";
@@ -208,12 +272,17 @@ public class ProductManagementController {
         return types;
     }
 
+    /**
+     * Zapisuje produkt do bazy danych.
+     * Wykonuje operację aktualizacji dla istniejącego produktu lub wstawienia dla nowego.
+     */
     @FXML
     private void saveProduct() {
         String nazwa = nazwaField.getText();
         int stan, limit;
         BigDecimal cena;
 
+        // Walidacja stanu magazynowego
         try {
             stan = Integer.parseInt(stanField.getText());
             if (stan < 0) {
@@ -225,6 +294,7 @@ public class ProductManagementController {
             return;
         }
 
+        // Walidacja ceny
         try {
             cena = new BigDecimal(cenaField.getText()).setScale(2, RoundingMode.HALF_UP);
             if (cena.compareTo(BigDecimal.ZERO) < 0) {
@@ -236,6 +306,7 @@ public class ProductManagementController {
             return;
         }
 
+        // Walidacja limitu stanu
         try {
             limit = Integer.parseInt(limitField.getText());
             if (limit < 0) {
@@ -247,12 +318,14 @@ public class ProductManagementController {
             return;
         }
 
+        // Walidacja typu produktu
         ProductType typ = typComboBox.getValue();
         if (typ == null) {
             showAlert("Błąd danych", "Wybierz typ produktu.");
             return;
         }
 
+        // Zapisz produkt (update lub insert)
         if (selectedProduct != null) {
             String sql = "UPDATE produkty SET nazwa=?, stan=?, cena=?, limit_stanow=?, id_typu_produktu=? WHERE id_produktu=?";
             try (Connection conn = DatabaseConnector.connect();
@@ -293,6 +366,10 @@ public class ProductManagementController {
         }
     }
 
+    /**
+     * Powraca do ekranu dashboardu.
+     * @param event Zdarzenie akcji powodującej przejście
+     */
     @FXML
     private void goBackToDashboard(ActionEvent event) {
         try {
@@ -308,6 +385,9 @@ public class ProductManagementController {
         }
     }
 
+    /**
+     * Czyści formularz produktu.
+     */
     @FXML
     private void clearForm() {
         nazwaField.clear();
@@ -318,6 +398,11 @@ public class ProductManagementController {
         selectedProduct = null;
     }
 
+    /**
+     * Wyświetla okno dialogowe z komunikatem o błędzie.
+     * @param title Tytuł okna dialogowego
+     * @param content Treść komunikatu
+     */
     private void showAlert(String title, String content) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);
@@ -325,6 +410,11 @@ public class ProductManagementController {
         alert.setContentText(content);
         alert.showAndWait();
     }
+
+    /**
+     * Stosuje wybrany motyw do interfejsu.
+     * @param theme Nazwa motywu do zastosowania
+     */
     private void applyTheme(String theme) {
         Scene scene = productRoot.getScene();
         if (scene == null) return;
@@ -342,6 +432,10 @@ public class ProductManagementController {
         }
     }
 
+    /**
+     * Stosuje wybrany rozmiar czcionki do interfejsu.
+     * @param label Etykieta określająca rozmiar czcionki
+     */
     private void applyFontSize(String label) {
         Scene scene = productRoot.getScene();
         if (scene == null) return;

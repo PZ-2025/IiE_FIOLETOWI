@@ -20,21 +20,34 @@ import java.util.logging.Level;
 
 import static com.example.projekt.DashboardController.LOGGER;
 
+/**
+ * Kontroler zarządzający interfejsem użytkownika dla zarządzania zadaniami.
+ * Obsługuje operacje CRUD na zadaniach oraz zapewnia integrację z bazą danych.
+ */
 public class TaskController {
 
     @FXML
     protected TableView<Task> taskTable;
     @FXML
     protected TableColumn<Task, String> nameColumn;
-    @FXML private TableColumn<Task, String> statusColumn;
-    @FXML private TableColumn<Task, String> priorityColumn;
-    @FXML private TableColumn<Task, String> startDateColumn;
-    @FXML private TableColumn<Task, String> endDateColumn;
-    @FXML private TableColumn<Task, String> assignedColumn;
-    @FXML private TableColumn<Task, String> commentColumn;
-    @FXML private TableColumn<Task, String> quantityColumn;
-    @FXML private TableColumn<Task, String> assignedproductColumn;
-    @FXML private TableColumn<Task, String> directionColumn;
+    @FXML
+    private TableColumn<Task, String> statusColumn;
+    @FXML
+    private TableColumn<Task, String> priorityColumn;
+    @FXML
+    private TableColumn<Task, String> startDateColumn;
+    @FXML
+    private TableColumn<Task, String> endDateColumn;
+    @FXML
+    private TableColumn<Task, String> assignedColumn;
+    @FXML
+    private TableColumn<Task, String> commentColumn;
+    @FXML
+    private TableColumn<Task, String> quantityColumn;
+    @FXML
+    private TableColumn<Task, String> assignedproductColumn;
+    @FXML
+    private TableColumn<Task, String> directionColumn;
 
     @FXML
     protected TextField nameField;
@@ -72,6 +85,9 @@ public class TaskController {
     private final String USER = "root";
     private final String PASSWORD = "";
 
+    /**
+     * Metoda inicjalizująca kontroler. Konfiguruje tabelę, ładuje dane i ustawia listenery.
+     */
     @FXML
     public void initialize() {
         taskRoot.sceneProperty().addListener((obs, oldScene, newScene) -> {
@@ -100,6 +116,10 @@ public class TaskController {
         directionBox.disableProperty().bind(TaskCheckBox.selectedProperty().not());
         quantityField.disableProperty().bind(TaskCheckBox.selectedProperty().not());
     }
+
+    /**
+     * Czyści formularz zadania.
+     */
     @FXML
     protected void clearForm() {
         nameField.clear();
@@ -114,6 +134,9 @@ public class TaskController {
         employeeBox.getSelectionModel().clearSelection();
     }
 
+    /**
+     * Przełącza widoczność pól związanych z niestandardowymi zadaniami.
+     */
     @FXML
     protected void toggleCustomTaskFields() {
         boolean enabled = TaskCheckBox.isSelected();
@@ -122,6 +145,9 @@ public class TaskController {
         quantityField.setDisable(!enabled);
     }
 
+    /**
+     * Konfiguruje kolumny tabeli zadań.
+     */
     private void configureTableColumns() {
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("nazwa"));
         statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
@@ -147,6 +173,11 @@ public class TaskController {
         directionColumn.prefWidthProperty().bind(taskTable.widthProperty().multiply(0.15));
     }
 
+    /**
+     * Wypełnia formularz danymi wybranego zadania.
+     *
+     * @param task Zadanie, którego dane mają zostać wypełnione w formularzu
+     */
     protected void fillFormWithSelectedTask(Task task) {
         nameField.setText(task.getNazwa());
         commentField.setText(task.getKomentarz());
@@ -154,7 +185,7 @@ public class TaskController {
         priorityBox.setValue(task.getPriorytet());
         productBox.setValue(task.getProdukt());
         directionBox.setValue(task.getKierunek());
-        quantityField.setText(task.getIlosc()); // Naprawiono - było getKierunek() zamiast getIlosc()
+        quantityField.setText(task.getIlosc());
 
         // Znalezienie i ustawienie pracownika
         employeeBox.getItems().stream()
@@ -180,6 +211,9 @@ public class TaskController {
         }
     }
 
+    /**
+     * Ładuje dane do comboboxów z bazy danych.
+     */
     public void loadComboBoxes() {
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD)) {
             loadStatuses(conn);
@@ -193,6 +227,12 @@ public class TaskController {
         }
     }
 
+    /**
+     * Ładuje listę statusów z bazy danych.
+     *
+     * @param conn Połączenie z bazą danych
+     * @throws SQLException W przypadku błędu dostępu do bazy danych
+     */
     private void loadStatuses(Connection conn) throws SQLException {
         statusList.clear();
         ResultSet rs = conn.createStatement().executeQuery("SELECT nazwa FROM statusy");
@@ -202,6 +242,12 @@ public class TaskController {
         statusBox.setItems(statusList);
     }
 
+    /**
+     * Ładuje listę produktów z bazy danych.
+     *
+     * @param conn Połączenie z bazą danych
+     * @throws SQLException W przypadku błędu dostępu do bazy danych
+     */
     private void loadProducts(Connection conn) throws SQLException {
         productList.clear();
         ResultSet rs = conn.createStatement().executeQuery("SELECT nazwa FROM produkty");
@@ -211,6 +257,12 @@ public class TaskController {
         productBox.setItems(productList);
     }
 
+    /**
+     * Ładuje listę priorytetów z bazy danych.
+     *
+     * @param conn Połączenie z bazą danych
+     * @throws SQLException W przypadku błędu dostępu do bazy danych
+     */
     private void loadPriorities(Connection conn) throws SQLException {
         priorityList.clear();
         ResultSet rs = conn.createStatement().executeQuery("SELECT nazwa FROM priorytety");
@@ -220,6 +272,12 @@ public class TaskController {
         priorityBox.setItems(priorityList);
     }
 
+    /**
+     * Ładuje listę kierunków z bazy danych.
+     *
+     * @param conn Połączenie z bazą danych
+     * @throws SQLException W przypadku błędu dostępu do bazy danych
+     */
     private void loadDirections(Connection conn) throws SQLException {
         directionList.clear();
         ResultSet rs = conn.createStatement().executeQuery("SELECT nazwa FROM kierunki");
@@ -229,6 +287,12 @@ public class TaskController {
         directionBox.setItems(directionList);
     }
 
+    /**
+     * Ładuje listę pracowników z bazy danych.
+     *
+     * @param conn Połączenie z bazą danych
+     * @throws SQLException W przypadku błędu dostępu do bazy danych
+     */
     private void loadEmployees(Connection conn) throws SQLException {
         employeeList.clear();
         ResultSet rs = conn.createStatement().executeQuery("SELECT id_pracownika, imie, nazwisko FROM pracownicy");
@@ -239,6 +303,9 @@ public class TaskController {
         employeeBox.setItems(employeeList);
     }
 
+    /**
+     * Ładuje listę zadań z bazy danych i wyświetla je w tabeli.
+     */
     protected void loadData() {
         taskList.clear();
         String query = """
@@ -297,8 +364,9 @@ public class TaskController {
         }
     }
 
-
-
+    /**
+     * Obsługuje dodawanie nowego zadania do bazy danych.
+     */
     @FXML
     protected void handleAddTask() {
         if (!validateForm()) return;
@@ -398,7 +466,9 @@ public class TaskController {
         }
     }
 
-
+    /**
+     * Obsługuje edycję istniejącego zadania w bazie danych.
+     */
     @FXML
     protected void handleEditTask() {
         Task selected = taskTable.getSelectionModel().getSelectedItem();
@@ -502,8 +572,9 @@ public class TaskController {
         }
     }
 
-
-
+    /**
+     * Obsługuje usuwanie zadania z bazy danych.
+     */
     @FXML
     protected void handleDeleteTask() {
         Task selected = taskTable.getSelectionModel().getSelectedItem();
@@ -536,6 +607,11 @@ public class TaskController {
         }
     }
 
+    /**
+     * Sprawdza poprawność danych w formularzu.
+     *
+     * @return true jeśli formularz jest poprawny, false w przeciwnym przypadku
+     */
     protected boolean validateForm() {
         if (nameField.getText().isEmpty()) {
             showAlert("Błąd", "Nazwa zadania nie może być pusta");
@@ -551,8 +627,6 @@ public class TaskController {
             showAlert("Błąd", "Wybierz priorytet zadania");
             return false;
         }
-
-        // Usunięto walidację produktu i kierunku - mogą być puste
 
         if (employeeBox.getValue() == null) {
             showAlert("Błąd", "Wybierz pracownika");
@@ -572,6 +646,15 @@ public class TaskController {
         return true;
     }
 
+    /**
+     * Pobiera ID rekordu z określonej tabeli na podstawie nazwy.
+     *
+     * @param conn Połączenie z bazą danych
+     * @param table Nazwa tabeli
+     * @param name Nazwa rekordu
+     * @return ID rekordu
+     * @throws SQLException W przypadku błędu dostępu do bazy danych
+     */
     protected int getIdFromTable(Connection conn, String table, String name) throws SQLException {
         if (name == null || name.trim().isEmpty()) {
             throw new SQLException("Nazwa nie może być pusta dla tabeli: " + table);
@@ -588,6 +671,12 @@ public class TaskController {
         throw new SQLException("Nie znaleziono: " + name + " w tabeli: " + table);
     }
 
+    /**
+     * Wyświetla okno dialogowe z komunikatem.
+     *
+     * @param title Tytuł okna dialogowego
+     * @param msg Treść komunikatu
+     */
     protected void showAlert(String title, String msg) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
@@ -596,6 +685,9 @@ public class TaskController {
         alert.showAndWait();
     }
 
+    /**
+     * Czyści pola formularza.
+     */
     protected void clearFields() {
         nameField.clear();
         commentField.clear();
@@ -609,6 +701,11 @@ public class TaskController {
         endDatePicker.setValue(null);
     }
 
+    /**
+     * Przechodzi z powrotem do panelu głównego (dashboard).
+     *
+     * @param event Zdarzenie wywołujące metodę
+     */
     @FXML
     protected void goBackToDashboard(ActionEvent event) {
         try {
@@ -625,6 +722,11 @@ public class TaskController {
         }
     }
 
+    /**
+     * Stosuje wybrany motyw do interfejsu.
+     *
+     * @param theme Nazwa motywu do zastosowania
+     */
     private void applyTheme(String theme) {
         Scene scene = taskRoot.getScene();
         if (scene == null) return;
@@ -643,6 +745,11 @@ public class TaskController {
         }
     }
 
+    /**
+     * Stosuje wybrany rozmiar czcionki do interfejsu.
+     *
+     * @param label Etykieta określająca rozmiar czcionki
+     */
     private void applyFontSize(String label) {
         Scene scene = taskRoot.getScene();
         if (scene == null) return;
@@ -662,5 +769,4 @@ public class TaskController {
             scene.getStylesheets().add(fontUrl.toExternalForm());
         }
     }
-
 }

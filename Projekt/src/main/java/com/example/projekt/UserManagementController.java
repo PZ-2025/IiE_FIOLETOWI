@@ -21,6 +21,10 @@ import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Kontroler zarządzający interfejsem użytkownika do zarządzania użytkownikami systemu.
+ * Obsługuje operacje CRUD na użytkownikach, w tym tworzenie, edycję i wyświetlanie listy użytkowników.
+ */
 public class UserManagementController {
 
     private static final Logger LOGGER = Logger.getLogger(UserManagementController.class.getName());
@@ -51,6 +55,10 @@ public class UserManagementController {
     public ObservableList<Group> groups = FXCollections.observableArrayList();
     private User selectedUserToEdit = null;
 
+    /**
+     * Metoda inicjalizująca kontroler. Konfiguruje tabelę użytkowników, ładuje dane
+     * i ustawia podstawowe właściwości interfejsu użytkownika.
+     */
     @FXML
     public void initialize() {
         userRoot.sceneProperty().addListener((obs, oldScene, newScene) -> {
@@ -60,6 +68,7 @@ public class UserManagementController {
             }
         });
 
+        // Konfiguracja wiązań danych w kolumnach tabeli
         imieColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getImie()));
         nazwiskoColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNazwisko()));
         loginColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getLogin()));
@@ -67,6 +76,7 @@ public class UserManagementController {
         rolaColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getRole()));
         grupaColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getGroup()));
 
+        // Formatowanie wyświetlania wartości w kolumnie płacy
         placaColumn.setCellFactory(column -> new TableCell<User, Double>() {
             @Override
             protected void updateItem(Double item, boolean empty) {
@@ -79,12 +89,14 @@ public class UserManagementController {
             }
         });
 
+        // Ładowanie danych do comboboxów i tabeli
         roles = loadRolesFromDatabase();
         groups = loadGroupsFromDatabase();
         roleComboBox.setItems(roles);
         groupComboBox.setItems(groups);
         loadUsersFromDatabase();
 
+        // Ustawienie proporcjonalnych szerokości kolumn
         double colWidth = 1.0 / 6;
         imieColumn.prefWidthProperty().bind(usersTable.widthProperty().multiply(colWidth));
         nazwiskoColumn.prefWidthProperty().bind(usersTable.widthProperty().multiply(colWidth));
@@ -93,8 +105,10 @@ public class UserManagementController {
         rolaColumn.prefWidthProperty().bind(usersTable.widthProperty().multiply(colWidth));
         grupaColumn.prefWidthProperty().bind(usersTable.widthProperty().multiply(colWidth));
 
+        // Konfiguracja widoczności pól w zależności od roli użytkownika
         configureFieldsByRole();
 
+        // Obsługa kliknięcia wiersza tabeli
         usersTable.setRowFactory(tv -> {
             TableRow<User> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
@@ -106,15 +120,23 @@ public class UserManagementController {
             return row;
         });
 
+        // Ukrycie przycisku tworzenia użytkownika dla menedżerów
         User currentUser = UserSession.getInstance().getUser();
         if (currentUser.isManager()) {
             createUserButton.setVisible(false);
         }
+
+        // Ustawienie focusa na głównym panelu
         Platform.runLater(() -> {
             userRoot.requestFocus();
         });
     }
 
+    /**
+     * Wypełnia formularz danymi wybranego użytkownika do edycji.
+     *
+     * @param user Użytkownik, którego dane mają zostać wypełnione w formularzu
+     */
     private void fillFormForEditing(User user) {
         usernameField.setText(user.getLogin());
         firstNameField.setText(user.getImie());
@@ -129,6 +151,9 @@ public class UserManagementController {
         );
     }
 
+    /**
+     * Ładuje listę użytkowników z bazy danych i wyświetla ją w tabeli.
+     */
     public void loadUsersFromDatabase() {
         ObservableList<User> usersList = FXCollections.observableArrayList();
         String sql = """
@@ -168,6 +193,11 @@ public class UserManagementController {
         usersTable.setItems(usersList);
     }
 
+    /**
+     * Ładuje listę ról z bazy danych.
+     *
+     * @return Lista ról dostępnych w systemie
+     */
     private ObservableList<Role> loadRolesFromDatabase() {
         ObservableList<Role> roles = FXCollections.observableArrayList();
         String sql = "SELECT id_roli, nazwa FROM role";
@@ -188,6 +218,11 @@ public class UserManagementController {
         return roles;
     }
 
+    /**
+     * Ładuje listę grup z bazy danych.
+     *
+     * @return Lista grup dostępnych w systemie
+     */
     private ObservableList<Group> loadGroupsFromDatabase() {
         ObservableList<Group> groups = FXCollections.observableArrayList();
         String sql = "SELECT id_grupy, nazwa FROM grupy";
@@ -208,6 +243,9 @@ public class UserManagementController {
         return groups;
     }
 
+    /**
+     * Konfiguruje widoczność pól formularza w zależności od roli aktualnie zalogowanego użytkownika.
+     */
     private void configureFieldsByRole() {
         User currentUser = UserSession.getInstance().getUser();
 
@@ -226,6 +264,9 @@ public class UserManagementController {
         managerLabel.setVisible(isManager);
     }
 
+    /**
+     * Obsługuje zdarzenie tworzenia nowego użytkownika lub aktualizacji istniejącego.
+     */
     @FXML
     void createUser() {
         if (selectedUserToEdit != null) {
@@ -235,6 +276,9 @@ public class UserManagementController {
         }
     }
 
+    /**
+     * Dodaje nowego użytkownika do bazy danych na podstawie danych z formularza.
+     */
     protected void addNewUser() {
         String login = usernameField.getText();
         String haslo = passwordField.getText();
@@ -292,6 +336,9 @@ public class UserManagementController {
         }
     }
 
+    /**
+     * Aktualizuje dane istniejącego użytkownika w bazie danych.
+     */
     private void updateUser() {
         String login = usernameField.getText();
         String haslo = passwordField.getText();
@@ -358,6 +405,9 @@ public class UserManagementController {
         }
     }
 
+    /**
+     * Czyści formularz zarządzania użytkownikami.
+     */
     @FXML
     private void clearForm() {
         usernameField.clear();
@@ -370,6 +420,11 @@ public class UserManagementController {
         selectedUserToEdit = null;
     }
 
+    /**
+     * Przechodzi do widoku dashboardu.
+     *
+     * @param event Zdarzenie wywołujące metodę
+     */
     @FXML
     private void goToDashboard(ActionEvent event) {
         try {
@@ -390,6 +445,9 @@ public class UserManagementController {
         }
     }
 
+    /**
+     * Obsługuje aktualizację danych użytkownika.
+     */
     @FXML
     private void handleUpdateUser() {
         if (selectedUserToEdit == null) {
@@ -399,6 +457,11 @@ public class UserManagementController {
         updateUser();
     }
 
+    /**
+     * Stosuje wybrany motyw do interfejsu użytkownika.
+     *
+     * @param theme Nazwa motywu do zastosowania
+     */
     private void applyTheme(String theme) {
         Scene scene = userRoot.getScene();
         if (scene == null) return;
@@ -417,6 +480,11 @@ public class UserManagementController {
         }
     }
 
+    /**
+     * Stosuje wybrany rozmiar czcionki do interfejsu użytkownika.
+     *
+     * @param label Etykieta określająca rozmiar czcionki
+     */
     private void applyFontSize(String label) {
         Scene scene = userRoot.getScene();
         if (scene == null) return;
@@ -436,5 +504,4 @@ public class UserManagementController {
             scene.getStylesheets().add(fontUrl.toExternalForm());
         }
     }
-
 }
