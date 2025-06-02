@@ -1,39 +1,50 @@
 package com.example.projekt;
-import javafx.scene.Node;
-import javafx.scene.Scene;
+
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.testfx.framework.junit5.ApplicationTest;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class MainControllerTest {
+public class MainControllerTest extends ApplicationTest {
 
     private MainController controller;
 
     private Pane sidebarContainerMock;
     private StackPane contentAreaMock;
 
+    @Override
+    public void start(Stage stage) {
+        // TestFX wymaga tej metody nawet jeśli nie jest używana
+    }
+
     @BeforeEach
     public void setUp() {
         controller = new MainController();
 
-        // Mockowanie sidebarContainer jako Pane
         sidebarContainerMock = Mockito.mock(Pane.class);
-        // Mockowanie contentArea
         contentAreaMock = Mockito.mock(StackPane.class);
 
-        // Ustawiamy pola w kontrolerze na mocki
         controller.sidebarContainer = sidebarContainerMock;
         controller.contentArea = contentAreaMock;
 
-        // Przy metodzie toggleSidebar trzeba zdefiniować zachowanie isVisible() i setVisible()
         when(sidebarContainerMock.isVisible()).thenReturn(true);
         doNothing().when(sidebarContainerMock).setVisible(anyBoolean());
         doNothing().when(sidebarContainerMock).setManaged(anyBoolean());
+    }
+
+    @Test
+    public void testToggleSidebar_hidesSidebarWhenVisible() {
+        // Act
+        controller.toggleSidebar();
+
+        // Assert
+        verify(sidebarContainerMock).setVisible(false);
+        verify(sidebarContainerMock).setManaged(false);
     }
 }

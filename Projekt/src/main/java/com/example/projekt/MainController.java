@@ -165,7 +165,7 @@ public class MainController {
      * Zmienia zarówno widoczność jak i flagę zarządzania panelem bocznym.
      */
     @FXML
-    private void toggleSidebar() {
+    void toggleSidebar() {
         boolean visible = sidebarContainer.isVisible();
         sidebarContainer.setVisible(!visible);
         sidebarContainer.setManaged(!visible);

@@ -3,11 +3,13 @@ package com.example.projekt;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
 import org.testfx.framework.junit5.ApplicationExtension;
 
+import javafx.scene.control.*;
 import java.sql.*;
 import java.time.LocalDate;
-import java.util.logging.Level;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -20,6 +22,7 @@ class TaskControllerTest {
     private Statement mockStatement;
     private PreparedStatement mockPreparedStatement;
     private ResultSet mockResultSet;
+    private MockedStatic<DriverManager> mockedDriverManager;
 
     @BeforeEach
     void setUp() throws SQLException {
@@ -31,154 +34,172 @@ class TaskControllerTest {
         mockPreparedStatement = mock(PreparedStatement.class);
         mockResultSet = mock(ResultSet.class);
 
+        // Konfiguracja mocków
         when(mockConnection.createStatement()).thenReturn(mockStatement);
         when(mockConnection.prepareStatement(anyString())).thenReturn(mockPreparedStatement);
         when(mockStatement.executeQuery(anyString())).thenReturn(mockResultSet);
+        when(mockPreparedStatement.executeQuery()).thenReturn(mockResultSet);
 
-        // Ustawienie mocka dla DriverManager
-        try {
-            DriverManager.registerDriver(mock(Driver.class));
-        } catch (SQLException e) {
-            // Driver już zarejestrowany
-        }
-
-        // Fix: Use eq() matchers for all String parameters
-        when(DriverManager.getConnection(
-                eq("jdbc:mysql://localhost:3306/HurtPolSan"),
-                eq("root"),
-                eq("")))
+        // Mockowanie DriverManager
+        mockedDriverManager = Mockito.mockStatic(DriverManager.class);
+        mockedDriverManager.when(() -> DriverManager.getConnection(
+                        eq("jdbc:mysql://localhost:3306/HurtPolSan"),
+                        eq("root"),
+                        eq("")))
                 .thenReturn(mockConnection);
+
+        // Inicjalizacja pól UI kontrolera
+        initializeUIFields();
     }
 
+    private void initializeUIFields() {
+        taskController.nameField = new TextField();
+        taskController.commentField = new TextField();
+        taskController.quantityField = new TextField();
+        taskController.statusBox = new ComboBox<>();
+        taskController.priorityBox = new ComboBox<>();
+        taskController.productBox = new ComboBox<>();
+        taskController.directionBox = new ComboBox<>();
+        taskController.employeeBox = new ComboBox<>();
+        taskController.startDatePicker = new DatePicker();
+        taskController.endDatePicker = new DatePicker();
+    }
 
     @Test
     void testGetIdFromTable() throws SQLException {
         // Przygotowanie
         String testName = "Test Status";
+        String tableName = "statusy";
+        String expectedQuery = "SELECT id FROM " + tableName + " WHERE nazwa = ?";
+
         when(mockResultSet.next()).thenReturn(true);
         when(mockResultSet.getInt(1)).thenReturn(5);
+        when(mockConnection.prepareStatement(expectedQuery)).thenReturn(mockPreparedStatement);
 
         // Wykonanie
-        int result = taskController.getIdFromTable(mockConnection, "statusy", testName);
+        int result = taskController.getIdFromTable(mockConnection, tableName, testName);
 
         // Weryfikacja
         assertEquals(5, result);
+        verify(mockConnection).prepareStatement(expectedQuery);
         verify(mockPreparedStatement).setString(1, testName);
+        verify(mockPreparedStatement).executeQuery();
     }
 
     @Test
     void testGetIdFromTableThrowsExceptionWhenNotFound() throws SQLException {
         // Przygotowanie
         String testName = "Nieistniejący Status";
+        String tableName = "statusy";
         when(mockResultSet.next()).thenReturn(false);
 
         // Wykonanie i Weryfikacja
-        assertThrows(SQLException.class, () -> {
-            taskController.getIdFromTable(mockConnection, "statusy", testName);
+        SQLException exception = assertThrows(SQLException.class, () -> {
+            taskController.getIdFromTable(mockConnection, tableName, testName);
         });
+
+        assertNotNull(exception.getMessage());
     }
 
     @Test
     void testValidateFormWithEmptyFields() {
-        // Przygotowanie
-        taskController.nameField = new javafx.scene.control.TextField("");
-        taskController.statusBox = new javafx.scene.control.ComboBox<>();
-        taskController.priorityBox = new javafx.scene.control.ComboBox<>();
-        taskController.employeeBox = new javafx.scene.control.ComboBox<>();
-        taskController.startDatePicker = new javafx.scene.control.DatePicker();
-        taskController.endDatePicker = new javafx.scene.control.DatePicker();
+        // Przygotowanie - pola już są puste po inicjalizacji
 
         // Wykonanie
         boolean result = taskController.validateForm();
 
         // Weryfikacja
-        assertFalse(result);
+        assertFalse(result, "Walidacja powinna zwrócić false dla pustych pól");
     }
 
     @Test
     void testValidateFormWithValidData() {
         // Przygotowanie
-        taskController.nameField = new javafx.scene.control.TextField("Test Task");
-        taskController.statusBox = new javafx.scene.control.ComboBox<>();
+        taskController.nameField.setText("Test Task");
+
         taskController.statusBox.getItems().add("Status");
         taskController.statusBox.setValue("Status");
-        taskController.priorityBox = new javafx.scene.control.ComboBox<>();
+
         taskController.priorityBox.getItems().add("Priority");
         taskController.priorityBox.setValue("Priority");
-        taskController.employeeBox = new javafx.scene.control.ComboBox<>();
+
         taskController.employeeBox.getItems().add("1: Jan Kowalski");
         taskController.employeeBox.setValue("1: Jan Kowalski");
-        taskController.startDatePicker = new javafx.scene.control.DatePicker(LocalDate.now());
-        taskController.endDatePicker = new javafx.scene.control.DatePicker(LocalDate.now().plusDays(1));
+
+        taskController.startDatePicker.setValue(LocalDate.now());
+        taskController.endDatePicker.setValue(LocalDate.now().plusDays(1));
 
         // Wykonanie
         boolean result = taskController.validateForm();
 
         // Weryfikacja
-        assertTrue(result);
+        assertTrue(result, "Walidacja powinna zwrócić true dla poprawnych danych");
     }
 
     @Test
     void testValidateFormWithInvalidDates() {
         // Przygotowanie
-        taskController.nameField = new javafx.scene.control.TextField("Test Task");
-        taskController.statusBox = new javafx.scene.control.ComboBox<>();
+        taskController.nameField.setText("Test Task");
+
         taskController.statusBox.getItems().add("Status");
         taskController.statusBox.setValue("Status");
-        taskController.priorityBox = new javafx.scene.control.ComboBox<>();
+
         taskController.priorityBox.getItems().add("Priority");
         taskController.priorityBox.setValue("Priority");
-        taskController.employeeBox = new javafx.scene.control.ComboBox<>();
+
         taskController.employeeBox.getItems().add("1: Jan Kowalski");
         taskController.employeeBox.setValue("1: Jan Kowalski");
-        taskController.startDatePicker = new javafx.scene.control.DatePicker(LocalDate.now());
-        taskController.endDatePicker = new javafx.scene.control.DatePicker(LocalDate.now().minusDays(1)); // Data końca przed datą początku
+
+        // Data końca przed datą początku
+        taskController.startDatePicker.setValue(LocalDate.now());
+        taskController.endDatePicker.setValue(LocalDate.now().minusDays(1));
 
         // Wykonanie
         boolean result = taskController.validateForm();
 
         // Weryfikacja
-        assertFalse(result);
+        assertFalse(result, "Walidacja powinna zwrócić false gdy data końca jest przed datą początku");
     }
 
     @Test
     void testClearFields() {
-        // Przygotowanie
-        taskController.nameField = new javafx.scene.control.TextField("Test");
-        taskController.commentField = new javafx.scene.control.TextField("Komentarz");
-        taskController.quantityField = new javafx.scene.control.TextField("10");
-        taskController.statusBox = new javafx.scene.control.ComboBox<>();
+        // Przygotowanie - wypełnienie pól
+        taskController.nameField.setText("Test");
+        taskController.commentField.setText("Komentarz");
+        taskController.quantityField.setText("10");
+
         taskController.statusBox.getItems().add("Status");
         taskController.statusBox.setValue("Status");
-        taskController.priorityBox = new javafx.scene.control.ComboBox<>();
+
         taskController.priorityBox.getItems().add("Priority");
         taskController.priorityBox.setValue("Priority");
-        taskController.productBox = new javafx.scene.control.ComboBox<>();
+
         taskController.productBox.getItems().add("Product");
         taskController.productBox.setValue("Product");
-        taskController.directionBox = new javafx.scene.control.ComboBox<>();
+
         taskController.directionBox.getItems().add("Direction");
         taskController.directionBox.setValue("Direction");
-        taskController.employeeBox = new javafx.scene.control.ComboBox<>();
+
         taskController.employeeBox.getItems().add("1: Jan Kowalski");
         taskController.employeeBox.setValue("1: Jan Kowalski");
-        taskController.startDatePicker = new javafx.scene.control.DatePicker(LocalDate.now());
-        taskController.endDatePicker = new javafx.scene.control.DatePicker(LocalDate.now());
+
+        taskController.startDatePicker.setValue(LocalDate.now());
+        taskController.endDatePicker.setValue(LocalDate.now());
 
         // Wykonanie
         taskController.clearFields();
 
         // Weryfikacja
-        assertTrue(taskController.nameField.getText().isEmpty());
-        assertTrue(taskController.commentField.getText().isEmpty());
-        assertTrue(taskController.quantityField.getText().isEmpty());
-        assertNull(taskController.statusBox.getValue());
-        assertNull(taskController.priorityBox.getValue());
-        assertNull(taskController.productBox.getValue());
-        assertNull(taskController.directionBox.getValue());
-        assertNull(taskController.employeeBox.getValue());
-        assertNull(taskController.startDatePicker.getValue());
-        assertNull(taskController.endDatePicker.getValue());
+        assertTrue(taskController.nameField.getText().isEmpty(), "Pole nazwy powinno być puste");
+        assertTrue(taskController.commentField.getText().isEmpty(), "Pole komentarza powinno być puste");
+        assertTrue(taskController.quantityField.getText().isEmpty(), "Pole ilości powinno być puste");
+        assertNull(taskController.statusBox.getValue(), "ComboBox statusu powinien być pusty");
+        assertNull(taskController.priorityBox.getValue(), "ComboBox priorytetu powinien być pusty");
+        assertNull(taskController.productBox.getValue(), "ComboBox produktu powinien być pusty");
+        assertNull(taskController.directionBox.getValue(), "ComboBox kierunku powinien być pusty");
+        assertNull(taskController.employeeBox.getValue(), "ComboBox pracownika powinien być pusty");
+        assertNull(taskController.startDatePicker.getValue(), "DatePicker daty początku powinien być pusty");
+        assertNull(taskController.endDatePicker.getValue(), "DatePicker daty końca powinien być pusty");
     }
 
     @Test
@@ -198,31 +219,33 @@ class TaskControllerTest {
         );
         testTask.setEndDate("2023-01-02");
 
-        taskController.nameField = new javafx.scene.control.TextField();
-        taskController.commentField = new javafx.scene.control.TextField();
-        taskController.quantityField = new javafx.scene.control.TextField();
-        taskController.statusBox = new javafx.scene.control.ComboBox<>();
-        taskController.priorityBox = new javafx.scene.control.ComboBox<>();
-        taskController.productBox = new javafx.scene.control.ComboBox<>();
-        taskController.directionBox = new javafx.scene.control.ComboBox<>();
-        taskController.employeeBox = new javafx.scene.control.ComboBox<>();
+        // Dodanie opcji do ComboBoxów (symulacja załadowanych danych)
         taskController.employeeBox.getItems().add("1: Jan Kowalski");
-        taskController.startDatePicker = new javafx.scene.control.DatePicker();
-        taskController.endDatePicker = new javafx.scene.control.DatePicker();
+        taskController.statusBox.getItems().add("Status");
+        taskController.priorityBox.getItems().add("Priority");
+        taskController.productBox.getItems().add("Product");
+        taskController.directionBox.getItems().add("Direction");
 
         // Wykonanie
         taskController.fillFormWithSelectedTask(testTask);
 
         // Weryfikacja
-        assertEquals("Test Task", taskController.nameField.getText());
-        assertEquals("Komentarz", taskController.commentField.getText());
-        assertEquals("10", taskController.quantityField.getText());
-        assertEquals("Status", taskController.statusBox.getValue());
-        assertEquals("Priority", taskController.priorityBox.getValue());
-        assertEquals("Product", taskController.productBox.getValue());
-        assertEquals("Direction", taskController.directionBox.getValue());
-        assertEquals("1: Jan Kowalski", taskController.employeeBox.getValue());
-        assertEquals(LocalDate.parse("2023-01-01"), taskController.startDatePicker.getValue());
-        assertEquals(LocalDate.parse("2023-01-02"), taskController.endDatePicker.getValue());
+        assertEquals("Test Task", taskController.nameField.getText(), "Nazwa zadania powinna być wypełniona");
+        assertEquals("Komentarz", taskController.commentField.getText(), "Komentarz powinien być wypełniony");
+        assertEquals("10", taskController.quantityField.getText(), "Ilość powinna być wypełniona");
+        assertEquals("Status", taskController.statusBox.getValue(), "Status powinien być wybrany");
+        assertEquals("Priority", taskController.priorityBox.getValue(), "Priorytet powinien być wybrany");
+        assertEquals("Product", taskController.productBox.getValue(), "Produkt powinien być wybrany");
+        assertEquals("Direction", taskController.directionBox.getValue(), "Kierunek powinien być wybrany");
+        assertEquals("1: Jan Kowalski", taskController.employeeBox.getValue(), "Pracownik powinien być wybrany");
+        assertEquals(LocalDate.parse("2023-01-01"), taskController.startDatePicker.getValue(), "Data początku powinna być ustawiona");
+        assertEquals(LocalDate.parse("2023-01-02"), taskController.endDatePicker.getValue(), "Data końca powinna być ustawiona");
+    }
+
+    // Cleanup metoda do zamknięcia mocków statycznych
+    void tearDown() {
+        if (mockedDriverManager != null) {
+            mockedDriverManager.close();
+        }
     }
 }

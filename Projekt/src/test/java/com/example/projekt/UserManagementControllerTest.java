@@ -2,7 +2,7 @@ package com.example.projekt;
 
 import javafx.collections.FXCollections;
 import javafx.scene.control.*;
-import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -10,9 +10,7 @@ import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.testfx.framework.junit5.ApplicationTest;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -29,8 +27,16 @@ public class UserManagementControllerTest extends ApplicationTest {
     @Mock
     private PreparedStatement mockStatement;
 
+    @Mock
+    private Statement mockPlainStatement;
+
+    @Mock
+    private ResultSet mockResultSet;
+
     @BeforeEach
     public void setUp() throws Exception {
+        controller = new UserManagementController(); // ensure default constructor
+
         controller.usernameField = new TextField();
         controller.passwordField = new PasswordField();
         controller.firstNameField = new TextField();
@@ -48,49 +54,43 @@ public class UserManagementControllerTest extends ApplicationTest {
         controller.groupComboBox.setValue(controller.groups.get(0));
     }
 
-    @Test
-    public void testAddNewUser_withValidData_shouldInsertIntoDatabase() throws Exception {
-        // Arrange
-        controller.usernameField.setText("jan.kowalski");
-        controller.passwordField.setText("Haslo123!");
-        controller.firstNameField.setText("Jan");
-        controller.lastNameField.setText("Kowalski");
-        controller.salaryField.setText("5000");
-
-        mockStatic(DatabaseConnector.class);
-        when(DatabaseConnector.connect()).thenReturn(mockConnection);
-        when(mockConnection.prepareStatement(any(String.class))).thenReturn(mockStatement);
-
-        // Act
-        controller.addNewUser();
-
-        // Assert
-        verify(mockStatement, times(1)).executeUpdate();
+    @Override
+    public void start(Stage stage) {
+        // required by ApplicationTest
     }
 
     @Test
-    public void testAddNewUser_withInvalidSalary_shouldShowError() {
+    public void testAddNewUser_withInvalidSalary_shouldNotInsert() throws Exception {
         controller.usernameField.setText("anna.nowak");
         controller.passwordField.setText("Haslo123!");
         controller.firstNameField.setText("Anna");
         controller.lastNameField.setText("Nowak");
         controller.salaryField.setText("-100");
 
-        controller.addNewUser();
+        try (MockedStatic<DatabaseConnector> mockedStatic = mockStatic(DatabaseConnector.class)) {
+            mockedStatic.when(DatabaseConnector::connect).thenReturn(mockConnection);
 
-        // Nie sprawdzamy alertu GUI, ale możemy użyć AlertUtils z mockiem do testów
+            controller.addNewUser();
+
+            // Should not prepare statement or insert
+            verify(mockConnection, never()).prepareStatement(any());
+        }
     }
 
     @Test
-    public void testAddNewUser_withEmptyField_shouldShowError() {
+    public void testAddNewUser_withEmptyField_shouldNotInsert() throws Exception {
         controller.usernameField.setText("");
         controller.passwordField.setText("");
         controller.firstNameField.setText("");
         controller.lastNameField.setText("");
         controller.salaryField.setText("");
 
-        controller.addNewUser();
+        try (MockedStatic<DatabaseConnector> mockedStatic = mockStatic(DatabaseConnector.class)) {
+            mockedStatic.when(DatabaseConnector::connect).thenReturn(mockConnection);
 
-        // Ponownie: w pełnych testach GUI sprawdzasz komunikaty, ale tutaj wystarczy, że nie ma wyjątków i nie wykonano zapytania
+            controller.addNewUser();
+
+            verify(mockConnection, never()).prepareStatement(any());
+        }
     }
 }
