@@ -4,9 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="93580640-a4f6-4848-877d-83f2d9fe0546" name="Changes" comment="Testy">
+    <list default="true" id="93580640-a4f6-4848-877d-83f2d9fe0546" name="Changes" comment="Poprawa null zadania">
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/reportlib.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/TaskController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/TaskController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projekt/lib/reportlib.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projekt/src/test/java/com/example/projekt/DashboardControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/test/java/com/example/projekt/DashboardControllerTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user-settings.properties" beforeDir="false" afterPath="$PROJECT_DIR$/user-settings.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -67,6 +69,7 @@
     "Application.TestPołączenia.executor": "Run",
     "Downloaded.Files.Path.Enabled": "false",
     "JUnit.AlertUtilsTest and 21 more.executor": "Coverage",
+    "JUnit.DashboardControllerTest.executor": "Coverage",
     "JUnit.ProductTest.executor": "Coverage",
     "JUnit.com.example.projekt in Projekt.executor": "Coverage",
     "Repository.Attach.Annotations": "false",
@@ -77,13 +80,18 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "project.structure.last.edited": "Libraries",
+    "last_opened_file_path": "C:/Users/remix/IdeaProjects/IiE_FIOLETOWI/Projekt/lib/reportlib.jar",
+    "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
     "settings.editor.selected.configurable": "MavenSettings"
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\remix\IdeaProjects\IiE_FIOLETOWI\Projekt\lib" />
+      <recent name="C:\Users\remix\IdeaProjects\IiE_FIOLETOWI\Projekt\src\main\resources" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\ABC\Documents\IiE_FIOLETOWI\Projekt\src\main\resources\com\example" />
       <recent name="C:\Users\ABC\Documents\IiE_FIOLETOWI\Projekt\src\main\java\com\example" />
@@ -125,6 +133,21 @@
         <pattern testClass="com.example.projekt.UserTaskPanelControllerTest" />
         <pattern testClass="com.example.projekt.UserTest" />
       </patterns>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DashboardControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Projekt" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.projekt.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.example.projekt" />
+      <option name="MAIN_CLASS_NAME" value="com.example.projekt.DashboardControllerTest" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -185,6 +208,7 @@
     <recent_temporary>
       <list>
         <item itemvalue="JUnit.AlertUtilsTest and 21 more" />
+        <item itemvalue="JUnit.DashboardControllerTest" />
         <item itemvalue="JUnit.ProductTest" />
         <item itemvalue="JUnit.com.example.projekt in Projekt" />
       </list>
@@ -295,7 +319,15 @@
       <option name="project" value="LOCAL" />
       <updated>1748879954614</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Poprawa null zadania">
+      <option name="closed" value="true" />
+      <created>1748900865596</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1748900865597</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -331,14 +363,18 @@
     <MESSAGE value="Nie wiem" />
     <MESSAGE value="Panel użytkownika" />
     <MESSAGE value="Testy" />
-    <option name="LAST_COMMIT_MESSAGE" value="Testy" />
+    <MESSAGE value="Poprawa null zadania" />
+    <option name="LAST_COMMIT_MESSAGE" value="Poprawa null zadania" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/IiE_FIOLETOWI$AlertUtilsTest_and_21_more.ic" NAME="AlertUtilsTest and 21 more Coverage Results" MODIFIED="1748895618318" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
+    <SUITE FILE_PATH="coverage/IiE_FIOLETOWI$AlertUtilsTest_and_21_more.ic" NAME="AlertUtilsTest and 21 more Coverage Results" MODIFIED="1748901969191" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
     <SUITE FILE_PATH="coverage/IiE_FIOLETOWI$com_example_projekt_in_Projekt.ic" NAME="com.example.projekt in Projekt Coverage Results" MODIFIED="1748879874364" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
       <FILTER>com.example.projekt.*</FILTER>
     </SUITE>
     <SUITE FILE_PATH="coverage/IiE_FIOLETOWI$ProductTest.ic" NAME="ProductTest Coverage Results" MODIFIED="1748894786763" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>com.example.projekt.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/IiE_FIOLETOWI$DashboardControllerTest.ic" NAME="DashboardControllerTest Coverage Results" MODIFIED="1748901944085" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
       <FILTER>com.example.projekt.*</FILTER>
     </SUITE>
   </component>

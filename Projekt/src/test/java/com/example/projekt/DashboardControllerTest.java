@@ -26,7 +26,6 @@ public class DashboardControllerTest {
 
     @BeforeAll
     public static void initToolkit() {
-        // Inicjalizacja JavaFX toolkit (wymagana przed użyciem FX elementów)
         new JFXPanel();
     }
 
@@ -34,20 +33,27 @@ public class DashboardControllerTest {
     public void setUp() throws Exception {
         CountDownLatch latch = new CountDownLatch(1);
 
+        // Inicjalizacja sesji użytkownika
+        UserSession.init(new User(
+                10, "Anna", "Nowak", "anowak", "haslo123",
+                6000.0, 3, 2, "Administrator", "IT"
+        ));
+
         Platform.runLater(() -> {
             try {
                 controller = new DashboardController();
 
-                // Jeśli kontroler ma pola powiązane z UI, trzeba je zasymulować:
+                // Inicjalizacja pól kontrolera
                 controller.usernameLabel = new Label();
                 controller.roleLabel = new Label();
                 controller.adminButton = new Button();
 
+                // Przygotowanie sceny i eventu
                 stage = new Stage();
                 Button button = new Button();
-
-                Scene scene = new Scene(new StackPane(button));
+                Scene scene = new Scene(new StackPane(button), 800, 600);
                 stage.setScene(scene);
+                stage.show();
 
                 event = new ActionEvent(button, null);
 
@@ -57,9 +63,8 @@ public class DashboardControllerTest {
             }
         });
 
-        // Czekamy maksymalnie 5 sekund na zakończenie inicjalizacji w FX thread
         if (!latch.await(5, TimeUnit.SECONDS)) {
-            throw new RuntimeException("Timeout waiting for FX thread in setUp");
+            throw new RuntimeException("Timeout podczas inicjalizacji");
         }
     }
 
@@ -78,7 +83,7 @@ public class DashboardControllerTest {
         });
 
         if (!latch.await(5, TimeUnit.SECONDS)) {
-            fail("Timeout waiting for FX thread in testGoToTaskManager");
+            fail("Timeout w testGoToTaskManager");
         }
     }
 
@@ -97,17 +102,12 @@ public class DashboardControllerTest {
         });
 
         if (!latch.await(5, TimeUnit.SECONDS)) {
-            fail("Timeout waiting for FX thread in testOpenSettings");
+            fail("Timeout w testOpenSettings");
         }
     }
 
     @Test
     public void testHandleLogout_clearsSessionAndChangesScene() throws Exception {
-        UserSession.init(new User(
-                10, "Anna", "Nowak", "anowak", "haslo123",
-                6000.0, 3, 2, "Uzytkownik", "Marketing"
-        ));
-
         CountDownLatch latch = new CountDownLatch(1);
 
         Platform.runLater(() -> {
@@ -121,7 +121,7 @@ public class DashboardControllerTest {
         });
 
         if (!latch.await(5, TimeUnit.SECONDS)) {
-            fail("Timeout waiting for FX thread in testHandleLogout");
+            fail("Timeout w testHandleLogout");
         }
     }
 
@@ -140,7 +140,7 @@ public class DashboardControllerTest {
         });
 
         if (!latch.await(5, TimeUnit.SECONDS)) {
-            fail("Timeout waiting for FX thread in testOpenProductManager");
+            fail("Timeout w testOpenProductManager");
         }
     }
 
@@ -150,19 +150,17 @@ public class DashboardControllerTest {
 
         Platform.runLater(() -> {
             try {
-                try {
-                    controller.goToUserManagement(event);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+                controller.goToUserManagement(event);
                 assertNotNull(stage.getScene());
+            } catch (IOException e) {
+                fail("Błąd ładowania userManagement.fxml", e);
             } finally {
                 latch.countDown();
             }
         });
 
         if (!latch.await(5, TimeUnit.SECONDS)) {
-            fail("Timeout waiting for FX thread in testGoToUserManagement");
+            fail("Timeout w testGoToUserManagement");
         }
     }
 
@@ -181,7 +179,7 @@ public class DashboardControllerTest {
         });
 
         if (!latch.await(5, TimeUnit.SECONDS)) {
-            fail("Timeout waiting for FX thread in testGoToUserTaskPanel");
+            fail("Timeout w testGoToUserTaskPanel");
         }
     }
 }

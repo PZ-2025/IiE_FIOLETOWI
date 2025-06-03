@@ -1,0 +1,1034 @@
+Index: .idea/shelf/Uncommitted_changes_before_Update_at_26_05_2025_20_30__Changes_.xml
+===================================================================
+diff --git a/.idea/shelf/Uncommitted_changes_before_Update_at_26_05_2025_20_30__Changes_.xml b/.idea/shelf/Uncommitted_changes_before_Update_at_26_05_2025_20_30__Changes_.xml
+deleted file mode 100644
+--- a/.idea/shelf/Uncommitted_changes_before_Update_at_26_05_2025_20_30__Changes_.xml	(revision 1c4c76e849ecd2b67bc50afaa481519ae0548e6b)
++++ /dev/null	(revision 1c4c76e849ecd2b67bc50afaa481519ae0548e6b)
+@@ -1,4 +0,0 @@
+-<changelist name="Uncommitted_changes_before_Update_at_26_05_2025_20_30_[Changes]" date="1748284262005" recycled="true" deleted="true">
+-  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_26_05_2025_20_30_[Changes]/shelved.patch" />
+-  <option name="DESCRIPTION" value="Uncommitted changes before Update at 26.05.2025 20:30 [Changes]" />
+-</changelist>
+\ No newline at end of file
+Index: .idea/shelf/Uncommitted_changes_before_Update_at_26_05_2025_20_30_[Changes]/shelved.patch
+===================================================================
+diff --git a/.idea/shelf/Uncommitted_changes_before_Update_at_26_05_2025_20_30_[Changes]/shelved.patch b/.idea/shelf/Uncommitted_changes_before_Update_at_26_05_2025_20_30_[Changes]/shelved.patch
+deleted file mode 100644
+--- a/.idea/shelf/Uncommitted_changes_before_Update_at_26_05_2025_20_30_[Changes]/shelved.patch	(revision 1c4c76e849ecd2b67bc50afaa481519ae0548e6b)
++++ /dev/null	(revision 1c4c76e849ecd2b67bc50afaa481519ae0548e6b)
+@@ -1,126 +0,0 @@
+-Index: .idea/shelf/Uncommitted_changes_before_Update_at_16_05_2025_12_07_[Changes]/shelved.patch
+-===================================================================
+-diff --git a/.idea/shelf/Uncommitted_changes_before_Update_at_16_05_2025_12_07_[Changes]/shelved.patch b/.idea/shelf/Uncommitted_changes_before_Update_at_16_05_2025_12_07_[Changes]/shelved.patch
+-deleted file mode 100644
+---- a/.idea/shelf/Uncommitted_changes_before_Update_at_16_05_2025_12_07_[Changes]/shelved.patch	(revision 22555a29aa9d98296922643ffd8a573d3b219d6d)
+-+++ /dev/null	(revision 22555a29aa9d98296922643ffd8a573d3b219d6d)
+-@@ -1,37 +0,0 @@
+--Index: .idea/workspace.xml
+--IDEA additional info:
+--Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+--<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"93580640-a4f6-4848-877d-83f2d9fe0546\" name=\"Changes\" comment=\"Panel użytkownika\">\r\n      <change afterPath=\"$PROJECT_DIR$/.idea/libraries/JavaFX_21.xml\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/.idea/libraries/itextpdf_io.xml\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/.idea/libraries/itextpdf_kernel.xml\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/.idea/libraries/itextpdf_layout.xml\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/.idea/modules.xml\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/Task.java\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/UserTaskPanelController.java\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/usertaskpanel.fxml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/misc.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/misc.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/DashboardController.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/DashboardController.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/dashboard.fxml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/dashboard.fxml\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"FxmlFile\" />\r\n        <option value=\"Class\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_BRANCH_BY_REPOSITORY\">\r\n      <map>\r\n        <entry key=\"$PROJECT_DIR$\" value=\"master\" />\r\n      </map>\r\n    </option>\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n    <option name=\"UPDATE_TYPE\" value=\"REBASE\" />\r\n  </component>\r\n  <component name=\"GitHubPullRequestSearchHistory\">{\r\n  &quot;lastFilter&quot;: {\r\n    &quot;state&quot;: &quot;OPEN&quot;,\r\n    &quot;assignee&quot;: &quot;KrzysztofDrozda&quot;\r\n  }\r\n}</component>\r\n  <component name=\"GithubPullRequestsUISettings\">{\r\n  &quot;selectedUrlAndAccountId&quot;: {\r\n    &quot;url&quot;: &quot;https://github.com/PZ-2025/IiE_FIOLETOWI.git&quot;,\r\n    &quot;accountId&quot;: &quot;5c3d54a6-02dd-4017-8913-ffb2e4886e09&quot;\r\n  }\r\n}</component>\r\n  <component name=\"ProjectColorInfo\">{\r\n  &quot;associatedIndex&quot;: 0\r\n}</component>\r\n  <component name=\"ProjectId\" id=\"2ujeoZrCePYtf6AiRhjnRcI7Jx1\" />\r\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">{\r\n  &quot;keyToString&quot;: {\r\n    &quot;Application.Main.executor&quot;: &quot;Run&quot;,\r\n    &quot;Application.TestPołączenia.executor&quot;: &quot;Run&quot;,\r\n    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,\r\n    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,\r\n    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,\r\n    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,\r\n    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,\r\n    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,\r\n    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,\r\n    &quot;git-widget-placeholder&quot;: &quot;main&quot;,\r\n    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,\r\n    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,\r\n    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,\r\n    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,\r\n    &quot;settings.editor.selected.configurable&quot;: &quot;MavenSettings&quot;\r\n  }\r\n}</component>\r\n  <component name=\"RunManager\">\r\n    <configuration name=\"Main\" type=\"Application\" factoryName=\"Application\">\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"com.example.projekt.Main\" />\r\n      <module name=\"Projekt\" />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"93580640-a4f6-4848-877d-83f2d9fe0546\" name=\"Changes\" comment=\"\" />\r\n      <created>1742766587316</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1742766587316</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"Pierwsze moduły\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1742767001159</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1742767001159</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"2\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State>\r\n              <option name=\"FILTERS\">\r\n                <map>\r\n                  <entry key=\"branch\">\r\n                    <value>\r\n                      <list>\r\n                        <option value=\"origin/main\" />\r\n                      </list>\r\n                    </value>\r\n                  </entry>\r\n                </map>\r\n              </option>\r\n            </State>\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"Pierwsze moduły\" />\r\n    <MESSAGE value=\"Panel użytkownika\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"Panel użytkownika\" />\r\n  </component>\r\n</project>
+--Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+--<+>UTF-8
+--===================================================================
+--diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+----- a/.idea/workspace.xml	(revision 225a19ee349149ecb180dec731bb6fb6f37bb330)
+--+++ b/.idea/workspace.xml	(date 1747389464723)
+--@@ -5,18 +5,7 @@
+--   </component>
+--   <component name="ChangeListManager">
+--     <list default="true" id="93580640-a4f6-4848-877d-83f2d9fe0546" name="Changes" comment="Panel użytkownika">
+---      <change afterPath="$PROJECT_DIR$/.idea/libraries/JavaFX_21.xml" afterDir="false" />
+---      <change afterPath="$PROJECT_DIR$/.idea/libraries/itextpdf_io.xml" afterDir="false" />
+---      <change afterPath="$PROJECT_DIR$/.idea/libraries/itextpdf_kernel.xml" afterDir="false" />
+---      <change afterPath="$PROJECT_DIR$/.idea/libraries/itextpdf_layout.xml" afterDir="false" />
+---      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+---      <change afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/Task.java" afterDir="false" />
+---      <change afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/UserTaskPanelController.java" afterDir="false" />
+---      <change afterPath="$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/usertaskpanel.fxml" afterDir="false" />
+---      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+--       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+---      <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/DashboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/DashboardController.java" afterDir="false" />
+---      <change beforePath="$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/dashboard.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/dashboard.fxml" afterDir="false" />
+--     </list>
+--     <option name="SHOW_DIALOG" value="false" />
+--     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+--@@ -38,7 +27,6 @@
+--       </map>
+--     </option>
+--     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+---    <option name="UPDATE_TYPE" value="REBASE" />
+--   </component>
+--   <component name="GitHubPullRequestSearchHistory">{
+--   &quot;lastFilter&quot;: {
+-Index: .idea/shelf/Uncommitted_changes_before_Update_at_16_05_2025_12_07__Changes_.xml
+-===================================================================
+-diff --git a/.idea/shelf/Uncommitted_changes_before_Update_at_16_05_2025_12_07__Changes_.xml b/.idea/shelf/Uncommitted_changes_before_Update_at_16_05_2025_12_07__Changes_.xml
+-deleted file mode 100644
+---- a/.idea/shelf/Uncommitted_changes_before_Update_at_16_05_2025_12_07__Changes_.xml	(revision 22555a29aa9d98296922643ffd8a573d3b219d6d)
+-+++ /dev/null	(revision 22555a29aa9d98296922643ffd8a573d3b219d6d)
+-@@ -1,4 +0,0 @@
+--<changelist name="Uncommitted_changes_before_Update_at_16_05_2025_12_07_[Changes]" date="1747390102525" recycled="true" deleted="true">
+--  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_16_05_2025_12_07_[Changes]/shelved.patch" />
+--  <option name="DESCRIPTION" value="Uncommitted changes before Update at 16.05.2025 12:07 [Changes]" />
+--</changelist>
+-\ No newline at end of file
+-Index: .idea/workspace.xml
+-IDEA additional info:
+-Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+-<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"93580640-a4f6-4848-877d-83f2d9fe0546\" name=\"Changes\" comment=\"Kierownik\">\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/DashboardController.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/DashboardController.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/ManagerUsersController.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/ManagerUsersController.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/TaskController.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/TaskController.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/User.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/User.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/ManagerUsers.fxml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/ManagerUsers.fxml\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"FxmlFile\" />\r\n        <option value=\"Class\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_BRANCH_BY_REPOSITORY\">\r\n      <map>\r\n        <entry key=\"$PROJECT_DIR$\" value=\"master\" />\r\n      </map>\r\n    </option>\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"GitHubPullRequestSearchHistory\">{\r\n  &quot;lastFilter&quot;: {\r\n    &quot;state&quot;: &quot;OPEN&quot;,\r\n    &quot;assignee&quot;: &quot;KrzysztofDrozda&quot;\r\n  }\r\n}</component>\r\n  <component name=\"GithubPullRequestsUISettings\">{\r\n  &quot;selectedUrlAndAccountId&quot;: {\r\n    &quot;url&quot;: &quot;https://github.com/PZ-2025/IiE_FIOLETOWI.git&quot;,\r\n    &quot;accountId&quot;: &quot;5c3d54a6-02dd-4017-8913-ffb2e4886e09&quot;\r\n  }\r\n}</component>\r\n  <component name=\"ProjectColorInfo\">{\r\n  &quot;associatedIndex&quot;: 0\r\n}</component>\r\n  <component name=\"ProjectId\" id=\"2ujeoZrCePYtf6AiRhjnRcI7Jx1\" />\r\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\">\r\n    <ConfirmationsSetting value=\"1\" id=\"Add\" />\r\n  </component>\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">{\r\n  &quot;keyToString&quot;: {\r\n    &quot;Application.Main.executor&quot;: &quot;Run&quot;,\r\n    &quot;Application.TestPołączenia.executor&quot;: &quot;Run&quot;,\r\n    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,\r\n    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,\r\n    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,\r\n    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,\r\n    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,\r\n    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,\r\n    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,\r\n    &quot;git-widget-placeholder&quot;: &quot;main&quot;,\r\n    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,\r\n    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,\r\n    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,\r\n    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,\r\n    &quot;settings.editor.selected.configurable&quot;: &quot;MavenSettings&quot;\r\n  }\r\n}</component>\r\n  <component name=\"RunManager\">\r\n    <configuration name=\"Main\" type=\"Application\" factoryName=\"Application\">\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"com.example.projekt.Main\" />\r\n      <module name=\"Projekt\" />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"93580640-a4f6-4848-877d-83f2d9fe0546\" name=\"Changes\" comment=\"\" />\r\n      <created>1742766587316</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1742766587316</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"Pierwsze moduły\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1742767001159</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1742767001159</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00002\" summary=\"Kierownik\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1747485613729</created>\r\n      <option name=\"number\" value=\"00002\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1747485613729</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"3\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State>\r\n              <option name=\"FILTERS\">\r\n                <map>\r\n                  <entry key=\"branch\">\r\n                    <value>\r\n                      <list>\r\n                        <option value=\"origin/main\" />\r\n                      </list>\r\n                    </value>\r\n                  </entry>\r\n                </map>\r\n              </option>\r\n            </State>\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"Pierwsze moduły\" />\r\n    <MESSAGE value=\"Panel użytkownika\" />\r\n    <MESSAGE value=\"Kierownik\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"Kierownik\" />\r\n  </component>\r\n</project>
+-Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+-<+>UTF-8
+-===================================================================
+-diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+---- a/.idea/workspace.xml	(revision 22555a29aa9d98296922643ffd8a573d3b219d6d)
+-+++ b/.idea/workspace.xml	(date 1748284222413)
+-@@ -4,13 +4,11 @@
+-     <option name="autoReloadType" value="SELECTIVE" />
+-   </component>
+-   <component name="ChangeListManager">
+--    <list default="true" id="93580640-a4f6-4848-877d-83f2d9fe0546" name="Changes" comment="Kierownik">
+-+    <list default="true" id="93580640-a4f6-4848-877d-83f2d9fe0546" name="Changes" comment="Dodanie panelu Ustawień, zmiany hasła oraz lokalne zmiany wielkości czcionki">
+-+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+-+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_16_05_2025_12_07_[Changes]/shelved.patch" beforeDir="false" />
+-+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_16_05_2025_12_07__Changes_.xml" beforeDir="false" />
+-       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+--      <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/DashboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/DashboardController.java" afterDir="false" />
+--      <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/ManagerUsersController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/ManagerUsersController.java" afterDir="false" />
+--      <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/TaskController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/TaskController.java" afterDir="false" />
+--      <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/User.java" afterDir="false" />
+--      <change beforePath="$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/ManagerUsers.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/ManagerUsers.fxml" afterDir="false" />
+-     </list>
+-     <option name="SHOW_DIALOG" value="false" />
+-     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+-@@ -39,12 +37,15 @@
+-     &quot;assignee&quot;: &quot;KrzysztofDrozda&quot;
+-   }
+- }</component>
+--  <component name="GithubPullRequestsUISettings">{
+--  &quot;selectedUrlAndAccountId&quot;: {
+--    &quot;url&quot;: &quot;https://github.com/PZ-2025/IiE_FIOLETOWI.git&quot;,
+--    &quot;accountId&quot;: &quot;5c3d54a6-02dd-4017-8913-ffb2e4886e09&quot;
+--  }
+--}</component>
+-+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+-+  "selectedUrlAndAccountId": {
+-+    "url": "https://github.com/PZ-2025/IiE_FIOLETOWI.git",
+-+    "accountId": "b1f7b158-4475-45f9-92b8-f1f8ef44342c"
+-+  }
+-+}]]></component>
+-+  <component name="ProblemsViewState">
+-+    <option name="selectedTabId" value="CurrentFile" />
+-+  </component>
+-   <component name="ProjectColorInfo">{
+-   &quot;associatedIndex&quot;: 0
+- }</component>
+-Index: .idea/misc.xml
+-IDEA additional info:
+-Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+-<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ExternalStorageConfigurationManager\" enabled=\"true\" />\r\n  <component name=\"MavenProjectsManager\">\r\n    <option name=\"originalFiles\">\r\n      <list>\r\n        <option value=\"$PROJECT_DIR$/Projekt/pom.xml\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"ProjectRootManager\" version=\"2\" languageLevel=\"JDK_21\" default=\"true\" project-jdk-name=\"corretto-21\" project-jdk-type=\"JavaSDK\">\r\n    <output url=\"file://$PROJECT_DIR$/out\" />\r\n  </component>\r\n</project>
+-Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+-<+>UTF-8
+-===================================================================
+-diff --git a/.idea/misc.xml b/.idea/misc.xml
+---- a/.idea/misc.xml	(revision 22555a29aa9d98296922643ffd8a573d3b219d6d)
+-+++ b/.idea/misc.xml	(date 1747743241944)
+-@@ -8,7 +8,7 @@
+-       </list>
+-     </option>
+-   </component>
+--  <component name="ProjectRootManager" version="2" languageLevel="JDK_21" default="true" project-jdk-name="corretto-21" project-jdk-type="JavaSDK">
+-+  <component name="ProjectRootManager" version="2" languageLevel="JDK_24" default="true" project-jdk-name="openjdk-24" project-jdk-type="JavaSDK">
+-     <output url="file://$PROJECT_DIR$/out" />
+-   </component>
+- </project>
+-\ No newline at end of file
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"93580640-a4f6-4848-877d-83f2d9fe0546\" name=\"Changes\" comment=\"Testy\">\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/Projekt/pom.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/Projekt/pom.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/LoginController.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/LoginController.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/ProductManagementController.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/ProductManagementController.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/ReportController.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/ReportController.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/SettingsController.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/SettingsController.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/TaskController.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/TaskController.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/UserManagementController.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/UserManagementController.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/UserSession.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/UserSession.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/UserTaskPanelController.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/UserTaskPanelController.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/Product_Management.fxml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/Product_Management.fxml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/reports.fxml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/reports.fxml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/settings.fxml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/settings.fxml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/task.fxml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/task.fxml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/userManagement.fxml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/userManagement.fxml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/usertaskpanel.fxml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/usertaskpanel.fxml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/Projekt/src/main/resources/styles/themes/dark.css\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/styles/themes/dark.css\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/Projekt/src/main/resources/styles/themes/default.css\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/styles/themes/default.css\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/Projekt/src/main/resources/styles/themes/light.css\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/styles/themes/light.css\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"FxmlFile\" />\r\n        <option value=\"Class\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"PREVIOUS_COMMIT_AUTHORS\">\r\n      <list>\r\n        <option value=\"KrzysztofDrozda &lt;kd125178@stud.ur.edu.pl&gt;\" />\r\n      </list>\r\n    </option>\r\n    <option name=\"RECENT_BRANCH_BY_REPOSITORY\">\r\n      <map>\r\n        <entry key=\"$PROJECT_DIR$\" value=\"master\" />\r\n      </map>\r\n    </option>\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"GitHubPullRequestSearchHistory\">{\r\n  &quot;lastFilter&quot;: {\r\n    &quot;state&quot;: &quot;OPEN&quot;,\r\n    &quot;assignee&quot;: &quot;KrzysztofDrozda&quot;\r\n  }\r\n}</component>\r\n  <component name=\"GithubPullRequestsUISettings\">{\r\n  &quot;selectedUrlAndAccountId&quot;: {\r\n    &quot;url&quot;: &quot;https://github.com/PZ-2025/IiE_FIOLETOWI.git&quot;,\r\n    &quot;accountId&quot;: &quot;b1f7b158-4475-45f9-92b8-f1f8ef44342c&quot;\r\n  }\r\n}</component>\r\n  <component name=\"ProjectColorInfo\">{\r\n  &quot;associatedIndex&quot;: 0\r\n}</component>\r\n  <component name=\"ProjectId\" id=\"2ujeoZrCePYtf6AiRhjnRcI7Jx1\" />\r\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\">\r\n    <ConfirmationsSetting value=\"1\" id=\"Add\" />\r\n  </component>\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">{\r\n  &quot;keyToString&quot;: {\r\n    &quot;Application.Main.executor&quot;: &quot;Run&quot;,\r\n    &quot;Application.TestPołączenia.executor&quot;: &quot;Run&quot;,\r\n    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,\r\n    &quot;JUnit.AlertUtilsTest.executor&quot;: &quot;Coverage&quot;,\r\n    &quot;JUnit.AppSettingsTest.executor&quot;: &quot;Coverage&quot;,\r\n    &quot;JUnit.DatabaseConnectorTest.executor&quot;: &quot;Coverage&quot;,\r\n    &quot;JUnit.DatabaseConnectorTest.testConnectReturnsConnection.executor&quot;: &quot;Run&quot;,\r\n    &quot;JUnit.GroupTest.executor&quot;: &quot;Coverage&quot;,\r\n    &quot;JUnit.LoginControllerTest.executor&quot;: &quot;Coverage&quot;,\r\n    &quot;JUnit.PasswordHasherTest.executor&quot;: &quot;Coverage&quot;,\r\n    &quot;JUnit.PasswordValidatorTest.executor&quot;: &quot;Coverage&quot;,\r\n    &quot;JUnit.ProductTest.executor&quot;: &quot;Coverage&quot;,\r\n    &quot;JUnit.ProductTypeTest.executor&quot;: &quot;Coverage&quot;,\r\n    &quot;JUnit.ReportControllerTest.executor&quot;: &quot;Run&quot;,\r\n    &quot;JUnit.RoleTest.executor&quot;: &quot;Coverage&quot;,\r\n    &quot;JUnit.RoleTest.testConstructorAndGetters.executor&quot;: &quot;Coverage&quot;,\r\n    &quot;JUnit.TaskTest.executor&quot;: &quot;Coverage&quot;,\r\n    &quot;JUnit.TestPolaczeniaTest.executor&quot;: &quot;Coverage&quot;,\r\n    &quot;JUnit.UserManagementControllerTest.addNewUser_withValidData_executesInsert.executor&quot;: &quot;Run&quot;,\r\n    &quot;JUnit.UserManagementControllerTest.executor&quot;: &quot;Coverage&quot;,\r\n    &quot;JUnit.UserSessionTest.executor&quot;: &quot;Coverage&quot;,\r\n    &quot;JUnit.UserTest.executor&quot;: &quot;Coverage&quot;,\r\n    &quot;JUnit.UserTest.testConstructorAndGetters.executor&quot;: &quot;Coverage&quot;,\r\n    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,\r\n    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,\r\n    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,\r\n    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,\r\n    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,\r\n    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,\r\n    &quot;git-widget-placeholder&quot;: &quot;main&quot;,\r\n    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,\r\n    &quot;last_opened_file_path&quot;: &quot;D:/IiE_FIOLETOWI1/Projekt/src/main/resources/com/example/projekt/icons&quot;,\r\n    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,\r\n    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,\r\n    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,\r\n    &quot;settings.editor.selected.configurable&quot;: &quot;MavenSettings&quot;\r\n  }\r\n}</component>\r\n  <component name=\"RecentsManager\">\r\n    <key name=\"CopyFile.RECENT_KEYS\">\r\n      <recent name=\"D:\\IiE_FIOLETOWI1\\Projekt\\src\\main\\resources\\com\\example\\projekt\\icons\" />\r\n      <recent name=\"D:\\IiE_FIOLETOWI1\\Projekt\\src\\main\\resources\\icons\" />\r\n    </key>\r\n    <key name=\"MoveFile.RECENT_KEYS\">\r\n      <recent name=\"D:\\IiE_FIOLETOWI1\\Projekt\\src\\main\\resources\\com\\example\\projekt\\styles\\themes\" />\r\n      <recent name=\"C:\\Users\\ABC\\Documents\\IiE_FIOLETOWI\\Projekt\\src\\main\\resources\\com\\example\" />\r\n      <recent name=\"C:\\Users\\ABC\\Documents\\IiE_FIOLETOWI\\Projekt\\src\\main\\java\\com\\example\" />\r\n      <recent name=\"C:\\Users\\ABC\\Documents\\IiE_FIOLETOWI\\Projekt\\src\\main\\java\\com\\example\\projekt\" />\r\n    </key>\r\n  </component>\r\n  <component name=\"RunManager\" selected=\"Application.Main\">\r\n    <configuration name=\"Main\" type=\"Application\" factoryName=\"Application\">\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"com.example.projekt.Main\" />\r\n      <module name=\"Projekt\" />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"LoginControllerTest\" type=\"JUnit\" factoryName=\"JUnit\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <module name=\"Projekt\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"com.example.projekt.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <option name=\"PACKAGE_NAME\" value=\"com.example.projekt\" />\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"com.example.projekt.LoginControllerTest\" />\r\n      <option name=\"TEST_OBJECT\" value=\"class\" />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"ReportControllerTest\" type=\"JUnit\" factoryName=\"JUnit\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <module name=\"Projekt\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"com.example.projekt.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <option name=\"PACKAGE_NAME\" value=\"com.example.projekt\" />\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"com.example.projekt.ReportControllerTest\" />\r\n      <option name=\"TEST_OBJECT\" value=\"class\" />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"TaskTest\" type=\"JUnit\" factoryName=\"JUnit\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <module name=\"Projekt\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"com.example.projekt.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <option name=\"PACKAGE_NAME\" value=\"com.example.projekt\" />\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"com.example.projekt.TaskTest\" />\r\n      <option name=\"TEST_OBJECT\" value=\"class\" />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"UserManagementControllerTest\" type=\"JUnit\" factoryName=\"JUnit\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <module name=\"Projekt\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"com.example.projekt.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <option name=\"PACKAGE_NAME\" value=\"com.example.projekt\" />\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"com.example.projekt.UserManagementControllerTest\" />\r\n      <option name=\"TEST_OBJECT\" value=\"class\" />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"UserManagementControllerTest.addNewUser_withValidData_executesInsert\" type=\"JUnit\" factoryName=\"JUnit\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <module name=\"Projekt\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"com.example.projekt.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <option name=\"PACKAGE_NAME\" value=\"com.example.projekt\" />\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"com.example.projekt.UserManagementControllerTest\" />\r\n      <option name=\"METHOD_NAME\" value=\"addNewUser_withValidData_executesInsert\" />\r\n      <option name=\"TEST_OBJECT\" value=\"method\" />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <recent_temporary>\r\n      <list>\r\n        <item itemvalue=\"JUnit.ReportControllerTest\" />\r\n        <item itemvalue=\"JUnit.UserManagementControllerTest\" />\r\n        <item itemvalue=\"JUnit.UserManagementControllerTest.addNewUser_withValidData_executesInsert\" />\r\n        <item itemvalue=\"JUnit.TaskTest\" />\r\n        <item itemvalue=\"JUnit.LoginControllerTest\" />\r\n      </list>\r\n    </recent_temporary>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"93580640-a4f6-4848-877d-83f2d9fe0546\" name=\"Changes\" comment=\"\" />\r\n      <created>1742766587316</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1742766587316</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"Pierwsze moduły\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1742767001159</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1742767001159</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00002\" summary=\"Kierownik\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1747485613729</created>\r\n      <option name=\"number\" value=\"00002\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1747485613729</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00003\" summary=\"CRUD produkty\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1748283279799</created>\r\n      <option name=\"number\" value=\"00003\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1748283279799</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00004\" summary=\"CRUD produkty\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1748283290823</created>\r\n      <option name=\"number\" value=\"00004\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00004\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1748283290823</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00005\" summary=\"Nowa tabela i triggery\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1748517970547</created>\r\n      <option name=\"number\" value=\"00005\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00005\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1748517970547</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00006\" summary=\"Nie wiem\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1748528171593</created>\r\n      <option name=\"number\" value=\"00006\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00006\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1748528171593</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00007\" summary=\"Panel użytkownika\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1748534285847</created>\r\n      <option name=\"number\" value=\"00007\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00007\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1748534285847</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00008\" summary=\"Panel użytkownika\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1748536051316</created>\r\n      <option name=\"number\" value=\"00008\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00008\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1748536051316</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00009\" summary=\"Wylogowywanie\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1748545717477</created>\r\n      <option name=\"number\" value=\"00009\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00009\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1748545717477</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00010\" summary=\"Zarządzanie użytkownikami\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1748546999194</created>\r\n      <option name=\"number\" value=\"00010\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00010\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1748546999194</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00011\" summary=\"Poprawki javadoc\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1748547819537</created>\r\n      <option name=\"number\" value=\"00011\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00011\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1748547819537</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00012\" summary=\"Testy\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1748550820086</created>\r\n      <option name=\"number\" value=\"00012\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00012\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1748550820086</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"13\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State>\r\n              <option name=\"FILTERS\">\r\n                <map>\r\n                  <entry key=\"branch\">\r\n                    <value>\r\n                      <list>\r\n                        <option value=\"main\" />\r\n                      </list>\r\n                    </value>\r\n                  </entry>\r\n                </map>\r\n              </option>\r\n            </State>\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"Pierwsze moduły\" />\r\n    <MESSAGE value=\"Kierownik\" />\r\n    <MESSAGE value=\"CRUD produkty\" />\r\n    <MESSAGE value=\"Nowa tabela i triggery\" />\r\n    <MESSAGE value=\"Nie wiem co się dzieje\" />\r\n    <MESSAGE value=\"Przekierowanie użytkownika do odpowiedniego panelu po zalogowaniu\" />\r\n    <MESSAGE value=\"Nie wiem\" />\r\n    <MESSAGE value=\"Panel użytkownika\" />\r\n    <MESSAGE value=\"Wylogowywanie\" />\r\n    <MESSAGE value=\"Zarządzanie użytkownikami\" />\r\n    <MESSAGE value=\"Poprawki javadoc\" />\r\n    <MESSAGE value=\"Testy\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"Testy\" />\r\n  </component>\r\n  <component name=\"com.intellij.coverage.CoverageDataManagerImpl\">\r\n    <SUITE FILE_PATH=\"coverage/IiE_FIOLETOWI$TestPolaczeniaTest.ic\" NAME=\"TestPolaczeniaTest Coverage Results\" MODIFIED=\"1748548885996\" SOURCE_PROVIDER=\"com.intellij.coverage.DefaultCoverageFileProvider\" RUNNER=\"idea\" COVERAGE_BY_TEST_ENABLED=\"false\" COVERAGE_TRACING_ENABLED=\"true\">\r\n      <FILTER>com.example.projekt.*</FILTER>\r\n    </SUITE>\r\n    <SUITE FILE_PATH=\"coverage/IiE_FIOLETOWI$DatabaseConnectorTest.ic\" NAME=\"DatabaseConnectorTest Coverage Results\" MODIFIED=\"1748548577061\" SOURCE_PROVIDER=\"com.intellij.coverage.DefaultCoverageFileProvider\" RUNNER=\"idea\" COVERAGE_BY_TEST_ENABLED=\"false\" COVERAGE_TRACING_ENABLED=\"true\">\r\n      <FILTER>com.example.projekt.*</FILTER>\r\n    </SUITE>\r\n    <SUITE FILE_PATH=\"coverage/IiE_FIOLETOWI$ProductTypeTest.ic\" NAME=\"ProductTypeTest Coverage Results\" MODIFIED=\"1748548782100\" SOURCE_PROVIDER=\"com.intellij.coverage.DefaultCoverageFileProvider\" RUNNER=\"idea\" COVERAGE_BY_TEST_ENABLED=\"false\" COVERAGE_TRACING_ENABLED=\"true\">\r\n      <FILTER>com.example.projekt.*</FILTER>\r\n    </SUITE>\r\n    <SUITE FILE_PATH=\"coverage/IiE_FIOLETOWI$UserManagementControllerTest.ic\" NAME=\"UserManagementControllerTest Coverage Results\" MODIFIED=\"1748550314573\" SOURCE_PROVIDER=\"com.intellij.coverage.DefaultCoverageFileProvider\" RUNNER=\"idea\" COVERAGE_BY_TEST_ENABLED=\"false\" COVERAGE_TRACING_ENABLED=\"true\">\r\n      <FILTER>com.example.projekt.*</FILTER>\r\n    </SUITE>\r\n    <SUITE FILE_PATH=\"coverage/IiE_FIOLETOWI$PasswordValidatorTest.ic\" NAME=\"PasswordValidatorTest Coverage Results\" MODIFIED=\"1748548754047\" SOURCE_PROVIDER=\"com.intellij.coverage.DefaultCoverageFileProvider\" RUNNER=\"idea\" COVERAGE_BY_TEST_ENABLED=\"false\" COVERAGE_TRACING_ENABLED=\"true\">\r\n      <FILTER>com.example.projekt.*</FILTER>\r\n    </SUITE>\r\n    <SUITE FILE_PATH=\"coverage/IiE_FIOLETOWI$GroupTest.ic\" NAME=\"GroupTest Coverage Results\" MODIFIED=\"1748548708982\" SOURCE_PROVIDER=\"com.intellij.coverage.DefaultCoverageFileProvider\" RUNNER=\"idea\" COVERAGE_BY_TEST_ENABLED=\"false\" COVERAGE_TRACING_ENABLED=\"true\">\r\n      <FILTER>com.example.projekt.*</FILTER>\r\n    </SUITE>\r\n    <SUITE FILE_PATH=\"coverage/IiE_FIOLETOWI$ProductTest.ic\" NAME=\"ProductTest Coverage Results\" MODIFIED=\"1748548773636\" SOURCE_PROVIDER=\"com.intellij.coverage.DefaultCoverageFileProvider\" RUNNER=\"idea\" COVERAGE_BY_TEST_ENABLED=\"false\" COVERAGE_TRACING_ENABLED=\"true\">\r\n      <FILTER>com.example.projekt.*</FILTER>\r\n    </SUITE>\r\n    <SUITE FILE_PATH=\"coverage/IiE_FIOLETOWI$LoginControllerTest.ic\" NAME=\"LoginControllerTest Coverage Results\" MODIFIED=\"1748549316626\" SOURCE_PROVIDER=\"com.intellij.coverage.DefaultCoverageFileProvider\" RUNNER=\"idea\" COVERAGE_BY_TEST_ENABLED=\"false\" COVERAGE_TRACING_ENABLED=\"true\">\r\n      <FILTER>com.example.projekt.*</FILTER>\r\n    </SUITE>\r\n    <SUITE FILE_PATH=\"coverage/IiE_FIOLETOWI$TaskTest.ic\" NAME=\"TaskTest Coverage Results\" MODIFIED=\"1748549380555\" SOURCE_PROVIDER=\"com.intellij.coverage.DefaultCoverageFileProvider\" RUNNER=\"idea\" COVERAGE_BY_TEST_ENABLED=\"false\" COVERAGE_TRACING_ENABLED=\"true\">\r\n      <FILTER>com.example.projekt.*</FILTER>\r\n    </SUITE>\r\n    <SUITE FILE_PATH=\"coverage/IiE_FIOLETOWI$UserSessionTest.ic\" NAME=\"UserSessionTest Coverage Results\" MODIFIED=\"1748548798117\" SOURCE_PROVIDER=\"com.intellij.coverage.DefaultCoverageFileProvider\" RUNNER=\"idea\" COVERAGE_BY_TEST_ENABLED=\"false\" COVERAGE_TRACING_ENABLED=\"true\">\r\n      <FILTER>com.example.projekt.*</FILTER>\r\n    </SUITE>\r\n    <SUITE FILE_PATH=\"coverage/IiE_FIOLETOWI$ReportControllerTest.ic\" NAME=\"ReportControllerTest Coverage Results\" MODIFIED=\"1748550635141\" SOURCE_PROVIDER=\"com.intellij.coverage.DefaultCoverageFileProvider\" RUNNER=\"idea\" COVERAGE_BY_TEST_ENABLED=\"false\" COVERAGE_TRACING_ENABLED=\"true\">\r\n      <FILTER>com.example.projekt.*</FILTER>\r\n    </SUITE>\r\n    <SUITE FILE_PATH=\"coverage/IiE_FIOLETOWI$RoleTest.ic\" NAME=\"RoleTest Coverage Results\" MODIFIED=\"1748548789379\" SOURCE_PROVIDER=\"com.intellij.coverage.DefaultCoverageFileProvider\" RUNNER=\"idea\" COVERAGE_BY_TEST_ENABLED=\"false\" COVERAGE_TRACING_ENABLED=\"true\">\r\n      <FILTER>com.example.projekt.*</FILTER>\r\n    </SUITE>\r\n    <SUITE FILE_PATH=\"coverage/IiE_FIOLETOWI$AppSettingsTest.ic\" NAME=\"AppSettingsTest Coverage Results\" MODIFIED=\"1748549084584\" SOURCE_PROVIDER=\"com.intellij.coverage.DefaultCoverageFileProvider\" RUNNER=\"idea\" COVERAGE_BY_TEST_ENABLED=\"false\" COVERAGE_TRACING_ENABLED=\"true\">\r\n      <FILTER>com.example.projekt.*</FILTER>\r\n    </SUITE>\r\n    <SUITE FILE_PATH=\"coverage/IiE_FIOLETOWI$PasswordHasherTest.ic\" NAME=\"PasswordHasherTest Coverage Results\" MODIFIED=\"1748548972803\" SOURCE_PROVIDER=\"com.intellij.coverage.DefaultCoverageFileProvider\" RUNNER=\"idea\" COVERAGE_BY_TEST_ENABLED=\"false\" COVERAGE_TRACING_ENABLED=\"true\">\r\n      <FILTER>com.example.projekt.*</FILTER>\r\n    </SUITE>\r\n    <SUITE FILE_PATH=\"coverage/IiE_FIOLETOWI$UserTest.ic\" NAME=\"UserTest Coverage Results\" MODIFIED=\"1748548806817\" SOURCE_PROVIDER=\"com.intellij.coverage.DefaultCoverageFileProvider\" RUNNER=\"idea\" COVERAGE_BY_TEST_ENABLED=\"false\" COVERAGE_TRACING_ENABLED=\"true\">\r\n      <FILTER>com.example.projekt.*</FILTER>\r\n    </SUITE>\r\n    <SUITE FILE_PATH=\"coverage/IiE_FIOLETOWI$AlertUtilsTest.ic\" NAME=\"AlertUtilsTest Coverage Results\" MODIFIED=\"1748549164396\" SOURCE_PROVIDER=\"com.intellij.coverage.DefaultCoverageFileProvider\" RUNNER=\"idea\" COVERAGE_BY_TEST_ENABLED=\"false\" COVERAGE_TRACING_ENABLED=\"true\">\r\n      <FILTER>com.example.projekt.*</FILTER>\r\n    </SUITE>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 1c4c76e849ecd2b67bc50afaa481519ae0548e6b)
++++ b/.idea/workspace.xml	(date 1748775322448)
+@@ -6,24 +6,11 @@
+   <component name="ChangeListManager">
+     <list default="true" id="93580640-a4f6-4848-877d-83f2d9fe0546" name="Changes" comment="Testy">
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/Projekt/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/pom.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/LoginController.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/ProductManagementController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/ProductManagementController.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/ReportController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/ReportController.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/SettingsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/SettingsController.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/TaskController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/TaskController.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/UserManagementController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/UserManagementController.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/UserSession.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/UserSession.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/UserTaskPanelController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/UserTaskPanelController.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/Product_Management.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/Product_Management.fxml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/reports.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/reports.fxml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/settings.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/settings.fxml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/task.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/task.fxml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/userManagement.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/userManagement.fxml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/usertaskpanel.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/usertaskpanel.fxml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/Projekt/src/main/resources/styles/themes/dark.css" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/styles/themes/dark.css" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/Projekt/src/main/resources/styles/themes/default.css" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/styles/themes/default.css" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/Projekt/src/main/resources/styles/themes/light.css" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/resources/com/example/projekt/styles/themes/light.css" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/Projekt/src/test/java/com/example/projekt/AppSettingsTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/test/java/com/example/projekt/AppSettingsTest.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/Projekt/src/test/java/com/example/projekt/TestPolaczeniaTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/test/java/com/example/projekt/TestPolaczeniaTest.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/user-settings.properties" beforeDir="false" afterPath="$PROJECT_DIR$/user-settings.properties" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -59,10 +46,13 @@
+ }</component>
+   <component name="GithubPullRequestsUISettings">{
+   &quot;selectedUrlAndAccountId&quot;: {
+-    &quot;url&quot;: &quot;https://github.com/PZ-2025/IiE_FIOLETOWI.git&quot;,
+-    &quot;accountId&quot;: &quot;b1f7b158-4475-45f9-92b8-f1f8ef44342c&quot;
++    &quot;url&quot;: &quot;https://github.com/PZ-2025/IiE_FIOLETOWI&quot;,
++    &quot;accountId&quot;: &quot;e47df973-3faf-41d6-9f20-be590d1b6888&quot;
+   }
+ }</component>
++  <component name="ProblemsViewState">
++    <option name="selectedTabId" value="CurrentFile" />
++  </component>
+   <component name="ProjectColorInfo">{
+   &quot;associatedIndex&quot;: 0
+ }</component>
+@@ -74,59 +64,67 @@
+     <option name="hideEmptyMiddlePackages" value="true" />
+     <option name="showLibraryContents" value="true" />
+   </component>
+-  <component name="PropertiesComponent">{
+-  &quot;keyToString&quot;: {
+-    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+-    &quot;Application.TestPołączenia.executor&quot;: &quot;Run&quot;,
+-    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
+-    &quot;JUnit.AlertUtilsTest.executor&quot;: &quot;Coverage&quot;,
+-    &quot;JUnit.AppSettingsTest.executor&quot;: &quot;Coverage&quot;,
+-    &quot;JUnit.DatabaseConnectorTest.executor&quot;: &quot;Coverage&quot;,
+-    &quot;JUnit.DatabaseConnectorTest.testConnectReturnsConnection.executor&quot;: &quot;Run&quot;,
+-    &quot;JUnit.GroupTest.executor&quot;: &quot;Coverage&quot;,
+-    &quot;JUnit.LoginControllerTest.executor&quot;: &quot;Coverage&quot;,
+-    &quot;JUnit.PasswordHasherTest.executor&quot;: &quot;Coverage&quot;,
+-    &quot;JUnit.PasswordValidatorTest.executor&quot;: &quot;Coverage&quot;,
+-    &quot;JUnit.ProductTest.executor&quot;: &quot;Coverage&quot;,
+-    &quot;JUnit.ProductTypeTest.executor&quot;: &quot;Coverage&quot;,
+-    &quot;JUnit.ReportControllerTest.executor&quot;: &quot;Run&quot;,
+-    &quot;JUnit.RoleTest.executor&quot;: &quot;Coverage&quot;,
+-    &quot;JUnit.RoleTest.testConstructorAndGetters.executor&quot;: &quot;Coverage&quot;,
+-    &quot;JUnit.TaskTest.executor&quot;: &quot;Coverage&quot;,
+-    &quot;JUnit.TestPolaczeniaTest.executor&quot;: &quot;Coverage&quot;,
+-    &quot;JUnit.UserManagementControllerTest.addNewUser_withValidData_executesInsert.executor&quot;: &quot;Run&quot;,
+-    &quot;JUnit.UserManagementControllerTest.executor&quot;: &quot;Coverage&quot;,
+-    &quot;JUnit.UserSessionTest.executor&quot;: &quot;Coverage&quot;,
+-    &quot;JUnit.UserTest.executor&quot;: &quot;Coverage&quot;,
+-    &quot;JUnit.UserTest.testConstructorAndGetters.executor&quot;: &quot;Coverage&quot;,
+-    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+-    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
+-    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
+-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+-    &quot;last_opened_file_path&quot;: &quot;D:/IiE_FIOLETOWI1/Projekt/src/main/resources/com/example/projekt/icons&quot;,
+-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+-    &quot;settings.editor.selected.configurable&quot;: &quot;MavenSettings&quot;
++  <component name="PropertiesComponent"><![CDATA[{
++  "keyToString": {
++    "Application.Main.executor": "Run",
++    "Application.TestPołączenia.executor": "Run",
++    "Downloaded.Files.Path.Enabled": "false",
++    "JUnit.AlertUtilsTest and 15 more.executor": "Coverage",
++    "JUnit.AlertUtilsTest and 17 more.executor": "Coverage",
++    "JUnit.AlertUtilsTest.executor": "Coverage",
++    "JUnit.AppSettingsTest.executor": "Coverage",
++    "JUnit.DatabaseConnectorTest.executor": "Coverage",
++    "JUnit.DatabaseConnectorTest.testConnectReturnsConnection.executor": "Run",
++    "JUnit.GroupTest.executor": "Coverage",
++    "JUnit.LoginControllerTest.executor": "Coverage",
++    "JUnit.MainControllerTest.executor": "Coverage",
++    "JUnit.PasswordHasherTest.executor": "Coverage",
++    "JUnit.PasswordValidatorTest.executor": "Coverage",
++    "JUnit.ProductManagementControllerTest.executor": "Coverage",
++    "JUnit.ProductTest.executor": "Coverage",
++    "JUnit.ProductTypeTest.executor": "Coverage",
++    "JUnit.ReportControllerTest.executor": "Coverage",
++    "JUnit.RoleTest.executor": "Coverage",
++    "JUnit.RoleTest.testConstructorAndGetters.executor": "Coverage",
++    "JUnit.TaskControllerTest.executor": "Coverage",
++    "JUnit.TaskControllerTest.testHandleAddTask_Success.executor": "Run",
++    "JUnit.TaskControllerTest.testInitialize.executor": "Run",
++    "JUnit.TaskControllerTest.testValidateForm_InvalidData.executor": "Run",
++    "JUnit.TaskTest.executor": "Coverage",
++    "JUnit.TestPolaczeniaTest.executor": "Coverage",
++    "JUnit.TestPolaczeniatest.executor": "Coverage",
++    "JUnit.UserManagementControllerTest.addNewUser_withValidData_executesInsert.executor": "Run",
++    "JUnit.UserManagementControllerTest.executor": "Coverage",
++    "JUnit.UserSessionTest.executor": "Coverage",
++    "JUnit.UserTaskPanelControllerTest.executor": "Run",
++    "JUnit.UserTaskPanelControllerTest.testChangeTaskStatus_noSelectedTask_showsAlert.executor": "Run",
++    "JUnit.UserTaskPanelControllerTest.testInitialize_shouldConfigureTablesAndLoadData.executor": "Run",
++    "JUnit.UserTaskPanelControllerTest.testSaveTaskComment_noSelectedTask_showsAlert.executor": "Run",
++    "JUnit.UserTest.executor": "Coverage",
++    "JUnit.UserTest.testConstructorAndGetters.executor": "Coverage",
++    "Repository.Attach.Annotations": "false",
++    "Repository.Attach.JavaDocs": "false",
++    "Repository.Attach.Sources": "false",
++    "RunOnceActivity.ShowReadmeOnStart": "true",
++    "RunOnceActivity.git.unshallow": "true",
++    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
++    "git-widget-placeholder": "main",
++    "kotlin-language-version-configured": "true",
++    "last_opened_file_path": "C:/Users/remix/IdeaProjects/IiE_FIOLETOWI/Projekt/lib/reportlib.jar",
++    "project.structure.last.edited": "Modules",
++    "project.structure.proportion": "0.15",
++    "project.structure.side.proportion": "0.2",
++    "settings.editor.selected.configurable": "MavenSettings"
+   }
+-}</component>
++}]]></component>
+   <component name="RecentsManager">
+-    <key name="CopyFile.RECENT_KEYS">
+-      <recent name="D:\IiE_FIOLETOWI1\Projekt\src\main\resources\com\example\projekt\icons" />
+-      <recent name="D:\IiE_FIOLETOWI1\Projekt\src\main\resources\icons" />
+-    </key>
+     <key name="MoveFile.RECENT_KEYS">
+-      <recent name="D:\IiE_FIOLETOWI1\Projekt\src\main\resources\com\example\projekt\styles\themes" />
+       <recent name="C:\Users\ABC\Documents\IiE_FIOLETOWI\Projekt\src\main\resources\com\example" />
+       <recent name="C:\Users\ABC\Documents\IiE_FIOLETOWI\Projekt\src\main\java\com\example" />
+       <recent name="C:\Users\ABC\Documents\IiE_FIOLETOWI\Projekt\src\main\java\com\example\projekt" />
+     </key>
+   </component>
+-  <component name="RunManager" selected="Application.Main">
++  <component name="RunManager" selected="JUnit.UserTaskPanelControllerTest">
+     <configuration name="Main" type="Application" factoryName="Application">
+       <option name="MAIN_CLASS_NAME" value="com.example.projekt.Main" />
+       <module name="Projekt" />
+@@ -134,7 +132,7 @@
+         <option name="Make" enabled="true" />
+       </method>
+     </configuration>
+-    <configuration name="LoginControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
++    <configuration name="TestPolaczeniatest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+       <module name="Projekt" />
+       <extension name="coverage">
+         <pattern>
+@@ -143,13 +141,13 @@
+         </pattern>
+       </extension>
+       <option name="PACKAGE_NAME" value="com.example.projekt" />
+-      <option name="MAIN_CLASS_NAME" value="com.example.projekt.LoginControllerTest" />
++      <option name="MAIN_CLASS_NAME" value="com.example.projekt.TestPolaczeniatest" />
+       <option name="TEST_OBJECT" value="class" />
+       <method v="2">
+         <option name="Make" enabled="true" />
+       </method>
+     </configuration>
+-    <configuration name="ReportControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
++    <configuration name="UserManagementControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+       <module name="Projekt" />
+       <extension name="coverage">
+         <pattern>
+@@ -158,13 +156,13 @@
+         </pattern>
+       </extension>
+       <option name="PACKAGE_NAME" value="com.example.projekt" />
+-      <option name="MAIN_CLASS_NAME" value="com.example.projekt.ReportControllerTest" />
++      <option name="MAIN_CLASS_NAME" value="com.example.projekt.UserManagementControllerTest" />
+       <option name="TEST_OBJECT" value="class" />
+       <method v="2">
+         <option name="Make" enabled="true" />
+       </method>
+     </configuration>
+-    <configuration name="TaskTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
++    <configuration name="UserSessionTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+       <module name="Projekt" />
+       <extension name="coverage">
+         <pattern>
+@@ -173,13 +171,13 @@
+         </pattern>
+       </extension>
+       <option name="PACKAGE_NAME" value="com.example.projekt" />
+-      <option name="MAIN_CLASS_NAME" value="com.example.projekt.TaskTest" />
++      <option name="MAIN_CLASS_NAME" value="com.example.projekt.UserSessionTest" />
+       <option name="TEST_OBJECT" value="class" />
+       <method v="2">
+         <option name="Make" enabled="true" />
+       </method>
+     </configuration>
+-    <configuration name="UserManagementControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
++    <configuration name="UserTaskPanelControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+       <module name="Projekt" />
+       <extension name="coverage">
+         <pattern>
+@@ -188,13 +186,13 @@
+         </pattern>
+       </extension>
+       <option name="PACKAGE_NAME" value="com.example.projekt" />
+-      <option name="MAIN_CLASS_NAME" value="com.example.projekt.UserManagementControllerTest" />
++      <option name="MAIN_CLASS_NAME" value="com.example.projekt.UserTaskPanelControllerTest" />
+       <option name="TEST_OBJECT" value="class" />
+       <method v="2">
+         <option name="Make" enabled="true" />
+       </method>
+     </configuration>
+-    <configuration name="UserManagementControllerTest.addNewUser_withValidData_executesInsert" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
++    <configuration name="UserTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+       <module name="Projekt" />
+       <extension name="coverage">
+         <pattern>
+@@ -203,20 +201,19 @@
+         </pattern>
+       </extension>
+       <option name="PACKAGE_NAME" value="com.example.projekt" />
+-      <option name="MAIN_CLASS_NAME" value="com.example.projekt.UserManagementControllerTest" />
+-      <option name="METHOD_NAME" value="addNewUser_withValidData_executesInsert" />
+-      <option name="TEST_OBJECT" value="method" />
++      <option name="MAIN_CLASS_NAME" value="com.example.projekt.UserTest" />
++      <option name="TEST_OBJECT" value="class" />
+       <method v="2">
+         <option name="Make" enabled="true" />
+       </method>
+     </configuration>
+     <recent_temporary>
+       <list>
+-        <item itemvalue="JUnit.ReportControllerTest" />
++        <item itemvalue="JUnit.UserTaskPanelControllerTest" />
++        <item itemvalue="JUnit.TestPolaczeniatest" />
++        <item itemvalue="JUnit.UserTest" />
++        <item itemvalue="JUnit.UserSessionTest" />
+         <item itemvalue="JUnit.UserManagementControllerTest" />
+-        <item itemvalue="JUnit.UserManagementControllerTest.addNewUser_withValidData_executesInsert" />
+-        <item itemvalue="JUnit.TaskTest" />
+-        <item itemvalue="JUnit.LoginControllerTest" />
+       </list>
+     </recent_temporary>
+   </component>
+@@ -325,7 +322,15 @@
+       <option name="project" value="LOCAL" />
+       <updated>1748550820086</updated>
+     </task>
+-    <option name="localTasksCounter" value="13" />
++    <task id="LOCAL-00013" summary="Testy">
++      <option name="closed" value="true" />
++      <created>1748715511675</created>
++      <option name="number" value="00013" />
++      <option name="presentableId" value="LOCAL-00013" />
++      <option name="project" value="LOCAL" />
++      <updated>1748715511675</updated>
++    </task>
++    <option name="localTasksCounter" value="14" />
+     <servers />
+   </component>
+   <component name="Vcs.Log.Tabs.Properties">
+@@ -367,52 +372,66 @@
+     <option name="LAST_COMMIT_MESSAGE" value="Testy" />
+   </component>
+   <component name="com.intellij.coverage.CoverageDataManagerImpl">
+-    <SUITE FILE_PATH="coverage/IiE_FIOLETOWI$TestPolaczeniaTest.ic" NAME="TestPolaczeniaTest Coverage Results" MODIFIED="1748548885996" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
++    <SUITE FILE_PATH="coverage/IiE_FIOLETOWI$TestPolaczeniaTest.ic" NAME="TestPolaczeniaTest Coverage Results" MODIFIED="1748774773633" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
++      <FILTER>com.example.projekt.*</FILTER>
++    </SUITE>
++    <SUITE FILE_PATH="coverage/IiE_FIOLETOWI$DatabaseConnectorTest.ic" NAME="DatabaseConnectorTest Coverage Results" MODIFIED="1748774664633" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
++      <FILTER>com.example.projekt.*</FILTER>
++    </SUITE>
++    <SUITE FILE_PATH="coverage/IiE_FIOLETOWI$ProductTypeTest.ic" NAME="ProductTypeTest Coverage Results" MODIFIED="1748774722917" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+       <FILTER>com.example.projekt.*</FILTER>
+     </SUITE>
+-    <SUITE FILE_PATH="coverage/IiE_FIOLETOWI$DatabaseConnectorTest.ic" NAME="DatabaseConnectorTest Coverage Results" MODIFIED="1748548577061" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
++    <SUITE FILE_PATH="coverage/IiE_FIOLETOWI$UserManagementControllerTest.ic" NAME="UserManagementControllerTest Coverage Results" MODIFIED="1748774783374" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+       <FILTER>com.example.projekt.*</FILTER>
+     </SUITE>
+-    <SUITE FILE_PATH="coverage/IiE_FIOLETOWI$ProductTypeTest.ic" NAME="ProductTypeTest Coverage Results" MODIFIED="1748548782100" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
++    <SUITE FILE_PATH="coverage/IiE_FIOLETOWI$PasswordValidatorTest.ic" NAME="PasswordValidatorTest Coverage Results" MODIFIED="1748774698347" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+       <FILTER>com.example.projekt.*</FILTER>
+     </SUITE>
+-    <SUITE FILE_PATH="coverage/IiE_FIOLETOWI$UserManagementControllerTest.ic" NAME="UserManagementControllerTest Coverage Results" MODIFIED="1748550314573" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
++    <SUITE FILE_PATH="coverage/IiE_FIOLETOWI$GroupTest.ic" NAME="GroupTest Coverage Results" MODIFIED="1748774671890" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+       <FILTER>com.example.projekt.*</FILTER>
+     </SUITE>
+-    <SUITE FILE_PATH="coverage/IiE_FIOLETOWI$PasswordValidatorTest.ic" NAME="PasswordValidatorTest Coverage Results" MODIFIED="1748548754047" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
++    <SUITE FILE_PATH="coverage/IiE_FIOLETOWI$LoginControllerTest.ic" NAME="LoginControllerTest Coverage Results" MODIFIED="1748774677665" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+       <FILTER>com.example.projekt.*</FILTER>
+     </SUITE>
+-    <SUITE FILE_PATH="coverage/IiE_FIOLETOWI$GroupTest.ic" NAME="GroupTest Coverage Results" MODIFIED="1748548708982" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
++    <SUITE FILE_PATH="coverage/IiE_FIOLETOWI$ProductTest.ic" NAME="ProductTest Coverage Results" MODIFIED="1748774716600" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+       <FILTER>com.example.projekt.*</FILTER>
+     </SUITE>
+-    <SUITE FILE_PATH="coverage/IiE_FIOLETOWI$ProductTest.ic" NAME="ProductTest Coverage Results" MODIFIED="1748548773636" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
++    <SUITE FILE_PATH="coverage/IiE_FIOLETOWI$TaskTest.ic" NAME="TaskTest Coverage Results" MODIFIED="1748774765217" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+       <FILTER>com.example.projekt.*</FILTER>
+     </SUITE>
+-    <SUITE FILE_PATH="coverage/IiE_FIOLETOWI$LoginControllerTest.ic" NAME="LoginControllerTest Coverage Results" MODIFIED="1748549316626" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
++    <SUITE FILE_PATH="coverage/IiE_FIOLETOWI$AlertUtilsTest_and_17_more.ic" NAME="AlertUtilsTest and 17 more Coverage Results" MODIFIED="1748723106220" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
++    <SUITE FILE_PATH="coverage/IiE_FIOLETOWI$TaskControllerTest.ic" NAME="TaskControllerTest Coverage Results" MODIFIED="1748774755015" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+       <FILTER>com.example.projekt.*</FILTER>
+     </SUITE>
+-    <SUITE FILE_PATH="coverage/IiE_FIOLETOWI$TaskTest.ic" NAME="TaskTest Coverage Results" MODIFIED="1748549380555" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
++    <SUITE FILE_PATH="coverage/IiE_FIOLETOWI$ReportControllerTest.ic" NAME="ReportControllerTest Coverage Results" MODIFIED="1748774731428" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+       <FILTER>com.example.projekt.*</FILTER>
+     </SUITE>
+-    <SUITE FILE_PATH="coverage/IiE_FIOLETOWI$UserSessionTest.ic" NAME="UserSessionTest Coverage Results" MODIFIED="1748548798117" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
++    <SUITE FILE_PATH="coverage/IiE_FIOLETOWI$UserSessionTest.ic" NAME="UserSessionTest Coverage Results" MODIFIED="1748774790186" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+       <FILTER>com.example.projekt.*</FILTER>
+     </SUITE>
+-    <SUITE FILE_PATH="coverage/IiE_FIOLETOWI$ReportControllerTest.ic" NAME="ReportControllerTest Coverage Results" MODIFIED="1748550635141" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
++    <SUITE FILE_PATH="coverage/IiE_FIOLETOWI$RoleTest.ic" NAME="RoleTest Coverage Results" MODIFIED="1748774748616" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+       <FILTER>com.example.projekt.*</FILTER>
+     </SUITE>
+-    <SUITE FILE_PATH="coverage/IiE_FIOLETOWI$RoleTest.ic" NAME="RoleTest Coverage Results" MODIFIED="1748548789379" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
++    <SUITE FILE_PATH="coverage/IiE_FIOLETOWI$AlertUtilsTest_and_15_more.ic" NAME="AlertUtilsTest and 15 more Coverage Results" MODIFIED="1748714582011" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
++    <SUITE FILE_PATH="coverage/IiE_FIOLETOWI$AppSettingsTest.ic" NAME="AppSettingsTest Coverage Results" MODIFIED="1748774658952" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+       <FILTER>com.example.projekt.*</FILTER>
+     </SUITE>
+-    <SUITE FILE_PATH="coverage/IiE_FIOLETOWI$AppSettingsTest.ic" NAME="AppSettingsTest Coverage Results" MODIFIED="1748549084584" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
++    <SUITE FILE_PATH="coverage/IiE_FIOLETOWI$MainControllerTest.ic" NAME="MainControllerTest Coverage Results" MODIFIED="1748774684825" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+       <FILTER>com.example.projekt.*</FILTER>
+     </SUITE>
+-    <SUITE FILE_PATH="coverage/IiE_FIOLETOWI$PasswordHasherTest.ic" NAME="PasswordHasherTest Coverage Results" MODIFIED="1748548972803" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
++    <SUITE FILE_PATH="coverage/IiE_FIOLETOWI$ProductManagementControllerTest.ic" NAME="ProductManagementControllerTest Coverage Results" MODIFIED="1748774704659" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+       <FILTER>com.example.projekt.*</FILTER>
+     </SUITE>
+-    <SUITE FILE_PATH="coverage/IiE_FIOLETOWI$UserTest.ic" NAME="UserTest Coverage Results" MODIFIED="1748548806817" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
++    <SUITE FILE_PATH="coverage/IiE_FIOLETOWI$PasswordHasherTest.ic" NAME="PasswordHasherTest Coverage Results" MODIFIED="1748774692589" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+       <FILTER>com.example.projekt.*</FILTER>
+     </SUITE>
+-    <SUITE FILE_PATH="coverage/IiE_FIOLETOWI$AlertUtilsTest.ic" NAME="AlertUtilsTest Coverage Results" MODIFIED="1748549164396" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
++    <SUITE FILE_PATH="coverage/IiE_FIOLETOWI$UserTest.ic" NAME="UserTest Coverage Results" MODIFIED="1748774799256" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
++      <FILTER>com.example.projekt.*</FILTER>
++    </SUITE>
++    <SUITE FILE_PATH="coverage/IiE_FIOLETOWI$TestPolaczeniatest.ic" NAME="TestPolaczeniatest Coverage Results" MODIFIED="1748774926038" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
++      <FILTER>com.example.projekt.*</FILTER>
++    </SUITE>
++    <SUITE FILE_PATH="coverage/IiE_FIOLETOWI$AlertUtilsTest.ic" NAME="AlertUtilsTest Coverage Results" MODIFIED="1748774652076" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+       <FILTER>com.example.projekt.*</FILTER>
+     </SUITE>
+   </component>
+Index: Projekt/src/test/java/com/example/projekt/TestPolaczeniaTest.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.projekt;\r\n\r\nimport org.junit.jupiter.api.Test;\r\n\r\nimport java.sql.Connection;\r\n\r\nimport static org.junit.jupiter.api.Assertions.*;\r\n\r\nclass TestPolaczeniaTest {\r\n\r\n    @Test\r\n    void testConnection() {\r\n        try (Connection conn = DatabaseConnector.connect()) {\r\n            assertNotNull(conn, \"Połączenie nie może być null\");\r\n            assertFalse(conn.isClosed(), \"Połączenie nie może być zamknięte\");\r\n        } catch (Exception e) {\r\n            fail(\"Połączenie z bazą danych nie powiodło się: \" + e.getMessage());\r\n        }\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Projekt/src/test/java/com/example/projekt/TestPolaczeniaTest.java b/Projekt/src/test/java/com/example/projekt/TestPolaczeniaTest.java
+--- a/Projekt/src/test/java/com/example/projekt/TestPolaczeniaTest.java	(revision 1c4c76e849ecd2b67bc50afaa481519ae0548e6b)
++++ b/Projekt/src/test/java/com/example/projekt/TestPolaczeniaTest.java	(date 1748774921009)
+@@ -1,20 +1,19 @@
+ package com.example.projekt;
+ 
+ import org.junit.jupiter.api.Test;
+-
+ import java.sql.Connection;
+ 
+ import static org.junit.jupiter.api.Assertions.*;
+ 
+-class TestPolaczeniaTest {
++class TestPolaczeniatest {
+ 
+     @Test
+-    void testConnection() {
++    void testConnect_shouldReturnValidConnection() {
+         try (Connection conn = DatabaseConnector.connect()) {
+-            assertNotNull(conn, "Połączenie nie może być null");
+-            assertFalse(conn.isClosed(), "Połączenie nie może być zamknięte");
++            assertNotNull(conn, "Connection should not be null");
++            assertFalse(conn.isClosed(), "Connection should be open");
+         } catch (Exception e) {
+-            fail("Połączenie z bazą danych nie powiodło się: " + e.getMessage());
++            fail("Exception thrown while connecting to the database: " + e.getMessage());
+         }
+     }
+ }
+Index: Projekt/src/main/java/com/example/projekt/UserTaskPanelController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.projekt;\r\n\r\nimport javafx.collections.FXCollections;\r\nimport javafx.collections.ObservableList;\r\nimport javafx.event.ActionEvent;\r\nimport javafx.fxml.FXML;\r\nimport javafx.fxml.FXMLLoader;\r\nimport javafx.geometry.Pos;\r\nimport javafx.scene.Scene;\r\nimport javafx.scene.Parent;\r\nimport javafx.scene.Node;\r\nimport javafx.scene.control.*;\r\nimport javafx.scene.layout.BorderPane;\r\nimport javafx.stage.Stage;\r\n\r\nimport java.net.URL;\r\nimport java.sql.*;\r\nimport java.util.*;\r\nimport java.util.logging.Level;\r\nimport java.util.logging.Logger;\r\n\r\npublic class UserTaskPanelController {\r\n    @FXML private TableView<Product> productTable;\r\n    @FXML private TableColumn<Product, String> productNameColumn;\r\n    @FXML private TableColumn<Product, Integer> productStockColumn;\r\n    @FXML private TableColumn<Product, Integer> productLimitColumn;\r\n    @FXML private TableColumn<Product, Double> productPriceColumn;\r\n\r\n    @FXML private TableView<Task> taskTable;\r\n    @FXML private TableColumn<Task, String> nameColumn;\r\n    @FXML private TableColumn<Task, String> statusColumn;\r\n    @FXML private TableColumn<Task, String> priorityColumn;\r\n    @FXML private TableColumn<Task, String> dateColumn;\r\n\r\n    @FXML private ComboBox<String> statusComboBox;\r\n    @FXML private ListView<String> historyList;\r\n    @FXML private TextArea commentTextArea;\r\n\r\n    @FXML private BorderPane userTaskRoot;\r\n\r\n    private static final Logger LOGGER = Logger.getLogger(UserTaskPanelController.class.getName());\r\n    private Task selectedTask;\r\n    private Map<String, Integer> statusOrder = new LinkedHashMap<>();\r\n\r\n    @FXML\r\n    public void initialize() {\r\n        userTaskRoot.sceneProperty().addListener((obs, oldScene, newScene) -> {\r\n            if (newScene != null) {\r\n                applyTheme(AppSettings.getTheme());\r\n                applyFontSize(AppSettings.getFontSizeLabel());\r\n            }\r\n        });\r\n        // Inicjalizacja kolejności statusów\r\n        initializeStatusOrder();\r\n\r\n        // Konfiguracja tabeli produktów\r\n        configureProductTable();\r\n        loadProducts();\r\n\r\n        // Konfiguracja tabeli zadań\r\n        configureTaskTable();\r\n        loadTasks();\r\n        loadStatuses();\r\n        loadTaskHistory();\r\n\r\n        // Listener dla wyboru zadania\r\n        taskTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSel, newSel) -> {\r\n            selectedTask = newSel;\r\n            if (newSel != null) {\r\n                loadTaskComment(newSel.getId());\r\n                updateAvailableStatuses(newSel.getStatus());\r\n            } else {\r\n                commentTextArea.clear();\r\n                statusComboBox.getItems().clear();\r\n            }\r\n        });\r\n\r\n        checkForNotifications();\r\n    }\r\n\r\n    private void initializeStatusOrder() {\r\n        statusOrder.put(\"Oczekujące\", 1);\r\n        statusOrder.put(\"Rozpoczęte\", 2);\r\n        statusOrder.put(\"W trakcie\", 3);\r\n        statusOrder.put(\"Zakończone\", 4);\r\n    }\r\n\r\n    private void configureProductTable() {\r\n        productNameColumn.setCellValueFactory(data -> data.getValue().nazwaProperty());\r\n        productStockColumn.setCellValueFactory(data -> data.getValue().stanProperty().asObject());\r\n        productLimitColumn.setCellValueFactory(data -> data.getValue().limitStanowProperty().asObject());\r\n        productPriceColumn.setCellValueFactory(data -> data.getValue().cenaProperty().asObject());\r\n\r\n        // Formatowanie ceny do 2 miejsc po przecinku\r\n        productPriceColumn.setCellFactory(column -> new TableCell<Product, Double>() {\r\n            @Override\r\n            protected void updateItem(Double price, boolean empty) {\r\n                super.updateItem(price, empty);\r\n                if (empty || price == null) {\r\n                    setText(null);\r\n                } else {\r\n                    setText(String.format(\"%.2f zł\", price));\r\n                    setAlignment(Pos.CENTER_RIGHT);\r\n                }\r\n            }\r\n        });\r\n\r\n        // Wyrównanie kolumn liczbowych do prawej\r\n        productStockColumn.setCellFactory(column -> new TableCell<Product, Integer>() {\r\n            @Override\r\n            protected void updateItem(Integer stock, boolean empty) {\r\n                super.updateItem(stock, empty);\r\n                if (empty || stock == null) {\r\n                    setText(null);\r\n                } else {\r\n                    setText(stock.toString());\r\n                    setAlignment(Pos.CENTER_RIGHT);\r\n                }\r\n            }\r\n        });\r\n\r\n        productLimitColumn.setCellFactory(column -> new TableCell<Product, Integer>() {\r\n            @Override\r\n            protected void updateItem(Integer limit, boolean empty) {\r\n                super.updateItem(limit, empty);\r\n                if (empty || limit == null) {\r\n                    setText(null);\r\n                } else {\r\n                    setText(limit.toString());\r\n                    setAlignment(Pos.CENTER_RIGHT);\r\n                }\r\n            }\r\n        });\r\n    }\r\n\r\n    private void configureTaskTable() {\r\n        nameColumn.setCellValueFactory(cellData -> cellData.getValue().nazwaProperty());\r\n        statusColumn.setCellValueFactory(cellData -> cellData.getValue().statusProperty());\r\n        priorityColumn.setCellValueFactory(cellData -> cellData.getValue().priorytetProperty());\r\n        dateColumn.setCellValueFactory(cellData -> cellData.getValue().dataProperty());\r\n    }\r\n\r\n    private void updateAvailableStatuses(String currentStatus) {\r\n        statusComboBox.getItems().clear();\r\n\r\n        // Znajdź aktualną pozycję statusu\r\n        Integer currentOrder = statusOrder.get(currentStatus);\r\n        if (currentOrder == null) return;\r\n\r\n        // Dodaj tylko statusy o wyższej kolejności\r\n        statusOrder.entrySet().stream()\r\n                .filter(entry -> entry.getValue() > currentOrder)\r\n                .forEach(entry -> statusComboBox.getItems().add(entry.getKey()));\r\n    }\r\n\r\n    private void loadProducts() {\r\n        ObservableList<Product> products = FXCollections.observableArrayList();\r\n        String sql = \"SELECT p.id_produktu, p.nazwa, p.stan, p.cena, p.limit_stanow, p.id_typu_produktu, t.nazwa AS typ_nazwa \" +\r\n                \"FROM produkty p \" +\r\n                \"LEFT JOIN typ_produktu t ON p.id_typu_produktu = t.id_typu_produktu\";\r\n\r\n        try (Connection conn = DatabaseConnector.connect();\r\n             PreparedStatement stmt = conn.prepareStatement(sql);\r\n             ResultSet rs = stmt.executeQuery()) {\r\n\r\n            while (rs.next()) {\r\n                products.add(new Product(\r\n                        rs.getInt(\"id_produktu\"),\r\n                        rs.getString(\"nazwa\"),\r\n                        rs.getInt(\"stan\"),\r\n                        rs.getDouble(\"cena\"),\r\n                        rs.getInt(\"limit_stanow\"),\r\n                        rs.getInt(\"id_typu_produktu\"),\r\n                        rs.getString(\"typ_nazwa\")\r\n                ));\r\n            }\r\n            productTable.setItems(products);\r\n\r\n        } catch (SQLException e) {\r\n            LOGGER.log(Level.SEVERE, \"Błąd ładowania produktów\", e);\r\n            showAlert(\"Błąd\", \"Nie udało się załadować produktów\");\r\n        }\r\n    }\r\n\r\n    private void loadTasks() {\r\n        ObservableList<Task> tasks = FXCollections.observableArrayList();\r\n        String sql = \"\"\"\r\n        SELECT \r\n            z.id_zadania, z.nazwa, s.nazwa AS status, p.nazwa AS priorytet,\r\n            z.data_rozpoczecia, z.komentarz, pk.nazwa AS produkt, \r\n            z.ilosc, k.nazwa AS kierunek, \r\n            CONCAT(pr.imie, ' ', pr.nazwisko) AS pracownik\r\n        FROM zadania z\r\n        LEFT JOIN statusy s ON z.id_statusu = s.id_statusu\r\n        LEFT JOIN priorytety p ON z.id_priorytetu = p.id_priorytetu\r\n        LEFT JOIN produkty pk ON z.id_produktu = pk.id_produktu\r\n        LEFT JOIN kierunki k ON z.id_kierunku = k.id_kierunku\r\n        LEFT JOIN pracownicy pr ON z.id_pracownika = pr.id_pracownika\r\n        WHERE z.id_pracownika = ? \r\n        AND s.nazwa != 'Zakończone'\r\n        \"\"\";\r\n\r\n        try (Connection conn = DatabaseConnector.connect();\r\n             PreparedStatement stmt = conn.prepareStatement(sql)) {\r\n\r\n            stmt.setInt(1, UserSession.getInstance().getUser().getId());\r\n            ResultSet rs = stmt.executeQuery();\r\n\r\n            while (rs.next()) {\r\n                // ilosc może być NULL, więc sprawdzamy\r\n                String ilosc = \"\";\r\n                int iloscInt = rs.getInt(\"ilosc\");\r\n                if (!rs.wasNull()) {\r\n                    ilosc = String.valueOf(iloscInt);\r\n                }\r\n\r\n                Task task = new Task(\r\n                        rs.getInt(\"id_zadania\"),\r\n                        rs.getString(\"nazwa\"),\r\n                        rs.getString(\"status\"),\r\n                        rs.getString(\"priorytet\"),\r\n                        rs.getDate(\"data_rozpoczecia\") != null ? rs.getDate(\"data_rozpoczecia\").toString() : \"\",\r\n                        rs.getString(\"produkt\"),\r\n                        rs.getString(\"kierunek\"),\r\n                        rs.getString(\"komentarz\") != null ? rs.getString(\"komentarz\") : \"\",\r\n                        ilosc,\r\n                        rs.getString(\"pracownik\")\r\n                );\r\n                tasks.add(task);\r\n            }\r\n\r\n            taskTable.setItems(tasks);\r\n\r\n        } catch (SQLException e) {\r\n            e.printStackTrace();\r\n            showAlert(\"Błąd\", \"Nie udało się pobrać zadań.\");\r\n        }\r\n    }\r\n\r\n\r\n\r\n    private void loadStatuses() {\r\n        try (Connection conn = DatabaseConnector.connect();\r\n             PreparedStatement stmt = conn.prepareStatement(\"SELECT nazwa FROM statusy\");\r\n             ResultSet rs = stmt.executeQuery()) {\r\n\r\n            // Nie czyścimy tutaj ComboBox, bo jest wypełniany dynamicznie w updateAvailableStatuses()\r\n        } catch (SQLException e) {\r\n            LOGGER.log(Level.SEVERE, \"Błąd ładowania statusów\", e);\r\n        }\r\n    }\r\n\r\n    private void loadTaskComment(int taskId) {\r\n        String sql = \"SELECT komentarz FROM zadania WHERE id_zadania = ?\";\r\n        try (Connection conn = DatabaseConnector.connect();\r\n             PreparedStatement stmt = conn.prepareStatement(sql)) {\r\n\r\n            stmt.setInt(1, taskId);\r\n            ResultSet rs = stmt.executeQuery();\r\n            if (rs.next()) {\r\n                commentTextArea.setText(rs.getString(\"komentarz\"));\r\n            }\r\n        } catch (SQLException e) {\r\n            LOGGER.log(Level.SEVERE, \"Błąd ładowania komentarza\", e);\r\n        }\r\n    }\r\n\r\n    @FXML\r\n    private void saveTaskComment() {\r\n        if (selectedTask == null) {\r\n            showAlert(\"Błąd\", \"Nie wybrano zadania\");\r\n            return;\r\n        }\r\n\r\n        String sql = \"UPDATE zadania SET komentarz = ? WHERE id_zadania = ?\";\r\n        try (Connection conn = DatabaseConnector.connect();\r\n             PreparedStatement stmt = conn.prepareStatement(sql)) {\r\n\r\n            stmt.setString(1, commentTextArea.getText());\r\n            stmt.setInt(2, selectedTask.getId());\r\n            stmt.executeUpdate();\r\n\r\n            showAlert(\"Sukces\", \"Komentarz został zapisany\");\r\n        } catch (SQLException e) {\r\n            LOGGER.log(Level.SEVERE, \"Błąd zapisu komentarza\", e);\r\n            showAlert(\"Błąd\", \"Nie udało się zapisać komentarza\");\r\n        }\r\n    }\r\n\r\n    @FXML\r\n    private void changeTaskStatus() {\r\n        if (selectedTask == null || statusComboBox.getValue() == null) {\r\n            showAlert(\"Błąd\", \"Nie wybrano zadania lub statusu\");\r\n            return;\r\n        }\r\n\r\n        String newStatus = statusComboBox.getValue();\r\n        String sql;\r\n\r\n        if (\"Zakończone\".equals(newStatus)) {\r\n            sql = \"\"\"\r\n            UPDATE zadania SET \r\n                id_statusu = (SELECT id_statusu FROM statusy WHERE nazwa = ?),\r\n                data_zakonczenia = CURRENT_DATE,\r\n                powiadomienia = 1\r\n            WHERE id_zadania = ?\r\n            \"\"\";\r\n        } else {\r\n            sql = \"\"\"\r\n            UPDATE zadania SET \r\n                id_statusu = (SELECT id_statusu FROM statusy WHERE nazwa = ?),\r\n                powiadomienia = 1\r\n            WHERE id_zadania = ?\r\n            \"\"\";\r\n        }\r\n\r\n        try (Connection conn = DatabaseConnector.connect();\r\n             PreparedStatement stmt = conn.prepareStatement(sql)) {\r\n\r\n            stmt.setString(1, newStatus);\r\n            if (\"Zakończone\".equals(newStatus)) {\r\n                stmt.setInt(2, selectedTask.getId());\r\n            } else {\r\n                stmt.setInt(2, selectedTask.getId());\r\n            }\r\n            stmt.executeUpdate();\r\n\r\n            loadTasks();\r\n            loadTaskHistory();\r\n            showAlert(\"Sukces\", \"Status zadania został zaktualizowany\");\r\n\r\n        } catch (SQLException e) {\r\n            LOGGER.log(Level.SEVERE, \"Błąd zmiany statusu\", e);\r\n            showAlert(\"Błąd\", \"Nie udało się zmienić statusu zadania: \" + e.getMessage());\r\n        }\r\n    }\r\n\r\n    private void loadTaskHistory() {\r\n        String sql = \"\"\"\r\n            SELECT z.nazwa, z.data_rozpoczecia, z.data_zakonczenia \r\n            FROM zadania z\r\n            JOIN statusy s ON z.id_statusu = s.id_statusu\r\n            WHERE z.id_pracownika = ? AND s.nazwa = 'Zakończone'\r\n            ORDER BY z.data_zakonczenia DESC\r\n            \"\"\";\r\n\r\n        try (Connection conn = DatabaseConnector.connect();\r\n             PreparedStatement stmt = conn.prepareStatement(sql)) {\r\n\r\n            stmt.setInt(1, UserSession.getInstance().getUser().getId());\r\n            ResultSet rs = stmt.executeQuery();\r\n\r\n            historyList.getItems().clear();\r\n            while (rs.next()) {\r\n                String taskInfo = String.format(\"%s (Rozpoczęto: %s, Zakończono: %s)\",\r\n                        rs.getString(\"nazwa\"),\r\n                        rs.getDate(\"data_rozpoczecia\"),\r\n                        rs.getDate(\"data_zakonczenia\"));\r\n                historyList.getItems().add(taskInfo);\r\n            }\r\n        } catch (SQLException e) {\r\n            LOGGER.log(Level.SEVERE, \"Błąd ładowania historii\", e);\r\n        }\r\n    }\r\n\r\n    private void checkForNotifications() {\r\n        String sql = \"SELECT nazwa FROM zadania WHERE id_pracownika = ? AND powiadomienia = 1\";\r\n\r\n        try (Connection conn = DatabaseConnector.connect();\r\n             PreparedStatement stmt = conn.prepareStatement(sql)) {\r\n\r\n            stmt.setInt(1, UserSession.getInstance().getUser().getId());\r\n            ResultSet rs = stmt.executeQuery();\r\n\r\n            StringBuilder message = new StringBuilder();\r\n            while (rs.next()) {\r\n                message.append(\"- \").append(rs.getString(\"nazwa\")).append(\"\\n\");\r\n            }\r\n\r\n            if (!message.isEmpty()) {\r\n                showAlert(\"Powiadomienia\", \"Nowe zadania:\\n\" + message.toString());\r\n\r\n                // Wyczyść powiadomienia\r\n                try (PreparedStatement clear = conn.prepareStatement(\r\n                        \"UPDATE zadania SET powiadomienia = 0 WHERE id_pracownika = ?\")) {\r\n                    clear.setInt(1, UserSession.getInstance().getUser().getId());\r\n                    clear.executeUpdate();\r\n                }\r\n            }\r\n        } catch (SQLException e) {\r\n            LOGGER.log(Level.SEVERE, \"Błąd sprawdzania powiadomień\", e);\r\n        }\r\n    }\r\n\r\n    @FXML\r\n    private void goToDashboard(ActionEvent event) {\r\n        try {\r\n            FXMLLoader loader = new FXMLLoader(getClass().getResource(\"/com/example/projekt/dashboard.fxml\"));\r\n            Parent root = loader.load();\r\n            DashboardController controller = loader.getController();\r\n            controller.setCurrentUser(UserSession.getInstance().getUser());\r\n\r\n            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();\r\n            stage.setScene(new Scene(root));\r\n            stage.setTitle(\"Dashboard\");\r\n        } catch (Exception e) {\r\n            LOGGER.log(Level.SEVERE, \"Błąd powrotu do dashboardu\", e);\r\n            showAlert(\"Błąd\", \"Nie udało się przejść do dashboardu\");\r\n        }\r\n    }\r\n\r\n    private void showAlert(String title, String message) {\r\n        Alert alert = new Alert(Alert.AlertType.INFORMATION);\r\n        alert.setTitle(title);\r\n        alert.setHeaderText(null);\r\n        alert.setContentText(message);\r\n        alert.showAndWait();\r\n    }\r\n    private void applyTheme(String theme) {\r\n        Scene scene = userTaskRoot.getScene();\r\n        if (scene == null) return;\r\n\r\n        scene.getStylesheets().clear();\r\n\r\n        String cssFile = switch (theme) {\r\n            case \"Jasny\" -> \"/com/example/projekt/styles/themes/light.css\";\r\n            case \"Ciemny\" -> \"/com/example/projekt/styles/themes/dark.css\";\r\n            default -> \"/com/example/projekt/styles/themes/default.css\";\r\n        };\r\n\r\n        URL cssUrl = getClass().getResource(cssFile);\r\n        if (cssUrl != null) {\r\n            scene.getStylesheets().add(cssUrl.toExternalForm());\r\n        }\r\n    }\r\n\r\n    private void applyFontSize(String label) {\r\n        Scene scene = userTaskRoot.getScene();\r\n        if (scene == null) return;\r\n\r\n        scene.getStylesheets().removeIf(css -> css.contains(\"/styles/fonts/\"));\r\n\r\n        String fontCss = switch (label.toLowerCase()) {\r\n            case \"mała\" -> \"/com/example/projekt/styles/fonts/small.css\";\r\n            case \"duża\" -> \"/com/example/projekt/styles/fonts/large.css\";\r\n            default -> \"/com/example/projekt/styles/fonts/medium.css\";\r\n        };\r\n\r\n        UserSession.setCurrentFontSize(fontCss); // aktualizacja sesji\r\n\r\n        URL fontUrl = getClass().getResource(fontCss);\r\n        if (fontUrl != null) {\r\n            scene.getStylesheets().add(fontUrl.toExternalForm());\r\n        }\r\n    }\r\n\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Projekt/src/main/java/com/example/projekt/UserTaskPanelController.java b/Projekt/src/main/java/com/example/projekt/UserTaskPanelController.java
+--- a/Projekt/src/main/java/com/example/projekt/UserTaskPanelController.java	(revision 1c4c76e849ecd2b67bc50afaa481519ae0548e6b)
++++ b/Projekt/src/main/java/com/example/projekt/UserTaskPanelController.java	(date 1748775928066)
+@@ -20,27 +20,41 @@
+ import java.util.logging.Logger;
+ 
+ public class UserTaskPanelController {
+-    @FXML private TableView<Product> productTable;
+-    @FXML private TableColumn<Product, String> productNameColumn;
+-    @FXML private TableColumn<Product, Integer> productStockColumn;
+-    @FXML private TableColumn<Product, Integer> productLimitColumn;
+-    @FXML private TableColumn<Product, Double> productPriceColumn;
++    @FXML
++    protected TableView<Product> productTable;
++    @FXML
++    protected TableColumn<Product, String> productNameColumn;
++    @FXML
++    protected TableColumn<Product, Integer> productStockColumn;
++    @FXML
++    protected TableColumn<Product, Integer> productLimitColumn;
++    @FXML
++    protected TableColumn<Product, Double> productPriceColumn;
+ 
+-    @FXML private TableView<Task> taskTable;
+-    @FXML private TableColumn<Task, String> nameColumn;
+-    @FXML private TableColumn<Task, String> statusColumn;
+-    @FXML private TableColumn<Task, String> priorityColumn;
+-    @FXML private TableColumn<Task, String> dateColumn;
++    @FXML
++    protected TableView<Task> taskTable;
++    @FXML
++    protected TableColumn<Task, String> nameColumn;
++    @FXML
++    protected TableColumn<Task, String> statusColumn;
++    @FXML
++    protected TableColumn<Task, String> priorityColumn;
++    @FXML
++    protected TableColumn<Task, String> dateColumn;
+ 
+-    @FXML private ComboBox<String> statusComboBox;
+-    @FXML private ListView<String> historyList;
+-    @FXML private TextArea commentTextArea;
++    @FXML
++    protected ComboBox<String> statusComboBox;
++    @FXML
++    protected ListView<String> historyList;
++    @FXML
++    protected TextArea commentTextArea;
+ 
+-    @FXML private BorderPane userTaskRoot;
++    @FXML
++    protected BorderPane userTaskRoot;
+ 
+     private static final Logger LOGGER = Logger.getLogger(UserTaskPanelController.class.getName());
+-    private Task selectedTask;
+-    private Map<String, Integer> statusOrder = new LinkedHashMap<>();
++    public Task selectedTask;
++    protected Map<String, Integer> statusOrder = new LinkedHashMap<>();
+ 
+     @FXML
+     public void initialize() {
+@@ -78,7 +92,7 @@
+         checkForNotifications();
+     }
+ 
+-    private void initializeStatusOrder() {
++    protected void initializeStatusOrder() {
+         statusOrder.put("Oczekujące", 1);
+         statusOrder.put("Rozpoczęte", 2);
+         statusOrder.put("W trakcie", 3);
+@@ -140,7 +154,7 @@
+         dateColumn.setCellValueFactory(cellData -> cellData.getValue().dataProperty());
+     }
+ 
+-    private void updateAvailableStatuses(String currentStatus) {
++    protected void updateAvailableStatuses(String currentStatus) {
+         statusComboBox.getItems().clear();
+ 
+         // Znajdź aktualną pozycję statusu
+@@ -153,7 +167,7 @@
+                 .forEach(entry -> statusComboBox.getItems().add(entry.getKey()));
+     }
+ 
+-    private void loadProducts() {
++    protected void loadProducts() {
+         ObservableList<Product> products = FXCollections.observableArrayList();
+         String sql = "SELECT p.id_produktu, p.nazwa, p.stan, p.cena, p.limit_stanow, p.id_typu_produktu, t.nazwa AS typ_nazwa " +
+                 "FROM produkty p " +
+@@ -182,7 +196,7 @@
+         }
+     }
+ 
+-    private void loadTasks() {
++    protected void loadTasks() {
+         ObservableList<Task> tasks = FXCollections.observableArrayList();
+         String sql = """
+         SELECT 
+@@ -239,7 +253,7 @@
+ 
+ 
+ 
+-    private void loadStatuses() {
++    protected void loadStatuses() {
+         try (Connection conn = DatabaseConnector.connect();
+              PreparedStatement stmt = conn.prepareStatement("SELECT nazwa FROM statusy");
+              ResultSet rs = stmt.executeQuery()) {
+@@ -250,7 +264,7 @@
+         }
+     }
+ 
+-    private void loadTaskComment(int taskId) {
++    protected void loadTaskComment(int taskId) {
+         String sql = "SELECT komentarz FROM zadania WHERE id_zadania = ?";
+         try (Connection conn = DatabaseConnector.connect();
+              PreparedStatement stmt = conn.prepareStatement(sql)) {
+@@ -266,7 +280,7 @@
+     }
+ 
+     @FXML
+-    private void saveTaskComment() {
++    protected void saveTaskComment() {
+         if (selectedTask == null) {
+             showAlert("Błąd", "Nie wybrano zadania");
+             return;
+@@ -288,7 +302,7 @@
+     }
+ 
+     @FXML
+-    private void changeTaskStatus() {
++    protected void changeTaskStatus() {
+         if (selectedTask == null || statusComboBox.getValue() == null) {
+             showAlert("Błąd", "Nie wybrano zadania lub statusu");
+             return;
+@@ -335,7 +349,7 @@
+         }
+     }
+ 
+-    private void loadTaskHistory() {
++    protected void loadTaskHistory() {
+         String sql = """
+             SELECT z.nazwa, z.data_rozpoczecia, z.data_zakonczenia 
+             FROM zadania z
+@@ -363,7 +377,7 @@
+         }
+     }
+ 
+-    private void checkForNotifications() {
++    protected void checkForNotifications() {
+         String sql = "SELECT nazwa FROM zadania WHERE id_pracownika = ? AND powiadomienia = 1";
+ 
+         try (Connection conn = DatabaseConnector.connect();
+@@ -409,14 +423,14 @@
+         }
+     }
+ 
+-    private void showAlert(String title, String message) {
++    protected void showAlert(String title, String message) {
+         Alert alert = new Alert(Alert.AlertType.INFORMATION);
+         alert.setTitle(title);
+         alert.setHeaderText(null);
+         alert.setContentText(message);
+         alert.showAndWait();
+     }
+-    private void applyTheme(String theme) {
++    protected void applyTheme(String theme) {
+         Scene scene = userTaskRoot.getScene();
+         if (scene == null) return;
+ 
+@@ -434,7 +448,7 @@
+         }
+     }
+ 
+-    private void applyFontSize(String label) {
++    protected void applyFontSize(String label) {
+         Scene scene = userTaskRoot.getScene();
+         if (scene == null) return;
+ 
+Index: Projekt/src/test/java/com/example/projekt/AppSettingsTest.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.projekt;\r\n\r\nimport org.junit.jupiter.api.*;\r\n\r\nimport java.io.File;\r\nimport java.io.IOException;\r\nimport java.nio.file.Files;\r\nimport java.nio.file.StandardCopyOption;\r\n\r\nimport static org.junit.jupiter.api.Assertions.*;\r\n\r\nclass AppSettingsTest {\r\n\r\n    private static final String CONFIG_FILE = \"user-settings.properties\";\r\n    private static File backupFile;\r\n\r\n    @BeforeAll\r\n    static void backupOriginalConfig() throws IOException {\r\n        File config = new File(CONFIG_FILE);\r\n        if (config.exists()) {\r\n            backupFile = new File(CONFIG_FILE + \".bak\");\r\n            Files.copy(config.toPath(), backupFile.toPath(), StandardCopyOption.REPLACE_EXISTING);\r\n        }\r\n    }\r\n\r\n    @AfterAll\r\n    static void restoreOriginalConfig() throws IOException {\r\n        if (backupFile != null && backupFile.exists()) {\r\n            Files.copy(backupFile.toPath(), new File(CONFIG_FILE).toPath(), StandardCopyOption.REPLACE_EXISTING);\r\n            backupFile.delete();\r\n        } else {\r\n            // Jeśli plik nie istniał wcześniej, usuń utworzony w testach\r\n            File config = new File(CONFIG_FILE);\r\n            if (config.exists()) {\r\n                config.delete();\r\n            }\r\n        }\r\n    }\r\n\r\n    @BeforeEach\r\n    void cleanConfigFile() {\r\n        File config = new File(CONFIG_FILE);\r\n        if (config.exists()) {\r\n            config.delete();\r\n        }\r\n        // Ponieważ AppSettings ładuje statycznie przy starcie klasy, trzeba wymusić przeładowanie klasy,\r\n        // ale bez refaktoru jest to bardzo trudne. Dlatego testujemy, że metody działają z nowym plikiem,\r\n        // choć konfiguracja może być z cache Properties.\r\n    }\r\n\r\n    @Test\r\n    void testDefaultValues() {\r\n        // Domyślne wartości jeśli plik nie istnieje\r\n        assertEquals(\"Domyślny\", AppSettings.getTheme(), \"Domyślny motyw powinien być 'Domyślny'\");\r\n        assertEquals(14, AppSettings.getFontSize(), \"Domyślny rozmiar czcionki powinien być 14\");\r\n    }\r\n\r\n    @Test\r\n    void testSetAndGetTheme() {\r\n        AppSettings.setTheme(\"TestMotyw\");\r\n        assertEquals(\"TestMotyw\", AppSettings.getTheme(), \"Motyw po ustawieniu powinien być 'TestMotyw'\");\r\n    }\r\n\r\n    @Test\r\n    void testSetAndGetFontSize() {\r\n        AppSettings.setFontSize(22);\r\n        assertEquals(22, AppSettings.getFontSize(), \"Rozmiar czcionki po ustawieniu powinien być 22\");\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Projekt/src/test/java/com/example/projekt/AppSettingsTest.java b/Projekt/src/test/java/com/example/projekt/AppSettingsTest.java
+--- a/Projekt/src/test/java/com/example/projekt/AppSettingsTest.java	(revision 1c4c76e849ecd2b67bc50afaa481519ae0548e6b)
++++ b/Projekt/src/test/java/com/example/projekt/AppSettingsTest.java	(date 1748765753033)
+@@ -1,69 +1,89 @@
+ package com.example.projekt;
+ 
+-import org.junit.jupiter.api.*;
++import static org.junit.jupiter.api.Assertions.*;
+ 
+ import java.io.File;
++import java.io.FileWriter;
+ import java.io.IOException;
+ import java.nio.file.Files;
+-import java.nio.file.StandardCopyOption;
++import java.util.Properties;
+ 
+-import static org.junit.jupiter.api.Assertions.*;
++import org.junit.jupiter.api.*;
+ 
+ class AppSettingsTest {
+ 
+     private static final String CONFIG_FILE = "user-settings.properties";
+-    private static File backupFile;
+-
+-    @BeforeAll
+-    static void backupOriginalConfig() throws IOException {
+-        File config = new File(CONFIG_FILE);
+-        if (config.exists()) {
+-            backupFile = new File(CONFIG_FILE + ".bak");
+-            Files.copy(config.toPath(), backupFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+-        }
+-    }
+-
+-    @AfterAll
+-    static void restoreOriginalConfig() throws IOException {
+-        if (backupFile != null && backupFile.exists()) {
+-            Files.copy(backupFile.toPath(), new File(CONFIG_FILE).toPath(), StandardCopyOption.REPLACE_EXISTING);
+-            backupFile.delete();
+-        } else {
+-            // Jeśli plik nie istniał wcześniej, usuń utworzony w testach
+-            File config = new File(CONFIG_FILE);
+-            if (config.exists()) {
+-                config.delete();
+-            }
+-        }
+-    }
++    private File configFileBackup;
+ 
+     @BeforeEach
+-    void cleanConfigFile() {
+-        File config = new File(CONFIG_FILE);
+-        if (config.exists()) {
+-            config.delete();
++    void setup() throws IOException {
++        // Jeśli plik istnieje, zrób kopię zapasową
++        File configFile = new File(CONFIG_FILE);
++        if (configFile.exists()) {
++            configFileBackup = new File(CONFIG_FILE + ".bak");
++            Files.copy(configFile.toPath(), configFileBackup.toPath());
++            configFile.delete();
++        }
++
++        // Utwórz testowy plik konfiguracyjny
++        try (FileWriter writer = new FileWriter(CONFIG_FILE)) {
++            writer.write("theme=jasny\n");
++            writer.write("fontSizeLabel=duża\n");
++        }
++
++        // Ze względu na statyczny blok, trzeba przeładować klasę AppSettings,
++        // żeby ponownie wczytała testowy plik.
++        // Tutaj wymaga to użycia refleksji lub uruchomienia testów w osobnym JVM.
++        // Alternatywnie można wymusić ręczne ustawienie property za pomocą setterów.
++    }
++
++    @AfterEach
++    void cleanup() throws IOException {
++        // Usuń testowy plik
++        File configFile = new File(CONFIG_FILE);
++        if (configFile.exists()) {
++            configFile.delete();
+         }
+-        // Ponieważ AppSettings ładuje statycznie przy starcie klasy, trzeba wymusić przeładowanie klasy,
+-        // ale bez refaktoru jest to bardzo trudne. Dlatego testujemy, że metody działają z nowym plikiem,
+-        // choć konfiguracja może być z cache Properties.
++
++        // Przywróć oryginalny plik jeśli istniał
++        if (configFileBackup != null && configFileBackup.exists()) {
++            Files.move(configFileBackup.toPath(), new File(CONFIG_FILE).toPath());
++        }
+     }
+ 
+     @Test
+-    void testDefaultValues() {
+-        // Domyślne wartości jeśli plik nie istnieje
+-        assertEquals("Domyślny", AppSettings.getTheme(), "Domyślny motyw powinien być 'Domyślny'");
+-        assertEquals(14, AppSettings.getFontSize(), "Domyślny rozmiar czcionki powinien być 14");
++    void testGetTheme() {
++        // Domyślnie AppSettings wczytuje ustawienia przy starcie klasy,
++        // więc jeśli klasa już była załadowana, test zwróci oryginalne wartości.
++        // Lepiej użyć setterów albo zrestartować JVM dla pełnego testu.
++        AppSettings.setTheme("jasny");
++        assertEquals("jasny", AppSettings.getTheme());
+     }
+ 
+     @Test
+-    void testSetAndGetTheme() {
+-        AppSettings.setTheme("TestMotyw");
+-        assertEquals("TestMotyw", AppSettings.getTheme(), "Motyw po ustawieniu powinien być 'TestMotyw'");
++    void testGetFontSizeLabel() {
++        AppSettings.setFontSizeLabel("duża");
++        assertEquals("duża", AppSettings.getFontSizeLabel());
+     }
+ 
+     @Test
+-    void testSetAndGetFontSize() {
+-        AppSettings.setFontSize(22);
+-        assertEquals(22, AppSettings.getFontSize(), "Rozmiar czcionki po ustawieniu powinien być 22");
++    void testSetThemeSavesProperty() throws IOException {
++        AppSettings.setTheme("ciemny");
++        // Wczytaj plik i sprawdź czy wartość się zapisała
++        Properties props = new Properties();
++        try (var in = Files.newInputStream(new File(CONFIG_FILE).toPath())) {
++            props.load(in);
++        }
++        assertEquals("ciemny", props.getProperty("theme"));
++    }
++
++    @Test
++    void testSetFontSizeLabelSavesProperty() throws IOException {
++        AppSettings.setFontSizeLabel("mała");
++        Properties props = new Properties();
++        try (var in = Files.newInputStream(new File(CONFIG_FILE).toPath())) {
++            props.load(in);
++        }
++        assertEquals("mała", props.getProperty("fontSizeLabel"));
+     }
+ }
+Index: Projekt/src/main/java/com/example/projekt/ProductManagementController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.projekt;\r\n\r\nimport javafx.beans.property.SimpleDoubleProperty;\r\nimport javafx.beans.property.SimpleIntegerProperty;\r\nimport javafx.beans.property.SimpleStringProperty;\r\nimport javafx.collections.FXCollections;\r\nimport javafx.collections.ObservableList;\r\nimport javafx.event.ActionEvent;\r\nimport javafx.fxml.FXML;\r\nimport javafx.fxml.FXMLLoader;\r\nimport javafx.scene.Node;\r\nimport javafx.scene.Parent;\r\nimport javafx.scene.Scene;\r\nimport javafx.scene.control.*;\r\nimport javafx.scene.layout.VBox;\r\nimport javafx.stage.Stage;\r\nimport javafx.application.Platform;\r\nimport java.math.BigDecimal;\r\nimport java.math.RoundingMode;\r\nimport java.net.URL;\r\nimport java.sql.*;\r\nimport java.util.function.UnaryOperator;\r\nimport java.util.logging.Level;\r\n\r\nimport static com.example.projekt.DashboardController.LOGGER;\r\n\r\npublic class ProductManagementController {\r\n\r\n    @FXML private TableView<Product> productTable;\r\n    @FXML private TableColumn<Product, String> nazwaColumn;\r\n    @FXML private TableColumn<Product, Integer> stanColumn;\r\n    @FXML private TableColumn<Product, Double> cenaColumn;\r\n    @FXML private TableColumn<Product, Integer> limitColumn;\r\n    @FXML private TableColumn<Product, String> typColumn;\r\n\r\n    @FXML private TextField nazwaField;\r\n    @FXML private TextField stanField;\r\n    @FXML private TextField cenaField;\r\n    @FXML private TextField limitField;\r\n    @FXML private ComboBox<ProductType> typComboBox;\r\n\r\n    @FXML private VBox productRoot;\r\n\r\n    private Product selectedProduct = null;\r\n    private ObservableList<ProductType> productTypes = FXCollections.observableArrayList();\r\n\r\n    @FXML\r\n    public void initialize() {\r\n        productRoot.sceneProperty().addListener((obs, oldScene, newScene) -> {\r\n            if (newScene != null) {\r\n                applyTheme(AppSettings.getTheme());\r\n                applyFontSize(AppSettings.getFontSizeLabel());\r\n            }\r\n        });\r\n\r\n        productTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);\r\n\r\n        nazwaColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getNazwa()));\r\n\r\n        stanColumn.setCellValueFactory(data -> new SimpleIntegerProperty(data.getValue().getStan()).asObject());\r\n        stanColumn.setStyle(\"-fx-alignment: CENTER-RIGHT;\");\r\n\r\n        limitColumn.setCellValueFactory(data -> new SimpleIntegerProperty(data.getValue().getLimitStanow()).asObject());\r\n        limitColumn.setStyle(\"-fx-alignment: CENTER-RIGHT;\");\r\n\r\n        cenaColumn.setCellValueFactory(data -> new SimpleDoubleProperty(data.getValue().getCena()).asObject());\r\n        cenaColumn.setCellFactory(column -> new TableCell<>() {\r\n            @Override\r\n            protected void updateItem(Double item, boolean empty) {\r\n                super.updateItem(item, empty);\r\n                if (empty || item == null) {\r\n                    setText(null);\r\n                } else {\r\n                    setText(String.format(\"%.2f\", item));\r\n                }\r\n                setStyle(\"-fx-alignment: CENTER-RIGHT;\");\r\n            }\r\n        });\r\n\r\n        typColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getTypProduktuNazwa()));\r\n\r\n        productTypes = loadProductTypes();\r\n        typComboBox.setItems(productTypes);\r\n\r\n        loadProducts();\r\n        Platform.runLater(() -> productRoot.requestFocus());\r\n        productTable.getSelectionModel().clearSelection();\r\n        typComboBox.getSelectionModel().clearSelection();\r\n        productTable.setRowFactory(tv -> {\r\n            TableRow<Product> row = new TableRow<>();\r\n            row.setOnMouseClicked(event -> {\r\n                if (!row.isEmpty()) {\r\n                    selectedProduct = row.getItem();\r\n                    fillForm(selectedProduct);\r\n                }\r\n            });\r\n            return row;\r\n        });\r\n\r\n        UnaryOperator<TextFormatter.Change> filter = change -> {\r\n            String newText = change.getControlNewText();\r\n            return newText.matches(\"\\\\d*(\\\\.\\\\d{0,2})?\") ? change : null;\r\n        };\r\n        cenaField.setTextFormatter(new TextFormatter<>(filter));\r\n    }\r\n\r\n    private void fillForm(Product p) {\r\n        nazwaField.setText(p.getNazwa());\r\n        stanField.setText(String.valueOf(p.getStan()));\r\n        cenaField.setText(String.format(\"%.2f\", p.getCena()));\r\n        limitField.setText(String.valueOf(p.getLimitStanow()));\r\n        typComboBox.getSelectionModel().select(\r\n                productTypes.stream()\r\n                        .filter(t -> t.getId() == p.getIdTypuProduktu())\r\n                        .findFirst()\r\n                        .orElse(null)\r\n        );\r\n    }\r\n\r\n    @FXML\r\n    private void handleAddProduct() {\r\n        saveProduct();\r\n        selectedProduct = null;\r\n        clearForm();\r\n    }\r\n\r\n    @FXML\r\n    private void handleDeleteProduct() {\r\n        Product selected = productTable.getSelectionModel().getSelectedItem();\r\n        if (selected != null) {\r\n            Alert confirmAlert = new Alert(Alert.AlertType.CONFIRMATION);\r\n            confirmAlert.setTitle(\"Potwierdzenie usunięcia\");\r\n            confirmAlert.setHeaderText(\"Czy na pewno chcesz usunąć ten produkt?\");\r\n            confirmAlert.setContentText(\"Produkt: \" + selected.getNazwa());\r\n\r\n            ButtonType buttonYes = new ButtonType(\"Tak\", ButtonBar.ButtonData.YES);\r\n            ButtonType buttonNo = new ButtonType(\"Nie\", ButtonBar.ButtonData.NO);\r\n            confirmAlert.getButtonTypes().setAll(buttonYes, buttonNo);\r\n\r\n            confirmAlert.showAndWait().ifPresent(response -> {\r\n                if (response == buttonYes) {\r\n                    try (Connection conn = DatabaseConnector.connect();\r\n                         PreparedStatement stmt = conn.prepareStatement(\"DELETE FROM produkty WHERE id_produktu = ?\")) {\r\n\r\n                        stmt.setInt(1, selected.getId());\r\n                        stmt.executeUpdate();\r\n                        loadProducts();\r\n                        clearForm();\r\n\r\n                    } catch (SQLException e) {\r\n                        e.printStackTrace();\r\n                    }\r\n                }\r\n            });\r\n\r\n        } else {\r\n            showAlert(\"Brak wyboru\", \"Nie wybrano produktu do usunięcia.\");\r\n        }\r\n    }\r\n\r\n    private void loadProducts() {\r\n        ObservableList<Product> products = FXCollections.observableArrayList();\r\n        String sql = \"\"\"\r\n            SELECT p.id_produktu, p.nazwa, p.stan, p.cena, p.limit_stanow, p.id_typu_produktu, t.nazwa AS typ\r\n            FROM produkty p\r\n            JOIN typ_produktu t ON p.id_typu_produktu = t.id_typu_produktu\r\n        \"\"\";\r\n\r\n        try (Connection conn = DatabaseConnector.connect();\r\n             Statement stmt = conn.createStatement();\r\n             ResultSet rs = stmt.executeQuery(sql)) {\r\n\r\n            while (rs.next()) {\r\n                products.add(new Product(\r\n                        rs.getInt(\"id_produktu\"),\r\n                        rs.getString(\"nazwa\"),\r\n                        rs.getInt(\"stan\"),\r\n                        rs.getDouble(\"cena\"),\r\n                        rs.getInt(\"limit_stanow\"),\r\n                        rs.getInt(\"id_typu_produktu\"),\r\n                        rs.getString(\"typ\")\r\n                ));\r\n            }\r\n\r\n        } catch (SQLException e) {\r\n            e.printStackTrace();\r\n        }\r\n\r\n        productTable.setItems(products);\r\n    }\r\n\r\n    private ObservableList<ProductType> loadProductTypes() {\r\n        ObservableList<ProductType> types = FXCollections.observableArrayList();\r\n        String sql = \"SELECT * FROM typ_produktu\";\r\n\r\n        try (Connection conn = DatabaseConnector.connect();\r\n             Statement stmt = conn.createStatement();\r\n             ResultSet rs = stmt.executeQuery(sql)) {\r\n\r\n            while (rs.next()) {\r\n                types.add(new ProductType(rs.getInt(\"id_typu_produktu\"), rs.getString(\"nazwa\")));\r\n            }\r\n\r\n        } catch (SQLException e) {\r\n            e.printStackTrace();\r\n        }\r\n\r\n        return types;\r\n    }\r\n\r\n    @FXML\r\n    private void saveProduct() {\r\n        String nazwa = nazwaField.getText();\r\n        int stan, limit;\r\n        BigDecimal cena;\r\n\r\n        try {\r\n            stan = Integer.parseInt(stanField.getText());\r\n            if (stan < 0) {\r\n                showAlert(\"Błąd walidacji\", \"Stan nie może być ujemny.\");\r\n                return;\r\n            }\r\n        } catch (NumberFormatException e) {\r\n            showAlert(\"Błąd danych\", \"Wprowadź poprawny stan.\");\r\n            return;\r\n        }\r\n\r\n        try {\r\n            cena = new BigDecimal(cenaField.getText()).setScale(2, RoundingMode.HALF_UP);\r\n            if (cena.compareTo(BigDecimal.ZERO) < 0) {\r\n                showAlert(\"Błąd walidacji\", \"Cena nie może być ujemna.\");\r\n                return;\r\n            }\r\n        } catch (NumberFormatException e) {\r\n            showAlert(\"Błąd danych\", \"Wprowadź poprawną cenę.\");\r\n            return;\r\n        }\r\n\r\n        try {\r\n            limit = Integer.parseInt(limitField.getText());\r\n            if (limit < 0) {\r\n                showAlert(\"Błąd walidacji\", \"Limit nie może być ujemny.\");\r\n                return;\r\n            }\r\n        } catch (NumberFormatException e) {\r\n            showAlert(\"Błąd danych\", \"Wprowadź poprawny limit.\");\r\n            return;\r\n        }\r\n\r\n        ProductType typ = typComboBox.getValue();\r\n        if (typ == null) {\r\n            showAlert(\"Błąd danych\", \"Wybierz typ produktu.\");\r\n            return;\r\n        }\r\n\r\n        if (selectedProduct != null) {\r\n            String sql = \"UPDATE produkty SET nazwa=?, stan=?, cena=?, limit_stanow=?, id_typu_produktu=? WHERE id_produktu=?\";\r\n            try (Connection conn = DatabaseConnector.connect();\r\n                 PreparedStatement stmt = conn.prepareStatement(sql)) {\r\n\r\n                stmt.setString(1, nazwa);\r\n                stmt.setInt(2, stan);\r\n                stmt.setDouble(3, cena.doubleValue());\r\n                stmt.setInt(4, limit);\r\n                stmt.setInt(5, typ.getId());\r\n                stmt.setInt(6, selectedProduct.getId());\r\n\r\n                stmt.executeUpdate();\r\n                clearForm();\r\n                loadProducts();\r\n\r\n            } catch (SQLException e) {\r\n                e.printStackTrace();\r\n            }\r\n        } else {\r\n            String sql = \"INSERT INTO produkty (nazwa, stan, cena, limit_stanow, id_typu_produktu) VALUES (?, ?, ?, ?, ?)\";\r\n            try (Connection conn = DatabaseConnector.connect();\r\n                 PreparedStatement stmt = conn.prepareStatement(sql)) {\r\n\r\n                stmt.setString(1, nazwa);\r\n                stmt.setInt(2, stan);\r\n                stmt.setDouble(3, cena.doubleValue());\r\n                stmt.setInt(4, limit);\r\n                stmt.setInt(5, typ.getId());\r\n\r\n                stmt.executeUpdate();\r\n                clearForm();\r\n                loadProducts();\r\n\r\n            } catch (SQLException e) {\r\n                e.printStackTrace();\r\n            }\r\n        }\r\n    }\r\n\r\n    @FXML\r\n    private void goBackToDashboard(ActionEvent event) {\r\n        try {\r\n            FXMLLoader loader = new FXMLLoader(getClass().getResource(\"/com/example/projekt/dashboard.fxml\"));\r\n            Parent root = loader.load();\r\n            DashboardController controller = loader.getController();\r\n            controller.setCurrentUser(UserSession.getInstance().getUser());\r\n            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();\r\n            stage.setScene(new Scene(root));\r\n            stage.setTitle(\"Dashboard\");\r\n        } catch (Exception e) {\r\n            LOGGER.log(Level.SEVERE, \"Błąd powrotu do dashboardu\", e);\r\n        }\r\n    }\r\n\r\n    @FXML\r\n    private void clearForm() {\r\n        nazwaField.clear();\r\n        stanField.clear();\r\n        cenaField.clear();\r\n        limitField.clear();\r\n        typComboBox.setValue(null);\r\n        selectedProduct = null;\r\n    }\r\n\r\n    private void showAlert(String title, String content) {\r\n        Alert alert = new Alert(Alert.AlertType.ERROR);\r\n        alert.setTitle(title);\r\n        alert.setHeaderText(null);\r\n        alert.setContentText(content);\r\n        alert.showAndWait();\r\n    }\r\n    private void applyTheme(String theme) {\r\n        Scene scene = productRoot.getScene();\r\n        if (scene == null) return;\r\n\r\n        scene.getStylesheets().clear();\r\n        String cssFile = switch (theme) {\r\n            case \"Jasny\" -> \"/com/example/projekt/styles/themes/light.css\";\r\n            case \"Ciemny\" -> \"/com/example/projekt/styles/themes/dark.css\";\r\n            default -> \"/com/example/projekt/styles/themes/default.css\";\r\n        };\r\n\r\n        URL cssUrl = getClass().getResource(cssFile);\r\n        if (cssUrl != null) {\r\n            scene.getStylesheets().add(cssUrl.toExternalForm());\r\n        }\r\n    }\r\n\r\n    private void applyFontSize(String label) {\r\n        Scene scene = productRoot.getScene();\r\n        if (scene == null) return;\r\n\r\n        scene.getStylesheets().removeIf(css -> css.contains(\"/styles/fonts/\"));\r\n\r\n        String fontCss = switch (label.toLowerCase()) {\r\n            case \"mała\" -> \"/com/example/projekt/styles/fonts/small.css\";\r\n            case \"duża\" -> \"/com/example/projekt/styles/fonts/large.css\";\r\n            default -> \"/com/example/projekt/styles/fonts/medium.css\";\r\n        };\r\n\r\n        UserSession.setCurrentFontSize(fontCss); // aktualizacja sesji\r\n\r\n        URL fontUrl = getClass().getResource(fontCss);\r\n        if (fontUrl != null) {\r\n            scene.getStylesheets().add(fontUrl.toExternalForm());\r\n        }\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Projekt/src/main/java/com/example/projekt/ProductManagementController.java b/Projekt/src/main/java/com/example/projekt/ProductManagementController.java
+--- a/Projekt/src/main/java/com/example/projekt/ProductManagementController.java	(revision 1c4c76e849ecd2b67bc50afaa481519ae0548e6b)
++++ b/Projekt/src/main/java/com/example/projekt/ProductManagementController.java	(date 1748773974018)
+@@ -26,23 +26,34 @@
+ 
+ public class ProductManagementController {
+ 
+-    @FXML private TableView<Product> productTable;
++    @FXML
++    protected TableView<Product> productTable;
+     @FXML private TableColumn<Product, String> nazwaColumn;
+     @FXML private TableColumn<Product, Integer> stanColumn;
+     @FXML private TableColumn<Product, Double> cenaColumn;
+     @FXML private TableColumn<Product, Integer> limitColumn;
+     @FXML private TableColumn<Product, String> typColumn;
+ 
+-    @FXML private TextField nazwaField;
+-    @FXML private TextField stanField;
+-    @FXML private TextField cenaField;
+-    @FXML private TextField limitField;
+-    @FXML private ComboBox<ProductType> typComboBox;
++    @FXML
++    protected TextField nazwaField;
++    @FXML
++    protected TextField stanField;
++    @FXML
++    protected TextField cenaField;
++    @FXML
++    protected TextField limitField;
++    @FXML
++    protected ComboBox<ProductType> typComboBox;
+ 
+-    @FXML private VBox productRoot;
+-
+-    private Product selectedProduct = null;
+-    private ObservableList<ProductType> productTypes = FXCollections.observableArrayList();
++    @FXML
++    protected VBox productRoot;
++
++    @FXML
++    private TableView<Product> productTableView;
++
++
++    protected Product selectedProduct = null;
++    protected ObservableList<ProductType> productTypes = FXCollections.observableArrayList();
+ 
+     @FXML
+     public void initialize() {
+@@ -104,7 +115,7 @@
+         cenaField.setTextFormatter(new TextFormatter<>(filter));
+     }
+ 
+-    private void fillForm(Product p) {
++    protected void fillForm(Product p) {
+         nazwaField.setText(p.getNazwa());
+         stanField.setText(String.valueOf(p.getStan()));
+         cenaField.setText(String.format("%.2f", p.getCena()));
+@@ -118,7 +129,7 @@
+     }
+ 
+     @FXML
+-    private void handleAddProduct() {
++    protected void handleAddProduct() {
+         saveProduct();
+         selectedProduct = null;
+         clearForm();
+@@ -158,7 +169,7 @@
+         }
+     }
+ 
+-    private void loadProducts() {
++    protected void loadProducts() {
+         ObservableList<Product> products = FXCollections.observableArrayList();
+         String sql = """
+             SELECT p.id_produktu, p.nazwa, p.stan, p.cena, p.limit_stanow, p.id_typu_produktu, t.nazwa AS typ
+@@ -189,7 +200,7 @@
+         productTable.setItems(products);
+     }
+ 
+-    private ObservableList<ProductType> loadProductTypes() {
++    protected ObservableList<ProductType> loadProductTypes() {
+         ObservableList<ProductType> types = FXCollections.observableArrayList();
+         String sql = "SELECT * FROM typ_produktu";
+ 
+@@ -209,7 +220,7 @@
+     }
+ 
+     @FXML
+-    private void saveProduct() {
++    protected void saveProduct() {
+         String nazwa = nazwaField.getText();
+         int stan, limit;
+         BigDecimal cena;
+@@ -309,7 +320,7 @@
+     }
+ 
+     @FXML
+-    private void clearForm() {
++    protected void clearForm() {
+         nazwaField.clear();
+         stanField.clear();
+         cenaField.clear();
+@@ -318,14 +329,18 @@
+         selectedProduct = null;
+     }
+ 
+-    private void showAlert(String title, String content) {
++    protected void showAlert(String title, String content) {
+         Alert alert = new Alert(Alert.AlertType.ERROR);
+         alert.setTitle(title);
+         alert.setHeaderText(null);
+         alert.setContentText(content);
+         alert.showAndWait();
+     }
+-    private void applyTheme(String theme) {
++    public void setProductTableView(TableView<Product> tableView) {
++        this.productTableView = tableView;
++    }
++
++    protected void applyTheme(String theme) {
+         Scene scene = productRoot.getScene();
+         if (scene == null) return;
+ 
+@@ -342,7 +357,7 @@
+         }
+     }
+ 
+-    private void applyFontSize(String label) {
++    public void applyFontSize(String label) {
+         Scene scene = productRoot.getScene();
+         if (scene == null) return;
+ 
+Index: user-settings.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>#Ustawienia aplikacji\r\n#Sat May 31 22:38:56 CEST 2025\r\nfontSize=24\r\nfontSizeLabel=Du\\u017Ca\r\ntheme=Ciemny\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>ISO-8859-1
+===================================================================
+diff --git a/user-settings.properties b/user-settings.properties
+--- a/user-settings.properties	(revision 1c4c76e849ecd2b67bc50afaa481519ae0548e6b)
++++ b/user-settings.properties	(date 1748724668677)
+@@ -1,5 +1,5 @@
+ #Ustawienia aplikacji
+-#Sat May 31 22:38:56 CEST 2025
++#Sat May 31 22:51:08 CEST 2025
+ fontSize=24
+-fontSizeLabel=Du\u017Ca
+-theme=Ciemny
++fontSizeLabel=\u015Arednia
++theme=Jasny
