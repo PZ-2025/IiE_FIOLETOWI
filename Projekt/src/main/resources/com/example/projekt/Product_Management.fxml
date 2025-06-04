@@ -20,7 +20,7 @@
         <TextField fx:id="cenaField" promptText="Cena" styleClass="input-field"/>
         <TextField fx:id="limitField" promptText="Limit" styleClass="input-field"/>
         <ComboBox fx:id="typComboBox" promptText="Typ produktu" styleClass="combo-box"/>
-        <Button text="Zapisz" onAction="#saveProduct" styleClass="primary-button"/>
+        <Button text="Zapisz" onAction="#editProduct" styleClass="primary-button"/>
         <Button text="Wyczyść" onAction="#clearForm"/>
     </HBox>
 

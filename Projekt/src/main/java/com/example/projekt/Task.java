@@ -142,4 +142,5 @@ public class Task {
 
     /** @return właściwość pracownika do powiązania z UI */
     public SimpleStringProperty pracownikProperty() { return pracownik; }
+
 }

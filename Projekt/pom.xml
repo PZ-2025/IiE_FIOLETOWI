@@ -147,6 +147,16 @@
             <version>4.0.16-alpha</version>
             <scope>test</scope>
         </dependency>
+
+
+        <dependency>
+            <groupId>com.example</groupId>
+            <artifactId>reportlib</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/reportlib.jar</systemPath>
+        </dependency>
+
     </dependencies>
 
     <build>

@@ -74,4 +74,9 @@ public class User {
     public boolean isAdmin() {return "Admin".equalsIgnoreCase(nazwaRoli);}
     public boolean isManager() {return "Kierownik".equalsIgnoreCase(nazwaRoli);}
 
+    @Override
+    public String toString() {
+        return imie + " " + nazwisko;
+    }
+
 }

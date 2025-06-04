@@ -5,24 +5,16 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import javafx.application.Platform;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.net.URL;
 import java.sql.*;
 import java.util.function.UnaryOperator;
-import java.util.logging.Level;
-
-import static com.example.projekt.DashboardController.LOGGER;
 
 /**
  * Kontroler zarządzający modułem produktów w aplikacji.
@@ -84,7 +76,6 @@ public class ProductManagementController {
      */
     @FXML
     public void initialize() {
-        // Nasłuchiwacz zmiany sceny dla aplikacji motywu i czcionki
         productRoot.sceneProperty().addListener((obs, oldScene, newScene) -> {
             if (newScene != null) {
                 applyTheme(AppSettings.getTheme());
@@ -172,8 +163,8 @@ public class ProductManagementController {
      */
     @FXML
     private void handleAddProduct() {
-        saveProduct();
         selectedProduct = null;
+        saveProduct();
         clearForm();
     }
 
@@ -276,7 +267,6 @@ public class ProductManagementController {
      * Zapisuje produkt do bazy danych.
      * Wykonuje operację aktualizacji dla istniejącego produktu lub wstawienia dla nowego.
      */
-    @FXML
     private void saveProduct() {
         String nazwa = nazwaField.getText();
         int stan, limit;
@@ -325,63 +315,47 @@ public class ProductManagementController {
             return;
         }
 
-        // Zapisz produkt (update lub insert)
-        if (selectedProduct != null) {
-            String sql = "UPDATE produkty SET nazwa=?, stan=?, cena=?, limit_stanow=?, id_typu_produktu=? WHERE id_produktu=?";
-            try (Connection conn = DatabaseConnector.connect();
-                 PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = DatabaseConnector.connect()) {
+            String checkSql = "SELECT id_produktu, stan FROM produkty WHERE nazwa = ? AND id_typu_produktu = ? AND cena = ? AND limit_stanow = ?";
+            try (PreparedStatement checkStmt = conn.prepareStatement(checkSql)) {
+                checkStmt.setString(1, nazwa);
+                checkStmt.setInt(2, typ.getId());
+                checkStmt.setDouble(3, cena.doubleValue());
+                checkStmt.setInt(4, limit);
 
-                stmt.setString(1, nazwa);
-                stmt.setInt(2, stan);
-                stmt.setDouble(3, cena.doubleValue());
-                stmt.setInt(4, limit);
-                stmt.setInt(5, typ.getId());
-                stmt.setInt(6, selectedProduct.getId());
+                try (ResultSet rs = checkStmt.executeQuery()) {
+                    if (rs.next()) {
+                        // Produkt istnieje ze wszystkimi tymi samymi danymi — zwiększamy stan
+                        int existingId = rs.getInt("id_produktu");
+                        int existingStan = rs.getInt("stan");
 
-                stmt.executeUpdate();
-                clearForm();
-                loadProducts();
-
-            } catch (SQLException e) {
-                e.printStackTrace();
+                        String updateSql = "UPDATE produkty SET stan = ? WHERE id_produktu = ?";
+                        try (PreparedStatement updateStmt = conn.prepareStatement(updateSql)) {
+                            updateStmt.setInt(1, existingStan + stan);
+                            updateStmt.setInt(2, existingId);
+                            updateStmt.executeUpdate();
+                        }
+                    } else {
+                        // Brak identycznego produktu — tworzymy nowy rekord
+                        String insertSql = "INSERT INTO produkty (nazwa, stan, cena, limit_stanow, id_typu_produktu) VALUES (?, ?, ?, ?, ?)";
+                        try (PreparedStatement insertStmt = conn.prepareStatement(insertSql)) {
+                            insertStmt.setString(1, nazwa);
+                            insertStmt.setInt(2, stan);
+                            insertStmt.setDouble(3, cena.doubleValue());
+                            insertStmt.setInt(4, limit);
+                            insertStmt.setInt(5, typ.getId());
+                            insertStmt.executeUpdate();
+                        }
+                    }
+                }
             }
-        } else {
-            String sql = "INSERT INTO produkty (nazwa, stan, cena, limit_stanow, id_typu_produktu) VALUES (?, ?, ?, ?, ?)";
-            try (Connection conn = DatabaseConnector.connect();
-                 PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-                stmt.setString(1, nazwa);
-                stmt.setInt(2, stan);
-                stmt.setDouble(3, cena.doubleValue());
-                stmt.setInt(4, limit);
-                stmt.setInt(5, typ.getId());
+            clearForm();
+            loadProducts();
 
-                stmt.executeUpdate();
-                clearForm();
-                loadProducts();
-
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    /**
-     * Powraca do ekranu dashboardu.
-     * @param event Zdarzenie akcji powodującej przejście
-     */
-    @FXML
-    private void goBackToDashboard(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/projekt/dashboard.fxml"));
-            Parent root = loader.load();
-            DashboardController controller = loader.getController();
-            controller.setCurrentUser(UserSession.getInstance().getUser());
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Dashboard");
-        } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "Błąd powrotu do dashboardu", e);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            showAlert("Błąd bazy danych", "Nie udało się zapisać produktu.");
         }
     }
 
@@ -453,6 +427,82 @@ public class ProductManagementController {
         URL fontUrl = getClass().getResource(fontCss);
         if (fontUrl != null) {
             scene.getStylesheets().add(fontUrl.toExternalForm());
+        }
+    }
+    @FXML
+    private void editProduct() {
+        if (selectedProduct == null) {
+            showAlert("Błąd", "Nie wybrano produktu do edycji.");
+            return;
+        }
+
+        String nazwa = nazwaField.getText();
+        int stan, limit;
+        BigDecimal cena;
+
+        // Walidacja stanu magazynowego
+        try {
+            stan = Integer.parseInt(stanField.getText());
+            if (stan < 0) {
+                showAlert("Błąd walidacji", "Stan nie może być ujemny.");
+                return;
+            }
+        } catch (NumberFormatException e) {
+            showAlert("Błąd danych", "Wprowadź poprawny stan.");
+            return;
+        }
+
+        // Walidacja ceny
+        try {
+            cena = new BigDecimal(cenaField.getText()).setScale(2, RoundingMode.HALF_UP);
+            if (cena.compareTo(BigDecimal.ZERO) < 0) {
+                showAlert("Błąd walidacji", "Cena nie może być ujemna.");
+                return;
+            }
+        } catch (NumberFormatException e) {
+            showAlert("Błąd danych", "Wprowadź poprawną cenę.");
+            return;
+        }
+
+        // Walidacja limitu stanu
+        try {
+            limit = Integer.parseInt(limitField.getText());
+            if (limit < 0) {
+                showAlert("Błąd walidacji", "Limit nie może być ujemny.");
+                return;
+            }
+        } catch (NumberFormatException e) {
+            showAlert("Błąd danych", "Wprowadź poprawny limit.");
+            return;
+        }
+
+        // Walidacja typu produktu
+        ProductType typ = typComboBox.getValue();
+        if (typ == null) {
+            showAlert("Błąd danych", "Wybierz typ produktu.");
+            return;
+        }
+
+
+        // Edycja produktu
+        try (Connection conn = DatabaseConnector.connect()) {
+            String updateSql = "UPDATE produkty SET nazwa = ?, stan = ?, cena = ?, limit_stanow = ?, id_typu_produktu = ? WHERE id_produktu = ?";
+            try (PreparedStatement updateStmt = conn.prepareStatement(updateSql)) {
+                updateStmt.setString(1, nazwa);
+                updateStmt.setInt(2, stan);
+                updateStmt.setDouble(3, cena.doubleValue());
+                updateStmt.setInt(4, limit);
+                updateStmt.setInt(5, typ.getId());
+                updateStmt.setInt(6, selectedProduct.getId());
+                updateStmt.executeUpdate();
+            }
+
+            loadProducts();
+            clearForm();
+            selectedProduct = null;
+
+        } catch (SQLException e) {
+            showAlert("Błąd", "Błąd bazy danych: " + e.getMessage());
         }
     }
 }

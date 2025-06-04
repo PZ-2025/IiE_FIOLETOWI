@@ -139,10 +139,6 @@ public class TaskController {
      */
     @FXML
     protected void toggleCustomTaskFields() {
-        boolean enabled = TaskCheckBox.isSelected();
-        productBox.setDisable(!enabled);
-        directionBox.setDisable(!enabled);
-        quantityField.setDisable(!enabled);
     }
 
     /**
@@ -187,11 +183,8 @@ public class TaskController {
         directionBox.setValue(task.getKierunek());
         quantityField.setText(task.getIlosc());
 
-        // Znalezienie i ustawienie pracownika
-        employeeBox.getItems().stream()
-                .filter(emp -> emp.contains(task.getPracownik()))
-                .findFirst()
-                .ifPresent(employeeBox::setValue);
+        // Ustawienie pracownika (teraz tylko imię i nazwisko)
+        employeeBox.setValue(task.getPracownik());
 
         // Ustawienie dat z obsługą błędów
         try {
@@ -295,9 +288,9 @@ public class TaskController {
      */
     private void loadEmployees(Connection conn) throws SQLException {
         employeeList.clear();
-        ResultSet rs = conn.createStatement().executeQuery("SELECT id_pracownika, imie, nazwisko FROM pracownicy");
+        ResultSet rs = conn.createStatement().executeQuery("SELECT imie, nazwisko FROM pracownicy");
         while (rs.next()) {
-            String emp = rs.getInt("id_pracownika") + ": " + rs.getString("imie") + " " + rs.getString("nazwisko");
+            String emp = rs.getString("imie") + " " + rs.getString("nazwisko");
             employeeList.add(emp);
         }
         employeeBox.setItems(employeeList);
@@ -393,7 +386,8 @@ public class TaskController {
             }
 
             // pracownik wymagany
-            employeeId = Integer.parseInt(employeeBox.getValue().split(":")[0]);
+            String employeeName = employeeBox.getValue();
+            employeeId = getEmployeeIdByName(conn, employeeName);
 
             // walidacja dat
             LocalDate startDate = startDatePicker.getValue();
@@ -497,7 +491,8 @@ public class TaskController {
                 directionId = null;
             }
 
-            employeeId = Integer.parseInt(employeeBox.getValue().split(":")[0]);
+            String employeeName = employeeBox.getValue();
+            employeeId = getEmployeeIdByName(conn, employeeName);
 
             LocalDate startDate = startDatePicker.getValue();
             LocalDate endDate = endDatePicker.getValue();
@@ -702,24 +697,29 @@ public class TaskController {
     }
 
     /**
-     * Przechodzi z powrotem do panelu głównego (dashboard).
+     * Pobiera ID pracownika na podstawie imienia i nazwiska.
      *
-     * @param event Zdarzenie wywołujące metodę
+     * @param conn Połączenie z bazą danych
+     * @param name Imię i nazwisko pracownika
+     * @return ID pracownika
+     * @throws SQLException W przypadku błędu dostępu do bazy danych
      */
-    @FXML
-    protected void goBackToDashboard(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/projekt/dashboard.fxml"));
-            Parent root = loader.load();
-            DashboardController controller = loader.getController();
-            controller.setCurrentUser(UserSession.getInstance().getUser());
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Dashboard");
-        } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "Błąd powrotu do dashboardu", e);
-            showAlert("Błąd", "Nie udało się przejść do dashboardu");
+    private int getEmployeeIdByName(Connection conn, String name) throws SQLException {
+        String[] parts = name.split(" ");
+        if (parts.length < 2) {
+            throw new SQLException("Nieprawidłowy format imienia i nazwiska pracownika");
         }
+
+        String sql = "SELECT id_pracownika FROM pracownicy WHERE imie = ? AND nazwisko = ?";
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        stmt.setString(1, parts[0]);
+        stmt.setString(2, parts[1]);
+        ResultSet rs = stmt.executeQuery();
+
+        if (rs.next()) {
+            return rs.getInt("id_pracownika");
+        }
+        throw new SQLException("Nie znaleziono pracownika: " + name);
     }
 
     /**

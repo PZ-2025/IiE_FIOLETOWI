@@ -11,13 +11,20 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
-
+import javafx.geometry.Insets;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -48,7 +55,7 @@ public class UserManagementController {
     @FXML protected TextField firstNameField;
     @FXML protected TextField lastNameField;
     @FXML protected TextField salaryField;
-
+    @FXML private Button deleteUserButton;
     @FXML private VBox userRoot;
 
     public ObservableList<Role> roles = FXCollections.observableArrayList();
@@ -89,7 +96,6 @@ public class UserManagementController {
             }
         });
 
-        // Ładowanie danych do comboboxów i tabeli
         roles = loadRolesFromDatabase();
         groups = loadGroupsFromDatabase();
         roleComboBox.setItems(roles);
@@ -269,12 +275,18 @@ public class UserManagementController {
      */
     @FXML
     void createUser() {
+        addNewUser();
+        selectedUserToEdit = null;
+    }
+
+    @FXML
+    void editUser() {
         if (selectedUserToEdit != null) {
             updateUser();
-        } else {
-            addNewUser();
+            selectedUserToEdit = null;
         }
     }
+
 
     /**
      * Dodaje nowego użytkownika do bazy danych na podstawie danych z formularza.
@@ -297,10 +309,14 @@ public class UserManagementController {
             AlertUtils.showError(PasswordValidator.getPasswordRequirementsMessage());
             return;
         }
+        if (isLoginTaken(login, null)) {
+            AlertUtils.showError("Login jest już w użyciu przez innego użytkownika.");
+            return;
+        }
 
         double placa;
         try {
-            placa = Double.parseDouble(placaStr);
+            placa = Double.parseDouble(placaStr.replace(",", "."));
             if (placa < 0) {
                 AlertUtils.showError("Płaca nie może być mniejsza niż 0.");
                 return;
@@ -309,6 +325,7 @@ public class UserManagementController {
             AlertUtils.showError("Nieprawidłowa wartość płacy.");
             return;
         }
+
 
         String hashedPassword = PasswordHasher.hashPassword(haslo, PasswordHasher.generateSalt());
 
@@ -365,13 +382,18 @@ public class UserManagementController {
 
         double placa;
         try {
-            placa = Double.parseDouble(placaStr);
+            placa = Double.parseDouble(placaStr.replace(",", "."));
             if (placa < 0) {
                 AlertUtils.showError("Płaca nie może być mniejsza niż 0.");
                 return;
             }
         } catch (NumberFormatException e) {
             AlertUtils.showError("Nieprawidłowa wartość płacy.");
+            return;
+        }
+
+        if (isLoginTaken(login, selectedUserToEdit.getId())) {
+            AlertUtils.showError("Login jest już w użyciu przez innego użytkownika.");
             return;
         }
 
@@ -404,6 +426,34 @@ public class UserManagementController {
             AlertUtils.showError("Błąd podczas aktualizacji użytkownika.");
         }
     }
+
+    private boolean isLoginTaken(String login, Integer excludeUserId) {
+        String sql = "SELECT COUNT(*) FROM pracownicy WHERE login = ?";
+
+        if (excludeUserId != null) {
+            sql += " AND id_pracownika != ?";
+        }
+
+        try (Connection conn = DatabaseConnector.connect();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, login);
+            if (excludeUserId != null) {
+                stmt.setInt(2, excludeUserId);
+            }
+
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Błąd przy sprawdzaniu loginu", e);
+        }
+
+        return false;
+    }
+
 
     /**
      * Czyści formularz zarządzania użytkownikami.
@@ -503,5 +553,161 @@ public class UserManagementController {
         if (fontUrl != null) {
             scene.getStylesheets().add(fontUrl.toExternalForm());
         }
+    }
+    @FXML
+    private void handleDeleteUser() {
+        if (selectedUserToEdit == null) {
+            AlertUtils.showError("Wybierz użytkownika do usunięcia.");
+            return;
+        }
+
+        int userId = selectedUserToEdit.getId();
+
+        try (Connection conn = DatabaseConnector.connect()) {
+
+            String checkTasksSql = "SELECT COUNT(*) FROM zadania WHERE id_pracownika = ?";
+            try (PreparedStatement stmt = conn.prepareStatement(checkTasksSql)) {
+                stmt.setInt(1, userId);
+                ResultSet rs = stmt.executeQuery();
+                rs.next();
+                int taskCount = rs.getInt(1);
+
+                if (taskCount > 0) {
+                    showTaskReassignmentDialog(conn, userId);
+                } else {
+                    deleteUserFromDatabase(conn, userId);
+                    AlertUtils.showAlert("Użytkownik został usunięty.");
+                    loadUsersFromDatabase();
+                }
+            }
+
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Błąd przy usuwaniu użytkownika", e);
+            AlertUtils.showError("Błąd podczas usuwania użytkownika.");
+        }
+    }
+    private void showTaskReassignmentDialog(Connection conn, int userId) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Użytkownik ma przypisane zadania");
+        alert.setHeaderText("Co chcesz zrobić z zadaniami przypisanymi do tego użytkownika?");
+        alert.setContentText("Wybierz jedną z opcji:");
+
+        ButtonType deleteTasks = new ButtonType("Usuń zadania");
+        ButtonType reassignTasks = new ButtonType("Przypisz innemu pracownikowi");
+        ButtonType cancel = new ButtonType("Anuluj", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+        alert.getButtonTypes().setAll(deleteTasks, reassignTasks, cancel);
+
+        alert.showAndWait().ifPresent(response -> {
+            try {
+                if (response == deleteTasks) {
+                    deleteTasksForUser(conn, userId);
+                    deleteUserFromDatabase(conn, userId);
+                    AlertUtils.showAlert("Użytkownik i jego zadania zostały usunięte.");
+                } else if (response == reassignTasks) {
+                    reassignTasksToAnotherUser(conn, userId);
+                }
+                loadUsersFromDatabase();
+            } catch (SQLException e) {
+                LOGGER.log(Level.SEVERE, "Błąd podczas operacji na zadaniach", e);
+                AlertUtils.showError("Wystąpił błąd podczas usuwania lub przypisywania zadań.");
+            }
+        });
+    }
+    private void deleteTasksForUser(Connection conn, int userId) throws SQLException {
+        String deleteTasksSql = "DELETE FROM zadania WHERE id_pracownika = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(deleteTasksSql)) {
+            stmt.setInt(1, userId);
+            stmt.executeUpdate();
+        }
+    }
+    private void deleteUserFromDatabase(Connection conn, int userId) throws SQLException {
+        String deleteUserSql = "DELETE FROM pracownicy WHERE id_pracownika = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(deleteUserSql)) {
+            stmt.setInt(1, userId);
+            stmt.executeUpdate();
+        }
+    }
+
+    private void reassignTasksToAnotherUser(Connection conn, int oldUserId) throws SQLException {
+        List<Task> tasks = getTasksByUserId(conn, oldUserId);
+        List<User> availableUsers = usersTable.getItems().filtered(u -> u.getId() != oldUserId);
+
+        if (tasks.isEmpty()) {
+            deleteUserFromDatabase(conn, oldUserId);
+            AlertUtils.showAlert("Użytkownik usunięty. Nie miał przypisanych zadań.");
+            return;
+        }
+
+        Dialog<ButtonType> dialog = new Dialog<>();
+        dialog.setTitle("Przypisz zadania");
+        dialog.setHeaderText("Wybierz nowego pracownika dla każdego zadania");
+        dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
+
+        GridPane grid = new GridPane();
+        grid.setVgap(10);
+        grid.setHgap(15);
+        grid.setPadding(new Insets(15));
+
+        List<ComboBox<User>> comboBoxes = new ArrayList<>();
+
+        for (int i = 0; i < tasks.size(); i++) {
+            Task task = tasks.get(i);
+            Label taskLabel = new Label(task.getNazwa());
+
+            ComboBox<User> comboBox = new ComboBox<>(FXCollections.observableArrayList(availableUsers));
+            comboBox.setPromptText("Wybierz pracownika");
+
+            comboBoxes.add(comboBox);
+            grid.addRow(i, taskLabel, comboBox);
+        }
+
+        dialog.getDialogPane().setContent(grid);
+
+        dialog.showAndWait().ifPresent(result -> {
+            if (result == ButtonType.OK) {
+                try {
+                    for (int i = 0; i < tasks.size(); i++) {
+                        User selectedUser = comboBoxes.get(i).getValue();
+                        if (selectedUser == null) {
+                            AlertUtils.showError("Nie przypisałeś pracownika do zadania: " + tasks.get(i).getNazwa());
+                            return;
+                        }
+
+                        try (PreparedStatement stmt = conn.prepareStatement(
+                                "UPDATE zadania SET id_pracownika = ? WHERE id_zadania = ?")) {
+                            stmt.setInt(1, selectedUser.getId());
+                            stmt.setInt(2, tasks.get(i).getId());
+                            stmt.executeUpdate();
+                        }
+                    }
+
+                    deleteUserFromDatabase(conn, oldUserId);
+                    AlertUtils.showAlert("Zadania zostały przypisane, a użytkownik usunięty.");
+                } catch (SQLException e) {
+                    LOGGER.log(Level.SEVERE, "Błąd przy przypisywaniu zadań", e);
+                    AlertUtils.showError("Nie udało się przypisać zadań.");
+                }
+            }
+        });
+    }
+
+    private List<Task> getTasksByUserId(Connection conn, int userId) throws SQLException {
+        List<Task> tasks = new ArrayList<>();
+
+        String sql = "SELECT id_zadania, nazwa FROM zadania WHERE id_pracownika = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, userId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    int id = rs.getInt("id_zadania");
+                    String nazwa = rs.getString("nazwa");
+
+                    tasks.add(new Task(id, nazwa, "", "", "", "", "", "", "", ""));
+                }
+            }
+        }
+
+        return tasks;
     }
 }

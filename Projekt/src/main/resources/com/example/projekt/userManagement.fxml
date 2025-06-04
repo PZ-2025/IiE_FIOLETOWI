@@ -34,6 +34,7 @@
         <Button onAction="#clearForm" text="Wyczyść dane" styleClass="primary-button"/>
         <Button onAction="#handleUpdateUser" text="Zaktualizuj użytkownika" styleClass="primary-button"/>
         <Button fx:id="createUserButton" onAction="#createUser" text="Dodaj użytkownika" styleClass="primary-button"/>
+        <Button fx:id="deleteUserButton" onAction="#handleDeleteUser" text="Usuń użytkownika" />
     </HBox>
 
     <TableView fx:id="usersTable" VBox.vgrow="ALWAYS" styleClass="table-view">
