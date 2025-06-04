@@ -4,12 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="93580640-a4f6-4848-877d-83f2d9fe0546" name="Changes" comment="Poprawa null zadania">
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/reportlib.xml" beforeDir="false" />
+    <list default="true" id="93580640-a4f6-4848-877d-83f2d9fe0546" name="Changes" comment="poprawa zewnętrznej biblioteki">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projekt/lib/reportlib.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projekt/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Projekt/src/test/java/com/example/projekt/DashboardControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/test/java/com/example/projekt/DashboardControllerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-settings.properties" beforeDir="false" afterPath="$PROJECT_DIR$/user-settings.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projekt/src/test/java/com/example/projekt/ProductTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/test/java/com/example/projekt/ProductTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,7 +80,7 @@
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/remix/IdeaProjects/IiE_FIOLETOWI/Projekt/lib/reportlib.jar",
-    "project.structure.last.edited": "Modules",
+    "project.structure.last.edited": "Libraries",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
     "settings.editor.selected.configurable": "MavenSettings"
@@ -98,7 +97,7 @@
       <recent name="C:\Users\ABC\Documents\IiE_FIOLETOWI\Projekt\src\main\java\com\example\projekt" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Main">
+  <component name="RunManager" selected="JUnit.AlertUtilsTest and 21 more">
     <configuration name="Main" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="com.example.projekt.Main" />
       <module name="Projekt" />
@@ -327,7 +326,15 @@
       <option name="project" value="LOCAL" />
       <updated>1748900865597</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="poprawa zewnętrznej biblioteki">
+      <option name="closed" value="true" />
+      <created>1748944646402</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1748944646402</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -364,10 +371,11 @@
     <MESSAGE value="Panel użytkownika" />
     <MESSAGE value="Testy" />
     <MESSAGE value="Poprawa null zadania" />
-    <option name="LAST_COMMIT_MESSAGE" value="Poprawa null zadania" />
+    <MESSAGE value="poprawa zewnętrznej biblioteki" />
+    <option name="LAST_COMMIT_MESSAGE" value="poprawa zewnętrznej biblioteki" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/IiE_FIOLETOWI$AlertUtilsTest_and_21_more.ic" NAME="AlertUtilsTest and 21 more Coverage Results" MODIFIED="1748901969191" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
+    <SUITE FILE_PATH="coverage/IiE_FIOLETOWI$AlertUtilsTest_and_21_more.ic" NAME="AlertUtilsTest and 21 more Coverage Results" MODIFIED="1748946999049" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
     <SUITE FILE_PATH="coverage/IiE_FIOLETOWI$com_example_projekt_in_Projekt.ic" NAME="com.example.projekt in Projekt Coverage Results" MODIFIED="1748879874364" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
       <FILTER>com.example.projekt.*</FILTER>
     </SUITE>

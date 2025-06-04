@@ -16,11 +16,20 @@ class ProductTest {
 
     @BeforeAll
     static void initJavaFX() throws InterruptedException {
-        // Inicjalizacja JavaFX (konieczne w środowiskach testowych bez GUI)
+        if (!Platform.isFxApplicationThread() && !Platform.isImplicitExit()) {
+            // Toolkit jest już zainicjalizowany – nic nie rób
+            return;
+        }
+
         CountDownLatch latch = new CountDownLatch(1);
-        Platform.startup(latch::countDown);
+        Platform.startup(() -> {
+            // Wyłącz automatyczne zamykanie aplikacji JavaFX po zamknięciu wszystkich okien
+            Platform.setImplicitExit(false);
+            latch.countDown();
+        });
         latch.await();
     }
+
 
     @BeforeEach
     void setUp() {
