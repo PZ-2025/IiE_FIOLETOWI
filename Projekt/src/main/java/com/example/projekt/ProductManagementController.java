@@ -192,11 +192,24 @@ public class ProductManagementController {
 
                         stmt.setInt(1, selected.getId());
                         stmt.executeUpdate();
+
                         loadProducts();
                         clearForm();
 
+                    } catch (SQLIntegrityConstraintViolationException ex) {
+                        Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                        errorAlert.setTitle("Błąd usuwania");
+                        errorAlert.setHeaderText("Nie można usunąć produktu");
+                        errorAlert.setContentText("Ten produkt jest przypisany do istniejących transakcji i nie może zostać usunięty.");
+                        errorAlert.showAndWait();
                     } catch (SQLException e) {
+                        // Inne błędy SQL
                         e.printStackTrace();
+                        Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                        errorAlert.setTitle("Błąd bazy danych");
+                        errorAlert.setHeaderText("Wystąpił błąd podczas usuwania produktu");
+                        errorAlert.setContentText("Szczegóły: " + e.getMessage());
+                        errorAlert.showAndWait();
                     }
                 }
             });
@@ -205,6 +218,7 @@ public class ProductManagementController {
             showAlert("Brak wyboru", "Nie wybrano produktu do usunięcia.");
         }
     }
+
 
     /**
      * Ładuje listę produktów z bazy danych i wyświetla je w tabeli.
