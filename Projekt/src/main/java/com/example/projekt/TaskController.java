@@ -50,6 +50,30 @@ public class TaskController {
     private TableColumn<Task, String> directionColumn;
 
     @FXML
+    protected TableView<Task> archivedTaskTable;
+    @FXML
+    protected TableColumn<Task, String> archivedNameColumn;
+    @FXML
+    private TableColumn<Task, String> archivedStatusColumn;
+    @FXML
+    private TableColumn<Task, String> archivedPriorityColumn;
+    @FXML
+    private TableColumn<Task, String> archivedStartDateColumn;
+    @FXML
+    private TableColumn<Task, String> archivedEndDateColumn;
+    @FXML
+    private TableColumn<Task, String> archivedCommentColumn;
+    @FXML
+    private TableColumn<Task, String> archivedAssignedColumn;
+    @FXML
+    private TableColumn<Task, String> archivedAssignedproductColumn;
+    @FXML
+    private TableColumn<Task, String> archivedQuantityColumn;
+    @FXML
+    private TableColumn<Task, String> archivedDirectionColumn;
+
+
+    @FXML
     protected TextField nameField;
     @FXML
     protected TextField commentField;
@@ -75,6 +99,7 @@ public class TaskController {
     protected BorderPane taskRoot;
 
     private ObservableList<Task> taskList = FXCollections.observableArrayList();
+    private ObservableList<Task> archivedTaskList = FXCollections.observableArrayList();
     private ObservableList<String> statusList = FXCollections.observableArrayList();
     private ObservableList<String> priorityList = FXCollections.observableArrayList();
     private ObservableList<String> productList = FXCollections.observableArrayList();
@@ -86,7 +111,8 @@ public class TaskController {
     private final String PASSWORD = "";
 
     /**
-     * Metoda inicjalizująca kontroler. Konfiguruje tabelę, ładuje dane i ustawia listenery.
+     * Metoda inicjalizująca kontroler.
+     * Konfiguruje tabelę, ładuje dane i ustawia listenery.
      */
     @FXML
     public void initialize() {
@@ -96,16 +122,17 @@ public class TaskController {
                 applyFontSize(AppSettings.getFontSizeLabel());
             }
         });
-
-        // Konfiguracja tabeli
+        // Konfiguracja tabel
         configureTableColumns();
+        configureArchivedTableColumns();
 
         // Ustawienie polityki zmiany rozmiaru kolumn
         taskTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        archivedTaskTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         loadData();
+        loadArchivedData();
         loadComboBoxes();
-
         taskTable.setOnMouseClicked(event -> {
             Task selected = taskTable.getSelectionModel().getSelectedItem();
             if (selected != null) {
@@ -155,7 +182,6 @@ public class TaskController {
         assignedproductColumn.setCellValueFactory(new PropertyValueFactory<>("produkt"));
         quantityColumn.setCellValueFactory(new PropertyValueFactory<>("ilosc"));
         directionColumn.setCellValueFactory(new PropertyValueFactory<>("kierunek"));
-
         // Ustawienie proporcjonalnego rozkładu szerokości kolumn
         nameColumn.prefWidthProperty().bind(taskTable.widthProperty().multiply(0.25));
         statusColumn.prefWidthProperty().bind(taskTable.widthProperty().multiply(0.15));
@@ -170,6 +196,35 @@ public class TaskController {
     }
 
     /**
+     * Konfiguruje kolumny tabeli zarchiwizowanych zadań.
+     */
+    private void configureArchivedTableColumns() {
+        archivedNameColumn.setCellValueFactory(new PropertyValueFactory<>("nazwa"));
+        archivedStatusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
+        archivedPriorityColumn.setCellValueFactory(new PropertyValueFactory<>("priorytet"));
+        archivedStartDateColumn.setCellValueFactory(new PropertyValueFactory<>("data"));
+        archivedEndDateColumn.setCellValueFactory(new PropertyValueFactory<>("koniec"));
+        archivedCommentColumn.setCellValueFactory(new PropertyValueFactory<>("komentarz"));
+        archivedAssignedColumn.setCellValueFactory(new PropertyValueFactory<>("pracownik"));
+        archivedAssignedproductColumn.setCellValueFactory(new PropertyValueFactory<>("produkt"));
+        archivedQuantityColumn.setCellValueFactory(new PropertyValueFactory<>("ilosc"));
+        archivedDirectionColumn.setCellValueFactory(new PropertyValueFactory<>("kierunek"));
+
+        // Ustawienie proporcjonalnego rozkładu szerokości kolumn
+        archivedNameColumn.prefWidthProperty().bind(archivedTaskTable.widthProperty().multiply(0.25));
+        archivedStatusColumn.prefWidthProperty().bind(archivedTaskTable.widthProperty().multiply(0.15));
+        archivedPriorityColumn.prefWidthProperty().bind(archivedTaskTable.widthProperty().multiply(0.15));
+        archivedStartDateColumn.prefWidthProperty().bind(archivedTaskTable.widthProperty().multiply(0.15));
+        archivedEndDateColumn.prefWidthProperty().bind(archivedTaskTable.widthProperty().multiply(0.15));
+        archivedAssignedColumn.prefWidthProperty().bind(archivedTaskTable.widthProperty().multiply(0.15));
+        archivedCommentColumn.prefWidthProperty().bind(archivedTaskTable.widthProperty().multiply(0.15));
+        archivedAssignedproductColumn.prefWidthProperty().bind(archivedTaskTable.widthProperty().multiply(0.15));
+        archivedQuantityColumn.prefWidthProperty().bind(archivedTaskTable.widthProperty().multiply(0.15));
+        archivedDirectionColumn.prefWidthProperty().bind(archivedTaskTable.widthProperty().multiply(0.15));
+    }
+
+
+    /**
      * Wypełnia formularz danymi wybranego zadania.
      *
      * @param task Zadanie, którego dane mają zostać wypełnione w formularzu
@@ -182,10 +237,8 @@ public class TaskController {
         productBox.setValue(task.getProdukt());
         directionBox.setValue(task.getKierunek());
         quantityField.setText(task.getIlosc());
-
         // Ustawienie pracownika (teraz tylko imię i nazwisko)
         employeeBox.setValue(task.getPracownik());
-
         // Ustawienie dat z obsługą błędów
         try {
             if (task.getData() != null && !task.getData().isEmpty()) {
@@ -297,23 +350,24 @@ public class TaskController {
     }
 
     /**
-     * Ładuje listę zadań z bazy danych i wyświetla je w tabeli.
+     * Ładuje listę aktywnych zadań z bazy danych i wyświetla je w tabeli.
+     * Ładuje zadania, których status to 'Oczekujące' (1), 'Rozpoczęte' (2) lub 'W trakcie' (3).
      */
     protected void loadData() {
         taskList.clear();
         String query = """
-        SELECT z.id_zadania, z.nazwa, s.nazwa AS status, p.nazwa AS priorytet,
-               z.data_rozpoczecia, z.data_zakonczenia, z.komentarz, z.ilosc,
-               pk.nazwa AS produkt, k.nazwa AS kierunek,
-               CONCAT(pr.imie, ' ', pr.nazwisko) AS pracownik
-        FROM zadania z
-        LEFT JOIN statusy s ON z.id_statusu = s.id_statusu
-        LEFT JOIN priorytety p ON z.id_priorytetu = p.id_priorytetu
-        LEFT JOIN pracownicy pr ON z.id_pracownika = pr.id_pracownika
-        LEFT JOIN produkty pk ON z.id_produktu = pk.id_produktu
-        LEFT JOIN kierunki k ON z.id_kierunku = k.id_kierunku
-    """;
-
+                SELECT z.id_zadania, z.nazwa, s.nazwa AS status, p.nazwa AS priorytet,
+                       z.data_rozpoczecia, z.data_zakonczenia, z.komentarz, z.ilosc,
+                       pk.nazwa AS produkt, k.nazwa AS kierunek,
+                       CONCAT(pr.imie, ' ', pr.nazwisko) AS pracownik
+                FROM zadania z
+                LEFT JOIN statusy s ON z.id_statusu = s.id_statusu
+                LEFT JOIN priorytety p ON z.id_priorytetu = p.id_priorytetu
+                LEFT JOIN pracownicy pr ON z.id_pracownika = pr.id_pracownika
+                LEFT JOIN produkty pk ON z.id_produktu = pk.id_produktu
+                LEFT JOIN kierunki k ON z.id_kierunku = k.id_kierunku
+                WHERE s.id_statusu IN (1, 2, 3, 4)
+                """;
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
@@ -330,7 +384,6 @@ public class TaskController {
                 String kierunek = rs.getString("kierunek");
                 String pracownik = rs.getString("pracownik");
                 String dataZakonczenia = rs.getString("data_zakonczenia");
-
                 Task task = new Task(
                         id,
                         nazwa,
@@ -343,14 +396,12 @@ public class TaskController {
                         ilosc,
                         pracownik
                 );
-
                 task.setEndDate(dataZakonczenia);
 
                 taskList.add(task);
             }
 
             taskTable.setItems(taskList);
-
         } catch (SQLException e) {
             LOGGER.log(Level.SEVERE, "Błąd ładowania zadań", e);
             showAlert("Błąd ładowania danych", "Nie udało się załadować listy zadań");
@@ -358,15 +409,73 @@ public class TaskController {
     }
 
     /**
+     * Ładuje listę zarchiwizowanych zadań z bazy danych i wyświetla je w tabeli.
+     * Ładuje zadania, których status to 'Zakończone' (4) lub 'Zarchiwizowane' (5).
+     */
+    protected void loadArchivedData() {
+        archivedTaskList.clear();
+        String query = """
+                SELECT z.id_zadania, z.nazwa, s.nazwa AS status, p.nazwa AS priorytet,
+                       z.data_rozpoczecia, z.data_zakonczenia, z.komentarz, z.ilosc,
+                       pk.nazwa AS produkt, k.nazwa AS kierunek,
+                       CONCAT(pr.imie, ' ', pr.nazwisko) AS pracownik
+                FROM zadania z
+                LEFT JOIN statusy s ON z.id_statusu = s.id_statusu
+                LEFT JOIN priorytety p ON z.id_priorytetu = p.id_priorytetu
+                LEFT JOIN pracownicy pr ON z.id_pracownika = pr.id_pracownika
+                LEFT JOIN produkty pk ON z.id_produktu = pk.id_produktu
+                LEFT JOIN kierunki k ON z.id_kierunku = k.id_kierunku
+                WHERE s.id_statusu = 5
+                """;
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+
+            while (rs.next()) {
+                int id = rs.getInt("id_zadania");
+                String nazwa = rs.getString("nazwa");
+                String status = rs.getString("status");
+                String priorytet = rs.getString("priorytet");
+                String dataRozpoczecia = rs.getString("data_rozpoczecia");
+                String komentarz = rs.getString("komentarz");
+                String ilosc = rs.getString("ilosc");
+                String produkt = rs.getString("produkt");
+                String kierunek = rs.getString("kierunek");
+                String pracownik = rs.getString("pracownik");
+                String dataZakonczenia = rs.getString("data_zakonczenia");
+                Task task = new Task(
+                        id,
+                        nazwa,
+                        status,
+                        priorytet,
+                        dataRozpoczecia,
+                        produkt,
+                        kierunek,
+                        komentarz,
+                        ilosc,
+                        pracownik
+                );
+                task.setEndDate(dataZakonczenia);
+
+                archivedTaskList.add(task);
+            }
+
+            archivedTaskTable.setItems(archivedTaskList);
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Błąd ładowania zarchiwizowanych zadań", e);
+            showAlert("Błąd ładowania danych", "Nie udało się załadować listy zarchiwizowanych zadań");
+        }
+    }
+
+
+    /**
      * Obsługuje dodawanie nowego zadania do bazy danych.
      */
     @FXML
     protected void handleAddTask() {
         if (!validateForm()) return;
-
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD)) {
             Integer statusId = null, priorityId = null, productId = null, directionId = null, employeeId = null;
-
             // status i priorytet wymagane
             statusId = getIdFromTable(conn, "statusy", statusBox.getValue());
             priorityId = getIdFromTable(conn, "priorytety", priorityBox.getValue());
@@ -398,12 +507,11 @@ public class TaskController {
             }
 
             String sql = """
-            INSERT INTO zadania (nazwa, id_statusu, id_priorytetu, data_rozpoczecia, 
-                                 data_zakonczenia, komentarz, id_pracownika, id_produktu, 
-                                 ilosc, id_kierunku)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-        """;
-
+                    INSERT INTO zadania (nazwa, id_statusu, id_priorytetu, data_rozpoczecia,
+                                         data_zakonczenia, komentarz, id_pracownika, id_produktu,
+                                         ilosc, id_kierunku)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    """;
             PreparedStatement stmt = conn.prepareStatement(sql);
 
             String name = nameField.getText().trim();
@@ -416,14 +524,14 @@ public class TaskController {
             stmt.setDate(5, Date.valueOf(endDate));
             stmt.setString(6, comment);
             stmt.setInt(7, employeeId);
-
             if (productId != null) {
                 stmt.setInt(8, productId);
             } else {
                 stmt.setNull(8, Types.INTEGER);
             }
 
-            String quantityText = quantityField.getText() != null ? quantityField.getText().trim() : "";
+            String quantityText = quantityField.getText() != null ?
+                    quantityField.getText().trim() : "";
             if (quantityText.isEmpty()) {
                 stmt.setNull(9, Types.INTEGER);
             } else {
@@ -448,9 +556,9 @@ public class TaskController {
 
             stmt.executeUpdate();
             loadData();
+            loadArchivedData(); // Odświeżanie zarchiwizowanych zadań
             clearFields();
             showAlert("Sukces", "Zadanie zostało dodane");
-
         } catch (SQLException e) {
             LOGGER.log(Level.SEVERE, "Błąd dodawania zadania", e);
             showAlert("Błąd", "Nie udało się dodać zadania: " + e.getMessage());
@@ -472,13 +580,10 @@ public class TaskController {
         }
 
         if (!validateForm()) return;
-
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD)) {
             Integer statusId = null, priorityId = null, productId = null, directionId = null, employeeId = null;
-
             statusId = getIdFromTable(conn, "statusy", statusBox.getValue());
             priorityId = getIdFromTable(conn, "priorytety", priorityBox.getValue());
-
             if (productBox.getValue() != null) {
                 productId = getIdFromTable(conn, "produkty", productBox.getValue());
             } else {
@@ -493,7 +598,6 @@ public class TaskController {
 
             String employeeName = employeeBox.getValue();
             employeeId = getEmployeeIdByName(conn, employeeName);
-
             LocalDate startDate = startDatePicker.getValue();
             LocalDate endDate = endDatePicker.getValue();
             if (endDate.isBefore(startDate)) {
@@ -502,13 +606,13 @@ public class TaskController {
             }
 
             String sql = """
-            UPDATE zadania
-            SET nazwa = ?, id_statusu = ?, id_priorytetu = ?, 
-                data_rozpoczecia = ?, data_zakonczenia = ?, komentarz = ?, 
-                id_pracownika = ?, id_produktu = ?, ilosc = ?, id_kierunku = ?
-            WHERE id_zadania = ?
-        """;
-
+                    UPDATE zadania
+                    SET nazwa = ?, id_statusu = ?, id_priorytetu = ?,
+                        data_rozpoczecia = ?, data_zakonczenia = ?, komentarz = ?,
+                        id_pracownika = ?, id_produktu = ?, ilosc =
+                    ?, id_kierunku = ?
+                    WHERE id_zadania = ?
+                    """;
             PreparedStatement stmt = conn.prepareStatement(sql);
 
             String name = nameField.getText().trim();
@@ -528,7 +632,8 @@ public class TaskController {
                 stmt.setNull(8, Types.INTEGER);
             }
 
-            String quantityText = quantityField.getText() != null ? quantityField.getText().trim() : "";
+            String quantityText = quantityField.getText() != null ?
+                    quantityField.getText().trim() : "";
             if (quantityText.isEmpty()) {
                 stmt.setNull(9, Types.INTEGER);
             } else {
@@ -555,6 +660,7 @@ public class TaskController {
 
             stmt.executeUpdate();
             loadData();
+            loadArchivedData(); // Odświeżanie zarchiwizowanych zadań
             clearFields();
             showAlert("Sukces", "Zadanie zostało zaktualizowane");
 
@@ -583,7 +689,6 @@ public class TaskController {
         confirmAlert.setTitle("Potwierdzenie");
         confirmAlert.setHeaderText("Czy na pewno chcesz usunąć to zadanie?");
         confirmAlert.setContentText("Zadanie: " + selected.getNazwa());
-
         if (confirmAlert.showAndWait().orElse(ButtonType.CANCEL) != ButtonType.OK) {
             return;
         }
@@ -594,6 +699,7 @@ public class TaskController {
             stmt.executeUpdate();
 
             loadData();
+            loadArchivedData(); // Odświeżanie zarchiwizowanych zadań
             clearFields();
             showAlert("Sukces", "Zadanie zostało usunięte");
         } catch (SQLException e) {
@@ -655,9 +761,9 @@ public class TaskController {
             throw new SQLException("Nazwa nie może być pusta dla tabeli: " + table);
         }
 
-        String baseName = table.endsWith("y") || table.endsWith("i") ? table.substring(0, table.length() - 1) + "u" : table;
+        String baseName = table.endsWith("y") ||
+                table.endsWith("i") ? table.substring(0, table.length() - 1) + "u" : table;
         String columnName = "id_" + baseName;
-
         String sql = "SELECT " + columnName + " FROM " + table + " WHERE nazwa = ?";
         PreparedStatement stmt = conn.prepareStatement(sql);
         stmt.setString(1, name.trim());
@@ -715,7 +821,6 @@ public class TaskController {
         stmt.setString(1, parts[0]);
         stmt.setString(2, parts[1]);
         ResultSet rs = stmt.executeQuery();
-
         if (rs.next()) {
             return rs.getInt("id_pracownika");
         }

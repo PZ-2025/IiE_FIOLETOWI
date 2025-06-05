@@ -61,7 +61,7 @@
 
             <Button text="Zapisz komentarz" onAction="#saveTaskComment" styleClass="primary-button"/>
 
-            <Label text="Historia zakończonych zadań:" styleClass="section-label"/>
+            <Label text="Zadania do zatwierdzenia:" styleClass="section-label"/>
             <ListView fx:id="historyList" prefHeight="100" styleClass="list-view"/>
         </VBox>
     </center>
