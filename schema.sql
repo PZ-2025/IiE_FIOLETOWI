@@ -24,7 +24,8 @@ CREATE TABLE pracownicy (
     id_grupy INT NOT NULL,
     id_roli INT NOT NULL,
     FOREIGN KEY (id_grupy) REFERENCES grupy(id_grupy),
-    FOREIGN KEY (id_roli) REFERENCES role(id_roli)
+    FOREIGN KEY (id_roli) REFERENCES role(id_roli),
+    archiwizacja BOOLEAN,
 );
 
 -- Tabela 'typ_produktu'
@@ -111,7 +112,7 @@ INSERT INTO grupy (nazwa) VALUES
 
 -- Wstawianie danych do tabeli 'statusy'
 INSERT INTO statusy (nazwa) VALUES
-('Oczekujące'), ('Rozpoczęte'), ('W trakcie'), ('Zakończone');
+('Oczekujące'), ('Rozpoczęte'), ('W trakcie'), ('Zakończone'), ('Zarchiwizowane');
 
 -- Wstawianie danych do tabeli 'priorytety'
 INSERT INTO priorytety (nazwa) VALUES
