@@ -127,12 +127,12 @@ INSERT INTO typ_produktu (nazwa) VALUES
 ('Foto / Wideo');
 
 -- Wstawianie danych do tabeli 'pracownicy'
-INSERT INTO pracownicy (imie, nazwisko, login, haslo, placa, id_grupy, id_roli) VALUES
-('Admin', 'Admin', 'Admin123', 'rDlt1lrSXRTUhaYdrtrHPQ==:0JzlTGgCm3V3x9XgTCV1hIyXdr7UA45FgeNdyr4EgW0=', 5000.00, 1, 1),
-('Jan', 'Kowalski', 'jkowalski', '9VnZWBzzv0Fwgis+dia9Sg==:ytBL2OvbM0FUNgHQ/8Vk4xj6Ifuin9q/p8Pn+Ve2RHE=', 5000.00, 1, 2),
-('Anna', 'Nowak', 'anowak', 'gFFyTO4esJ8OO0Ml9ZeJXA==:E0ytSeKCkJ37zSXPC5FSi1n6H8QpXdjwEGmP8mYccno=', 5200.00, 2, 2),
-('Piotr', 'Zieliński', 'pzielinski', 'ctHDoZWGPyMZNAk+spWvVg==:h++8x391tbhAeV1rsBWUd49X+a1Y/wqL//iCJuaY2hU=', 4800.00, 3, 3),
-('Katarzyna', 'Wiśniewska', 'kwisniewska', 'EeHt2TjXgQTMyT0efrGb0g==:Vh2VSvZfL4U64ny2Xk8QCAVQf1TmFACwGToCDaWwnvk=', 5300.00, 4, 2);
+INSERT INTO pracownicy (imie, nazwisko, login, haslo, placa, id_grupy, id_roli, archiwizacja) VALUES
+('Admin', 'Admin', 'Admin123', 'rDlt1lrSXRTUhaYdrtrHPQ==:0JzlTGgCm3V3x9XgTCV1hIyXdr7UA45FgeNdyr4EgW0=', 5000.00, 1, 1, 0),
+('Jan', 'Kowalski', 'jkowalski', '9VnZWBzzv0Fwgis+dia9Sg==:ytBL2OvbM0FUNgHQ/8Vk4xj6Ifuin9q/p8Pn+Ve2RHE=', 5000.00, 1, 2, 0),
+('Anna', 'Nowak', 'anowak', 'gFFyTO4esJ8OO0Ml9ZeJXA==:E0ytSeKCkJ37zSXPC5FSi1n6H8QpXdjwEGmP8mYccno=', 5200.00, 2, 2, 0),
+('Piotr', 'Zieliński', 'pzielinski', 'ctHDoZWGPyMZNAk+spWvVg==:h++8x391tbhAeV1rsBWUd49X+a1Y/wqL//iCJuaY2hU=', 4800.00, 3, 3, 0),
+('Katarzyna', 'Wiśniewska', 'kwisniewska', 'EeHt2TjXgQTMyT0efrGb0g==:Vh2VSvZfL4U64ny2Xk8QCAVQf1TmFACwGToCDaWwnvk=', 5300.00, 4, 2, 0);
 
 -- Wstawianie danych do tabeli 'produkty'
 INSERT INTO produkty (nazwa, stan, cena, limit_stanow, id_typu_produktu) VALUES
