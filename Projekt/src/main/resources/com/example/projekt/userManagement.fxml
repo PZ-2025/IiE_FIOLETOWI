@@ -34,11 +34,12 @@
         <Button onAction="#clearForm" text="Wyczyść dane" styleClass="primary-button"/>
         <Button onAction="#handleUpdateUser" text="Zaktualizuj użytkownika" styleClass="primary-button"/>
         <Button fx:id="createUserButton" onAction="#createUser" text="Dodaj użytkownika" styleClass="primary-button"/>
-        <Button fx:id="deleteUserButton" onAction="#handleDeleteUser" text="Usuń użytkownika" />
+        <Button fx:id="archiveUserButton" onAction="#handleArchiveUser" text="Zarchiwizuj użytkownika" />
     </HBox>
 
     <HBox alignment="CENTER_LEFT" spacing="10">
         <Button fx:id="toggleArchiveButton" onAction="#toggleArchiveView" text="Pokaż zarchiwizowanych" styleClass="primary-button"/>
+        <Button fx:id="restoreUserButton" text="Przywróć użytkownika" onAction="#handleRestoreUser"/>
     </HBox>
 
     <!-- Tabela użytkowników aktywnych -->

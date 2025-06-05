@@ -6,9 +6,6 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
@@ -17,10 +14,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
-import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
-import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.util.ArrayList;
@@ -35,8 +29,6 @@ import java.util.logging.Logger;
 public class UserManagementController {
 
     private static final Logger LOGGER = Logger.getLogger(UserManagementController.class.getName());
-    private static final String DASHBOARD_VIEW_PATH = "/com/example/projekt/dashboard.fxml";
-    private static final String DASHBOARD_TITLE = "Dashboard";
 
     @FXML private Button createUserButton;
     @FXML private Label adminLabel;
@@ -55,7 +47,6 @@ public class UserManagementController {
     @FXML protected TextField firstNameField;
     @FXML protected TextField lastNameField;
     @FXML protected TextField salaryField;
-    @FXML private Button deleteUserButton;
     @FXML private VBox userRoot;
     @FXML private Button toggleArchiveButton;
     @FXML private TableView<User> archivedUsersTable;
@@ -65,6 +56,8 @@ public class UserManagementController {
     @FXML private TableColumn<User, Double> placaArchColumn;
     @FXML private TableColumn<User, String> rolaArchColumn;
     @FXML private TableColumn<User, String> grupaArchColumn;
+    @FXML private Button restoreUserButton;
+
     private boolean showingArchived = false;
 
     public ObservableList<Role> roles = FXCollections.observableArrayList();
@@ -83,6 +76,8 @@ public class UserManagementController {
                 applyFontSize(AppSettings.getFontSizeLabel());
             }
         });
+        restoreUserButton.setVisible(false);
+        restoreUserButton.setManaged(false);
 
         // Konfiguracja wiązań danych w kolumnach tabeli
         imieColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getImie()));
@@ -101,7 +96,7 @@ public class UserManagementController {
         grupaArchColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getGroup()));
         
         // Formatowanie wyświetlania wartości w kolumnie płacy
-        placaColumn.setCellFactory(column -> new TableCell<User, Double>() {
+        placaColumn.setCellFactory(column -> new TableCell<>() {
             @Override
             protected void updateItem(Double item, boolean empty) {
                 super.updateItem(item, empty);
@@ -110,6 +105,20 @@ public class UserManagementController {
                 } else {
                     setText(String.format("%.2f zł", item));
                 }
+                setStyle("-fx-alignment: CENTER-RIGHT;");
+            }
+        });
+
+        placaArchColumn.setCellFactory(column -> new TableCell<>() {
+            @Override
+            protected void updateItem(Double item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(String.format("%.2f zł", item));
+                }
+                setStyle("-fx-alignment: CENTER-RIGHT;");
             }
         });
 
@@ -156,10 +165,7 @@ public class UserManagementController {
             createUserButton.setVisible(false);
         }
 
-        // Ustawienie focusa na głównym panelu
-        Platform.runLater(() -> {
-            userRoot.requestFocus();
-        });
+        Platform.runLater(() -> userRoot.requestFocus());
     }
 
     /**
@@ -304,15 +310,6 @@ public class UserManagementController {
         addNewUser();
         selectedUserToEdit = null;
     }
-
-    @FXML
-    void editUser() {
-        if (selectedUserToEdit != null) {
-            updateUser();
-            selectedUserToEdit = null;
-        }
-    }
-
 
     /**
      * Dodaje nowego użytkownika do bazy danych na podstawie danych z formularza.
@@ -496,30 +493,6 @@ public class UserManagementController {
         selectedUserToEdit = null;
     }
 
-    /**
-     * Przechodzi do widoku dashboardu.
-     *
-     * @param event Zdarzenie wywołujące metodę
-     */
-    @FXML
-    private void goToDashboard(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(DASHBOARD_VIEW_PATH));
-            Parent dashboardRoot = loader.load();
-
-            DashboardController dashboardController = loader.getController();
-            dashboardController.setCurrentUser(UserSession.getInstance().getUser());
-
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setTitle(DASHBOARD_TITLE);
-            stage.setScene(new Scene(dashboardRoot));
-            stage.show();
-
-        } catch (IOException | NullPointerException e) {
-            LOGGER.log(Level.SEVERE, "Błąd ładowania dashboardu", e);
-            AlertUtils.showError("Nie można załadować dashboardu.");
-        }
-    }
 
     /**
      * Obsługuje aktualizację danych użytkownika.
@@ -527,7 +500,7 @@ public class UserManagementController {
     @FXML
     private void handleUpdateUser() {
         if (selectedUserToEdit == null) {
-            AlertUtils.showError("Wybierz użytkownika z tabeli do edycji!");
+            AlertUtils.showError("Wybierz użytkownika z tabeli aktywnych do edycji!");
             return;
         }
         updateUser();
@@ -581,13 +554,18 @@ public class UserManagementController {
         }
     }
     @FXML
-    private void handleDeleteUser() {
+    private void handleArchiveUser() {
         if (selectedUserToEdit == null) {
-            AlertUtils.showError("Wybierz użytkownika do zarchiwizowania.");
+            AlertUtils.showError("Wybierz aktywnego użytkownika do zarchiwizowania.");
             return;
         }
 
         int userId = selectedUserToEdit.getId();
+
+        if (userId == 1) {
+            AlertUtils.showError("Nie można zarchiwizować użytkownika systemowego.");
+            return;
+        }
 
         try (Connection conn = DatabaseConnector.connect()) {
 
@@ -603,6 +581,7 @@ public class UserManagementController {
                 } else {
                     archiveUserInDatabase(conn, userId);
                     AlertUtils.showAlert("Użytkownik został zarchiwizowany.");
+                    clearForm();
                     loadUsersFromDatabase();
                 }
             }
@@ -749,6 +728,9 @@ public class UserManagementController {
 
         toggleArchiveButton.setText(showingArchived ? "Pokaż aktywnych" : "Pokaż zarchiwizowanych");
 
+        restoreUserButton.setVisible(showingArchived);
+        restoreUserButton.setManaged(showingArchived);
+
         if (showingArchived) {
             loadArchivedUsers();
         }
@@ -791,5 +773,31 @@ public class UserManagementController {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "Błąd ładowania zarchiwizowanych użytkowników", e);
         }
     }
+    @FXML
+    private void handleRestoreUser() {
+        User selectedUser = archivedUsersTable.getSelectionModel().getSelectedItem();
+
+        if (selectedUser == null) {
+            AlertUtils.showError("Wybierz użytkownika do przywrócenia.");
+            return;
+        }
+
+        try (Connection conn = DatabaseConnector.connect()) {
+            String restoreSql = "UPDATE pracownicy SET archiwizacja = 0 WHERE id_pracownika = ?";
+            try (PreparedStatement stmt = conn.prepareStatement(restoreSql)) {
+                stmt.setInt(1, selectedUser.getId());
+                stmt.executeUpdate();
+            }
+
+            AlertUtils.showAlert("Użytkownik został przywrócony.");
+            loadArchivedUsers();
+            loadUsersFromDatabase();
+
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Błąd przy przywracaniu użytkownika", e);
+            AlertUtils.showError("Wystąpił błąd podczas przywracania użytkownika.");
+        }
+    }
+
 
 }
