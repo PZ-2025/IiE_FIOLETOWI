@@ -341,7 +341,9 @@ public class TaskController {
      */
     private void loadEmployees(Connection conn) throws SQLException {
         employeeList.clear();
-        ResultSet rs = conn.createStatement().executeQuery("SELECT imie, nazwisko FROM pracownicy");
+        // Modyfikacja zapytania SQL, aby wykluczyć pracowników z archiwizacja = 1
+        String query = "SELECT imie, nazwisko FROM pracownicy WHERE archiwizacja = 0";
+        ResultSet rs = conn.createStatement().executeQuery(query);
         while (rs.next()) {
             String emp = rs.getString("imie") + " " + rs.getString("nazwisko");
             employeeList.add(emp);
