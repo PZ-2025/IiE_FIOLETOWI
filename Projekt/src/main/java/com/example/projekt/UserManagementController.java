@@ -55,7 +55,7 @@ public class UserManagementController {
     @FXML protected TextField firstNameField;
     @FXML protected TextField lastNameField;
     @FXML protected TextField salaryField;
-    @FXML private Button deleteUserButton;
+    @FXML private Button archiveUserButton;
     @FXML private VBox userRoot;
     @FXML private Button toggleArchiveButton;
     @FXML private TableView<User> archivedUsersTable;
@@ -65,6 +65,8 @@ public class UserManagementController {
     @FXML private TableColumn<User, Double> placaArchColumn;
     @FXML private TableColumn<User, String> rolaArchColumn;
     @FXML private TableColumn<User, String> grupaArchColumn;
+    @FXML private Button restoreUserButton;
+
     private boolean showingArchived = false;
 
     public ObservableList<Role> roles = FXCollections.observableArrayList();
@@ -83,6 +85,8 @@ public class UserManagementController {
                 applyFontSize(AppSettings.getFontSizeLabel());
             }
         });
+        restoreUserButton.setVisible(false);
+        restoreUserButton.setManaged(false);
 
         // Konfiguracja wiązań danych w kolumnach tabeli
         imieColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getImie()));
@@ -110,6 +114,20 @@ public class UserManagementController {
                 } else {
                     setText(String.format("%.2f zł", item));
                 }
+                setStyle("-fx-alignment: CENTER-RIGHT;");
+            }
+        });
+
+        placaArchColumn.setCellFactory(column -> new TableCell<User, Double>() {
+            @Override
+            protected void updateItem(Double item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(String.format("%.2f zł", item));
+                }
+                setStyle("-fx-alignment: CENTER-RIGHT;");
             }
         });
 
@@ -527,7 +545,7 @@ public class UserManagementController {
     @FXML
     private void handleUpdateUser() {
         if (selectedUserToEdit == null) {
-            AlertUtils.showError("Wybierz użytkownika z tabeli do edycji!");
+            AlertUtils.showError("Wybierz użytkownika z tabeli aktywnych do edycji!");
             return;
         }
         updateUser();
@@ -581,13 +599,18 @@ public class UserManagementController {
         }
     }
     @FXML
-    private void handleDeleteUser() {
+    private void handleArchiveUser() {
         if (selectedUserToEdit == null) {
-            AlertUtils.showError("Wybierz użytkownika do zarchiwizowania.");
+            AlertUtils.showError("Wybierz aktywnego użytkownika do zarchiwizowania.");
             return;
         }
 
         int userId = selectedUserToEdit.getId();
+
+        if (userId == 1) {
+            AlertUtils.showError("Nie można zarchiwizować użytkownika systemowego.");
+            return;
+        }
 
         try (Connection conn = DatabaseConnector.connect()) {
 
@@ -603,6 +626,7 @@ public class UserManagementController {
                 } else {
                     archiveUserInDatabase(conn, userId);
                     AlertUtils.showAlert("Użytkownik został zarchiwizowany.");
+                    clearForm();
                     loadUsersFromDatabase();
                 }
             }
@@ -749,6 +773,9 @@ public class UserManagementController {
 
         toggleArchiveButton.setText(showingArchived ? "Pokaż aktywnych" : "Pokaż zarchiwizowanych");
 
+        restoreUserButton.setVisible(showingArchived);
+        restoreUserButton.setManaged(showingArchived);
+
         if (showingArchived) {
             loadArchivedUsers();
         }
@@ -791,5 +818,31 @@ public class UserManagementController {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "Błąd ładowania zarchiwizowanych użytkowników", e);
         }
     }
+    @FXML
+    private void handleRestoreUser() {
+        User selectedUser = archivedUsersTable.getSelectionModel().getSelectedItem();
+
+        if (selectedUser == null) {
+            AlertUtils.showError("Wybierz użytkownika do przywrócenia.");
+            return;
+        }
+
+        try (Connection conn = DatabaseConnector.connect()) {
+            String restoreSql = "UPDATE pracownicy SET archiwizacja = 0 WHERE id_pracownika = ?";
+            try (PreparedStatement stmt = conn.prepareStatement(restoreSql)) {
+                stmt.setInt(1, selectedUser.getId());
+                stmt.executeUpdate();
+            }
+
+            AlertUtils.showAlert("Użytkownik został przywrócony.");
+            loadArchivedUsers();
+            loadUsersFromDatabase();
+
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Błąd przy przywracaniu użytkownika", e);
+            AlertUtils.showError("Wystąpił błąd podczas przywracania użytkownika.");
+        }
+    }
+
 
 }

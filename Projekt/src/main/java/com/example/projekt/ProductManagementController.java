@@ -102,7 +102,7 @@ public class ProductManagementController {
                 if (empty || item == null) {
                     setText(null);
                 } else {
-                    setText(String.format("%.2f", item));
+                    setText(String.format("%.2f zł", item));
                 }
                 setStyle("-fx-alignment: CENTER-RIGHT;");
             }
