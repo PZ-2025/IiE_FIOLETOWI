@@ -37,7 +37,12 @@
         <Button fx:id="deleteUserButton" onAction="#handleDeleteUser" text="Usuń użytkownika" />
     </HBox>
 
-    <TableView fx:id="usersTable" VBox.vgrow="ALWAYS" styleClass="table-view">
+    <HBox alignment="CENTER_LEFT" spacing="10">
+        <Button fx:id="toggleArchiveButton" onAction="#toggleArchiveView" text="Pokaż zarchiwizowanych" styleClass="primary-button"/>
+    </HBox>
+
+    <!-- Tabela użytkowników aktywnych -->
+    <TableView fx:id="usersTable" VBox.vgrow="ALWAYS" styleClass="table-view" visible="true" managed="true">
         <columns>
             <TableColumn fx:id="imieColumn" text="Imię"/>
             <TableColumn fx:id="nazwiskoColumn" text="Nazwisko"/>
@@ -45,6 +50,18 @@
             <TableColumn fx:id="placaColumn" text="Płaca"/>
             <TableColumn fx:id="rolaColumn" text="Rola"/>
             <TableColumn fx:id="grupaColumn" text="Grupa"/>
+        </columns>
+    </TableView>
+
+    <!-- Tabela użytkowników zarchiwizowanych -->
+    <TableView fx:id="archivedUsersTable" VBox.vgrow="ALWAYS" styleClass="table-view" visible="false" managed="false">
+        <columns>
+            <TableColumn fx:id="imieArchColumn" text="Imię"/>
+            <TableColumn fx:id="nazwiskoArchColumn" text="Nazwisko"/>
+            <TableColumn fx:id="loginArchColumn" text="Login"/>
+            <TableColumn fx:id="placaArchColumn" text="Płaca"/>
+            <TableColumn fx:id="rolaArchColumn" text="Rola"/>
+            <TableColumn fx:id="grupaArchColumn" text="Grupa"/>
         </columns>
     </TableView>
 

@@ -57,6 +57,15 @@ public class UserManagementController {
     @FXML protected TextField salaryField;
     @FXML private Button deleteUserButton;
     @FXML private VBox userRoot;
+    @FXML private Button toggleArchiveButton;
+    @FXML private TableView<User> archivedUsersTable;
+    @FXML private TableColumn<User, String> imieArchColumn;
+    @FXML private TableColumn<User, String> nazwiskoArchColumn;
+    @FXML private TableColumn<User, String> loginArchColumn;
+    @FXML private TableColumn<User, Double> placaArchColumn;
+    @FXML private TableColumn<User, String> rolaArchColumn;
+    @FXML private TableColumn<User, String> grupaArchColumn;
+    private boolean showingArchived = false;
 
     public ObservableList<Role> roles = FXCollections.observableArrayList();
     public ObservableList<Group> groups = FXCollections.observableArrayList();
@@ -83,6 +92,14 @@ public class UserManagementController {
         rolaColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getRole()));
         grupaColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getGroup()));
 
+        // Konfiguracja kolumn tabeli zarchiwizowanych użytkowników
+        imieArchColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getImie()));
+        nazwiskoArchColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNazwisko()));
+        loginArchColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getLogin()));
+        placaArchColumn.setCellValueFactory(cellData -> new SimpleDoubleProperty(cellData.getValue().getPlaca()).asObject());
+        rolaArchColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getRole()));
+        grupaArchColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getGroup()));
+        
         // Formatowanie wyświetlania wartości w kolumnie płacy
         placaColumn.setCellFactory(column -> new TableCell<User, Double>() {
             @Override
@@ -101,7 +118,7 @@ public class UserManagementController {
         roleComboBox.setItems(roles);
         groupComboBox.setItems(groups);
         loadUsersFromDatabase();
-
+        loadArchivedUsers();
         // Ustawienie proporcjonalnych szerokości kolumn
         double colWidth = 1.0 / 6;
         imieColumn.prefWidthProperty().bind(usersTable.widthProperty().multiply(colWidth));
@@ -110,6 +127,13 @@ public class UserManagementController {
         placaColumn.prefWidthProperty().bind(usersTable.widthProperty().multiply(colWidth));
         rolaColumn.prefWidthProperty().bind(usersTable.widthProperty().multiply(colWidth));
         grupaColumn.prefWidthProperty().bind(usersTable.widthProperty().multiply(colWidth));
+
+        imieArchColumn.prefWidthProperty().bind(usersTable.widthProperty().multiply(colWidth));
+        nazwiskoArchColumn.prefWidthProperty().bind(usersTable.widthProperty().multiply(colWidth));
+        loginArchColumn.prefWidthProperty().bind(usersTable.widthProperty().multiply(colWidth));
+        placaArchColumn.prefWidthProperty().bind(usersTable.widthProperty().multiply(colWidth));
+        rolaArchColumn.prefWidthProperty().bind(usersTable.widthProperty().multiply(colWidth));
+        grupaArchColumn.prefWidthProperty().bind(usersTable.widthProperty().multiply(colWidth));
 
         // Konfiguracja widoczności pól w zależności od roli użytkownika
         configureFieldsByRole();
@@ -163,12 +187,13 @@ public class UserManagementController {
     public void loadUsersFromDatabase() {
         ObservableList<User> usersList = FXCollections.observableArrayList();
         String sql = """
-            SELECT p.id_pracownika, p.imie, p.nazwisko, p.login, p.haslo, p.placa, p.id_grupy, p.id_roli,
+            SELECT p.id_pracownika, p.imie, p.nazwisko, p.login, p.haslo, p.placa, p.id_grupy, p.id_roli, p.archiwizacja,
                  r.nazwa AS nazwa_roli,
                  g.nazwa AS nazwa_grupy
                  FROM pracownicy p
                  JOIN role r ON p.id_roli = r.id_roli
                  JOIN grupy g ON p.id_grupy = g.id_grupy
+                 WHERE archiwizacja = 0
         """;
 
         try (Connection conn = DatabaseConnector.connect();
@@ -186,7 +211,8 @@ public class UserManagementController {
                         rs.getInt("id_grupy"),
                         rs.getInt("id_roli"),
                         rs.getString("nazwa_roli"),
-                        rs.getString("nazwa_grupy")
+                        rs.getString("nazwa_grupy"),
+                        rs.getBoolean("archiwizacja")
                 );
                 usersList.add(user);
             }
@@ -557,7 +583,7 @@ public class UserManagementController {
     @FXML
     private void handleDeleteUser() {
         if (selectedUserToEdit == null) {
-            AlertUtils.showError("Wybierz użytkownika do usunięcia.");
+            AlertUtils.showError("Wybierz użytkownika do zarchiwizowania.");
             return;
         }
 
@@ -575,15 +601,15 @@ public class UserManagementController {
                 if (taskCount > 0) {
                     showTaskReassignmentDialog(conn, userId);
                 } else {
-                    deleteUserFromDatabase(conn, userId);
-                    AlertUtils.showAlert("Użytkownik został usunięty.");
+                    archiveUserInDatabase(conn, userId);
+                    AlertUtils.showAlert("Użytkownik został zarchiwizowany.");
                     loadUsersFromDatabase();
                 }
             }
 
         } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "Błąd przy usuwaniu użytkownika", e);
-            AlertUtils.showError("Błąd podczas usuwania użytkownika.");
+            LOGGER.log(Level.SEVERE, "Błąd przy archiwizowaniu użytkownika", e);
+            AlertUtils.showError("Błąd podczas archiwizowaniu użytkownika.");
         }
     }
     private void showTaskReassignmentDialog(Connection conn, int userId) {
@@ -602,8 +628,8 @@ public class UserManagementController {
             try {
                 if (response == deleteTasks) {
                     deleteTasksForUser(conn, userId);
-                    deleteUserFromDatabase(conn, userId);
-                    AlertUtils.showAlert("Użytkownik i jego zadania zostały usunięte.");
+                    archiveUserInDatabase(conn, userId);
+                    AlertUtils.showAlert("Użytkownik i jego zadania zostały zarchiwizowane.");
                 } else if (response == reassignTasks) {
                     reassignTasksToAnotherUser(conn, userId);
                 }
@@ -621,21 +647,22 @@ public class UserManagementController {
             stmt.executeUpdate();
         }
     }
-    private void deleteUserFromDatabase(Connection conn, int userId) throws SQLException {
-        String deleteUserSql = "DELETE FROM pracownicy WHERE id_pracownika = ?";
-        try (PreparedStatement stmt = conn.prepareStatement(deleteUserSql)) {
+    private void archiveUserInDatabase(Connection conn, int userId) throws SQLException {
+        String archiveUserSql = "UPDATE pracownicy SET archiwizacja = 1 WHERE id_pracownika = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(archiveUserSql)) {
             stmt.setInt(1, userId);
             stmt.executeUpdate();
         }
     }
+
 
     private void reassignTasksToAnotherUser(Connection conn, int oldUserId) throws SQLException {
         List<Task> tasks = getTasksByUserId(conn, oldUserId);
         List<User> availableUsers = usersTable.getItems().filtered(u -> u.getId() != oldUserId);
 
         if (tasks.isEmpty()) {
-            deleteUserFromDatabase(conn, oldUserId);
-            AlertUtils.showAlert("Użytkownik usunięty. Nie miał przypisanych zadań.");
+            archiveUserInDatabase(conn, oldUserId);
+            AlertUtils.showAlert("Użytkownik zarchiwizowany. Nie miał przypisanych zadań.");
             return;
         }
 
@@ -682,8 +709,8 @@ public class UserManagementController {
                         }
                     }
 
-                    deleteUserFromDatabase(conn, oldUserId);
-                    AlertUtils.showAlert("Zadania zostały przypisane, a użytkownik usunięty.");
+                    archiveUserInDatabase(conn, oldUserId);
+                    AlertUtils.showAlert("Zadania zostały przypisane, a użytkownik zarchiwizowany.");
                 } catch (SQLException e) {
                     LOGGER.log(Level.SEVERE, "Błąd przy przypisywaniu zadań", e);
                     AlertUtils.showError("Nie udało się przypisać zadań.");
@@ -710,4 +737,59 @@ public class UserManagementController {
 
         return tasks;
     }
+    @FXML
+    private void toggleArchiveView() {
+        showingArchived = !showingArchived;
+
+        usersTable.setVisible(!showingArchived);
+        usersTable.setManaged(!showingArchived);
+
+        archivedUsersTable.setVisible(showingArchived);
+        archivedUsersTable.setManaged(showingArchived);
+
+        toggleArchiveButton.setText(showingArchived ? "Pokaż aktywnych" : "Pokaż zarchiwizowanych");
+
+        if (showingArchived) {
+            loadArchivedUsers();
+        }
+    }
+    private void loadArchivedUsers() {
+        archivedUsersTable.getItems().clear();
+
+        String query = """
+            SELECT p.id_pracownika, p.imie, p.nazwisko, p.login, p.haslo, p.placa, p.id_grupy, p.id_roli, p.archiwizacja,
+                 r.nazwa AS nazwa_roli,
+                 g.nazwa AS nazwa_grupy
+                 FROM pracownicy p
+                 JOIN role r ON p.id_roli = r.id_roli
+                 JOIN grupy g ON p.id_grupy = g.id_grupy
+                 WHERE archiwizacja = 1
+        """;
+
+        try (Connection conn = DatabaseConnector.connect();
+             PreparedStatement stmt = conn.prepareStatement(query);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                User user = new User(
+                        rs.getInt("id_pracownika"),
+                        rs.getString("imie"),
+                        rs.getString("nazwisko"),
+                        rs.getString("login"),
+                        rs.getString("haslo"),
+                        rs.getDouble("placa"),
+                        rs.getInt("id_grupy"),
+                        rs.getInt("id_roli"),
+                        rs.getString("nazwa_roli"),
+                        rs.getString("nazwa_grupy"),
+                        true
+                );
+                archivedUsersTable.getItems().add(user);
+            }
+
+        } catch (SQLException e) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "Błąd ładowania zarchiwizowanych użytkowników", e);
+        }
+    }
+
 }
