@@ -16,72 +16,101 @@
     </top>
 
     <center>
-        <VBox spacing="10" styleClass="content-box">
-            <padding>
-                <Insets top="20" right="20" bottom="20" left="20"/>
-            </padding>
+        <TabPane>
+            <tabs>
+                <Tab text="Aktywne Zadania">
+                    <VBox spacing="10" styleClass="content-box">
+                        <padding>
+                            <Insets top="20" right="20" bottom="20" left="20"/>
+                        </padding>
 
-            <TableView fx:id="taskTable" prefHeight="300">
-                <columns>
-                    <TableColumn fx:id="nameColumn" text="Nazwa"/>
-                    <TableColumn fx:id="statusColumn" text="Status"/>
-                    <TableColumn fx:id="priorityColumn" text="Priorytet"/>
-                    <TableColumn fx:id="startDateColumn" text="Start"/>
-                    <TableColumn fx:id="endDateColumn" text="Koniec"/>
-                    <TableColumn fx:id="commentColumn" text="Komentarz"/>
-                    <TableColumn fx:id="assignedColumn" text="Pracownik"/>
-                    <TableColumn fx:id="assignedproductColumn" text="Produkt"/>
-                    <TableColumn fx:id="quantityColumn" text="Ilość"/>
-                    <TableColumn fx:id="directionColumn" text="Kierunek"/>
-                </columns>
-            </TableView>
+                        <TableView fx:id="taskTable" prefHeight="300">
+                            <columns>
+                                <TableColumn fx:id="nameColumn" text="Nazwa"/>
+                                <TableColumn fx:id="statusColumn" text="Status"/>
+                                <TableColumn fx:id="priorityColumn" text="Priorytet"/>
+                                <TableColumn fx:id="startDateColumn" text="Start"/>
+                                <TableColumn fx:id="endDateColumn" text="Koniec"/>
+                                <TableColumn fx:id="commentColumn" text="Komentarz"/>
+                                <TableColumn fx:id="assignedColumn" text="Pracownik"/>
+                                <TableColumn fx:id="assignedproductColumn" text="Produkt"/>
+                                <TableColumn fx:id="quantityColumn" text="Ilość"/>
+                                <TableColumn fx:id="directionColumn" text="Kierunek"/>
+                            </columns>
+                        </TableView>
 
-            <HBox spacing="10">
-                <Label text="Nazwa:" styleClass="label"/>
-                <TextField fx:id="nameField" promptText="Wpisz nazwę" styleClass="input-field"/>
+                        <HBox spacing="10">
+                            <Label text="Nazwa:" styleClass="label"/>
+                            <TextField fx:id="nameField" promptText="Wpisz nazwę" styleClass="input-field"/>
 
-                <Label text="Komentarz:" styleClass="label"/>
-                <TextField fx:id="commentField" promptText="Wpisz komentarz" styleClass="input-field"/>
+                            <Label text="Komentarz:" styleClass="label"/>
+                            <TextField fx:id="commentField" promptText="Wpisz komentarz" styleClass="input-field"/>
 
-                <Label text="Status:" styleClass="label"/>
-                <ComboBox fx:id="statusBox" styleClass="combo-box"/>
+                            <Label text="Status:" styleClass="label"/>
+                            <ComboBox fx:id="statusBox" styleClass="combo-box"/>
 
-                <Label text="Priorytet:" styleClass="label"/>
-                <ComboBox fx:id="priorityBox" styleClass="combo-box"/>
-            </HBox>
-            <HBox spacing="10">
+                            <Label text="Priorytet:" styleClass="label"/>
+                            <ComboBox fx:id="priorityBox" styleClass="combo-box"/>
+                        </HBox>
+                        <HBox spacing="10">
 
-                <CheckBox fx:id="TaskCheckBox"
-                          text="Transakcja"
-                          onAction="#toggleCustomTaskFields"/>
+                            <CheckBox fx:id="TaskCheckBox"
+                                      text="Transakcja"
+                                      onAction="#toggleCustomTaskFields"/>
 
-                <Label text="Produkt:" styleClass="label"/>
-                <ComboBox fx:id="productBox" styleClass="combo-box"/>
+                            <Label text="Produkt:" styleClass="label"/>
+                            <ComboBox fx:id="productBox" styleClass="combo-box"/>
 
-                <Label text="Kierunek:" styleClass="label"/>
-                <ComboBox fx:id="directionBox" styleClass="combo-box"/>
+                            <Label text="Kierunek:" styleClass="label"/>
+                            <ComboBox fx:id="directionBox" styleClass="combo-box"/>
 
-                <Label text="Ilość:" styleClass="label"/>
-                <TextField fx:id="quantityField" promptText="Wpisz ilość" styleClass="input-field"/>
-            </HBox>
+                            <Label text="Ilość:" styleClass="label"/>
+                            <TextField fx:id="quantityField" promptText="Wpisz ilość" styleClass="input-field"/>
+                        </HBox>
 
-            <HBox spacing="10" >
-                <Label text="Data startu:" styleClass="label"/>
-                <DatePicker fx:id="startDatePicker" styleClass="date-picker"/>
+                        <HBox spacing="10">
+                            <Label text="Data startu:" styleClass="label"/>
+                            <DatePicker fx:id="startDatePicker" styleClass="date-picker"/>
 
-                <Label text="Data końca:" styleClass="label"/>
-                <DatePicker fx:id="endDatePicker" styleClass="date-picker"/>
+                            <Label text="Data końca:" styleClass="label"/>
+                            <DatePicker fx:id="endDatePicker" styleClass="date-picker"/>
 
-                <Label text="Przypisz do:" styleClass="label"/>
-                <ComboBox fx:id="employeeBox" styleClass="combo-box"/>
-            </HBox>
+                            <Label text="Przypisz do:" styleClass="label"/>
+                            <ComboBox fx:id="employeeBox" styleClass="combo-box"/>
+                        </HBox>
 
-            <HBox spacing="10">
-                <Button text="Dodaj zadanie" onAction="#handleAddTask" styleClass="primary-button"/>
-                <Button text="Edytuj zadanie" onAction="#handleEditTask" styleClass="primary-button"/>
-                <Button text="Usuń zadanie" onAction="#handleDeleteTask" styleClass="primary-button"/>
-                <Button text="Wyczyść formularz" onAction="#clearForm" styleClass="secondary-button"/>
-            </HBox>
-        </VBox>
+                        <HBox spacing="10">
+                            <Button text="Dodaj zadanie" onAction="#handleAddTask" styleClass="primary-button"/>
+                            <Button text="Edytuj zadanie" onAction="#handleEditTask" styleClass="primary-button"/>
+                            <Button text="Usuń zadanie" onAction="#handleDeleteTask" styleClass="primary-button"/>
+                            <Button text="Wyczyść formularz" onAction="#clearForm" styleClass="secondary-button"/>
+                        </HBox>
+                    </VBox>
+                </Tab>
+
+                <Tab text="Zarchiwizowane Zadania">
+                    <VBox spacing="10" styleClass="content-box">
+                        <padding>
+                            <Insets top="20" right="20" bottom="20" left="20"/>
+                        </padding>
+
+                        <TableView fx:id="archivedTaskTable" prefHeight="300">
+                            <columns>
+                                <TableColumn fx:id="archivedNameColumn" text="Nazwa"/>
+                                <TableColumn fx:id="archivedStatusColumn" text="Status"/>
+                                <TableColumn fx:id="archivedPriorityColumn" text="Priorytet"/>
+                                <TableColumn fx:id="archivedStartDateColumn" text="Start"/>
+                                <TableColumn fx:id="archivedEndDateColumn" text="Koniec"/>
+                                <TableColumn fx:id="archivedCommentColumn" text="Komentarz"/>
+                                <TableColumn fx:id="archivedAssignedColumn" text="Pracownik"/>
+                                <TableColumn fx:id="archivedAssignedproductColumn" text="Produkt"/>
+                                <TableColumn fx:id="archivedQuantityColumn" text="Ilość"/>
+                                <TableColumn fx:id="archivedDirectionColumn" text="Kierunek"/>
+                            </columns>
+                        </TableView>
+                    </VBox>
+                </Tab>
+            </tabs>
+        </TabPane>
     </center>
 </BorderPane>
