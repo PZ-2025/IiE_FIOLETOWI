@@ -569,63 +569,39 @@ public class UserManagementController {
 
         try (Connection conn = DatabaseConnector.connect()) {
 
-            String checkTasksSql = "SELECT COUNT(*) FROM zadania WHERE id_pracownika = ?";
-            try (PreparedStatement stmt = conn.prepareStatement(checkTasksSql)) {
-                stmt.setInt(1, userId);
-                ResultSet rs = stmt.executeQuery();
-                rs.next();
-                int taskCount = rs.getInt(1);
+            int activeCount = countTasksByStatus(conn, userId, "NOT IN (4, 5)");
+            int finishedCount = countTasksByStatus(conn, userId, "= 4");
 
-                if (taskCount > 0) {
-                    showTaskReassignmentDialog(conn, userId);
-                } else {
-                    archiveUserInDatabase(conn, userId);
-                    AlertUtils.showAlert("Użytkownik został zarchiwizowany.");
-                    clearForm();
-                    loadUsersFromDatabase();
-                }
+            if (activeCount == 0 && finishedCount == 0) {
+                // Brak zadań lub tylko zarchiwizowane
+                archiveUserInDatabase(conn, userId);
+                AlertUtils.showAlert("Użytkownik został zarchiwizowany.");
+                clearForm();
+                loadUsersFromDatabase();
+            } else {
+                // Są przypisane zadania – pokaż dialog
+                showTaskOptionsDialog(conn, userId, activeCount, finishedCount);
             }
 
         } catch (SQLException e) {
             LOGGER.log(Level.SEVERE, "Błąd przy archiwizowaniu użytkownika", e);
-            AlertUtils.showError("Błąd podczas archiwizowaniu użytkownika.");
+            AlertUtils.showError("Błąd podczas archiwizowania użytkownika.");
         }
     }
-    private void showTaskReassignmentDialog(Connection conn, int userId) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Użytkownik ma przypisane zadania");
-        alert.setHeaderText("Co chcesz zrobić z zadaniami przypisanymi do tego użytkownika?");
-        alert.setContentText("Wybierz jedną z opcji:");
 
-        ButtonType deleteTasks = new ButtonType("Usuń zadania");
-        ButtonType reassignTasks = new ButtonType("Przypisz innemu pracownikowi");
-        ButtonType cancel = new ButtonType("Anuluj", ButtonBar.ButtonData.CANCEL_CLOSE);
-
-        alert.getButtonTypes().setAll(deleteTasks, reassignTasks, cancel);
-
-        alert.showAndWait().ifPresent(response -> {
-            try {
-                if (response == deleteTasks) {
-                    deleteTasksForUser(conn, userId);
-                    archiveUserInDatabase(conn, userId);
-                    AlertUtils.showAlert("Użytkownik i jego zadania zostały zarchiwizowane.");
-                } else if (response == reassignTasks) {
-                    reassignTasksToAnotherUser(conn, userId);
-                }
-                loadUsersFromDatabase();
-            } catch (SQLException e) {
-                LOGGER.log(Level.SEVERE, "Błąd podczas operacji na zadaniach", e);
-                AlertUtils.showError("Wystąpił błąd podczas usuwania lub przypisywania zadań.");
-            }
-        });
-    }
     private void deleteTasksForUser(Connection conn, int userId) throws SQLException {
-        String deleteTasksSql = "DELETE FROM zadania WHERE id_pracownika = ?";
+        String deleteTasksSql = """
+            DELETE FROM zadania
+            WHERE id_pracownika = ? AND id_statusu != 5
+        """;
+
+
         try (PreparedStatement stmt = conn.prepareStatement(deleteTasksSql)) {
             stmt.setInt(1, userId);
             stmt.executeUpdate();
         }
     }
+
     private void archiveUserInDatabase(Connection conn, int userId) throws SQLException {
         String archiveUserSql = "UPDATE pracownicy SET archiwizacja = 1 WHERE id_pracownika = ?";
         try (PreparedStatement stmt = conn.prepareStatement(archiveUserSql)) {
@@ -636,12 +612,12 @@ public class UserManagementController {
 
 
     private void reassignTasksToAnotherUser(Connection conn, int oldUserId) throws SQLException {
-        List<Task> tasks = getTasksByUserId(conn, oldUserId);
+        List<Task> tasks = getTasksByUserId(conn, oldUserId); // pobiera tylko aktywne zadania (id_statusu != 5)
         List<User> availableUsers = usersTable.getItems().filtered(u -> u.getId() != oldUserId);
 
         if (tasks.isEmpty()) {
             archiveUserInDatabase(conn, oldUserId);
-            AlertUtils.showAlert("Użytkownik zarchiwizowany. Nie miał przypisanych zadań.");
+            AlertUtils.showAlert("Użytkownik zarchiwizowany. Nie miał przypisanych zadań do przeniesienia.");
             return;
         }
 
@@ -674,16 +650,25 @@ public class UserManagementController {
             if (result == ButtonType.OK) {
                 try {
                     for (int i = 0; i < tasks.size(); i++) {
+                        Task task = tasks.get(i);
                         User selectedUser = comboBoxes.get(i).getValue();
+
                         if (selectedUser == null) {
-                            AlertUtils.showError("Nie przypisałeś pracownika do zadania: " + tasks.get(i).getNazwa());
+                            AlertUtils.showError("Nie przypisałeś pracownika do zadania: " + task.getNazwa());
                             return;
+                        }
+
+                        String checkStatusSql = "SELECT id_statusu FROM zadania WHERE id_zadania = ?";
+                        try (PreparedStatement checkStmt = conn.prepareStatement(checkStatusSql)) {
+                            checkStmt.setInt(1, task.getId());
+                            ResultSet rs = checkStmt.executeQuery();
+
                         }
 
                         try (PreparedStatement stmt = conn.prepareStatement(
                                 "UPDATE zadania SET id_pracownika = ? WHERE id_zadania = ?")) {
                             stmt.setInt(1, selectedUser.getId());
-                            stmt.setInt(2, tasks.get(i).getId());
+                            stmt.setInt(2, task.getId());
                             stmt.executeUpdate();
                         }
                     }
@@ -698,10 +683,16 @@ public class UserManagementController {
         });
     }
 
+
     private List<Task> getTasksByUserId(Connection conn, int userId) throws SQLException {
         List<Task> tasks = new ArrayList<>();
 
-        String sql = "SELECT id_zadania, nazwa FROM zadania WHERE id_pracownika = ?";
+        String sql = """
+        SELECT id_zadania, nazwa
+        FROM zadania
+        WHERE id_pracownika = ? AND id_statusu NOT IN (4, 5)
+    """;
+
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, userId);
             try (ResultSet rs = stmt.executeQuery()) {
@@ -716,6 +707,8 @@ public class UserManagementController {
 
         return tasks;
     }
+
+
     @FXML
     private void toggleArchiveView() {
         showingArchived = !showingArchived;
@@ -796,6 +789,109 @@ public class UserManagementController {
         } catch (SQLException e) {
             LOGGER.log(Level.SEVERE, "Błąd przy przywracaniu użytkownika", e);
             AlertUtils.showError("Wystąpił błąd podczas przywracania użytkownika.");
+        }
+    }
+
+
+    private void showTaskOptionsDialog(Connection conn, int userId, int activeCount, int finishedCount) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Zadania użytkownika");
+        alert.setHeaderText("Użytkownik ma przypisane zadania");
+        alert.setContentText("Wybierz co zrobić z zadaniami:");
+
+        ButtonType deleteBtn = new ButtonType("Usuń zadania");
+        ButtonType reassignBtn = new ButtonType("Przypisz innemu pracownikowi");
+        ButtonType cancelBtn = new ButtonType("Anuluj", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+        if (activeCount > 0) {
+            alert.getButtonTypes().setAll(deleteBtn, reassignBtn, cancelBtn);
+        } else {
+            alert.getButtonTypes().setAll(deleteBtn, cancelBtn);
+        }
+
+        alert.showAndWait().ifPresent(choice -> {
+            try (Connection conn2 = DatabaseConnector.connect()) {
+                if (choice == deleteBtn) {
+                    deleteTasksByStatus(conn2, userId, "NOT IN (4, 5)");
+
+                    if (finishedCount > 0) {
+                        askToArchiveFinishedTasks(conn2, userId);
+                    } else {
+                        archiveUserInDatabase(conn2, userId);
+                        AlertUtils.showAlert("Zadania zostały usunięte, użytkownik zarchiwizowany.");
+                        clearForm();
+                        loadUsersFromDatabase();
+                    }
+
+                } else if (choice == reassignBtn && activeCount > 0) {
+                    reassignTasksToAnotherUser(conn2, userId);
+                    clearForm();
+                    loadUsersFromDatabase();
+                }
+
+            } catch (SQLException e) {
+                LOGGER.log(Level.SEVERE, "Błąd przy obsłudze zadań", e);
+                AlertUtils.showError("Wystąpił błąd przy obsłudze zadań.");
+            }
+        });
+    }
+
+    private void askToArchiveFinishedTasks(Connection conn, int userId) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Zakończone zadania");
+        alert.setHeaderText("Użytkownik ma zakończone zadania");
+        alert.setContentText("Czy chcesz je zarchiwizować zamiast usuwać?");
+
+        ButtonType archive = new ButtonType("Zarchiwizuj");
+        ButtonType delete = new ButtonType("Usuń");
+        ButtonType cancel = new ButtonType("Anuluj", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+        alert.getButtonTypes().setAll(archive, delete, cancel);
+
+        alert.showAndWait().ifPresent(choice -> {
+            try (Connection conn2 = DatabaseConnector.connect()) {
+                if (choice == archive) {
+                    archiveFinishedTasks(conn2, userId);
+                } else if (choice == delete) {
+                    deleteTasksByStatus(conn2, userId, "= 4");
+                } else {
+                    return; // anulowano
+                }
+
+                archiveUserInDatabase(conn2, userId);
+                AlertUtils.showAlert("Zadania przetworzone, użytkownik zarchiwizowany.");
+                clearForm();
+                loadUsersFromDatabase();
+
+            } catch (SQLException e) {
+                LOGGER.log(Level.SEVERE, "Błąd przy obsłudze zakończonych zadań", e);
+                AlertUtils.showError("Wystąpił błąd przy przetwarzaniu zakończonych zadań.");
+            }
+        });
+    }
+    private int countTasksByStatus(Connection conn, int userId, String statusCondition) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM zadania WHERE id_pracownika = ? AND id_statusu " + statusCondition;
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, userId);
+            ResultSet rs = stmt.executeQuery();
+            rs.next();
+            return rs.getInt(1);
+        }
+    }
+
+    private void deleteTasksByStatus(Connection conn, int userId, String statusCondition) throws SQLException {
+        String sql = "DELETE FROM zadania WHERE id_pracownika = ? AND id_statusu " + statusCondition;
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, userId);
+            stmt.executeUpdate();
+        }
+    }
+
+    private void archiveFinishedTasks(Connection conn, int userId) throws SQLException {
+        String sql = "UPDATE zadania SET id_statusu = 5 WHERE id_pracownika = ? AND id_statusu = 4";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, userId);
+            stmt.executeUpdate();
         }
     }
 
