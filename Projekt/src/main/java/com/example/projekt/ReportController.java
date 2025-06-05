@@ -16,6 +16,9 @@ import com.example.reportlib.PDFGenerator;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.*;
 import java.sql.Date;
 import java.time.LocalDate;
@@ -75,6 +78,12 @@ public class ReportController {
     /** Lista CheckBox-ów dla typów produktów */
     private List<CheckBox> productTypeCheckBoxes = new ArrayList<>();
 
+    private User currentUser;
+
+    private boolean hasPermissionToViewAll() {
+        return currentUser.isAdmin() || currentUser.isManager();
+    }
+
     /**
      * Inicjalizuje kontroler po załadowaniu FXML.
      * Konfiguruje nasłuchiwacze zdarzeń, ustawia opcje raportów i stosuje motyw aplikacji.
@@ -104,6 +113,20 @@ public class ReportController {
             lastReportData = null;
             lastChartData = null;
         });
+
+        currentUser = UserSession.getInstance().getUser();
+        if (currentUser == null) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/projekt/login.fxml"));
+                Parent root = loader.load();
+                Stage stage = new Stage();
+                stage.setScene(new Scene(root));
+                stage.show();
+                return;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     /**
@@ -161,6 +184,12 @@ public class ReportController {
         addDateRangePickers();
         addProductTypeCheckboxes();
         addComboBox("Sortuj po", "sortTransaction", List.of("Data", "Produkt", "Ilość", "Typ produktu"));
+
+        // Dodaj filtry w zależności od roli
+        if (hasPermissionToViewAll()) {
+            addComboBox("Zakres danych", "transactionScope",
+                    List.of("Moje transakcje", "Wszystkie transakcje"));
+        }
     }
 
     /**
@@ -197,6 +226,11 @@ public class ReportController {
         filterContainer.getChildren().add(priorityBox);
 
         addComboBox("Sortuj po", "sortTask", List.of("Data rozpoczęcia", "Priorytet", "Status"));
+
+        if (hasPermissionToViewAll()) {
+            addComboBox("Zakres danych", "taskScope",
+                    List.of("Moje zadania", "Wszystkie zadania"));
+        }
     }
 
     /**
@@ -339,14 +373,13 @@ public class ReportController {
      */
     private List<Map<String, String>> getTransactionData(String sortKey, LocalDate start, LocalDate end) {
         List<Map<String, String>> list = new ArrayList<>();
-        String orderBy;
-        switch (sortKey) {
-            case "Produkt" -> orderBy = "p.nazwa";
-            case "Data" -> orderBy = "t.data_transakcji";
-            case "Ilość" -> orderBy = "t.ilosc";
-            case "Typ produktu" -> orderBy = "tp.nazwa";
-            default -> orderBy = "t.data_transakcji";
-        }
+        String orderBy = switch (sortKey) {
+            case "Produkt" -> "p.nazwa";
+            case "Data" -> "t.data_transakcji";
+            case "Ilość" -> "t.ilosc";
+            case "Typ produktu" -> "tp.nazwa";
+            default -> "t.data_transakcji";
+        };
 
         // Pobierz wybrane typy produktów
         List<String> selectedTypes = productTypeCheckBoxes.stream()
@@ -361,6 +394,22 @@ public class ReportController {
                         "JOIN typ_produktu tp ON p.id_typu_produktu = tp.id_typu_produktu " +
                         "WHERE 1=1 "
         );
+
+        // Domyślnie pokazuj tylko swoje transakcje
+        query.append("AND t.id_pracownika = ").append(currentUser.getId()).append(" ");
+
+        // Jeśli użytkownik ma uprawnienia i wybrał "Wszystkie transakcje"
+        if (hasPermissionToViewAll() && dynamicFilters.containsKey("transactionScope")) {
+            String scope = ((ComboBox<String>)dynamicFilters.get("transactionScope")).getValue();
+            if ("Wszystkie transakcje".equals(scope)) {
+                query = new StringBuilder(
+                        "SELECT p.nazwa AS produkt, t.data_transakcji AS data, t.ilosc AS ilosc, tp.nazwa AS typ_produktu " +
+                                "FROM transakcje t " +
+                                "JOIN produkty p ON t.id_produktu = p.id_produktu " +
+                                "JOIN typ_produktu tp ON p.id_typu_produktu = tp.id_typu_produktu " +
+                                "WHERE 1=1 ");
+            }
+        }
 
         if (start != null) query.append("AND t.data_transakcji >= ? ");
         if (end != null) query.append("AND t.data_transakcji <= ? ");
@@ -426,6 +475,22 @@ public class ReportController {
                         "JOIN typ_produktu tp ON p.id_typu_produktu = tp.id_typu_produktu " +
                         "WHERE 1=1 "
         );
+
+        // Domyślnie pokazuj tylko swoje transakcje
+        query.append("AND t.id_pracownika = ").append(currentUser.getId()).append(" ");
+
+        // Jeśli użytkownik ma uprawnienia i wybrał "Wszystkie transakcje"
+        if (hasPermissionToViewAll() && dynamicFilters.containsKey("transactionScope")) {
+            String scope = ((ComboBox<String>)dynamicFilters.get("transactionScope")).getValue();
+            if ("Wszystkie transakcje".equals(scope)) {
+                query = new StringBuilder(
+                        "SELECT t.data_transakcji, SUM(t.ilosc) AS total " +
+                                "FROM transakcje t " +
+                                "JOIN produkty p ON t.id_produktu = p.id_produktu " +
+                                "JOIN typ_produktu tp ON p.id_typu_produktu = tp.id_typu_produktu " +
+                                "WHERE 1=1 ");
+            }
+        }
 
         if (start != null) query.append("AND t.data_transakcji >= ? ");
         if (end != null) query.append("AND t.data_transakcji <= ? ");
@@ -524,6 +589,21 @@ public class ReportController {
                         "JOIN priorytety p ON z.id_priorytetu = p.id_priorytetu WHERE 1=1 "
         );
 
+        // Domyślnie pokazuj tylko swoje zadania
+        query.append("AND z.id_pracownika = ").append(currentUser.getId()).append(" ");
+
+        // Jeśli użytkownik ma uprawnienia i wybrał "Wszystkie zadania"
+        if (hasPermissionToViewAll() && dynamicFilters.containsKey("taskScope")) {
+            String scope = ((ComboBox<String>)dynamicFilters.get("taskScope")).getValue();
+            if ("Wszystkie zadania".equals(scope)) {
+                query = new StringBuilder(
+                        "SELECT z.nazwa, s.nazwa AS status, p.nazwa AS priority, z.data_rozpoczecia " +
+                                "FROM zadania z " +
+                                "JOIN statusy s ON z.id_statusu = s.id_statusu " +
+                                "JOIN priorytety p ON z.id_priorytetu = p.id_priorytetu WHERE 1=1 ");
+            }
+        }
+
         if (start != null) query.append("AND z.data_rozpoczecia >= ? ");
         if (end != null) query.append("AND z.data_rozpoczecia <= ? ");
 
@@ -603,6 +683,21 @@ public class ReportController {
                         "JOIN statusy s ON z.id_statusu = s.id_statusu " +
                         "JOIN priorytety p ON z.id_priorytetu = p.id_priorytetu WHERE 1=1 "
         );
+
+        // Domyślnie pokazuj tylko swoje zadania
+        query.append("AND z.id_pracownika = ").append(currentUser.getId()).append(" ");
+
+        // Jeśli użytkownik ma uprawnienia i wybrał "Wszystkie zadania"
+        if (hasPermissionToViewAll() && dynamicFilters.containsKey("taskScope")) {
+            String scope = ((ComboBox<String>)dynamicFilters.get("taskScope")).getValue();
+            if ("Wszystkie zadania".equals(scope)) {
+                query = new StringBuilder(
+                        "SELECT s.nazwa AS status, COUNT(*) AS total " +
+                                "FROM zadania z " +
+                                "JOIN statusy s ON z.id_statusu = s.id_statusu " +
+                                "JOIN priorytety p ON z.id_priorytetu = p.id_priorytetu WHERE 1=1 ");
+            }
+        }
 
         if (!selectedStatuses.isEmpty()) {
             query.append("AND s.nazwa IN (");
@@ -860,6 +955,24 @@ public class ReportController {
     public void saveReportAsPDF() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF", "*.pdf"));
+
+        // Pobranie ścieżki do folderu Dokumenty
+        Path documentsPath = Paths.get(System.getProperty("user.home"), "Documents");
+
+        // Sprawdzenie czy folder Documents istnieje (wersja angielska)
+        if (!Files.exists(documentsPath)) {
+            // Jeśli nie, spróbuj z polską wersją "Dokumenty"
+            documentsPath = Paths.get(System.getProperty("user.home"), "Dokumenty");
+        }
+
+        // Jeśli nadal nie istnieje, użyj folderu domowego
+        if (!Files.exists(documentsPath)) {
+            documentsPath = Paths.get(System.getProperty("user.home"));
+        }
+
+        fileChooser.setInitialDirectory(documentsPath.toFile());
+        fileChooser.setInitialFileName("raport_" + currentReportType.toLowerCase() + ".pdf");
+
         File file = fileChooser.showSaveDialog(new Stage());
 
         if (file != null) {
@@ -874,7 +987,7 @@ public class ReportController {
                 showAlert("Zapisano raport do pliku: " + file.getName());
             } catch (Exception e) {
                 e.printStackTrace();
-                showAlert("Błąd zapisu PDF.");
+                showAlert("Błąd zapisu PDF: " + e.getMessage());
             }
         }
     }
@@ -955,5 +1068,4 @@ public class ReportController {
             scene.getStylesheets().add(fontUrl.toExternalForm());
         }
     }
-
 }
