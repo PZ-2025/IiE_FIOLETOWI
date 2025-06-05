@@ -25,7 +25,7 @@ CREATE TABLE pracownicy (
     id_roli INT NOT NULL,
     FOREIGN KEY (id_grupy) REFERENCES grupy(id_grupy),
     FOREIGN KEY (id_roli) REFERENCES role(id_roli),
-    archiwizacja BOOLEAN,
+    archiwizacja BOOLEAN
 );
 
 -- Tabela 'typ_produktu'
