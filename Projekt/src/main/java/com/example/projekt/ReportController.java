@@ -66,6 +66,15 @@ public class ReportController {
     /** Mapa mapująca nagłówki kolumn na klucze danych */
     protected final Map<String, String> headerKeyMap = new LinkedHashMap<>();
 
+    /** Lista CheckBox-ów dla statusów */
+    private List<CheckBox> statusCheckBoxes = new ArrayList<>();
+
+    /** Lista CheckBox-ów dla priorytetów */
+    private List<CheckBox> priorityCheckBoxes = new ArrayList<>();
+
+    /** Lista CheckBox-ów dla typów produktów */
+    private List<CheckBox> productTypeCheckBoxes = new ArrayList<>();
+
     /**
      * Inicjalizuje kontroler po załadowaniu FXML.
      * Konfiguruje nasłuchiwacze zdarzeń, ustawia opcje raportów i stosuje motyw aplikacji.
@@ -111,6 +120,12 @@ public class ReportController {
                 ((DatePicker) control).setValue(null);
             }
         }
+
+        // Resetowanie CheckBox-ów
+        statusCheckBoxes.forEach(cb -> cb.setSelected(false));
+        priorityCheckBoxes.forEach(cb -> cb.setSelected(false));
+        productTypeCheckBoxes.forEach(cb -> cb.setSelected(false));
+
         reportTableView.getItems().clear();
         reportTableView.getColumns().clear();
         reportPreviewContainer.getChildren().clear();
@@ -127,6 +142,9 @@ public class ReportController {
     protected void renderFilterUI(String type) {
         filterContainer.getChildren().clear();
         dynamicFilters.clear();
+        statusCheckBoxes.clear();
+        priorityCheckBoxes.clear();
+        productTypeCheckBoxes.clear();
 
         switch (type) {
             case "Transakcje" -> setupTransactionFilters();
@@ -141,7 +159,8 @@ public class ReportController {
      */
     private void setupTransactionFilters() {
         addDateRangePickers();
-        addComboBox("Sortuj po", "sortTransaction", List.of("Data", "Produkt", "Ilość"));
+        addProductTypeCheckboxes();
+        addComboBox("Sortuj po", "sortTransaction", List.of("Data", "Produkt", "Ilość", "Typ produktu"));
     }
 
     /**
@@ -150,8 +169,33 @@ public class ReportController {
      */
     private void setupTaskFilters() {
         addDateRangePickers();
-        addComboBox("Status", "status", getDataFromDatabase("SELECT nazwa FROM statusy"));
-        addComboBox("Priorytet", "priority", getDataFromDatabase("SELECT nazwa FROM priorytety"));
+
+        // Dodawanie CheckBox-ów dla statusów
+        Label statusLabel = new Label("Status:");
+        VBox statusBox = new VBox(5);
+        statusBox.getChildren().add(statusLabel);
+
+        List<String> statuses = getDataFromDatabase("SELECT nazwa FROM statusy");
+        statuses.forEach(status -> {
+            CheckBox cb = new CheckBox(status);
+            statusCheckBoxes.add(cb);
+            statusBox.getChildren().add(cb);
+        });
+        filterContainer.getChildren().add(statusBox);
+
+        // Dodawanie CheckBox-ów dla priorytetów
+        Label priorityLabel = new Label("Priorytet:");
+        VBox priorityBox = new VBox(5);
+        priorityBox.getChildren().add(priorityLabel);
+
+        List<String> priorities = getDataFromDatabase("SELECT nazwa FROM priorytety");
+        priorities.forEach(priority -> {
+            CheckBox cb = new CheckBox(priority);
+            priorityCheckBoxes.add(cb);
+            priorityBox.getChildren().add(cb);
+        });
+        filterContainer.getChildren().add(priorityBox);
+
         addComboBox("Sortuj po", "sortTask", List.of("Data rozpoczęcia", "Priorytet", "Status"));
     }
 
@@ -160,8 +204,9 @@ public class ReportController {
      * Dodaje filtry stanu magazynowego i opcje sortowania.
      */
     private void setupProductFilters() {
+        addProductTypeCheckboxes();
         addComboBox("Stan magazynowy", "stockFilter", List.of("Wszystkie", "Tylko poniżej limitu"));
-        addComboBox("Sortuj po", "sortProduct", List.of("Nazwa", "Stan", "Cena"));
+        addComboBox("Sortuj po", "sortProduct", List.of("Nazwa", "Stan", "Cena", "Typ produktu"));
     }
 
     /**
@@ -191,6 +236,23 @@ public class ReportController {
         cb.setPrefWidth(200);
         filterContainer.getChildren().add(new HBox(10, lbl, cb));
         dynamicFilters.put(key, cb);
+    }
+
+    /**
+     * Dodaje CheckBox-y dla typów produktów do interfejsu filtrów.
+     */
+    private void addProductTypeCheckboxes() {
+        Label typeLabel = new Label("Typ produktu:");
+        VBox typeBox = new VBox(5);
+        typeBox.getChildren().add(typeLabel);
+
+        List<String> types = getDataFromDatabase("SELECT nazwa FROM typ_produktu");
+        types.forEach(type -> {
+            CheckBox cb = new CheckBox(type);
+            productTypeCheckBoxes.add(cb);
+            typeBox.getChildren().add(cb);
+        });
+        filterContainer.getChildren().add(typeBox);
     }
 
     /**
@@ -245,17 +307,26 @@ public class ReportController {
         List<Map<String, String>> data = getTransactionData(sortKey, start, end);
 
         addColumn("Produkt", "Produkt");
+        addColumn("Typ produktu", "TypProduktu");
         addColumn("Data", "Data");
         addColumn("Ilosc", "Ilosc");
 
-        reportTableView.setItems(FXCollections.observableArrayList(data));
+        if (!data.isEmpty()) {
+            reportTableView.setItems(FXCollections.observableArrayList(data));
+        } else {
+            showAlert("Brak danych spełniających kryteria wyszukiwania.");
+        }
+
         lastReportData = data;
 
         Map<String, Integer> chartData = getTransactionChartData(start, end);
         lastChartData = chartData;
 
-        ImageView chart = ChartUtils.createChartImage(chartData, "Sprzedaż dzienna");
-        reportPreviewContainer.getChildren().add(chart);
+        if (!chartData.isEmpty()) {
+            ImageView chart = ChartUtils.createChartImage(chartData, "Sprzedaż dzienna");
+            reportPreviewContainer.getChildren().removeIf(node -> node instanceof ImageView);
+            reportPreviewContainer.getChildren().add(chart);
+        }
     }
 
     /**
@@ -273,18 +344,35 @@ public class ReportController {
             case "Produkt" -> orderBy = "p.nazwa";
             case "Data" -> orderBy = "t.data_transakcji";
             case "Ilość" -> orderBy = "t.ilosc";
+            case "Typ produktu" -> orderBy = "tp.nazwa";
             default -> orderBy = "t.data_transakcji";
         }
 
+        // Pobierz wybrane typy produktów
+        List<String> selectedTypes = productTypeCheckBoxes.stream()
+                .filter(CheckBox::isSelected)
+                .map(CheckBox::getText)
+                .toList();
+
         StringBuilder query = new StringBuilder(
-                "SELECT p.nazwa AS produkt, t.data_transakcji AS data, t.ilosc AS ilosc " +
+                "SELECT p.nazwa AS produkt, t.data_transakcji AS data, t.ilosc AS ilosc, tp.nazwa AS typ_produktu " +
                         "FROM transakcje t " +
                         "JOIN produkty p ON t.id_produktu = p.id_produktu " +
+                        "JOIN typ_produktu tp ON p.id_typu_produktu = tp.id_typu_produktu " +
                         "WHERE 1=1 "
         );
 
         if (start != null) query.append("AND t.data_transakcji >= ? ");
         if (end != null) query.append("AND t.data_transakcji <= ? ");
+
+        if (!selectedTypes.isEmpty()) {
+            query.append("AND tp.nazwa IN (");
+            for (int i = 0; i < selectedTypes.size(); i++) {
+                query.append("?");
+                if (i < selectedTypes.size() - 1) query.append(",");
+            }
+            query.append(") ");
+        }
 
         query.append("ORDER BY ").append(orderBy);
 
@@ -295,12 +383,17 @@ public class ReportController {
             if (start != null) stmt.setDate(index++, Date.valueOf(start));
             if (end != null) stmt.setDate(index++, Date.valueOf(end));
 
+            for (String type : selectedTypes) {
+                stmt.setString(index++, type);
+            }
+
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 Map<String, String> row = new HashMap<>();
                 row.put("Produkt", rs.getString("produkt"));
                 row.put("Data", rs.getString("data"));
                 row.put("Ilosc", rs.getString("ilosc"));
+                row.put("TypProduktu", rs.getString("typ_produktu"));
                 list.add(row);
             }
         } catch (SQLException e) {
@@ -319,12 +412,32 @@ public class ReportController {
      */
     private Map<String, Integer> getTransactionChartData(LocalDate start, LocalDate end) {
         Map<String, Integer> data = new LinkedHashMap<>();
+
+        // Pobierz wybrane typy produktów
+        List<String> selectedTypes = productTypeCheckBoxes.stream()
+                .filter(CheckBox::isSelected)
+                .map(CheckBox::getText)
+                .toList();
+
         StringBuilder query = new StringBuilder(
-                "SELECT t.data_transakcji, SUM(t.ilosc) AS total FROM transakcje t WHERE 1=1 "
+                "SELECT t.data_transakcji, SUM(t.ilosc) AS total " +
+                        "FROM transakcje t " +
+                        "JOIN produkty p ON t.id_produktu = p.id_produktu " +
+                        "JOIN typ_produktu tp ON p.id_typu_produktu = tp.id_typu_produktu " +
+                        "WHERE 1=1 "
         );
 
         if (start != null) query.append("AND t.data_transakcji >= ? ");
         if (end != null) query.append("AND t.data_transakcji <= ? ");
+
+        if (!selectedTypes.isEmpty()) {
+            query.append("AND tp.nazwa IN (");
+            for (int i = 0; i < selectedTypes.size(); i++) {
+                query.append("?");
+                if (i < selectedTypes.size() - 1) query.append(",");
+            }
+            query.append(") ");
+        }
 
         query.append("GROUP BY t.data_transakcji ORDER BY t.data_transakcji");
 
@@ -335,12 +448,17 @@ public class ReportController {
             if (start != null) stmt.setDate(index++, Date.valueOf(start));
             if (end != null) stmt.setDate(index++, Date.valueOf(end));
 
+            for (String type : selectedTypes) {
+                stmt.setString(index++, type);
+            }
+
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 data.put(rs.getString("data_transakcji"), rs.getInt("total"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            showAlert("Błąd podczas generowania wykresu transakcji: " + e.getMessage());
         }
         return data;
     }
@@ -351,16 +469,26 @@ public class ReportController {
      */
     private void generateTaskPreview() {
         String sortKey = Optional.ofNullable(getFilterValue("sortTask", "Data rozpoczęcia")).orElse("Data rozpoczęcia");
-        String statusFilter = getFilterValue("status", null);
-        String priorityFilter = getFilterValue("priority", null);
+
+        // Pobranie wybranych statusów
+        List<String> selectedStatuses = statusCheckBoxes.stream()
+                .filter(CheckBox::isSelected)
+                .map(CheckBox::getText)
+                .toList();
+
+        // Pobranie wybranych priorytetów
+        List<String> selectedPriorities = priorityCheckBoxes.stream()
+                .filter(CheckBox::isSelected)
+                .map(CheckBox::getText)
+                .toList();
 
         LocalDate start = ((DatePicker) dynamicFilters.get("startDate")).getValue();
         LocalDate end = ((DatePicker) dynamicFilters.get("endDate")).getValue();
 
-        System.out.println("Filtracja zadań: sortKey=" + sortKey + ", status=" + statusFilter + ", priority=" + priorityFilter);
+        System.out.println("Filtracja zadań: sortKey=" + sortKey + ", statusy=" + selectedStatuses + ", priorytety=" + selectedPriorities);
         System.out.println("Zakres dat: start=" + start + ", end=" + end);
 
-        List<Map<String, String>> data = getTaskData(sortKey, statusFilter, priorityFilter, start, end);
+        List<Map<String, String>> data = getTaskData(sortKey, selectedStatuses, selectedPriorities, start, end);
 
         addColumn("Zadanie", "task");
         addColumn("Status", "status");
@@ -370,7 +498,7 @@ public class ReportController {
         reportTableView.setItems(FXCollections.observableArrayList(data));
         lastReportData = data;
 
-        Map<String, Integer> chartData = getTaskChartData(statusFilter, priorityFilter, start, end);
+        Map<String, Integer> chartData = getTaskChartData(selectedStatuses, selectedPriorities, start, end);
         lastChartData = chartData;
 
         ImageView chart = ChartUtils.createChartImage(chartData, "Liczba zadań wg statusu");
@@ -381,13 +509,13 @@ public class ReportController {
      * Pobiera dane zadań z bazy danych z zastosowaniem filtrów.
      *
      * @param sortKey klucz sortowania ("Priorytet", "Status", "Data rozpoczęcia")
-     * @param statusFilter filtr statusu (może być null)
-     * @param priorityFilter filtr priorytetu (może być null)
+     * @param selectedStatuses lista wybranych statusów (może być pusta)
+     * @param selectedPriorities lista wybranych priorytetów (może być pusta)
      * @param start data początkowa zakresu (może być null)
      * @param end data końcowa zakresu (może być null)
      * @return lista map zawierających dane zadań
      */
-    private List<Map<String, String>> getTaskData(String sortKey, String statusFilter, String priorityFilter, LocalDate start, LocalDate end) {
+    private List<Map<String, String>> getTaskData(String sortKey, List<String> selectedStatuses, List<String> selectedPriorities, LocalDate start, LocalDate end) {
         List<Map<String, String>> list = new ArrayList<>();
         StringBuilder query = new StringBuilder(
                 "SELECT z.nazwa, s.nazwa AS status, p.nazwa AS priority, z.data_rozpoczecia " +
@@ -398,8 +526,24 @@ public class ReportController {
 
         if (start != null) query.append("AND z.data_rozpoczecia >= ? ");
         if (end != null) query.append("AND z.data_rozpoczecia <= ? ");
-        if (statusFilter != null) query.append("AND s.nazwa = ? ");
-        if (priorityFilter != null) query.append("AND p.nazwa = ? ");
+
+        if (!selectedStatuses.isEmpty()) {
+            query.append("AND s.nazwa IN (");
+            for (int i = 0; i < selectedStatuses.size(); i++) {
+                query.append("?");
+                if (i < selectedStatuses.size() - 1) query.append(",");
+            }
+            query.append(") ");
+        }
+
+        if (!selectedPriorities.isEmpty()) {
+            query.append("AND p.nazwa IN (");
+            for (int i = 0; i < selectedPriorities.size(); i++) {
+                query.append("?");
+                if (i < selectedPriorities.size() - 1) query.append(",");
+            }
+            query.append(") ");
+        }
 
         query.append("ORDER BY ");
         query.append(switch (sortKey) {
@@ -416,8 +560,14 @@ public class ReportController {
             int index = 1;
             if (start != null) stmt.setDate(index++, Date.valueOf(start));
             if (end != null) stmt.setDate(index++, Date.valueOf(end));
-            if (statusFilter != null) stmt.setString(index++, statusFilter);
-            if (priorityFilter != null) stmt.setString(index++, priorityFilter);
+
+            for (String status : selectedStatuses) {
+                stmt.setString(index++, status);
+            }
+
+            for (String priority : selectedPriorities) {
+                stmt.setString(index++, priority);
+            }
 
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
@@ -439,13 +589,13 @@ public class ReportController {
     /**
      * Pobiera dane do wykresu zadań - liczba zadań według statusu.
      *
-     * @param statusFilter filtr statusu (może być null)
-     * @param priorityFilter filtr priorytetu (może być null)
+     * @param selectedStatuses lista wybranych statusów (może być pusta)
+     * @param selectedPriorities lista wybranych priorytetów (może być pusta)
      * @param start data początkowa zakresu (może być null)
      * @param end data końcowa zakresu (może być null)
      * @return mapa zawierająca statusy jako klucze i liczby zadań jako wartości
      */
-    private Map<String, Integer> getTaskChartData(String statusFilter, String priorityFilter, LocalDate start, LocalDate end) {
+    private Map<String, Integer> getTaskChartData(List<String> selectedStatuses, List<String> selectedPriorities, LocalDate start, LocalDate end) {
         Map<String, Integer> data = new LinkedHashMap<>();
         StringBuilder query = new StringBuilder(
                 "SELECT s.nazwa AS status, COUNT(*) AS total " +
@@ -454,8 +604,24 @@ public class ReportController {
                         "JOIN priorytety p ON z.id_priorytetu = p.id_priorytetu WHERE 1=1 "
         );
 
-        if (statusFilter != null) query.append("AND s.nazwa = ? ");
-        if (priorityFilter != null) query.append("AND p.nazwa = ? ");
+        if (!selectedStatuses.isEmpty()) {
+            query.append("AND s.nazwa IN (");
+            for (int i = 0; i < selectedStatuses.size(); i++) {
+                query.append("?");
+                if (i < selectedStatuses.size() - 1) query.append(",");
+            }
+            query.append(") ");
+        }
+
+        if (!selectedPriorities.isEmpty()) {
+            query.append("AND p.nazwa IN (");
+            for (int i = 0; i < selectedPriorities.size(); i++) {
+                query.append("?");
+                if (i < selectedPriorities.size() - 1) query.append(",");
+            }
+            query.append(") ");
+        }
+
         if (start != null) query.append("AND z.data_rozpoczecia >= ? ");
         if (end != null) query.append("AND z.data_rozpoczecia <= ? ");
 
@@ -465,8 +631,14 @@ public class ReportController {
              PreparedStatement stmt = conn.prepareStatement(query.toString())) {
 
             int index = 1;
-            if (statusFilter != null) stmt.setString(index++, statusFilter);
-            if (priorityFilter != null) stmt.setString(index++, priorityFilter);
+            for (String status : selectedStatuses) {
+                stmt.setString(index++, status);
+            }
+
+            for (String priority : selectedPriorities) {
+                stmt.setString(index++, priority);
+            }
+
             if (start != null) stmt.setDate(index++, Date.valueOf(start));
             if (end != null) stmt.setDate(index++, Date.valueOf(end));
 
@@ -486,19 +658,34 @@ public class ReportController {
      */
     private void generateProductPreview() {
         String sortKey = getFilterValue("sortProduct", "Nazwa");
-        List<Map<String, String>> data = getProductData(sortKey);
+        String stockFilter = getFilterValue("stockFilter", "Wszystkie");
+        List<Map<String, String>> data = getProductData(sortKey, stockFilter);
+
+        // Czyszczenie i konfiguracja tabeli
+        reportTableView.getColumns().clear();
+        reportTableView.getItems().clear();
 
         addColumn("Produkt", "product");
+        addColumn("Typ produktu", "type");
         addColumn("Stan magazynowy", "stock");
         addColumn("Cena", "price");
 
-        reportTableView.setItems(FXCollections.observableArrayList(data));
+        if (!data.isEmpty()) {
+            reportTableView.setItems(FXCollections.observableArrayList(data));
+        } else {
+            showAlert("Brak danych spełniających kryteria wyszukiwania.");
+        }
+
         lastReportData = data;
 
-        Map<String, Integer> chartData = getProductChartData();
+        Map<String, Integer> chartData = getProductChartData(stockFilter);
         lastChartData = chartData;
-        ImageView chart = ChartUtils.createChartImage(chartData, "Stan magazynowy produktów");
-        reportPreviewContainer.getChildren().add(chart);
+
+        if (!chartData.isEmpty()) {
+            ImageView chart = ChartUtils.createChartImage(chartData, "Stan magazynowy produktów");
+            reportPreviewContainer.getChildren().removeIf(node -> node instanceof ImageView);
+            reportPreviewContainer.getChildren().add(chart);
+        }
     }
 
     /**
@@ -507,29 +694,73 @@ public class ReportController {
      * @param sortKey klucz sortowania ("Stan", "Cena", "Nazwa")
      * @return lista map zawierających dane produktów
      */
-    private List<Map<String, String>> getProductData(String sortKey) {
+    private List<Map<String, String>> getProductData(String sortKey, String stockFilter) {
         List<Map<String, String>> list = new ArrayList<>();
 
         String orderBy = switch (sortKey) {
-            case "Stan" -> "stan";
-            case "Cena" -> "cena";
-            default -> "nazwa";
+            case "Stan" -> "p.stan";
+            case "Cena" -> "p.cena";
+            case "Typ produktu" -> "tp.nazwa";
+            default -> "p.nazwa";
         };
 
-        String query = "SELECT nazwa, stan, cena FROM produkty ORDER BY " + orderBy;
+        // Pobierz wybrane typy produktów
+        List<String> selectedTypes = productTypeCheckBoxes.stream()
+                .filter(CheckBox::isSelected)
+                .map(CheckBox::getText)
+                .toList();
+
+        StringBuilder query = new StringBuilder(
+                "SELECT p.nazwa AS product, p.stan AS stock, p.cena AS price, tp.nazwa AS type, p.limit_stanow AS min_stock " +
+                        "FROM produkty p " +
+                        "JOIN typ_produktu tp ON p.id_typu_produktu = tp.id_typu_produktu " +
+                        "WHERE 1=1 "
+        );
+
+        if (!selectedTypes.isEmpty()) {
+            query.append("AND tp.nazwa IN (");
+            for (int i = 0; i < selectedTypes.size(); i++) {
+                query.append("?");
+                if (i < selectedTypes.size() - 1) query.append(",");
+            }
+            query.append(") ");
+        }
+
+        // Dodaj warunek dla produktów poniżej limitu
+        if ("Tylko poniżej limitu".equals(stockFilter)) {
+            query.append("AND p.stan < p.limit_stanow ");
+        }
+
+        query.append("ORDER BY ").append(orderBy);
 
         try (Connection conn = DatabaseConnector.connect();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(query)) {
+             PreparedStatement stmt = conn.prepareStatement(query.toString())) {
+
+            int index = 1;
+            for (String type : selectedTypes) {
+                stmt.setString(index++, type);
+            }
+
+            ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                Map<String, String> row = new HashMap<>();
-                row.put("product", rs.getString("nazwa"));
-                row.put("stock", rs.getString("stan"));
-                row.put("price", rs.getString("cena"));
+                Map<String, String> row = new LinkedHashMap<>();
+                row.put("product", rs.getString("product"));
+
+                int stock = rs.getInt("stock");
+                int minStock = rs.getInt("min_stock");
+                String stockText = String.valueOf(stock);
+                if (stock < minStock) {
+                    stockText += " (poniżej limitu)";
+                }
+                row.put("stock", stockText);
+
+                row.put("price", String.format("%.2f", rs.getDouble("price")));
+                row.put("type", rs.getString("type"));
                 list.add(row);
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            showAlert("Błąd podczas pobierania danych produktów: " + e.getMessage());
         }
         return list;
     }
@@ -539,18 +770,53 @@ public class ReportController {
      *
      * @return mapa zawierająca nazwy produktów jako klucze i stany magazynowe jako wartości
      */
-    private Map<String, Integer> getProductChartData() {
+    private Map<String, Integer> getProductChartData(String stockFilter) {
         Map<String, Integer> data = new LinkedHashMap<>();
-        String query = "SELECT nazwa, SUM(stan) AS total FROM produkty GROUP BY nazwa";
+
+        // Pobierz wybrane typy produktów
+        List<String> selectedTypes = productTypeCheckBoxes.stream()
+                .filter(CheckBox::isSelected)
+                .map(CheckBox::getText)
+                .toList();
+
+        StringBuilder query = new StringBuilder(
+                "SELECT p.nazwa, SUM(p.stan) AS total " +
+                        "FROM produkty p " +
+                        "JOIN typ_produktu tp ON p.id_typu_produktu = tp.id_typu_produktu " +
+                        "WHERE 1=1 "
+        );
+
+        if (!selectedTypes.isEmpty()) {
+            query.append("AND tp.nazwa IN (");
+            for (int i = 0; i < selectedTypes.size(); i++) {
+                query.append("?");
+                if (i < selectedTypes.size() - 1) query.append(",");
+            }
+            query.append(") ");
+        }
+
+        // Dodaj warunek dla produktów poniżej limitu
+        if ("Tylko poniżej limitu".equals(stockFilter)) {
+            query.append("AND p.stan < p.limit_stanow ");
+        }
+
+        query.append("GROUP BY p.nazwa");
 
         try (Connection conn = DatabaseConnector.connect();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(query)) {
+             PreparedStatement stmt = conn.prepareStatement(query.toString())) {
+
+            int index = 1;
+            for (String type : selectedTypes) {
+                stmt.setString(index++, type);
+            }
+
+            ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 data.put(rs.getString("nazwa"), rs.getInt("total"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            showAlert("Błąd podczas generowania wykresu: " + e.getMessage());
         }
         return data;
     }

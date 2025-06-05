@@ -4,11 +4,27 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="93580640-a4f6-4848-877d-83f2d9fe0546" name="Changes" comment="poprawa zewnętrznej biblioteki">
+    <list default="true" id="93580640-a4f6-4848-877d-83f2d9fe0546" name="Changes" comment="poprawa testy">
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_26_05_2025_20_30_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_26_05_2025_20_30__Changes_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_27_05_2025_09_16_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_27_05_2025_09_16__Changes_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_27_05_2025_21_33_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_27_05_2025_21_33__Changes_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_27_05_2025_22_29_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_27_05_2025_22_29__Changes_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_27_05_2025_23_27_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_27_05_2025_23_27__Changes_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_28_05_2025_10_31_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_28_05_2025_10_31__Changes_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_28_05_2025_16_00_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_28_05_2025_16_00__Changes_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_29_05_2025_11_05_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_29_05_2025_11_05__Changes_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Projekt/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projekt/src/test/java/com/example/projekt/DashboardControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/test/java/com/example/projekt/DashboardControllerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projekt/src/test/java/com/example/projekt/ProductTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/test/java/com/example/projekt/ProductTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/ReportController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/example/projekt/ReportController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-settings.properties" beforeDir="false" afterPath="$PROJECT_DIR$/user-settings.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,8 +63,8 @@
 }</component>
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/PZ-2025/IiE_FIOLETOWI.git&quot;,
-    &quot;accountId&quot;: &quot;9b500b68-c45e-4292-b426-a1ebc04dbb6e&quot;
+    &quot;url&quot;: &quot;https://github.com/PZ-2025/IiE_FIOLETOWI&quot;,
+    &quot;accountId&quot;: &quot;e47df973-3faf-41d6-9f20-be590d1b6888&quot;
   }
 }</component>
   <component name="ProjectColorInfo">{
@@ -62,30 +78,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.Main.executor": "Run",
-    "Application.TestPołączenia.executor": "Run",
-    "Downloaded.Files.Path.Enabled": "false",
-    "JUnit.AlertUtilsTest and 21 more.executor": "Coverage",
-    "JUnit.DashboardControllerTest.executor": "Coverage",
-    "JUnit.ProductTest.executor": "Coverage",
-    "JUnit.com.example.projekt in Projekt.executor": "Coverage",
-    "Repository.Attach.Annotations": "false",
-    "Repository.Attach.JavaDocs": "false",
-    "Repository.Attach.Sources": "false",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/remix/IdeaProjects/IiE_FIOLETOWI/Projekt/lib/reportlib.jar",
-    "project.structure.last.edited": "Libraries",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "MavenSettings"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;Application.TestPołączenia.executor&quot;: &quot;Run&quot;,
+    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
+    &quot;JUnit.AlertUtilsTest and 21 more.executor&quot;: &quot;Coverage&quot;,
+    &quot;JUnit.DashboardControllerTest.executor&quot;: &quot;Coverage&quot;,
+    &quot;JUnit.ProductTest.executor&quot;: &quot;Coverage&quot;,
+    &quot;JUnit.com.example.projekt in Projekt.executor&quot;: &quot;Coverage&quot;,
+    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/remix/IdeaProjects/IiE_FIOLETOWI/Projekt/lib/reportlib.jar&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;MavenSettings&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\remix\IdeaProjects\IiE_FIOLETOWI\Projekt\lib" />
@@ -97,7 +113,7 @@
       <recent name="C:\Users\ABC\Documents\IiE_FIOLETOWI\Projekt\src\main\java\com\example\projekt" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.AlertUtilsTest and 21 more">
+  <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="com.example.projekt.Main" />
       <module name="Projekt" />
@@ -334,7 +350,15 @@
       <option name="project" value="LOCAL" />
       <updated>1748944646402</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="poprawa testy">
+      <option name="closed" value="true" />
+      <created>1748947202856</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1748947202856</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -372,10 +396,11 @@
     <MESSAGE value="Testy" />
     <MESSAGE value="Poprawa null zadania" />
     <MESSAGE value="poprawa zewnętrznej biblioteki" />
-    <option name="LAST_COMMIT_MESSAGE" value="poprawa zewnętrznej biblioteki" />
+    <MESSAGE value="poprawa testy" />
+    <option name="LAST_COMMIT_MESSAGE" value="poprawa testy" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/IiE_FIOLETOWI$AlertUtilsTest_and_21_more.ic" NAME="AlertUtilsTest and 21 more Coverage Results" MODIFIED="1748946999049" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
+    <SUITE FILE_PATH="coverage/IiE_FIOLETOWI$AlertUtilsTest_and_21_more.ic" NAME="AlertUtilsTest and 21 more Coverage Results" MODIFIED="1748947159734" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
     <SUITE FILE_PATH="coverage/IiE_FIOLETOWI$com_example_projekt_in_Projekt.ic" NAME="com.example.projekt in Projekt Coverage Results" MODIFIED="1748879874364" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
       <FILTER>com.example.projekt.*</FILTER>
     </SUITE>
