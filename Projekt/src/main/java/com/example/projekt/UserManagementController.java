@@ -6,9 +6,6 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
@@ -17,10 +14,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
-import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
-import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.util.ArrayList;
@@ -35,8 +29,6 @@ import java.util.logging.Logger;
 public class UserManagementController {
 
     private static final Logger LOGGER = Logger.getLogger(UserManagementController.class.getName());
-    private static final String DASHBOARD_VIEW_PATH = "/com/example/projekt/dashboard.fxml";
-    private static final String DASHBOARD_TITLE = "Dashboard";
 
     @FXML private Button createUserButton;
     @FXML private Label adminLabel;
@@ -55,7 +47,6 @@ public class UserManagementController {
     @FXML protected TextField firstNameField;
     @FXML protected TextField lastNameField;
     @FXML protected TextField salaryField;
-    @FXML private Button archiveUserButton;
     @FXML private VBox userRoot;
     @FXML private Button toggleArchiveButton;
     @FXML private TableView<User> archivedUsersTable;
@@ -105,7 +96,7 @@ public class UserManagementController {
         grupaArchColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getGroup()));
         
         // Formatowanie wyświetlania wartości w kolumnie płacy
-        placaColumn.setCellFactory(column -> new TableCell<User, Double>() {
+        placaColumn.setCellFactory(column -> new TableCell<>() {
             @Override
             protected void updateItem(Double item, boolean empty) {
                 super.updateItem(item, empty);
@@ -118,7 +109,7 @@ public class UserManagementController {
             }
         });
 
-        placaArchColumn.setCellFactory(column -> new TableCell<User, Double>() {
+        placaArchColumn.setCellFactory(column -> new TableCell<>() {
             @Override
             protected void updateItem(Double item, boolean empty) {
                 super.updateItem(item, empty);
@@ -174,10 +165,7 @@ public class UserManagementController {
             createUserButton.setVisible(false);
         }
 
-        // Ustawienie focusa na głównym panelu
-        Platform.runLater(() -> {
-            userRoot.requestFocus();
-        });
+        Platform.runLater(() -> userRoot.requestFocus());
     }
 
     /**
@@ -322,15 +310,6 @@ public class UserManagementController {
         addNewUser();
         selectedUserToEdit = null;
     }
-
-    @FXML
-    void editUser() {
-        if (selectedUserToEdit != null) {
-            updateUser();
-            selectedUserToEdit = null;
-        }
-    }
-
 
     /**
      * Dodaje nowego użytkownika do bazy danych na podstawie danych z formularza.
@@ -514,30 +493,6 @@ public class UserManagementController {
         selectedUserToEdit = null;
     }
 
-    /**
-     * Przechodzi do widoku dashboardu.
-     *
-     * @param event Zdarzenie wywołujące metodę
-     */
-    @FXML
-    private void goToDashboard(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(DASHBOARD_VIEW_PATH));
-            Parent dashboardRoot = loader.load();
-
-            DashboardController dashboardController = loader.getController();
-            dashboardController.setCurrentUser(UserSession.getInstance().getUser());
-
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setTitle(DASHBOARD_TITLE);
-            stage.setScene(new Scene(dashboardRoot));
-            stage.show();
-
-        } catch (IOException | NullPointerException e) {
-            LOGGER.log(Level.SEVERE, "Błąd ładowania dashboardu", e);
-            AlertUtils.showError("Nie można załadować dashboardu.");
-        }
-    }
 
     /**
      * Obsługuje aktualizację danych użytkownika.
