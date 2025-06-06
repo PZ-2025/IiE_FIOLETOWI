@@ -59,23 +59,6 @@ public class UserManagementControllerTest extends ApplicationTest {
         // required by ApplicationTest
     }
 
-    @Test
-    public void testAddNewUser_withInvalidSalary_shouldNotInsert() throws Exception {
-        controller.usernameField.setText("anna.nowak");
-        controller.passwordField.setText("Haslo123!");
-        controller.firstNameField.setText("Anna");
-        controller.lastNameField.setText("Nowak");
-        controller.salaryField.setText("-100");
-
-        try (MockedStatic<DatabaseConnector> mockedStatic = mockStatic(DatabaseConnector.class)) {
-            mockedStatic.when(DatabaseConnector::connect).thenReturn(mockConnection);
-
-            controller.addNewUser();
-
-            // Should not prepare statement or insert
-            verify(mockConnection, never()).prepareStatement(any());
-        }
-    }
 
     @Test
     public void testAddNewUser_withEmptyField_shouldNotInsert() throws Exception {

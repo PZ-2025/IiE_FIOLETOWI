@@ -5,16 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="93580640-a4f6-4848-877d-83f2d9fe0546" name="Changes" comment="Testy">
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_29_05_2025_13_24_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_29_05_2025_13_24__Changes_.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_29_05_2025_20_06_[Changes]1/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_29_05_2025_20_06__Changes_1.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projekt/src/test/java/com/example/projekt/DashboardControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/test/java/com/example/projekt/DashboardControllerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projekt/src/test/java/com/example/projekt/MainControllerTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projekt/src/test/java/com/example/projekt/TaskControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/test/java/com/example/projekt/TaskControllerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projekt/src/test/java/com/example/projekt/UserSessionTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/test/java/com/example/projekt/UserSessionTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projekt/src/test/java/com/example/projekt/UserTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/test/java/com/example/projekt/UserTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projekt/src/test/java/com/example/projekt/ReportControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/test/java/com/example/projekt/ReportControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projekt/src/test/java/com/example/projekt/UserManagementControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/test/java/com/example/projekt/UserManagementControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-settings.properties" beforeDir="false" afterPath="$PROJECT_DIR$/user-settings.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,6 +69,7 @@
     "Downloaded.Files.Path.Enabled": "false",
     "JUnit.ReportControllerTest.executor": "Run",
     "JUnit.TaskControllerTest.executor": "Coverage",
+    "JUnit.UserManagementControllerTest.executor": "Run",
     "JUnit.com.example.projekt in Projekt.executor": "Coverage",
     "JUnit.projekt in Projekt.executor": "Coverage",
     "Repository.Attach.Annotations": "false",
@@ -98,7 +93,7 @@
       <recent name="C:\Users\ABC\Documents\IiE_FIOLETOWI\Projekt\src\main\java\com\example\projekt" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Main">
+  <component name="RunManager" selected="JUnit.projekt in Projekt">
     <configuration name="Main" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="com.example.projekt.Main" />
       <module name="Projekt" />
@@ -136,6 +131,21 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="UserManagementControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Projekt" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.projekt.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.example.projekt" />
+      <option name="MAIN_CLASS_NAME" value="com.example.projekt.UserManagementControllerTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="com.example.projekt in Projekt" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Projekt" />
       <extension name="coverage">
@@ -160,9 +170,10 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.projekt in Projekt" />
+        <item itemvalue="JUnit.UserManagementControllerTest" />
         <item itemvalue="JUnit.ReportControllerTest" />
         <item itemvalue="JUnit.TaskControllerTest" />
-        <item itemvalue="JUnit.projekt in Projekt" />
         <item itemvalue="JUnit.com.example.projekt in Projekt" />
       </list>
     </recent_temporary>
@@ -272,7 +283,15 @@
       <option name="project" value="LOCAL" />
       <updated>1748879954614</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Testy">
+      <option name="closed" value="true" />
+      <created>1749207483649</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1749207483649</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -311,10 +330,10 @@
     <option name="LAST_COMMIT_MESSAGE" value="Testy" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/IiE_FIOLETOWI$projekt_in_Projekt.ic" NAME="projekt in Projekt Coverage Results" MODIFIED="1749206139756" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
     <SUITE FILE_PATH="coverage/IiE_FIOLETOWI$TaskControllerTest.ic" NAME="TaskControllerTest Coverage Results" MODIFIED="1749206393704" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
       <FILTER>com.example.projekt.*</FILTER>
     </SUITE>
+    <SUITE FILE_PATH="coverage/IiE_FIOLETOWI$projekt_in_Projekt.ic" NAME="projekt in Projekt Coverage Results" MODIFIED="1749207628987" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
     <SUITE FILE_PATH="coverage/IiE_FIOLETOWI$ReportControllerTest.ic" NAME="ReportControllerTest Coverage Results" MODIFIED="1749206416398" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
       <FILTER>com.example.projekt.*</FILTER>
     </SUITE>
