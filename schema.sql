@@ -254,9 +254,9 @@ AFTER UPDATE ON zadania
 FOR EACH ROW
 BEGIN
     -- Sprawdzamy, czy nazwa zadania to 'Realizacja transakcji' i czy status zmienił się na 'Zakończone' (id_statusu = 4)
-    IF NEW.nazwa = 'Realizacja transakcji' AND NEW.id_statusu = 4 AND OLD.id_statusu <> 4 THEN
+    IF NEW.id_produktu is not null AND NEW.id_pracownika is not null AND NEW.ilosc is not null AND NEW.id_kierunku is not null AND NEW.id_statusu = 5 AND OLD.id_statusu <> 5 THEN
         INSERT INTO transakcje (id_produktu, id_pracownika, ilosc, data_transakcji, id_kierunku)
-        VALUES (NEW.id_produktu, NEW.id_pracownika, NEW.ilosc, CURDATE(), NEW.id_kierunku);
+        VALUES (NEW.id_produktu, NEW.id_pracownika, NEW.ilosc, NEW.data_zakonczenia, NEW.id_kierunku);
     END IF;
 END;
 //
