@@ -18,7 +18,7 @@ class UserSessionTest {
         // Testowy użytkownik
         testUser = new User(
                 1, "Jan", "Kowalski", "janek", "1234",
-                5000.0, 2, 1, "Admin", "Zespół IT"
+                5000.0, 2, 1, "Admin", "Zespół IT", true
         );
     }
 
@@ -34,8 +34,8 @@ class UserSessionTest {
 
     @Test
     void init_ShouldNotOverwriteExistingSession() {
-        User firstUser = new User(1, "A", "A", "user1", "pass", 4000.0, 1, 1, "Admin", "Grupa1");
-        User secondUser = new User(2, "B", "B", "user2", "pass", 4500.0, 2, 2, "Uzytkownik", "Grupa2");
+        User firstUser = new User(1, "A", "A", "user1", "pass", 4000.0, 1, 1, "Admin", "Grupa1", true);
+        User secondUser = new User(2, "B", "B", "user2", "pass", 4500.0, 2, 2, "Uzytkownik", "Grupa2", true);
 
         UserSession.init(firstUser);
         UserSession.init(secondUser); // Próba nadpisania

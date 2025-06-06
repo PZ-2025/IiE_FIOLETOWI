@@ -36,7 +36,7 @@ public class DashboardControllerTest {
         // Inicjalizacja sesji użytkownika
         UserSession.init(new User(
                 10, "Anna", "Nowak", "anowak", "haslo123",
-                6000.0, 3, 2, "Administrator", "IT"
+                6000.0, 3, 2, "Administrator", "IT", true
         ));
 
         Platform.runLater(() -> {

@@ -252,7 +252,7 @@ class TaskControllerTest {
                         "Direction",
                         "Komentarz",
                         "10",
-                        "Jan Kowalski"
+                        "1: Jan Kowalski"
                 );
                 testTask.setEndDate("2023-01-02");
 

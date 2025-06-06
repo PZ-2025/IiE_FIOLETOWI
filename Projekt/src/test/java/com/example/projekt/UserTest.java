@@ -10,7 +10,7 @@ class UserTest {
     void constructor_ShouldSetAllFieldsCorrectly() {
         User user = new User(
                 10, "Anna", "Nowak", "anowak", "haslo123",
-                6000.0, 3, 2, "Uzytkownik", "Marketing"
+                6000.0, 3, 2, "Uzytkownik", "Marketing", true
         );
 
         assertEquals(10, user.getId());
@@ -28,7 +28,7 @@ class UserTest {
     @Test
     void isAdmin_ShouldReturnTrue_WhenRoleIsAdmin() {
         User admin = new User(1, "Admin", "User", "admin", "pass",
-                7000, 1, 1, "Admin", "IT");
+                7000, 1, 1, "Admin", "IT", true);
 
         assertTrue(admin.isAdmin());
     }
@@ -36,7 +36,7 @@ class UserTest {
     @Test
     void isAdmin_ShouldReturnFalse_WhenRoleIsNotAdmin() {
         User user = new User(2, "Test", "User", "test", "pass",
-                5000, 2, 2, "Uzytkownik", "HR");
+                5000, 2, 2, "Uzytkownik", "HR", true);
 
         assertFalse(user.isAdmin());
     }
@@ -44,7 +44,7 @@ class UserTest {
     @Test
     void isManager_ShouldReturnTrue_WhenRoleIsKierownik() {
         User kierownik = new User(3, "Kasia", "Szef", "kasia", "pass",
-                8000, 4, 3, "Kierownik", "Sprzedaż");
+                8000, 4, 3, "Kierownik", "Sprzedaż", true);
 
         assertTrue(kierownik.isManager());
     }
@@ -52,7 +52,7 @@ class UserTest {
     @Test
     void isManager_ShouldReturnFalse_WhenRoleIsNotKierownik() {
         User user = new User(4, "Maciej", "Pracownik", "maciej", "pass",
-                4000, 5, 4, "Uzytkownik", "Obsługa klienta");
+                4000, 5, 4, "Uzytkownik", "Obsługa klienta", true);
 
         assertFalse(user.isManager());
     }
@@ -60,7 +60,7 @@ class UserTest {
     @Test
     void setRole_ShouldUpdateRole() {
         User user = new User(5, "Tomasz", "Nowy", "tomek", "pass",
-                4500, 6, 5, "Uzytkownik", "Produkcja");
+                4500, 6, 5, "Uzytkownik", "Produkcja", true);
 
         user.setRole("Admin");
         assertEquals("Admin", user.getRole());
@@ -70,7 +70,7 @@ class UserTest {
     @Test
     void setGroup_ShouldUpdateGroupName() {
         User user = new User(6, "Zofia", "Grupa", "zofia", "pass",
-                4700, 7, 6, "Uzytkownik", "StaraGrupa");
+                4700, 7, 6, "Uzytkownik", "StaraGrupa", true);
 
         user.setGroup("NowaGrupa");
         assertEquals("NowaGrupa", user.getGroup());
